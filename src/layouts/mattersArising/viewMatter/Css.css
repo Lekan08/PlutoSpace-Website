@@ -1,0 +1,68 @@
+#other .box {
+  max-width: 400px;
+  min-width: 5px;
+  background-color: rgb(122, 145, 247);;
+  text-align: right;
+  word-break: break-all;
+  margin-top: -13px;
+  border-radius: 30px;
+}
+#you .box {
+  max-width: 400px;
+  min-width: 5px;
+  word-break: break-all;
+  margin-top: -13px;
+  text-align: left;
+  border-radius: 30px;
+  background-color: #e6e6e6;
+}
+#other .message {
+  color: black;
+  padding: 15px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: medium;
+  margin-left: 20px;
+  word-break: break-all;
+  text-align: center;
+}
+#you .message {
+  color: black;
+  word-break: break-all;
+  font-family: "Times New Roman", Times, serif;
+  padding: 15px;
+  padding-top: 2px;
+  font-size: medium;
+  padding-bottom: 2px;
+  text-align: center;
+  margin-right: 20px;
+}
+.header {
+  background-color: rgb(122, 145, 247);
+  border-bottom: 3px solid lightgray;
+  margin-top: 5px;
+  border-radius: 20px;
+  padding: 5px;
+}
+.headerText {
+  color: darkslategray;
+  font-family: cursive;
+  text-decoration: solid;
+  font-size: x-large;
+}
+.textx {
+  color: darkslategray;
+  width: 93%;
+  padding: 8px;
+  margin-top: 25px;
+  padding-bottom: 3px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: medium;
+  border-radius: 7px;
+  border: 2px solid gray;
+}
+.upp {
+  vertical-align: -5px;
+  font-size: smaller;
+}

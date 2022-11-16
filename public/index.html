@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#1A73E8" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <link rel="apple-touch-icon" sizes="76x76" href="%PUBLIC_URL%/apple-icon.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+      integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Plutospace</title>
+    <style>
+      .loading {
+        position: fixed;
+        z-index: 99;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgb(250, 250, 250);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .forbid1 {
+        position: fixed;
+        z-index: 99;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .forbid1 > img {
+        width: 956px;
+        height: 680px;
+      }
+
+      .loading > img {
+        width: 600px;
+        height: 400px;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <!-- <script type="text/javascript" src="https://sdk.monnify.com/plugin/monnify.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+      var duration = 1; // duration in minutes 1200000
+      if (window.location.pathname !== "/authentication/sign-in") {
+        setInterval(redoTimeout, 10000);
+        function redoTimeout() {
+          const myTimeout = setTimeout(updateTimer, 1200000);
+
+          function updateTimer() {
+            duration--;
+            if (duration < 1) {
+              Swal.fire({
+                title: "Timeout",
+                text: "you have been logged out",
+                icon: "error",
+              }).then(() => {
+                window.location = "authentication/sign-in";
+                setTimeout(function () {
+                  location.reload();
+                }, 1000);
+              });
+              setTimeout(redirectLog, 5000);
+            }
+          }
+          function redirectLog() {
+            window.location = "authentication/sign-in";
+            setTimeout(function () {
+              location.reload();
+            }, 1000);
+          }
+          window.addEventListener("mousemove", resetTimer);
+
+          function resetTimer() {
+            duration = 2;
+            clearTimeout(myTimeout);
+          }
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root">
+      <div class="loading"><img src="loader1.gif" alt="Loading..." /></div>
+    </div>
+    <!-- <h1 id="countdown"></h1>
+     <script src="./layouts/cbt/takeCbt/index.js"></script>
+    <script src="../src/layouts/cbt/takeCbt/index.js"></script> -->
+  </body>
+</html>

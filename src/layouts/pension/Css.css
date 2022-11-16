@@ -1,0 +1,41 @@
+.center {
+    text-align: center;
+    padding: 5px;
+    padding-left: 10px;
+}
+.stretch {
+    width:30rem;
+}
+.name {
+    width:20rem;
+}
+
+.long {
+    height:3rem;
+}
+.rest {
+    padding:5px;
+    margin-top:-0px;
+}
+.short {
+    width:287px;
+}
+.shortest {
+    width:200px;
+}
+.str {
+    font-style: bold;
+}
+.opa {
+    opacity: .6;
+}
+.longSel {
+    height:10px;
+    width: 287px;
+    text-align: center;
+    align-self: center;
+}
+.upp {
+    vertical-align: -10px;
+    font-size: large;
+  }

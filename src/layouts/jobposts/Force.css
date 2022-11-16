@@ -1,0 +1,38 @@
+.App-header {
+    min-height: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    margin-bottom: 5vh;
+    text-align: center;
+  }
+  .wrapper-class {
+    border: 1px solid #ccc;
+    width:100%;
+  }
+  .editor-class {
+    background-color:lightgray;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    height: 200px;
+  }
+  .toolbar-class {
+    border: 1px solid #ccc;
+  }
+  .required {
+    color:red;
+    font-size: 12px;
+    font-weight: light;
+  }
+  .optional {
+    color: gray;
+    font-size: 12px;
+    font-weight: light;
+  }
+  .prev {
+    color:gray;
+    font-size:12px;
+    font-weight:light;
+  }
