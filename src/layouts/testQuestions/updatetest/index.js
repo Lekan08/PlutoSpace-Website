@@ -457,7 +457,7 @@ function Updatetest() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -466,7 +466,7 @@ function Updatetest() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="question">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="question">
               {" "}
             </MDTypography>
           </MDBox>

@@ -1444,7 +1444,7 @@ function ViewSingleCorporate() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -1453,10 +1453,10 @@ function ViewSingleCorporate() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="title">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="message">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="message">
                 {" "}
               </MDTypography>
             </MDBox>
@@ -1602,7 +1602,7 @@ function ViewSingleCorporate() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -1611,10 +1611,10 @@ function ViewSingleCorporate() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="title">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="message">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="message">
                 {" "}
               </MDTypography>
             </MDBox>
@@ -1698,7 +1698,7 @@ function ViewSingleCorporate() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -1707,10 +1707,10 @@ function ViewSingleCorporate() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="title">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="message">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="message">
                 {" "}
               </MDTypography>
             </MDBox>

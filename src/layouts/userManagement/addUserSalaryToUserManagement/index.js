@@ -301,7 +301,7 @@ function AddUserpayment() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -310,7 +310,7 @@ function AddUserpayment() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="amount">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="amount">
               {" "}
             </MDTypography>
           </MDBox>

@@ -171,13 +171,13 @@ function updatesystemrole() {
           <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
             Update User System Role
           </MDTypography>
-          <MDTypography variant="gradient" fontSize="60%" color="white" id="numbers">
+          <MDTypography variant="gradient" fontSize="60%" color="error" id="numbers">
             {" "}
           </MDTypography>
         </MDBox>
         <MDBox
           variant="gradient"
-          bgColor="error"
+          sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
           borderRadius="lg"
           coloredShadow="success"
           mx={3}
@@ -186,7 +186,7 @@ function updatesystemrole() {
           mb={1}
           textAlign="center"
         >
-          <MDTypography variant="gradient" fontSize="60%" color="white" id="numofdays">
+          <MDTypography variant="gradient" fontSize="60%" color="error" id="numofdays">
             {" "}
           </MDTypography>
         </MDBox>

@@ -595,7 +595,7 @@ function Demand() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -604,22 +604,22 @@ function Demand() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="title">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="quantity">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="quantity">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="ppquantity">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="ppquantity">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="vatamount">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="vatamount">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="productType">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="productType">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="bonusamount">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="bonusamount">
               {" "}
             </MDTypography>
           </MDBox>

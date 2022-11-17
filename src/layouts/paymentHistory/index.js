@@ -807,7 +807,7 @@ function PaymentHis() {
                 </MDBox>
                 <MDBox
                   variant="gradient"
-                  bgColor="error"
+                  sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={3}
@@ -816,19 +816,19 @@ function PaymentHis() {
                   mb={1}
                   textAlign="center"
                 >
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="email">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="phone">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="phone">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="street">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="street">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="city">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="city">
                     {" "}
                   </MDTypography>
                 </MDBox>
@@ -967,7 +967,7 @@ function PaymentHis() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -976,7 +976,7 @@ function PaymentHis() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
                 {" "}
               </MDTypography>
             </MDBox>

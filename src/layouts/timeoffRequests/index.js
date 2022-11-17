@@ -304,7 +304,7 @@ function TimeOff() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -313,22 +313,22 @@ function TimeOff() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="requested">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="requested">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="starting">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="starting">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="ending">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="ending">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="resuming">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="resuming">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="purpose">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="purpose">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="title">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
               {" "}
             </MDTypography>
           </MDBox>

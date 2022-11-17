@@ -391,7 +391,7 @@ function Appointments() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -400,10 +400,10 @@ function Appointments() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="title">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="date">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="date">
               {" "}
             </MDTypography>
           </MDBox>

@@ -2352,7 +2352,7 @@ function UserProfile() {
                 </MDBox>
                 <MDBox
                   variant="gradient"
-                  bgColor="error"
+                  sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={3}
@@ -2361,28 +2361,28 @@ function UserProfile() {
                   mb={5}
                   textAlign="center"
                 >
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="nkfirst">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="nkfirst">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="nklast">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="nklast">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="nkother">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="nkother">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="nkemail">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="nkemail">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="nkphone">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="nkphone">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="nkstreet">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="nkstreet">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="nkcity">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="nkcity">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="nkoccupation">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="nkoccupation">
                     {" "}
                   </MDTypography>
                 </MDBox>
@@ -2622,7 +2622,7 @@ function UserProfile() {
                 </MDBox>
                 <MDBox
                   variant="gradient"
-                  bgColor="error"
+                  sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={3}
@@ -2631,10 +2631,10 @@ function UserProfile() {
                   mb={5}
                   textAlign="center"
                 >
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="maspouse">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="maspouse">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="machildren">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="machildren">
                     {" "}
                   </MDTypography>
                 </MDBox>
@@ -2706,7 +2706,7 @@ function UserProfile() {
                 </MDBox>
                 <MDBox
                   variant="gradient"
-                  bgColor="error"
+                  sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={3}
@@ -2715,25 +2715,25 @@ function UserProfile() {
                   mb={5}
                   textAlign="center"
                 >
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="first">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="first">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="last">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="last">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="other">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="other">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="email">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="phone">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="phone">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="street">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="street">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="city">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="city">
                     {" "}
                   </MDTypography>
                 </MDBox>
@@ -3054,7 +3054,7 @@ function UserProfile() {
                 </MDBox>
                 <MDBox
                   variant="gradient"
-                  bgColor="error"
+                  sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={3}
@@ -3063,10 +3063,10 @@ function UserProfile() {
                   mb={5}
                   textAlign="center"
                 >
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="baAccName">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="baAccName">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="baAccNo">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="baAccNo">
                     {" "}
                   </MDTypography>
                 </MDBox>
@@ -3194,7 +3194,7 @@ function UserProfile() {
                 </MDBox>
                 <MDBox
                   variant="gradient"
-                  bgColor="error"
+                  sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={3}

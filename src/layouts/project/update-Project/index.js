@@ -338,7 +338,7 @@ function ProjectUpdate() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -347,16 +347,16 @@ function ProjectUpdate() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="workflow">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="workflow">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="startTime">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="startTime">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="FETime">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="FETime">
               {" "}
             </MDTypography>
           </MDBox>

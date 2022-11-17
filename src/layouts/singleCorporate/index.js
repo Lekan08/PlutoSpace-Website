@@ -520,7 +520,7 @@ function SingleCorporate() {
                 </MDBox>
                 <MDBox
                   variant="gradient"
-                  bgColor="error"
+                  sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={3}
@@ -529,22 +529,22 @@ function SingleCorporate() {
                   mb={1}
                   textAlign="center"
                 >
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="city">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="city">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="state">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="state">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="country">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="country">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="email">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
                     {" "}
                   </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="white" id="year">
+                  <MDTypography variant="gradient" fontSize="60%" color="error" id="year">
                     {" "}
                   </MDTypography>
                 </MDBox>

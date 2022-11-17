@@ -171,7 +171,7 @@ function ProductsBranch() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -180,7 +180,7 @@ function ProductsBranch() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="quantity">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="quantity">
               {" "}
             </MDTypography>
           </MDBox>
@@ -248,7 +248,7 @@ export default ProductsBranch;
 
 <MDBox
   variant="gradient"
-  bgColor="error"
+  sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
   borderRadius="lg"
   coloredShadow="success"
   mx={3}
@@ -257,10 +257,10 @@ export default ProductsBranch;
   mb={1}
   textAlign="center"
 >
-  {/* <MDTypography variant="gradient" fontSize="60%" color="white" id="title">
+  {/* <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
   {" "}
 </MDTypography> */}
-  <MDTypography variant="gradient" fontSize="60%" color="white" id="quantity">
+  <MDTypography variant="gradient" fontSize="60%" color="error" id="quantity">
     {" "}
   </MDTypography>
   <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>

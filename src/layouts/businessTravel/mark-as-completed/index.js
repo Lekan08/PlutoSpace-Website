@@ -161,7 +161,7 @@ function MarkAsCompleted() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -170,10 +170,10 @@ function MarkAsCompleted() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="actualDSpent">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="actualDSpent">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="actualEx">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="actualEx">
               {" "}
             </MDTypography>
           </MDBox>

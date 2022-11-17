@@ -36,8 +36,9 @@ import MDButton from "components/MDButton";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-in-basic.gif";
+import bgImage from "assets/images/meet-your-match-image.png";
 import plutospaceImg from "assets/images/PlutoSpaceImg.png";
+import Styles from "styles";
 
 function Basic() {
   const navigate = useNavigate();
@@ -49,6 +50,19 @@ function Basic() {
   const MySwal = withReactContent(Swal);
 
   const [passwordShown, setPasswordShown] = useState(false);
+
+  // const Styles = {
+  //   buttonSx: {
+  //     bacgroundColor: "#f96d02",
+  //     color: "#fff",
+  //   },
+  //   boxSx: {
+  //     backgroundColor: "#f96d02",
+  //     color: "#fff",
+  //     width: 5000,
+  //   },
+  // };
+  console.log(Styles);
 
   // Password toggle handler
   const togglePassword = () => {
@@ -124,7 +138,7 @@ function Basic() {
         <Card>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -132,29 +146,11 @@ function Basic() {
             p={2}
             mb={1}
             textAlign="center"
+            style={Styles.boxSx}
           >
             <MDBox component="img" src={plutospaceImg} alt="PlutoSpace" width="15rem" />
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Sign In
-            </MDTypography>
-          </MDBox>
-
-          <MDBox
-            variant="gradient"
-            bgColor="error"
-            borderRadius="lg"
-            coloredShadow="success"
-            mx={3}
-            mt={1}
-            p={1}
-            mb={1}
-            textAlign="center"
-          >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="username">
-              {" "}
-            </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="password">
-              {" "}
             </MDTypography>
           </MDBox>
           <MDBox pt={4} pb={3} px={3}>
@@ -193,14 +189,15 @@ function Basic() {
                       align="right"
                       onClick={togglePassword}
                       mx={0}
-                      color="info"
+                      // color="info"
+                      style={Styles.textSx}
                     >
                       show password
                     </MDTypography>
                   </div>
                 </Container>
               </MDBox>
-              <MDButton variant="gradient" onClick={handleClick} color="info" fullWidth>
+              <MDButton variant="gradient" onClick={handleClick} style={Styles.buttonSx} fullWidth>
                 sign In
               </MDButton>
               <MDBox mt={1} textAlign="center">
@@ -212,7 +209,8 @@ function Basic() {
                     variant="button"
                     color="info"
                     fontWeight="medium"
-                    textGradient
+                    // textGradient
+                    style={Styles.textSx}
                   >
                     Sign Up
                   </MDTypography>
@@ -223,9 +221,10 @@ function Basic() {
                   component={Link}
                   to="/authentication/forgot-password"
                   variant="button"
-                  color="info"
+                  // color="info"
+                  style={Styles.textSx}
                   fontWeight="medium"
-                  textGradient
+                  // textGradient
                 >
                   Forgot Password
                 </MDTypography>
@@ -235,9 +234,10 @@ function Basic() {
                   component={Link}
                   to="/authentication/renew-Login"
                   variant="button"
-                  color="info"
+                  // color="info"
+                  style={Styles.textSx}
                   fontWeight="medium"
-                  textGradient
+                  // textGradient
                 >
                   Renew Subscription
                 </MDTypography>

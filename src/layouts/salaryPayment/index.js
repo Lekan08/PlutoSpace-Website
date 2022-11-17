@@ -24,13 +24,13 @@ import withReactContent from "sweetalert2-react-content";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Select from "react-select";
-import makeAnimated from "react-select/animated";
+// import makeAnimated from "react-select/animated";
 import { CSVLink } from "react-csv";
 
 function SalaryPayment() {
   const MySwal = withReactContent(Swal);
 
-  const animatedComponents = makeAnimated();
+  // const animatedComponents = makeAnimated();
 
   const [namex, setName] = useState("");
   const [descripx, setDescrip] = useState("");
@@ -839,7 +839,7 @@ function SalaryPayment() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -848,7 +848,7 @@ function SalaryPayment() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
                 {" "}
               </MDTypography>
             </MDBox>
@@ -871,7 +871,7 @@ function SalaryPayment() {
                           </MDTypography>
                           <Select
                             closeMenuOnSelect
-                            components={animatedComponents}
+                            // components={animatedComponents}
                             onChange={handleOnSelect}
                             isMulti
                             options={sUser}
@@ -945,7 +945,7 @@ function SalaryPayment() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -954,7 +954,7 @@ function SalaryPayment() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
                 {" "}
               </MDTypography>
             </MDBox>
@@ -1025,7 +1025,7 @@ function SalaryPayment() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -1034,7 +1034,7 @@ function SalaryPayment() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
                 {" "}
               </MDTypography>
             </MDBox>
@@ -1084,7 +1084,7 @@ function SalaryPayment() {
                           </MDTypography>
                           <Select
                             closeMenuOnSelect
-                            components={animatedComponents}
+                            // components={animatedComponents}
                             onChange={handleAllSelect}
                             isMulti
                             options={aUser}

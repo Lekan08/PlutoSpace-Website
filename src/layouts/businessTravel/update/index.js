@@ -610,7 +610,7 @@ function UpdateBusinessTravel() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -619,25 +619,25 @@ function UpdateBusinessTravel() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="purpose">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="purpose">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="address">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="address">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="city">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="city">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="xpense">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="xpense">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="Axpense">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="Axpense">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="dayspent">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="dayspent">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="dayrequest">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="dayrequest">
               {" "}
             </MDTypography>
           </MDBox>

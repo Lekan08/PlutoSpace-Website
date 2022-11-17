@@ -482,7 +482,7 @@ function InviteUser() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -491,19 +491,19 @@ function InviteUser() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="first">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="first">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="last">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="last">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="other">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="other">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="email">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="phone">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="phone">
                 {" "}
               </MDTypography>
             </MDBox>
@@ -685,7 +685,7 @@ function InviteUser() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -694,10 +694,10 @@ function InviteUser() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="street">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="street">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="city">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="city">
                 {" "}
               </MDTypography>
             </MDBox>
@@ -793,7 +793,7 @@ function InviteUser() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={3}
@@ -802,10 +802,10 @@ function InviteUser() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="password">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="password">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="rtPassword">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="rtPassword">
                 {" "}
               </MDTypography>
             </MDBox>

@@ -176,7 +176,7 @@ function userlogin() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="error"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -185,13 +185,13 @@ function userlogin() {
               mb={1}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="password">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="password">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="npassword">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="npassword">
                 {" "}
               </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="retypepassword">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="retypepassword">
                 {" "}
               </MDTypography>
             </MDBox>

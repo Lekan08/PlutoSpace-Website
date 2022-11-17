@@ -123,7 +123,7 @@ function CBT() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -132,7 +132,7 @@ function CBT() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
               {" "}
             </MDTypography>
           </MDBox>

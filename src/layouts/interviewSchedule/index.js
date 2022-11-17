@@ -720,7 +720,7 @@ function InterviewSchedule() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -729,7 +729,7 @@ function InterviewSchedule() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="email">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
               {" "}
             </MDTypography>
             <></>

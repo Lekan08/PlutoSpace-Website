@@ -245,7 +245,7 @@ function UserManagement() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -254,13 +254,13 @@ function UserManagement() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="first">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="first">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="last">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="last">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="email">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
               {" "}
             </MDTypography>
           </MDBox>

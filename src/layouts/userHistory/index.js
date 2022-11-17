@@ -545,7 +545,7 @@ function UserAudit() {
               sx={{ width: "auto" }}
               textAlign="center"
             >
-              <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
                 {" "}
               </MDTypography>
             </MDBox>
