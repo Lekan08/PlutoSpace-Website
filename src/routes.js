@@ -230,6 +230,7 @@ import TimeOffRequestsDashboard from "layouts/timeoffrequest-dashboard";
 import OnboardingSession from "layouts/onboardingCompany/sessions";
 import AssignedOnboarding from "layouts/assignedOnboarding";
 import GenerateProductionReport from "layouts/products/reportProduction/generateProductionReport";
+import OtherInflow from "layouts/otherInflow";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
 import OnboardingCompany from "./layouts/onboardingCompany";
@@ -452,6 +453,26 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/timeSheet/timeSheet.js",
     component: <TimeSheetManual />,
+  },
+  {
+    type: "divider",
+    name: "",
+    key: "divd2657",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Other Inflows",
+    key: "titd212121",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Other Inflows",
+    key: "otherinflow",
+    icon: <Icon fontSize="small">VolunteerActivism</Icon>,
+    route: "/otherinflow",
+    component: <OtherInflow />,
   },
   {
     type: "divider",
