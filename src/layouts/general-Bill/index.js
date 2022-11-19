@@ -191,7 +191,7 @@ function GeneralBills() {
       setCheckedEndTime(false);
       console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("FETime").innerHTML = "Select a Forecasted End Time <br>";
+      document.getElementById("FETime").innerHTML = "Select an End Time <br>";
     }
     if (FETime) {
       console.log("working2222222");
@@ -284,7 +284,7 @@ function GeneralBills() {
       MySwal.fire({
         title: "Invalid Date",
         type: "error",
-        text: "Please Enter A Date From The Future",
+        text: "Your Start Time Date should come before your End Time Date",
       });
     } else {
       setOpened(true);
