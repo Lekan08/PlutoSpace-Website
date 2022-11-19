@@ -37,6 +37,9 @@ function GeneralBills() {
   const [empIDsx, setEmpIDsx] = useState([]);
   const [createdBysx, setCreatedBysx] = useState([]);
   const [approvedBysx, setApprovedBysx] = useState([]);
+  const [empIDsxT, setEmpIDsxT] = useState([]);
+  const [createdBysxT, setCreatedBysxT] = useState([]);
+  const [approvedBysxT, setApprovedBysxT] = useState([]);
   const [endTimexx, setEndTimexx] = useState("");
   //   const [totalAmountx, setTotalAmountx] = useState("");
   const [startAmountx, setStartAmountx] = useState("");
@@ -91,17 +94,21 @@ function GeneralBills() {
     // console.log('Using Map', Object.values(map));
 
     let duplicateRemoved = [];
+    const empIDNeeded = [];
 
     value.forEach((item) => {
-      if (duplicateRemoved.findIndex((o) => o === item) >= 0) {
-        duplicateRemoved = duplicateRemoved.filter((x) => x === item);
+      if (duplicateRemoved.findIndex((o) => o.id === item.id) >= 0) {
+        duplicateRemoved = duplicateRemoved.filter((x) => x.id === item.id);
       } else {
         duplicateRemoved.push(item);
+        empIDNeeded.push(item.id);
       }
     });
 
-    setEmpIDsx(duplicateRemoved);
+    setEmpIDsxT(duplicateRemoved);
+    setEmpIDsx(empIDNeeded);
   };
+
   const handleChangeCrea = (event) => {
     const {
       target: { value },
@@ -109,16 +116,19 @@ function GeneralBills() {
 
     console.log(value);
     let duplicateRemoved = [];
+    const createdByNeeded = [];
 
     value.forEach((item) => {
-      if (duplicateRemoved.findIndex((o) => o === item) >= 0) {
-        duplicateRemoved = duplicateRemoved.filter((x) => x === item);
+      if (duplicateRemoved.findIndex((o) => o.id === item.id) >= 0) {
+        duplicateRemoved = duplicateRemoved.filter((x) => x.id === item.id);
       } else {
         duplicateRemoved.push(item);
+        createdByNeeded.push(item.id);
       }
     });
 
-    setCreatedBysx(duplicateRemoved);
+    setCreatedBysxT(duplicateRemoved);
+    setCreatedBysx(createdByNeeded);
   };
   const handleChangeCreaAppr = (event) => {
     const {
@@ -127,16 +137,19 @@ function GeneralBills() {
 
     console.log(value);
     let duplicateRemoved = [];
+    const approvedByNeeded = [];
 
     value.forEach((item) => {
-      if (duplicateRemoved.findIndex((o) => o === item) >= 0) {
-        duplicateRemoved = duplicateRemoved.filter((x) => x === item);
+      if (duplicateRemoved.findIndex((o) => o.id === item.id) >= 0) {
+        duplicateRemoved = duplicateRemoved.filter((x) => x.id === item.id);
       } else {
         duplicateRemoved.push(item);
+        approvedByNeeded.push(item.id);
       }
     });
 
-    setApprovedBysx(duplicateRemoved);
+    setApprovedBysxT(duplicateRemoved);
+    setApprovedBysx(approvedByNeeded);
   };
 
   // const handleChange = (event) => {
@@ -506,15 +519,6 @@ function GeneralBills() {
             <MDTypography variant="gradient" fontSize="60%" color="error" id="FETime">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="paidAmount">
-              {" "}
-            </MDTypography>{" "}
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="purpose">
-              {" "}
-            </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="assign">
-              {" "}
-            </MDTypography>
           </MDBox>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
@@ -556,7 +560,7 @@ function GeneralBills() {
                     <TextField
                       id="filled-number"
                       value={startAmountx || ""}
-                      label="Amount (NGN) "
+                      label="Start Amount (NGN) "
                       placeholder="Amount "
                       type="number"
                       onChange={(e) => setStartAmountx(e.target.value)}
@@ -564,7 +568,6 @@ function GeneralBills() {
                       sx={{
                         width: 250,
                       }}
-                      required
                     />
                   </div>
                   <div className="col-sm-2">
@@ -574,7 +577,7 @@ function GeneralBills() {
                     <TextField
                       id="filled-number"
                       value={endAmountx || ""}
-                      label="Tax Amount (NGN) "
+                      label="End Amount (NGN) "
                       placeholder="Amount "
                       type="number"
                       onChange={(e) => setEndAmountx(e.target.value)}
@@ -582,7 +585,6 @@ function GeneralBills() {
                       sx={{
                         width: 250,
                       }}
-                      required
                     />
                   </div>
                 </div>
@@ -596,18 +598,20 @@ function GeneralBills() {
                         labelId="demo-multiple-checkbox-label"
                         id="demo-multiple-checkbox"
                         multiple
-                        value={empIDsx}
+                        value={empIDsxT}
                         onChange={handleChange}
                         input={<OutlinedInput label="Emplooye" />}
                         // eslint-disable-next-line no-shadow
-                        renderValue={(selected) => selected.map((x) => x.name).join(", ")}
+                        renderValue={(selected) =>
+                          selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
+                        }
                         MenuProps={MenuProps}
                       >
                         {userInfox.map((variant) => (
-                          <MenuItem key={variant.personal.id} value={variant.personal.id}>
+                          <MenuItem key={variant.personal.id} value={variant.personal}>
                             <Checkbox
                               checked={
-                                empIDsx.findIndex((item) => item === variant.personal.id) >= 0
+                                empIDsxT.findIndex((item) => item.id === variant.personal.id) >= 0
                               }
                             />
                             <ListItemText
@@ -629,18 +633,21 @@ function GeneralBills() {
                         labelId="demo-multiple-checkbox-label"
                         id="demo-multiple-checkbox"
                         multiple
-                        value={createdBysx}
+                        value={createdBysxT}
                         onChange={handleChangeCrea}
                         input={<OutlinedInput label="Created By" />}
                         // eslint-disable-next-line no-shadow
-                        renderValue={(selected) => selected.map((x) => x.name).join(", ")}
+                        renderValue={(selected) =>
+                          selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
+                        }
                         MenuProps={MenuProps}
                       >
                         {userInfox.map((variant) => (
-                          <MenuItem key={variant.personal.id} value={variant.personal.id}>
+                          <MenuItem key={variant.personal.id} value={variant.personal}>
                             <Checkbox
                               checked={
-                                createdBysx.findIndex((item) => item === variant.personal.id) >= 0
+                                createdBysxT.findIndex((item) => item.id === variant.personal.id) >=
+                                0
                               }
                             />
                             <ListItemText
@@ -662,18 +669,22 @@ function GeneralBills() {
                         labelId="demo-multiple-checkbox-label"
                         id="demo-multiple-checkbox"
                         multiple
-                        value={approvedBysx}
+                        value={approvedBysxT}
                         onChange={handleChangeCreaAppr}
                         input={<OutlinedInput label="Approved By" />}
                         // eslint-disable-next-line no-shadow
-                        renderValue={(selected) => selected.map((x) => x.name).join(", ")}
+                        renderValue={(selected) =>
+                          selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
+                        }
                         MenuProps={MenuProps}
                       >
                         {userInfox.map((variant) => (
-                          <MenuItem key={variant.personal.id} value={variant.personal.id}>
+                          <MenuItem key={variant.personal.id} value={variant.personal}>
                             <Checkbox
                               checked={
-                                approvedBysx.findIndex((item) => item === variant.personal.id) >= 0
+                                approvedBysxT.findIndex(
+                                  (item) => item.id === variant.personal.id
+                                ) >= 0
                               }
                             />
                             <ListItemText
