@@ -466,9 +466,6 @@ function GeneralBills() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigate(`/my-Bills/update-My-Bills?id=${value}`)}>
-                Update
-              </Dropdown.Item>
               <Dropdown.Item onClick={() => handleApproveOrDecline(value, 1)}>
                 Approve{" "}
               </Dropdown.Item>
