@@ -92,6 +92,9 @@ import RenewSub from "layouts/authentication/renewSubscription";
 import SalaryPayment from "layouts/salaryPayment";
 
 import Bonusdeduction from "layouts/bonusdeduction";
+import MyBills from "layouts/my-Bills";
+import GeneralBills from "layouts/general-Bill";
+import UpdateMyBills from "layouts/my-Bills/update-My-Bills/index";
 import CloneBonusDeduction from "layouts/bonusdeduction/clone";
 import UpdateBonusOrDeduction from "layouts/bonusdeduction/update";
 import GroupNotifications from "layouts/group-notifications";
@@ -230,7 +233,10 @@ import TimeOffRequestsDashboard from "layouts/timeoffrequest-dashboard";
 import OnboardingSession from "layouts/onboardingCompany/sessions";
 import AssignedOnboarding from "layouts/assignedOnboarding";
 import GenerateProductionReport from "layouts/products/reportProduction/generateProductionReport";
+import OtherInflowType from "layouts/otherInflowType";
 import OtherInflow from "layouts/otherInflow";
+import UpdateOtherInflow from "layouts/otherInflow/update";
+import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
 import Services from "layouts/services";
@@ -279,6 +285,30 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/appointments",
     component: <Appointments />,
+  },
+
+  {
+    type: "collapse",
+    name: "My Bills",
+    key: "myBills",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/my-Bills",
+    component: <MyBills />,
+  },
+  {
+    type: "collapse",
+    name: "General Bills",
+    key: "generalBills",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/general-Bills",
+    component: <GeneralBills />,
+  },
+  {
+    name: "My Bills",
+    key: "updateMyBills",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/my-Bills/update-My-Bills",
+    component: <UpdateMyBills />,
   },
   {
     type: "collapse",
@@ -471,11 +501,35 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Other Inflows",
+    name: "Other Inflow",
     key: "otherinflow",
-    icon: <Icon fontSize="small">VolunteerActivism</Icon>,
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/otherinflow",
     component: <OtherInflow />,
+  },
+  {
+    // type: "collapse",
+    name: "Update Other Inflow",
+    key: "otherinflowupdate",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/otherinflow/update",
+    component: <UpdateOtherInflow />,
+  },
+  {
+    type: "collapse",
+    name: "Filter Other Inflow",
+    key: "filterotherinflow",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/otherinflow/filter-other-inflow",
+    component: <FilterOtherInflow />,
+  },
+  {
+    type: "collapse",
+    name: "Other Inflow Type",
+    key: "otherinflowtype",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/otherinflowtype",
+    component: <OtherInflowType />,
   },
   {
     type: "divider",
