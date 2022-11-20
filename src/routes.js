@@ -92,6 +92,9 @@ import RenewSub from "layouts/authentication/renewSubscription";
 import SalaryPayment from "layouts/salaryPayment";
 
 import Bonusdeduction from "layouts/bonusdeduction";
+import MyBills from "layouts/my-Bills";
+import GeneralBills from "layouts/general-Bill";
+import UpdateMyBills from "layouts/my-Bills/update-My-Bills/index";
 import CloneBonusDeduction from "layouts/bonusdeduction/clone";
 import UpdateBonusOrDeduction from "layouts/bonusdeduction/update";
 import GroupNotifications from "layouts/group-notifications";
@@ -279,6 +282,30 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/appointments",
     component: <Appointments />,
+  },
+
+  {
+    type: "collapse",
+    name: "My Bills",
+    key: "myBills",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/my-Bills",
+    component: <MyBills />,
+  },
+  {
+    type: "collapse",
+    name: "General Bills",
+    key: "generalBills",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/general-Bills",
+    component: <GeneralBills />,
+  },
+  {
+    name: "My Bills",
+    key: "updateMyBills",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/my-Bills/update-My-Bills",
+    component: <UpdateMyBills />,
   },
   {
     type: "collapse",
