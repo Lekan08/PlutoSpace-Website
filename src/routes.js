@@ -230,7 +230,10 @@ import TimeOffRequestsDashboard from "layouts/timeoffrequest-dashboard";
 import OnboardingSession from "layouts/onboardingCompany/sessions";
 import AssignedOnboarding from "layouts/assignedOnboarding";
 import GenerateProductionReport from "layouts/products/reportProduction/generateProductionReport";
+import OtherInflowType from "layouts/otherInflowType";
 import OtherInflow from "layouts/otherInflow";
+import UpdateOtherInflow from "layouts/otherInflow/update";
+import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
 import OnboardingCompany from "./layouts/onboardingCompany";
@@ -468,11 +471,35 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Other Inflows",
+    name: "Other Inflow",
     key: "otherinflow",
-    icon: <Icon fontSize="small">VolunteerActivism</Icon>,
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/otherinflow",
     component: <OtherInflow />,
+  },
+  {
+    // type: "collapse",
+    name: "Update Other Inflow",
+    key: "otherinflowupdate",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/otherinflow/update",
+    component: <UpdateOtherInflow />,
+  },
+  {
+    type: "collapse",
+    name: "Filter Other Inflow",
+    key: "filterotherinflow",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/otherinflow/filter-other-inflow",
+    component: <FilterOtherInflow />,
+  },
+  {
+    type: "collapse",
+    name: "Other Inflow Type",
+    key: "otherinflowtype",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/otherinflowtype",
+    component: <OtherInflowType />,
   },
   {
     type: "divider",
