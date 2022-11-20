@@ -318,7 +318,7 @@ function FilterOtherInflow() {
     return (
       <DashboardLayout>
         <DashboardNavbar />
-        <MDBox>Finish halftime</MDBox>
+        {/* <MDBox>Finish halftime</MDBox> */}
         <Card>
           <MDBox pt={4} pb={3} px={30}>
             <MDBox
