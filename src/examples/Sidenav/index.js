@@ -64,19 +64,9 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     window.location.reload();
   };
 
-  const userOData = JSON.parse(localStorage.getItem("userOtherDets"));
-  let userRoleID = "";
-  let userFullName = "";
-  if (userOData !== null) {
-    // eslint-disable-next-line prefer-template
-    userFullName = userOData.personal.fname + " " + userOData.personal.lname;
+  const [userRoleID, setUserRoleID] = useState("");
+  const [userFullName, setUserFullName] = useState("");
 
-    if (userOData.role === null) {
-      userRoleID = "Admin";
-    } else {
-      userRoleID = userOData.role.name;
-    }
-  }
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();
@@ -304,6 +294,27 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     if (isMounted) {
       // fetches the table data
       handleGetImage();
+
+      const userOOData = localStorage.getItem("userOtherDets");
+      // console.log(userOOData);
+      if (
+        userOOData !== null &&
+        userOOData !== undefined &&
+        userOOData !== "undefined" &&
+        userOOData !== "null"
+      ) {
+        // console.log("entered");
+        const userOData = JSON.parse(userOOData);
+        // eslint-disable-next-line prefer-template
+        setUserFullName(userOData.personal.fname + " " + userOData.personal.lname);
+
+        // console.log(userFullName);
+        if (userOData.role === null) {
+          setUserRoleID("Admin");
+        } else {
+          setUserRoleID(userOData.role.name);
+        }
+      }
     }
     return () => {
       isMounted = false;

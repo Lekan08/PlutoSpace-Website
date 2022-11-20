@@ -233,6 +233,9 @@ import GenerateProductionReport from "layouts/products/reportProduction/generate
 import OtherInflow from "layouts/otherInflow";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
+import Services from "layouts/services";
+import UpdateService from "layouts/services/update";
+import SBranches from "layouts/services/branches";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -1120,6 +1123,28 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/Products",
     component: <Products />,
+  },
+  {
+    type: "collapse",
+    name: "Services",
+    key: "services",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/services",
+    component: <Services />,
+  },
+  {
+    name: "Update Services",
+    key: "services-branch",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/services/branches",
+    component: <SBranches />,
+  },
+  {
+    name: "Service Branch",
+    key: "update-services",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/services/update",
+    component: <UpdateService />,
   },
   {
     name: "Products Branch",
