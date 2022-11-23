@@ -341,6 +341,7 @@ function MySubscription() {
   // method handledeleteq
 
   const handledeleteq = (id) => {
+    console.log(id);
     MySwal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -516,7 +517,7 @@ function MySubscription() {
 
             <Dropdown.Menu>
               <Dropdown.Item
-                onClick={() => navigate(`/my-Bills/update-My-Subscription?id=${value}`)}
+                onClick={() => navigate(`/my-Subscription/update-My-Subscription?id=${value}`)}
               >
                 Update
               </Dropdown.Item>

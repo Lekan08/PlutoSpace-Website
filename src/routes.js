@@ -326,7 +326,7 @@ const routes = [
     name: "Update My Subscription",
     key: "updateMySubscription",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/my-Bills/update-My-Subscription",
+    route: "/my-Subscription/update-My-Subscription",
     component: <UpdateMySubscription />,
   },
   {

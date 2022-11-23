@@ -265,7 +265,7 @@ function UpdateMySubscription() {
     const ids = urlParams.get("id");
     const headers = miHeaders;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/bills/getByIds/${ids}`, {
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/getByIds/${ids}`, {
       headers,
     })
       .then(async (res) => {
