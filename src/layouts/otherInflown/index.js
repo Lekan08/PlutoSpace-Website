@@ -5,7 +5,7 @@ import MDBox from "components/MDBox";
 // import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
-import { Container, Form } from "react-bootstrap";
+import { Container, Form, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MDTypography from "components/MDTypography";
 import PHeaders from "postHeader";
@@ -19,8 +19,8 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Footer from "examples/Footer";
 import GHeaders from "getHeader";
-// import Paper from "@mui/material/Paper";
-// import Accordion from "react-bootstrap/Accordion";
+import Paper from "@mui/material/Paper";
+import Accordion from "react-bootstrap/Accordion";
 import OtherInflowntable from "./data/table";
 // Big Zzzz Doings
 // total is task + amountt
@@ -44,10 +44,10 @@ function OtherInflow() {
 
   const [checkedAmount, setCheckedAmount] = useState("");
   const [checkedTaxAmount, setCheckedTaxAmount] = useState("");
-  //   const [startAmountx, setStartAmount] = useState("");
-  //   const [endTimex, setEndTime] = useState("");
-  //   const [endAmountx, setEndAmount] = useState("");
-  //   const [startTimex, setStartTime] = useState("");
+  const [startAmountx, setStartAmount] = useState("");
+  const [endTimex, setEndTime] = useState("");
+  const [endAmountx, setEndAmount] = useState("");
+  const [startTimex, setStartTime] = useState("");
 
   const TotalAmountx = parseInt(taxAmountx, 10) + parseInt(amountx, 10);
 
@@ -186,70 +186,70 @@ function OtherInflow() {
       });
   };
 
-  //   const handleFilter = (e) => {
-  //     setOpened(true);
-  //     e.preventDefault();
-  //     const data11 = JSON.parse(localStorage.getItem("user1"));
+  const handleFilter = (e) => {
+    setOpened(true);
+    e.preventDefault();
+    const data11 = JSON.parse(localStorage.getItem("user1"));
 
-  //     const orgIDs = data11.orgID;
-  //     const idx = data11.personalID;
-  //     const raw = JSON.stringify({
-  //       startTime: startTimex,
-  //       endTime: endTimex,
-  //       approverStatus: 0,
-  //       orgID: orgIDs,
-  //       createdBys: [idx],
-  //       approvedBys: [0],
-  //       startAmount: startAmountx,
-  //       endAmount: endAmountx,
-  //     });
-  //     const requestOptions = {
-  //       method: "POST",
-  //       headers: myHeaders,
-  //       body: raw,
-  //       redirect: "follow",
-  //     };
-  //     fetch(`${process.env.REACT_APP_LOUGA_URL}/otherInflow/gets`, requestOptions)
-  //       .then(async (res) => {
-  //         const aToken = res.headers.get("token-1");
-  //         localStorage.setItem("rexxdex", aToken);
-  //         const result = await res.text();
-  //         if (result === null || result === undefined || result === "") {
-  //           return {};
-  //         }
-  //         return JSON.parse(result);
-  //       })
-  //       .then((result) => {
-  //         if (result.message === "Expired Access") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Token Does Not Exist") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Unauthorized Access") {
-  //           navigate("/authentication/forbiddenPage");
-  //           window.location.reload();
-  //         }
-  //         setOpened(false);
-  //         MySwal.fire({
-  //           title: result.status,
-  //           type: "success",
-  //           text: result.message,
-  //         }).then(() => {
-  //           window.location.reload();
-  //         });
-  //       })
-  //       .catch((error) => {
-  //         setOpened(false);
-  //         MySwal.fire({
-  //           title: error.status,
-  //           type: "error",
-  //           text: error.message,
-  //         });
-  //       });
-  //   };
+    const orgIDs = data11.orgID;
+    const idx = data11.personalID;
+    const raw = JSON.stringify({
+      startTime: startTimex,
+      endTime: endTimex,
+      approverStatus: 0,
+      orgID: orgIDs,
+      createdBys: [idx],
+      approvedBys: [0],
+      startAmount: startAmountx,
+      endAmount: endAmountx,
+    });
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/otherInflow/gets`, requestOptions)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
+        return JSON.parse(result);
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        setOpened(false);
+        MySwal.fire({
+          title: result.status,
+          type: "success",
+          text: result.message,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
 
   const handleValidate = (e) => {
     if (checkedAmount && checkedTaxAmount === true) {
@@ -275,7 +275,7 @@ function OtherInflow() {
             style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Other Inflow
+              Other Inflow Type
             </MDTypography>
           </MDBox>
           <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -357,7 +357,7 @@ function OtherInflow() {
                 <div className="row">
                   <div className="col-sm-12">
                     <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
-                      <Form.Label style={{ fontSize: 14 }}>Particulars</Form.Label>
+                      <Form.Label style={{ fontSize: 14 }}>Portfolio</Form.Label>
                       <Form.Control
                         as="textarea"
                         value={particularz || ""}
@@ -387,7 +387,7 @@ function OtherInflow() {
           </MDBox>
         </MDBox>
       </Card>
-      {/* <br />
+      <br />
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="1">
           <Accordion.Header>Filter Other Inflow</Accordion.Header>
@@ -419,7 +419,7 @@ function OtherInflow() {
                         onChange={(start) => setStartDate(start)}
                       />
                     </MDBox>
-                  </div>
+                  </div> */}
                     <div className="col-sm-3">
                       <TextField
                         id="datetime-local"
@@ -471,7 +471,7 @@ function OtherInflow() {
                   </div>
                 </Container>
                 {/* <u>Before Proceeding Read carefully:</u> */}
-      {/* <MDBox p={3} mt={2}>
+                {/* <MDBox p={3} mt={2}>
                         <MDTypography
                           variant="h4"
                           fontWeight="regular"
@@ -488,8 +488,8 @@ function OtherInflow() {
                           <br /> please open image in new tab to zoom in for a clearer view)
                         </MDTypography>
                       </MDBox> */}
-      <br />
-      {/* <MDBox textAlign="center" p={5}>
+                <br />
+                {/* <MDBox textAlign="center" p={5}>
                         <MDTypography
                           variant="h4"
                           fontWeight="regular"
@@ -504,8 +504,8 @@ function OtherInflow() {
                             onChange={changeHandler}
                             style={{ display: "block", margin: "10px auto" }}
                           />
-                        </MDTypography>
-                {/* </MDBox> 
+                        </MDTypography> */}
+                {/* </MDBox> */}
                 <Button onClick={handleFilter} variant="success">
                   Upload
                 </Button>
@@ -514,7 +514,7 @@ function OtherInflow() {
             </Paper>
           </Accordion.Body>
         </Accordion.Item>
-      </Accordion> */}
+      </Accordion>
       <MDBox pt={3}>
         <DataTable
           table={{ columns: pColumns, rows: pRows }}
