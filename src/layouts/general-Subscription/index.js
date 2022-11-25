@@ -567,7 +567,7 @@ function GeneralSubscription() {
                 <div className="row">
                   <div className="col-sm-5">
                     <FormControl sx={{ width: 250 }}>
-                      <InputLabel id="demo-multiple-checkbox-label">Emplooye</InputLabel>
+                      <InputLabel id="demo-multiple-checkbox-label">Employee</InputLabel>
                       <Select
                         style={{ height: "40px" }}
                         labelId="demo-multiple-checkbox-label"
@@ -575,7 +575,7 @@ function GeneralSubscription() {
                         multiple
                         value={empIDsxT}
                         onChange={handleChange}
-                        input={<OutlinedInput label="Emplooye" />}
+                        input={<OutlinedInput label="Employee" />}
                         // eslint-disable-next-line no-shadow
                         renderValue={(selected) =>
                           selected.map((x) => `${x.fname} ${x.lname}`).join(", ")

@@ -23,28 +23,33 @@ function UpdateMySubscription() {
   const { allGHeaders: miHeaders } = GHeaders();
   const MySwal = withReactContent(Swal);
 
-  const [extraInfox, setExtraInfox] = useState("");
+  const [typex, setTypex] = useState("");
   const [paidAmountx, setPaidAmountx] = useState("");
   //   const [totalAmountx, setTotalAmountx] = useState("");
   const [taxAmountx, setTaxAmountx] = useState("");
   const [amountx, setAmountx] = useState("");
   const [userInfox, setUserInfo] = useState([]);
-  const [imageURL, setImageUrl] = useState([]);
+  const [billsx, setBillsx] = useState([]);
   const [assignedTox, setAssignTo] = useState("");
   const [createdTimeee, setCreatedTime] = useState("");
   const [approverIDDDD, setApproverID] = useState("");
   const [approveTimexx, setApproveTime] = useState("");
   const [approvalStatusxx, setApprovalStatus] = useState("");
   const [deleteFlagxx, setDeleteFlag] = useState("");
+  const [pricePerUnitx, setPricePerUnitx] = useState("");
+  const [frequencyx, setFrequencyx] = useState("");
 
-  const [purposex, setPurposex] = useState("");
+  const [particularsx, setParticularsx] = useState("");
   const [idx, setId] = useState("");
 
   const [checkedTaxAmountx, setCheckedTaxAmount] = useState(false);
   const [checkedPaidAmountx, setCheckedPaidAmount] = useState(false);
   const [checkedAmountx, setCheckedAmountx] = useState(false);
   const [checkAssignx, setCheckedAssign] = useState(false);
-  const [checkPurpose, setCheckedPurpose] = useState(false);
+  const [checkParticulars, setCheckedParticular] = useState(false);
+  const [checkCheckedType, setCheckedType] = useState(false);
+  const [checkCheckedPricePerUnit, setCheckedPricePerUnit] = useState(false);
+  const [checkCheckedFrequencyTime, setCheckedFrequencyTime] = useState(false);
 
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
@@ -53,53 +58,85 @@ function UpdateMySubscription() {
   const { allPHeaders: myHeaders } = PHeaders();
 
   const handleonAssign = (valuex) => {
-    setAssignTo(valuex);
     console.log(valuex);
-    console.log("working");
     if (!valuex) {
       setCheckedAssign(false);
-      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("assign").innerHTML = "Assign bill to user <br>";
     }
     if (valuex) {
-      console.log("working2222222");
       setCheckedAssign(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("assign").innerHTML = " ";
     }
   };
-
-  //   const formData = new FormData();
-  console.log(assignedTox);
-  const handlePurpose = (valuex) => {
+  const handleFrequencyTime = (valuex) => {
     console.log(valuex);
     console.log("working");
     if (!valuex) {
-      setCheckedPurpose(false);
-      console.log("auhfcgeafig");
+      setCheckedFrequencyTime(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("purpose").innerHTML = "Purpose is required <br>";
+      document.getElementById("frequency").innerHTML = "Subscription Period is required <br>";
     }
     if (valuex) {
-      console.log("working2222222");
-      setCheckedPurpose(true);
+      setCheckedFrequencyTime(true);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("purpose").innerHTML = " ";
+      document.getElementById("frequency").innerHTML = " ";
+    }
+  };
+  const handlePricePerUnit = (valuex) => {
+    console.log(valuex);
+    if (!valuex) {
+      setCheckedPricePerUnit(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("pricePerUnit").innerHTML = "Price per period is required <br>";
+    }
+    if (valuex) {
+      setCheckedPricePerUnit(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("pricePerUnit").innerHTML = " ";
+    }
+  };
+
+  const handleType = (valuex) => {
+    setTypex(valuex);
+    console.log(valuex);
+    if (!valuex) {
+      setCheckedType(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("type").innerHTML = "Subscription Type is required <br>";
+    }
+    if (valuex) {
+      setCheckedType(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("type").innerHTML = " ";
+    }
+  };
+
+  //   const formData = new FormData();
+
+  const handleParticulars = (valuex) => {
+    console.log(valuex);
+    if (!valuex) {
+      setCheckedParticular(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("particulars").innerHTML = "Particulars is required <br>";
+    }
+    if (valuex) {
+      setCheckedParticular(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("particulars").innerHTML = " ";
     }
   };
 
   const handleTaxAmount = (valuex) => {
     console.log(valuex);
-    console.log("working");
     if (!valuex) {
       setCheckedTaxAmount(false);
-      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("taxAmount").innerHTML = "Tax Amount is required <br>";
     }
     if (valuex) {
-      console.log("working2222222");
       setCheckedTaxAmount(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("taxAmount").innerHTML = " ";
@@ -108,15 +145,12 @@ function UpdateMySubscription() {
 
   const handlePaidAmountx = (valuex) => {
     console.log(valuex);
-    console.log("working");
     if (!valuex) {
       setCheckedPaidAmount(false);
-      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("paidAmount").innerHTML = "Paid Amount is required <br>";
     }
     if (valuex) {
-      console.log("working2222222");
       setCheckedPaidAmount(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("paidAmount").innerHTML = " ";
@@ -127,12 +161,10 @@ function UpdateMySubscription() {
     console.log(valuex);
     if (!valuex) {
       setCheckedAmountx(false);
-      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "Amount is required";
     }
     if (valuex) {
-      console.log("working2222222");
       setCheckedAmountx(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = " ";
@@ -156,13 +188,15 @@ function UpdateMySubscription() {
       taxAmount: taxAmountx,
       totalAmount: totalAmountx,
       paidAmount: paidAmountx,
-      purpose: purposex,
-      extraInformation: extraInfox,
-      attachedDocs: imageURL,
+      particulars: particularsx,
+      type: typex,
+      frequency: frequencyx,
+      pricePerUnit: pricePerUnitx,
+      bills: billsx,
       approverID: approverIDDDD,
       approveTime: approveTimexx,
-      approvalStatus: approvalStatusxx,
       deleteFlag: deleteFlagxx,
+      approvalStatus: approvalStatusxx,
     });
 
     console.log(raw);
@@ -252,12 +286,25 @@ function UpdateMySubscription() {
   }, []);
 
   useEffect(() => {
-    handlePurpose(purposex);
-    handlePaidAmountx(paidAmountx);
     handleAmount(amountx);
-    handleonAssign(assignedTox);
     handleTaxAmount(taxAmountx);
-  }, [assignedTox, purposex, paidAmountx, amountx, taxAmountx]);
+    handlePaidAmountx(paidAmountx);
+    handleParticulars(particularsx);
+    handleType(typex);
+    handleFrequencyTime(frequencyx);
+    handlePricePerUnit(pricePerUnitx);
+    handleonAssign(assignedTox);
+  }, [
+    paidAmountx,
+    amountx,
+    taxAmountx,
+    pricePerUnitx,
+    particularsx,
+    frequencyx,
+    typex,
+    pricePerUnitx,
+    assignedTox,
+  ]);
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -298,16 +345,18 @@ function UpdateMySubscription() {
             setId(result[0].id);
             setAmountx(result[0].amount);
             setPaidAmountx(result[0].paidAmount);
-            setPurposex(result[0].purpose);
-            setExtraInfox(result[0].extraInformation);
+            setParticularsx(result[0].particulars);
+            setTypex(result[0].type);
             setAssignTo(result[0].empID);
+            console.log(result[0].empID);
             setCreatedTime(result[0].createdTime);
             setApproverID(result[0].approverID);
             setApproveTime(result[0].approveTime);
             setApprovalStatus(result[0].approvalStatus);
             setDeleteFlag(result[0].deleteFlag);
-            setImageUrl(result[0].attachedDocs);
-            console.log(result[0].attachedDocs);
+            setBillsx(result[0].bills);
+            setFrequencyx(result[0].frequency);
+            setPricePerUnitx(result[0].pricePerUnit);
           }
         }
       });
@@ -318,21 +367,22 @@ function UpdateMySubscription() {
   }, []);
 
   const handleValidate = (e) => {
-    // handleAmount(amountx);
-    // handleTaxAmount(taxAmountx);
-    // handlePaidAmountx(paidAmountx);
-    // handleonAssign(assignedTox);
-    // handlePurpose(purposex);
     console.log(checkedTaxAmountx);
-    console.log(checkedPaidAmountx);
-    console.log(checkPurpose);
-    console.log(checkAssignx);
     console.log(checkedAmountx);
+    console.log(checkParticulars);
+    console.log(checkAssignx);
+    console.log(checkCheckedType);
+    console.log(checkCheckedPricePerUnit);
+    console.log(checkCheckedFrequencyTime);
+    console.log(checkedPaidAmountx);
     if (
       checkedTaxAmountx &&
       checkedAmountx &&
-      checkPurpose &&
+      checkParticulars &&
       checkAssignx &&
+      checkCheckedType &&
+      checkCheckedPricePerUnit &&
+      checkCheckedFrequencyTime &&
       checkedPaidAmountx === true
     ) {
       handleClick(e);
@@ -373,7 +423,16 @@ function UpdateMySubscription() {
             <MDTypography variant="gradient" fontSize="60%" color="error" id="paidAmount">
               {" "}
             </MDTypography>{" "}
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="purpose">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="particulars">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="type">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="frequency">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="pricePerUnit">
               {" "}
             </MDTypography>
             <MDTypography variant="gradient" fontSize="60%" color="error" id="assign">
@@ -423,7 +482,7 @@ function UpdateMySubscription() {
                   <div className="col-sm-5">
                     <TextField
                       id="filled-read-only-input"
-                      label="Total Amount (NGN)"
+                      label="Total Amount of Subscription (NGN)"
                       value={totalAmountx || " "}
                       InputProps={{
                         readOnly: true,
@@ -457,40 +516,73 @@ function UpdateMySubscription() {
                   <TextField
                     id="outlined-textarea"
                     rows={2}
-                    value={purposex || ""}
-                    label="Purpose "
-                    placeholder="Purpose "
-                    onChange={(e) => setPurposex(e.target.value)}
-                    onKeyUp={(e) => handlePurpose(e.target.value)}
+                    value={particularsx || ""}
+                    label="Particulars "
+                    placeholder="Particulars "
+                    onChange={(e) => setParticularsx(e.target.value)}
+                    onKeyUp={(e) => handleParticulars(e.target.value)}
                     sx={{
-                      width: 587,
+                      width: 600,
                     }}
                     multiline
                     required
                   />
                 </div>
                 &nbsp; &nbsp;
-                <div className="col-sm-12">
-                  <TextField
-                    id="outlined-textarea"
-                    rows={2}
-                    value={extraInfox || ""}
-                    label="Extra Informaton "
-                    placeholder="Extra Informaton "
-                    onChange={(e) => setExtraInfox(e.target.value)}
-                    sx={{
-                      width: 587,
-                    }}
-                    multiline
-                  />
+                <div className="row">
+                  <div className="col-sm-6">
+                    <Form.Select
+                      value={typex}
+                      aria-label="Default select example"
+                      //   onChange={(e) => setAssignTo(e.target.value)}
+                      onInput={(e) => handleType(e.target.value)}
+                    >
+                      <option value="">--Type of Subscription--</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="yearly">Yearly</option>
+                    </Form.Select>
+                  </div>
+
+                  <div className="col-sm-6">
+                    <TextField
+                      id="filled-number"
+                      value={frequencyx || ""}
+                      label="Subscription Period "
+                      placeholder="Subscription Period "
+                      type="number"
+                      onChange={(e) => setFrequencyx(e.target.value)}
+                      onKeyUp={(e) => handleFrequencyTime(e.target.value)}
+                      sx={{
+                        width: 300,
+                      }}
+                      required
+                    />
+                  </div>
                 </div>
                 &nbsp; &nbsp;
                 <div className="row">
                   <div className="col-sm-6">
+                    <TextField
+                      id="filled-number"
+                      value={pricePerUnitx || ""}
+                      label="Price per Period (NGN) "
+                      placeholder="Amount to be paid for each period "
+                      type="number"
+                      onChange={(e) => setPricePerUnitx(e.target.value)}
+                      onKeyUp={(e) => handlePricePerUnit(e.target.value)}
+                      sx={{
+                        width: 250,
+                      }}
+                      required
+                    />
+                  </div>
+                  <div className="col-sm-6">
                     <Form.Select
-                      value={assignedTox}
+                      value={assignedTox || " "}
                       aria-label="Default select example"
-                      //   onChange={(e) => setAssignTo(e.target.value)}
+                      onChange={(e) => setAssignTo(e.target.value)}
                       onInput={(e) => handleonAssign(e.target.value)}
                     >
                       <option value="">--Assign to--</option>
@@ -500,9 +592,6 @@ function UpdateMySubscription() {
                         </option>
                       ))}
                     </Form.Select>
-                  </div>
-                  <div className="col-sm-6">
-                    <></>
                   </div>
                 </div>
               </Container>
