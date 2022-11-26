@@ -245,6 +245,8 @@ import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant"
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
 import SBranches from "layouts/services/branches";
+import InsuranceTypes from "layouts/insuranceTypes";
+import InsurancePlans from "layouts/insurancePlans";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -1015,6 +1017,34 @@ const routes = [
     icon: <Icon fontSize="small">person_add_alt1</Icon>,
     route: "user-pension-settings",
     component: <UserPension />,
+  },
+  {
+    type: "divider",
+    name: "",
+    key: "divdins1",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Insurance",
+    key: "titdins2",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Insurance Types",
+    key: "insuranceType",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/insurance/type",
+    component: <InsuranceTypes />,
+  },
+  {
+    type: "collapse",
+    name: "Insurance Plans",
+    key: "insurancePlan",
+    icon: <Icon fontSize="small">book_online</Icon>,
+    route: "/insurance/plan",
+    component: <InsurancePlans />,
   },
   {
     type: "divider",
