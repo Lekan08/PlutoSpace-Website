@@ -9,7 +9,7 @@ import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 
-export default function InsuranceTypesTableData() {
+export default function InsurancePlansTableData() {
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
 
@@ -18,18 +18,31 @@ export default function InsuranceTypesTableData() {
 
   const navigate = useNavigate();
   // Method to handle update
-  const handleUpdate = (idx, namex, descripx, createdTimex, deleteFlagx, plansx) => {
+  const handleUpdate = (
+    idx,
+    titlex,
+    descripx,
+    createdTimex,
+    deleteFlagx,
+    damageClientContributionx,
+    monthlyContributionx,
+    yearlyContributionx
+  ) => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
+    const damageCompanyContributionx = 100 - Number(damageClientContributionx);
     const orgIDs = data11.orgID;
     const raw = JSON.stringify({
       id: idx,
       orgID: orgIDs,
-      name: namex,
+      title: titlex,
       descrip: descripx,
       createdTime: createdTimex,
       deleteFlag: deleteFlagx,
-      planIDs: plansx,
+      damageClientContribution: damageClientContributionx,
+      damageCompanyContribution: damageCompanyContributionx,
+      monthlyContribution: monthlyContributionx,
+      yearlyContribution: yearlyContributionx,
     });
     const requestOptions = {
       method: "POST",
@@ -38,7 +51,7 @@ export default function InsuranceTypesTableData() {
       redirect: "follow",
     };
 
-    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceType/update`, requestOptions)
+    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insurancePlan/update`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -80,48 +93,86 @@ export default function InsuranceTypesTableData() {
 
   // Method to filter departments
   const handleShow = (filteredData, value) => {
-    let namex = "";
+    let titlex = "";
     let descripx = "";
+    let damageClientContributionx = 0;
+    let monthlyContributionx = 0;
+    let yearlyContributionx = 0;
     let createdTime = 0;
     let deleteFlag = 0;
-    let plansx = [];
     // Avoid filter for empty string
     if (!value) {
-      namex = "";
+      titlex = "";
       descripx = "";
+      damageClientContributionx = 0;
+      monthlyContributionx = 0;
+      yearlyContributionx = 0;
       createdTime = 0;
       deleteFlag = 0;
-      plansx = [];
     } else {
       const filteredItems = filteredData.filter((item) => item.id === value);
 
-      namex = filteredItems[0].name;
+      titlex = filteredItems[0].title;
       descripx = filteredItems[0].descrip;
+      damageClientContributionx = filteredItems[0].damageClientContribution;
+      monthlyContributionx = filteredItems[0].monthlyContribution;
+      yearlyContributionx = filteredItems[0].yearlyContribution;
       createdTime = filteredItems[0].createdTime;
       deleteFlag = filteredItems[0].deleteFlag;
-      plansx = filteredItems[0].planIDs;
     }
 
     MySwal.fire({
-      title: "Update Insurance Type",
+      title: "Update Insurance Plan",
       html: ` <table><tr><td>
-           <label for="Name">Name</label></td>
-           <td><input type="text" id="name" value="${namex}" class="swal2-input" placeholder="Name"></td></tr><br>
+           <label for="Title">Title*</label></td>
+           <td><input type="text" id="title" value="${titlex}" class="swal2-input" placeholder="Title"></td></tr><br>
            <tr><td><label for="descrip">Description</label></td>
            <td><input type="text" class="swal2-input" id="descrip" value="${descripx}" placeholder="Description"></td></tr>
+           <tr><td><label for="damageClientContribution">Damage Client Contribution (in %)*</label></td>
+           <td><input type="text" class="swal2-input" id="damageClientContribution" value="${damageClientContributionx}"></td></tr>
+           <tr><td><label for="monthlyContribution">Monthly Contribution (in %)</label></td>
+           <td><input type="text" class="swal2-input" id="monthlyContribution" value="${monthlyContributionx}"></td></tr>
+           <tr><td><label for="yearlyContribution">Yearly Contribution (in %)</label></td>
+           <td><input type="text" class="swal2-input" id="yearlyContribution" value="${yearlyContributionx}"></td></tr>
            </table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       preConfirm: () => {
-        const name = Swal.getPopup().querySelector("#name").value;
+        const title = Swal.getPopup().querySelector("#title").value;
         const descrip = Swal.getPopup().querySelector("#descrip").value;
+        const damageClientContribution = Swal.getPopup().querySelector(
+          "#damageClientContribution"
+        ).value;
+        const monthlyContribution = Swal.getPopup().querySelector("#monthlyContribution").value;
+        const yearlyContribution = Swal.getPopup().querySelector("#yearlyContribution").value;
         const id = value;
-        if (!name) {
-          Swal.showValidationMessage(`Please enter name`);
+
+        const PricePCval = /^[0-9.]+$/;
+        if (
+          !title ||
+          (damageClientContributionx.length > 0 && !damageClientContributionx.match(PricePCval)) ||
+          (monthlyContributionx.length > 0 && !monthlyContributionx.match(PricePCval)) ||
+          (yearlyContributionx.length > 0 && !yearlyContributionx.match(PricePCval)) ||
+          (damageClientContributionx.length > 0 && Number(damageClientContributionx) > 100) ||
+          (monthlyContributionx.length > 0 && Number(monthlyContributionx) > 100) ||
+          (yearlyContributionx.length > 0 && Number(yearlyContributionx) > 100)
+        ) {
+          Swal.showValidationMessage(
+            `Please enter valid inputs for title, damage client contribution, monthly contribution and yearly contribution`
+          );
         }
-        handleUpdate(id, name, descrip, createdTime, deleteFlag, plansx);
+        handleUpdate(
+          id,
+          title,
+          descrip,
+          createdTime,
+          deleteFlag,
+          damageClientContribution,
+          monthlyContribution,
+          yearlyContribution
+        );
       },
     });
   };
@@ -144,7 +195,7 @@ export default function InsuranceTypesTableData() {
         };
 
         fetch(
-          `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceType/delete/${value}`,
+          `${process.env.REACT_APP_JOHANNESBURG_URL}/insurancePlan/delete/${value}`,
           requestOptions
         )
           .then(async (res) => {
@@ -192,6 +243,15 @@ export default function InsuranceTypesTableData() {
     return retDate;
   };
 
+  // Method to change display for percentage contribution
+  const changeDisplay = (value) => {
+    if (value <= 0) {
+      return "NONE";
+    }
+
+    return value;
+  };
+
   // Method to fetch all insurance types
   useEffect(() => {
     const headers = miHeaders;
@@ -199,7 +259,7 @@ export default function InsuranceTypesTableData() {
 
     const orgIDs = data11.orgID;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceType/gets/${orgIDs}`, { headers })
+    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insurancePlan/gets/${orgIDs}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -234,8 +294,25 @@ export default function InsuranceTypesTableData() {
   // Return table
   return {
     columns: [
-      { Header: "name", accessor: "name", align: "left" },
+      { Header: "title", accessor: "title", align: "left" },
       { Header: "description", accessor: "descrip", align: "left" },
+      {
+        Header: "damage client contribution (in %)",
+        accessor: "damageClientContribution",
+        align: "left",
+      },
+      {
+        Header: "monthly contribution (in %)",
+        accessor: "monthlyContribution",
+        Cell: ({ cell: { value } }) => changeDisplay(value),
+        align: "left",
+      },
+      {
+        Header: "yearly contribution (in %)",
+        accessor: "yearlyContribution",
+        Cell: ({ cell: { value } }) => changeDisplay(value),
+        align: "left",
+      },
       {
         Header: "Date Created",
         accessor: "createdTime",
