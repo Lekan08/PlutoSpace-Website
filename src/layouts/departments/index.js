@@ -63,7 +63,7 @@ function Departments() {
       const data11 = JSON.parse(localStorage.getItem("user1"));
 
       const orgIDs = data11.orgID;
-      const raw = JSON.stringify({ orgID: orgIDs, name: namex, description: descripx });
+      const raw = JSON.stringify({ orgID: orgIDs, name: namex, descrip: descripx });
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
