@@ -28,7 +28,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
 
-function GeneralBills() {
+function GeneralSubscription() {
   const { allGHeaders: miHeaders } = GHeaders();
   const MySwal = withReactContent(Swal);
 
@@ -75,23 +75,6 @@ function GeneralBills() {
     } = event;
 
     console.log(value);
-
-    // const filterdValue = value.filter(
-    //   (item) => variantName.findIndex((o) => o.id === item.id) >= 0
-    // );
-
-    // let duplicatesRemoved = value.filter((item, itemIndex) =>
-    //   value.findIndex((o, oIndex) => o.id === item.id && oIndex !== itemIndex)
-    // );
-
-    // console.log(duplicatesRemoved);
-
-    // let map = {};
-
-    // for (let list of value) {
-    //   map[Object.values(list).join('')] = list;
-    // }
-    // console.log('Using Map', Object.values(map));
 
     let duplicateRemoved = [];
     const empIDNeeded = [];
@@ -152,21 +135,6 @@ function GeneralBills() {
     setApprovedBysx(approvedByNeeded);
   };
 
-  // const handleChange = (event) => {
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   const preventDuplicate = value.filter(
-  //     (v, i, a) => a.findIndex((t) => t.id === v.id) === i
-  //   );
-  //   setVariantName(
-  //     // On autofill we get a the stringified value.
-  //     typeof preventDuplicate === 'string'
-  //       ? preventDuplicate.split(',')
-  //       : preventDuplicate
-  //   );
-  // };
-
   const handleTime = (valuex) => {
     console.log(valuex);
     const sTime = new Date(valuex).getTime();
@@ -221,7 +189,7 @@ function GeneralBills() {
           headers: miHeaders,
         };
         fetch(
-          `${process.env.REACT_APP_LOUGA_URL}/bills/approveOrDecline/${id}/${approverID}/${status}`,
+          `${process.env.REACT_APP_LOUGA_URL}/subscriptions/approveOrDecline/${id}/${approverID}/${status}`,
           requestOptions
         )
           .then((res) => res.json())
@@ -288,7 +256,7 @@ function GeneralBills() {
       });
     } else {
       setOpened(true);
-      fetch(`${process.env.REACT_APP_LOUGA_URL}/bills/gets`, requestOptions)
+      fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/gets`, requestOptions)
         .then(async (res) => {
           const aToken = res.headers.get("token-1");
           localStorage.setItem("rexxdex", aToken);
@@ -397,13 +365,23 @@ function GeneralBills() {
 
   const pColumns = [
     {
-      Header: "Purpose ",
-      accessor: "purpose",
+      Header: "Particulars ",
+      accessor: "particulars",
       align: "left",
     },
     {
-      Header: "Extra Information",
-      accessor: "extraInformation",
+      Header: "Type",
+      accessor: "type",
+      align: "left",
+    },
+    {
+      Header: "Subscription Period",
+      accessor: "frequency",
+      align: "left",
+    },
+    {
+      Header: "Price Per Period",
+      accessor: "pricePerUnit",
       align: "left",
     },
     {
@@ -417,7 +395,7 @@ function GeneralBills() {
       align: "left",
     },
     {
-      Header: "Paid amount",
+      Header: "Paid Amount",
       accessor: "paidAmount",
       align: "left",
     },
@@ -502,7 +480,7 @@ function GeneralBills() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              General Bills
+              General Subscriptions
             </MDTypography>
           </MDBox>
           <MDBox
@@ -589,7 +567,7 @@ function GeneralBills() {
                 <div className="row">
                   <div className="col-sm-5">
                     <FormControl sx={{ width: 250 }}>
-                      <InputLabel id="demo-multiple-checkbox-label">Emplooye</InputLabel>
+                      <InputLabel id="demo-multiple-checkbox-label">Employee</InputLabel>
                       <Select
                         style={{ height: "40px" }}
                         labelId="demo-multiple-checkbox-label"
@@ -597,7 +575,7 @@ function GeneralBills() {
                         multiple
                         value={empIDsxT}
                         onChange={handleChange}
-                        input={<OutlinedInput label="Emplooye" />}
+                        input={<OutlinedInput label="Employee" />}
                         // eslint-disable-next-line no-shadow
                         renderValue={(selected) =>
                           selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
@@ -732,4 +710,4 @@ function GeneralBills() {
   );
 }
 
-export default GeneralBills;
+export default GeneralSubscription;

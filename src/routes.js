@@ -93,8 +93,11 @@ import SalaryPayment from "layouts/salaryPayment";
 
 import Bonusdeduction from "layouts/bonusdeduction";
 import MyBills from "layouts/my-Bills";
+import MySubscription from "layouts/my-Subscription";
 import GeneralBills from "layouts/general-Bill";
+import GeneralSubscription from "layouts/general-Subscription";
 import UpdateMyBills from "layouts/my-Bills/update-My-Bills/index";
+import UpdateMySubscription from "layouts/my-Subscription/update-My-Subscription/index";
 import CloneBonusDeduction from "layouts/bonusdeduction/clone";
 import UpdateBonusOrDeduction from "layouts/bonusdeduction/update";
 import GroupNotifications from "layouts/group-notifications";
@@ -242,6 +245,7 @@ import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant"
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
 import SBranches from "layouts/services/branches";
+import InsuranceTypes from "layouts/insuranceTypes";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -286,7 +290,6 @@ const routes = [
     route: "/appointments",
     component: <Appointments />,
   },
-
   {
     type: "collapse",
     name: "My Bills",
@@ -304,11 +307,34 @@ const routes = [
     component: <GeneralBills />,
   },
   {
-    name: "My Bills",
+    type: "collapse",
+    name: "General Subscriptions",
+    key: "generalSubscription",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/general-Subscription",
+    component: <GeneralSubscription />,
+  },
+  {
+    type: "collapse",
+    name: "My Subscriptions",
+    key: "mySubscription",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/my-Subscription",
+    component: <MySubscription />,
+  },
+  {
+    name: "Update My Bills",
     key: "updateMyBills",
     icon: <Icon fontSize="small">today</Icon>,
     route: "/my-Bills/update-My-Bills",
     component: <UpdateMyBills />,
+  },
+  {
+    name: "Update My Subscription",
+    key: "updateMySubscription",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/my-Subscription/update-My-Subscription",
+    component: <UpdateMySubscription />,
   },
   {
     type: "collapse",
@@ -990,6 +1016,26 @@ const routes = [
     icon: <Icon fontSize="small">person_add_alt1</Icon>,
     route: "user-pension-settings",
     component: <UserPension />,
+  },
+  {
+    type: "divider",
+    name: "",
+    key: "divdins1",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Insurance",
+    key: "titdins2",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Insurance Types",
+    key: "insuranceType",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/insurance/type",
+    component: <InsuranceTypes />,
   },
   {
     type: "divider",

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
 import { Container, Form, Dropdown } from "react-bootstrap";
@@ -21,34 +20,31 @@ import GHeaders from "getHeader";
 import TextField from "@mui/material/TextField";
 import DataTable from "examples/Tables/DataTable";
 import Styles from "styles";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-function MyBills() {
+function MySubscription() {
   const { allGHeaders: miHeaders } = GHeaders();
   const MySwal = withReactContent(Swal);
 
   const [dataTablex, setDataTable] = useState([]);
-  const [extraInfox, setExtraInfox] = useState("");
+  const [typex, setType] = useState("");
   const [paidAmountx, setPaidAmountx] = useState("");
   //   const [totalAmountx, setTotalAmountx] = useState("");
   const [taxAmountx, setTaxAmountx] = useState("");
   const [amountx, setAmountx] = useState("");
-  const [userInfox, setUserInfo] = useState([]);
   const [assignedTox, setAssignTo] = useState("");
-  const [purposex, setPurposex] = useState("");
-  const [files, setFiles] = useState("");
-  const [billID, setBillID] = useState("");
-  const [open, setOpen] = useState(false);
-  const handleCloseModal = () => setOpen(false);
+  const [particularsx, setParticularsx] = useState("");
+  const [pricePerUnitx, setPricePerUnit] = useState("");
+  const [frequencyx, setFrequency] = useState("");
+  const [userInfox, setUserInfo] = useState([]);
 
   const [checkedTaxAmountx, setCheckedTaxAmount] = useState(false);
   const [checkedPaidAmountx, setCheckedPaidAmount] = useState(false);
   const [checkedAmountx, setCheckedAmountx] = useState(false);
   const [checkAssignx, setCheckedAssign] = useState(false);
-  const [checkPurpose, setCheckedPurpose] = useState(false);
+  const [checkParticulars, setCheckedParticular] = useState(false);
+  const [checkCheckedType, setCheckedType] = useState(false);
+  const [checkCheckedPricePerUnit, setCheckedPricePerUnit] = useState(false);
+  const [checkCheckedFrequencyTime, setCheckedFrequencyTime] = useState(false);
 
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
@@ -64,7 +60,7 @@ function MyBills() {
       setCheckedAssign(false);
       console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("assign").innerHTML = "Assign bill to user <br>";
+      document.getElementById("assign").innerHTML = "Assign Subscription to user <br>";
     }
     if (valuex) {
       console.log("working2222222");
@@ -74,20 +70,37 @@ function MyBills() {
     }
   };
 
-  const handlePurpose = (valuex) => {
+  const handleParticulars = (valuex) => {
     console.log(valuex);
     console.log("working");
     if (!valuex) {
-      setCheckedPurpose(false);
+      setCheckedParticular(false);
       console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("purpose").innerHTML = "Purpose is required <br>";
+      document.getElementById("particulars").innerHTML = "Particulars is required <br>";
     }
     if (valuex) {
       console.log("working2222222");
-      setCheckedPurpose(true);
+      setCheckedParticular(true);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("purpose").innerHTML = " ";
+      document.getElementById("particulars").innerHTML = " ";
+    }
+  };
+  const handleType = (valuex) => {
+    setType(valuex);
+    console.log(valuex);
+    console.log("working");
+    if (!valuex) {
+      setCheckedType(false);
+      console.log("auhfcgeafig");
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("type").innerHTML = "Subscription Type is required <br>";
+    }
+    if (valuex) {
+      console.log("working2222222");
+      setCheckedType(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("type").innerHTML = " ";
     }
   };
 
@@ -125,6 +138,39 @@ function MyBills() {
     }
   };
 
+  const handleFrequencyTime = (valuex) => {
+    console.log(valuex);
+    console.log("working");
+    if (!valuex) {
+      setCheckedFrequencyTime(false);
+      console.log("auhfcgeafig");
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("frequency").innerHTML = "Subscription Period is required <br>";
+    }
+    if (valuex) {
+      console.log("working2222222");
+      setCheckedFrequencyTime(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("frequency").innerHTML = " ";
+    }
+  };
+  const handlePricePerUnit = (valuex) => {
+    console.log(valuex);
+    console.log("working");
+    if (!valuex) {
+      setCheckedPricePerUnit(false);
+      console.log("auhfcgeafig");
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("pricePerUnit").innerHTML = "Price per period is required <br>";
+    }
+    if (valuex) {
+      console.log("working2222222");
+      setCheckedPricePerUnit(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("pricePerUnit").innerHTML = " ";
+    }
+  };
+
   const handleAmount = (valuex) => {
     console.log(valuex);
     if (!valuex) {
@@ -141,6 +187,42 @@ function MyBills() {
     }
   };
 
+  useEffect(() => {
+    setOpened(true);
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+    let isMounted = true;
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          console.log(result);
+          setUserInfo(result);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // eslint-disable-next-line consistent-return
   const handleClick = (e) => {
     e.preventDefault();
@@ -156,8 +238,10 @@ function MyBills() {
       taxAmount: taxAmountx,
       totalAmount: totalAmountx,
       paidAmount: paidAmountx,
-      purpose: purposex,
-      extraInformation: extraInfox,
+      particulars: particularsx,
+      type: typex,
+      frequency: frequencyx,
+      pricePerUnit: pricePerUnitx,
     });
     console.log(raw);
     const requestOptions = {
@@ -169,7 +253,7 @@ function MyBills() {
     console.log(requestOptions);
 
     setOpened(true);
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/bills/add`, requestOptions)
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/add`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -209,187 +293,13 @@ function MyBills() {
       });
   };
 
-  const handleImageUpload = (e) => {
-    // handleClose();
-    if (files !== "" && files !== 0) {
-      if (files === undefined) {
-        MySwal.fire({
-          title: "INVALID_INPUT",
-          type: "error",
-          text: "Please input a file",
-          // })  //.then(() => {
-          // handleOpen();
-        });
-      } else {
-        setOpened(true);
-        e.preventDefault();
-        // Headers for upload image
-        const GenToken = localStorage.getItem("rexxdex1");
-        const apiiToken = localStorage.getItem("rexxdex");
-
-        if (apiiToken !== "null" && apiiToken !== null) {
-          localStorage.setItem("rexxdex1", apiiToken);
-        }
-        const iiHeaders = new Headers();
-        iiHeaders.append("Token-1", GenToken);
-
-        const data11 = JSON.parse(localStorage.getItem("user1"));
-        // const personalIDs = data11.id;
-        const orgIdx = data11.orgID;
-        // const imgKey = `PROF_PIC_EMP-${personalIDs}`;
-        // console.log(imgKey);
-
-        const dateQ = new Date().getTime();
-        const billsKey = `billsDoc${1 * 2 + 3 + dateQ}`;
-        console.log(billsKey);
-        console.log(files);
-        const formDataxx = new FormData();
-        formDataxx.append("file", files[0]);
-        formDataxx.append("orgID", orgIdx);
-        formDataxx.append("key", billsKey);
-        formDataxx.append("type", files[0].type);
-
-        const raw = formDataxx;
-        console.log(raw);
-
-        const requestOptions = {
-          method: "POST",
-          headers: iiHeaders,
-          body: raw,
-          redirect: "follow",
-        };
-
-        fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
-          .then(async (res) => {
-            const aToken = res.headers.get("token-1");
-            localStorage.setItem("rexxdex", aToken);
-            return res.json();
-          })
-          .then((result) => {
-            setOpened(false);
-            if (result.message === "Expired Access") {
-              navigate("/authentication/sign-in");
-              window.location.reload();
-            }
-            if (result.message === "Token Does Not Exist") {
-              navigate("/authentication/sign-in");
-              window.location.reload();
-            }
-            if (result.message === "Unauthorized Access") {
-              navigate("/authentication/forbiddenPage");
-              window.location.reload();
-            }
-            console.log(result);
-            if (result.status === "SUCCESS") {
-              console.log(billID);
-
-              const requestOptionsS = {
-                method: "GET",
-                headers: miHeaders,
-              };
-
-              fetch(
-                `${process.env.REACT_APP_LOUGA_URL}/bills/addDocument/${billID}/${billsKey}`,
-                requestOptionsS
-              )
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  return res.json();
-                })
-                .then((resultr) => {
-                  setOpened(false);
-                  if (resultr.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultr.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultr.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                    window.location.reload();
-                  }
-                  handleCloseModal();
-                  MySwal.fire({
-                    title: resultr.status,
-                    type: "success",
-                    text: resultr.message,
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                  console.log(resultr);
-                })
-                .catch((error) => {
-                  setOpened(false);
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
-            }
-            // .then(() => {
-            //   if (result.status !== "SUCCESS") {
-            //     handleOpen();
-            //   }
-            //   console.log("SUCCESS");
-            // });
-          });
-      }
-    }
-  };
-
-  const handleOpenModal = (id) => {
-    console.log(id);
-    setBillID(id);
-    setOpen(true);
-  };
-
-  useEffect(() => {
-    setOpened(true);
-    const headers = miHeaders;
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-    const orgIDs = data11.orgID;
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          console.log(result);
-          setUserInfo(result);
-        }
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
   useEffect(() => {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const empID = data11.personalID;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/bills/getForEmp/${orgIDs}/${empID}`, {
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/getForEmp/${orgIDs}/${empID}`, {
       headers,
     })
       .then(async (res) => {
@@ -431,6 +341,7 @@ function MyBills() {
   // method handledeleteq
 
   const handledeleteq = (id) => {
+    console.log(id);
     MySwal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -445,7 +356,7 @@ function MyBills() {
           method: "DELETE",
           headers: miHeaders,
         };
-        fetch(`${process.env.REACT_APP_LOUGA_URL}/bills/delete/${id}`, requestOptions)
+        fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/delete/${id}`, requestOptions)
           .then((res) => res.json())
           .then((resx) => {
             if (resx.message === "Expired Access") {
@@ -475,80 +386,25 @@ function MyBills() {
       }
     });
   };
-  const handledeleteBillDoc = (id) => {
-    const filterFirstedd = dataTablex.filter((data) => data.id === id);
-    console.log(filterFirstedd);
-    const checkDoc = filterFirstedd[0].attachedDocs;
-    console.log(checkDoc);
-    if (checkDoc !== null) {
-      const documentID = filterFirstedd[0].attachedDocs[0];
-      console.log(documentID);
-      MySwal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
-        if (result.isConfirmed === true) {
-          const requestOptions = {
-            method: "DELETE",
-            headers: miHeaders,
-          };
-          fetch(
-            `${process.env.REACT_APP_LOUGA_URL}/bills/removeDocument/${id}/${documentID}`,
-            requestOptions
-          )
-            .then((res) => res.json())
-            .then((resx) => {
-              if (resx.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-              }
-              if (resx.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-              }
-              if (resx.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-              }
-              MySwal.fire({
-                title: resx.status,
-                type: "success",
-                text: resx.message,
-              }).then(() => {
-                window.location.reload();
-              });
-            })
-            .catch((error) => {
-              MySwal.fire({
-                title: error.status,
-                type: "error",
-                text: error.message,
-              });
-            });
-        }
-      });
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No Document Attached to this Bill",
-      });
-    }
-  };
+
   const handleValidate = (e) => {
     handleAmount(amountx);
     handleTaxAmount(taxAmountx);
     handlePaidAmountx(paidAmountx);
     handleonAssign(assignedTox);
-    handlePurpose(purposex);
+    handleParticulars(particularsx);
+    handleType(typex);
+    handleFrequencyTime(typex);
+    handlePricePerUnit(pricePerUnitx);
     // console.log(checkedWorkflow);
     if (
       checkedTaxAmountx &&
       checkedAmountx &&
-      checkPurpose &&
+      checkParticulars &&
       checkAssignx &&
+      checkCheckedType &&
+      checkCheckedPricePerUnit &&
+      checkCheckedFrequencyTime &&
       checkedPaidAmountx === true
     ) {
       handleClick(e);
@@ -577,44 +433,27 @@ function MyBills() {
     return retDate;
   };
 
-  // MODAL STYLE
-  const modalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 550,
-    bgcolor: "#ffffff",
-    border: "3px solid #5F9DF7",
-    borderRadius: 5,
-    boxShadow: 24,
-    p: 4,
-    overflow: "auto",
-    height: "50%",
-    display: "flex",
-    "&::-webkit-scrollbar": {
-      width: 20,
-    },
-    "&::-webkit-scrollbar-track": {
-      backgroundColor: "white",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "#f5f5f5",
-      borderRadius: 10,
-    },
-  };
-
   // Table for Data
 
   const pColumns = [
     {
-      Header: "Purpose ",
-      accessor: "purpose",
+      Header: "Particulars ",
+      accessor: "particulars",
       align: "left",
     },
     {
-      Header: "Extra Information",
-      accessor: "extraInformation",
+      Header: "Type",
+      accessor: "type",
+      align: "left",
+    },
+    {
+      Header: "Subscription Period",
+      accessor: "frequency",
+      align: "left",
+    },
+    {
+      Header: "Price Per Period",
+      accessor: "pricePerUnit",
       align: "left",
     },
     {
@@ -677,15 +516,13 @@ function MyBills() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigate(`/my-Bills/update-My-Bills?id=${value}`)}>
+              <Dropdown.Item
+                onClick={() => navigate(`/my-Subscription/update-My-Subscription?id=${value}`)}
+              >
                 Update
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleOpenModal(value)}>Attach Document</Dropdown.Item>
-              <Dropdown.Item onClick={() => handledeleteBillDoc(value)}>
-                Delete Attached Document
-              </Dropdown.Item>
 
-              <Dropdown.Item onClick={() => handledeleteq(value)}>Delete Bill</Dropdown.Item>
+              <Dropdown.Item onClick={() => handledeleteq(value)}>Delete</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -711,7 +548,7 @@ function MyBills() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              My Bills
+              My Subscriptions
             </MDTypography>
           </MDBox>
           <MDBox
@@ -728,7 +565,16 @@ function MyBills() {
             <MDTypography variant="gradient" fontSize="60%" color="error" id="paidAmount">
               {" "}
             </MDTypography>{" "}
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="purpose">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="particulars">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="type">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="frequency">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="pricePerUnit">
               {" "}
             </MDTypography>
             <MDTypography variant="gradient" fontSize="60%" color="error" id="assign">
@@ -739,7 +585,7 @@ function MyBills() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-6">
+                  <div className="col-sm-5">
                     <TextField
                       id="filled-number"
                       value={amountx || ""}
@@ -754,8 +600,10 @@ function MyBills() {
                       required
                     />
                   </div>
-
-                  <div className="col-sm-6">
+                  <div className="col-sm-2">
+                    <></>
+                  </div>
+                  <div className="col-sm-5">
                     <TextField
                       id="filled-number"
                       value={taxAmountx || ""}
@@ -773,10 +621,10 @@ function MyBills() {
                 </div>
                 &nbsp; &nbsp;
                 <div className="row">
-                  <div className="col-sm-6">
+                  <div className="col-sm-5">
                     <TextField
                       id="filled-read-only-input"
-                      label="Total Amount (NGN)"
+                      label="Total Amount of Subscription (NGN)"
                       value={totalAmountx || " "}
                       InputProps={{
                         readOnly: true,
@@ -786,8 +634,10 @@ function MyBills() {
                       }}
                     />
                   </div>
-
-                  <div className="col-sm-6">
+                  <div className="col-sm-2">
+                    <></>
+                  </div>
+                  <div className="col-sm-5">
                     <TextField
                       id="filled-number"
                       value={paidAmountx || ""}
@@ -808,35 +658,68 @@ function MyBills() {
                   <TextField
                     id="outlined-textarea"
                     rows={2}
-                    value={purposex || ""}
-                    label="Purpose "
-                    placeholder="Purpose "
-                    onChange={(e) => setPurposex(e.target.value)}
-                    onKeyUp={(e) => handlePurpose(e.target.value)}
+                    value={particularsx || ""}
+                    label="Particulars "
+                    placeholder="Particulars "
+                    onChange={(e) => setParticularsx(e.target.value)}
+                    onKeyUp={(e) => handleParticulars(e.target.value)}
                     sx={{
-                      width: 587,
+                      width: 600,
                     }}
                     multiline
                     required
                   />
                 </div>
                 &nbsp; &nbsp;
-                <div className="col-sm-12">
-                  <TextField
-                    id="outlined-textarea"
-                    rows={2}
-                    value={extraInfox || ""}
-                    label="Extra Informaton "
-                    placeholder="Extra Informaton "
-                    onChange={(e) => setExtraInfox(e.target.value)}
-                    sx={{
-                      width: 587,
-                    }}
-                    multiline
-                  />
+                <div className="row">
+                  <div className="col-sm-6">
+                    <Form.Select
+                      value={typex}
+                      aria-label="Default select example"
+                      //   onChange={(e) => setAssignTo(e.target.value)}
+                      onInput={(e) => handleType(e.target.value)}
+                    >
+                      <option value="">--Type of Subscription--</option>
+                      <option value="daily">Daily</option>
+                      <option value="weekly">Weekly</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="yearly">Yearly</option>
+                    </Form.Select>
+                  </div>
+
+                  <div className="col-sm-6">
+                    <TextField
+                      id="filled-number"
+                      value={frequencyx || ""}
+                      label="Subscription Period "
+                      placeholder="Subscription Period "
+                      type="number"
+                      onChange={(e) => setFrequency(e.target.value)}
+                      onKeyUp={(e) => handleFrequencyTime(e.target.value)}
+                      sx={{
+                        width: 300,
+                      }}
+                      required
+                    />
+                  </div>
                 </div>
                 &nbsp; &nbsp;
                 <div className="row">
+                  <div className="col-sm-6">
+                    <TextField
+                      id="filled-number"
+                      value={pricePerUnitx || ""}
+                      label="Price per Period (NGN) "
+                      placeholder="Amount to be paid for each period "
+                      type="number"
+                      onChange={(e) => setPricePerUnit(e.target.value)}
+                      onKeyUp={(e) => handlePricePerUnit(e.target.value)}
+                      sx={{
+                        width: 250,
+                      }}
+                      required
+                    />
+                  </div>
                   <div className="col-sm-6">
                     <Form.Select
                       value={assignedTox}
@@ -883,82 +766,6 @@ function MyBills() {
         />
       </MDBox>
       <div>
-        <Modal
-          open={open}
-          onClose={handleCloseModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={modalStyle}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={12}>
-                <HighlightOffIcon
-                  onClick={handleCloseModal}
-                  fontSize="large"
-                  style={{
-                    // display: "flex",
-                    padding: "5px",
-                    color: "red",
-                    float: "right",
-                    position: "absolute",
-                    left: 500,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    cursor: "pointer",
-                  }}
-                />
-                <MDBox pt={1} pb={1} px={2}>
-                  <MDBox
-                    variant="gradient"
-                    // bgColor="info"
-                    borderRadius="lg"
-                    style={{ backgroundColor: "#f96d02" }}
-                    mx={2}
-                    mt={-3}
-                    p={2}
-                    mb={1}
-                    textAlign="center"
-                  >
-                    <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                      Upload Docunent
-                    </MDTypography>
-                  </MDBox>
-                  <MDBox
-                    mt={2}
-                    mb={2}
-                    sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-                  >
-                    <MDTypography variant="gradient" fontSize="60%" color="white" id="document">
-                      {" "}
-                    </MDTypography>
-                  </MDBox>
-                </MDBox>
-                <div className="col-sm-6">
-                  {/* <input type="file" ref={ref} /> */}
-                  <MDInput type="file" files={files} onChange={(e) => setFiles(e.target.files)} />
-                  <p id="imageVal" style={{ color: "red", fontSize: 13 }}>
-                    <i> </i>
-                  </p>
-                </div>
-                <MDBox mt={4} mb={1}>
-                  <MDBox mt={4} mb={1}>
-                    <MDButton
-                      variant="gradient"
-                      onClick={handleImageUpload}
-                      //   color="info"
-                      style={Styles.buttonSx}
-                      width="50%"
-                      align="left"
-                    >
-                      Save
-                    </MDButton>
-                  </MDBox>
-                </MDBox>
-              </Grid>
-            </Grid>
-          </Box>
-        </Modal>
         <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
           <CircularProgress color="info" />
         </Backdrop>
@@ -971,4 +778,4 @@ function MyBills() {
   );
 }
 
-export default MyBills;
+export default MySubscription;
