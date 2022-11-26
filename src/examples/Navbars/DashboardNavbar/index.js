@@ -499,7 +499,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                       open={state[anchor]}
                       onClose={toggleDrawer(anchor, false)}
                       sx={{
-                        "& .MuiDrawer-paper": { boxSizing: "border-box", width: 500 },
+                        "& .MuiDrawer-paper": { boxSizing: "border-box", width: 460 },
                       }}
                     >
                       {drawer(anchor)}
