@@ -256,6 +256,8 @@ function OtherInflow() {
       handleClick(e);
     }
   };
+  console.log(checkedAmount);
+  console.log(checkedTaxAmount);
 
   return (
     <DashboardLayout>
@@ -301,7 +303,7 @@ function OtherInflow() {
                   </div>
                   <div className="col-sm-6">
                     <TextField
-                      label="Amount *"
+                      label="Tax Amount *"
                       type="number"
                       value={taxAmountx}
                       onKeyUp={(e) => handleOnTaxAmountKeys(e.target.value)}
@@ -357,7 +359,7 @@ function OtherInflow() {
                 <div className="row">
                   <div className="col-sm-12">
                     <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
-                      <Form.Label style={{ fontSize: 14 }}>Particulars</Form.Label>
+                      <Form.Label style={{ fontSize: 14 }}>Particulars *</Form.Label>
                       <Form.Control
                         as="textarea"
                         value={particularz || ""}
@@ -367,7 +369,7 @@ function OtherInflow() {
                       />
                     </Form.Group>
 
-                    <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
+                    {/* <i style={{ fontSize: "11px", color: "gray" }}>optional</i> */}
                   </div>
                 </div>
               </Container>

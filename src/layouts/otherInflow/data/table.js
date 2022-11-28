@@ -118,7 +118,7 @@ export default function OtherInflowntable() {
   };
 
   const handleUpdate = (value) => {
-    navigate(`/otherInflown/update?id=${value}`);
+    navigate(`/other-Inflow/update?id=${value}`);
   };
 
   const handleApprove = (id) => {
@@ -427,11 +427,11 @@ export default function OtherInflowntable() {
 
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => handleUpdate(value)}>Update</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleApprove(value, items)}>Approve</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisApprove(value, items)}>
                   Disapprove
                 </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>

@@ -1,5 +1,3 @@
-/* eslint-disable no-eval */
-/* eslint-disable no-lone-blocks */
 /* eslint-disable react/no-this-in-sfc */
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -30,9 +28,9 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconButton } from "@mui/material";
-// import MenuItem from "@mui/material/MenuItem";
-// import InputLabel from "@mui/material/InputLabel";
-// import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import Add from "@mui/icons-material/Add";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
@@ -64,7 +62,7 @@ function Sales() {
   //   const [emailx, setEmail] = useState("");
   // const [pnox, setPno] = useState("");
   // const [maritalx, setMaritalx] = useState("");
-  // const [duty, setDutyRelieverx] = useState("");
+  //   const [duty, setDutyRelieverx] = useState("");
   const [user, setUser] = useState([]);
   const [commentx, setComment] = useState("");
 
@@ -76,58 +74,12 @@ function Sales() {
   const [pPQuantityx, setPPQuantity] = useState("");
   const [quantityx, setQuantity] = useState("");
   const [amountx, setAmount] = useState("");
-  // const [taxAmountx, setTaxAmount] = useState("");
+  const [taxAmountx, setTaxAmount] = useState("");
   const [amountNotChange, setAmountNotChange] = useState("");
   const [amountNotChange2, setAmountNotChange2] = useState("");
-  const [productx, setProduct] = useState([]);
-  const [prodx, setProd] = useState("");
-  const [productBranx, setProductBran] = useState([]);
-  const [prodBranx, setProdBran] = useState("");
-  const [bonusAmountxx, setBonusAmount] = useState("");
-  const [subTotalAmountx, setSubTotalAmount] = useState([]);
-  const [allTax, setAllTax] = useState("");
-  const [cashPaymentx, setCashPayment] = useState("");
-  const [cardPaymentx, setCardPayment] = useState("");
-  const [transferPaymentx, setTransferPayment] = useState("");
-  const [showPayment, setShowPayment] = useState(false);
-  // const [addictx, setAddict] = useState("");
-  const [peeps, setPeeps] = useState([]);
-  console.log(setPeeps);
-  console.log(setSalesType);
-  console.log(setPPQuantity);
-  console.log(setQuantity);
-  // console.log(setTaxAmount);
-  console.log(setAmountNotChange);
-  console.log(setProductBran);
-  console.log(prodBranx);
-  console.log(setProdBran);
 
   const [counter, setCounter] = useState([
-    {
-      saleType: Number(""),
-      salesID: "",
-      branchID: "",
-      pricePerUnit: Number(""),
-      quantity: Number(""),
-      amount: Number(""),
-      taxAmount: Number(""),
-      totalAmount: Number(""),
-      // product: "",
-      // branch: "",
-      // bonusAmount: "",
-      // id: `SALE${new Date().getTime * 8 + 2}`,
-    },
-    // {
-    //   saleType: "",
-    //   salesID: "",
-    //   branchID: "",
-    //   pricePerUnit: "",
-    //   quantity: "",
-    //   amount: "",
-    //   taxAmount: "",
-    //   totalAmount: "",
-    //   id: `SALE${new Date().getTime * 8 + 2}`,
-    // },
+    { salesType: "", pPQuantity: "", quantity: "", amount: "", taxAmountx: "", bonusAmount: "" },
   ]);
   const [counter2, setCounter2] = useState([]);
   const [view, setView] = useState([]);
@@ -138,7 +90,6 @@ function Sales() {
   console.log(amountNotChange2);
   console.log(setAmountNotChange2);
   console.log(view);
-  console.log(counter);
   // console.log(ppp);
   // eslint-disable-next-line no-lone-blocks
   // {
@@ -348,34 +299,19 @@ function Sales() {
   console.log(salesTypex);
 
   const handleNewInput = () => {
-    // setCounter(counter + 1);
+    setCounter(counter + 1);
     setCounter2(counter);
     console.log(counter);
     const item = {
-      saleType: "",
-      salesID: "",
+      saleType: [salesTypex],
       branchID: "",
       pricePerUnit: "",
       quantity: "",
-      amount: "",
+      amount: [amountx],
       taxAmount: "",
       totalAmount: "",
-      product: "",
-      // branch: "",
-      // bonusAmount: "",
-      // id: `SALE${new Date().getTime * 8 + 2}`,
+      id: counter,
     };
-    // {
-    //   saleType: [salesTypex],
-    //   branch: "",
-    //   pricePerUnit: "",
-    //   product: "",
-    //   quantity: "",
-    //   amount: [amountx],
-    //   taxAmount: "",
-    //   totalAmount: "",
-    //   id: counter,
-    // };
 
     console.log(item);
     console.log(counter2);
@@ -393,7 +329,7 @@ function Sales() {
   array.push(counter2);
   console.log(array);
   const handleRemoveInput = () => {
-    setCounter(counter.pop());
+    setCounter(counter - 1);
     console.log(counter);
   };
   console.log(handleNewInput);
@@ -402,9 +338,6 @@ function Sales() {
   // const amountx = parseInt(pPQuantityx, 10) * parseInt(quantityx, 10);
   console.log(amountx);
   // setAmountNotChange2(amountxx);
-
-  const TOTAL = eval(subTotalAmountx + allTax - bonusAmountxx);
-  console.log(TOTAL);
 
   const handleClick = (e) => {
     // handleOnTitleKeys();
@@ -418,20 +351,28 @@ function Sales() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
-    const idx = data11.personalID;
+    //   const idx = data11.personalID;
     const raw = JSON.stringify({
       orgID: orgIDs,
-      individualID: indix,
-      items: counter,
-      bonusAmount: bonusAmountxx,
-      subTotalAmount: subTotalAmountx,
-      totalAmount: TOTAL,
-      createdBy: idx,
+      individualID: "duty",
+      items: [
+        {
+          saleType: salesTypex,
+          salesID: "string",
+          branchID: "branx",
+          pricePerUnit: pPQuantityx,
+          quantity: quantityx,
+          amount: "amountx",
+          taxAmount: taxAmountx,
+          totalAmount: "totalAmountx",
+        },
+      ],
+      bonusAmount: 0,
+      subTotalAmount: 0,
+      totalAmount: 0,
+      createdBy: "idx",
       comment: commentx,
       receiptStatus: 0,
-      cardPaymentAmount: cardPaymentx,
-      transferPaymentAmount: transferPaymentx,
-      cashPaymentAmount: cashPaymentx,
     });
     console.log(raw);
     const requestOptions = {
@@ -440,9 +381,6 @@ function Sales() {
       body: raw,
       redirect: "follow",
     };
-    // localStorage.setItem("Payload", JSON.stringify(raw));
-    // navigate("/sales/salesPayment");
-    // navigate(`/sales/sales-payment`);
 
     fetch(`${process.env.REACT_APP_LOUGA_URL}/sales/add`, requestOptions)
       .then(async (res) => {
@@ -464,7 +402,6 @@ function Sales() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-
         MySwal.fire({
           title: result.status,
           type: "success",
@@ -486,11 +423,8 @@ function Sales() {
           text: error.message,
         });
       });
+    // }
   };
-  console.log(handleClick);
-  console.log(allTax);
-  console.log(subTotalAmountx);
-  console.log(bonusAmountxx);
 
   const handleOnNameKeys = () => {
     const letters = /^[a-zA-Z ]+$/;
@@ -532,26 +466,26 @@ function Sales() {
     setOpen(true);
     console.log(id);
   };
-  // const handleOnChange = (e) => {
-  //   const abc = {};
-  //   abc[e.target.className] = e.target.value;
-  //   setSalesType({ ...salesTypex, ...abc });
-  //   console.log({ ...salesTypex, ...abc });
-  // };
-  // const handleOnChange2 = (e) => {
-  //   console.log(e);
-  //   console.log(pPQuantityx);
-  //   const abc = parseInt(e, 10) * parseInt(quantityx, 10);
-  //   const belgium = e * quantityx;
-  //   console.log(abc);
-  //   console.log(belgium);
-  //   // abc[e.target.className] = e.target.value;
-  //   setPPQuantity(e);
-  //   const invest = Number(abc);
-  //   console.log(invest);
-  //   setAmountNotChange(belgium);
-  //   // setAmount(quantityx * e);
-  // };
+  const handleOnChange = (e) => {
+    const abc = {};
+    abc[e.target.className] = e.target.value;
+    setSalesType({ ...salesTypex, ...abc });
+    console.log({ ...salesTypex, ...abc });
+  };
+  const handleOnChange2 = (e) => {
+    console.log(e);
+    console.log(pPQuantityx);
+    const abc = parseInt(e, 10) * parseInt(quantityx, 10);
+    const belgium = e * quantityx;
+    console.log(abc);
+    console.log(belgium);
+    // abc[e.target.className] = e.target.value;
+    setPPQuantity(e);
+    const invest = Number(abc);
+    console.log(invest);
+    setAmountNotChange(belgium);
+    // setAmount(quantityx * e);
+  };
   // console.log(setAmount);
   // const handleOnChange4 = (e) => {
   //   console.log(e);
@@ -597,33 +531,33 @@ function Sales() {
     //   // };
     // }, [amountx]);
   }
-  // const handleOnChange3 = (e) => {
-  //   // const abc = {};
-  //   // abc[e.target.className] = e.target.value;
-  //   setQuantity(e.target.value);
-  //   // setAmount(e.target.value * pPQuantityx);
-  //   console.log(pPQuantityx * e.target.value);
-  //   setAmountNotChange2(pPQuantityx * e.target.value);
-  //   const movvvv = parseInt(pPQuantityx, 10) * parseInt(e.target.value, 10);
-  //   console.log(movvvv);
-  //   console.log(e.target.value);
-  //   if (movvvv !== "") {
-  //     console.log(e.target.value * pPQuantityx);
-  //     console.log(amountNotChange2);
-  //     console.log(amountNotChange);
-  //     console.log(movvvv);
-  //     // callback(movvvv);
-  //     // useEffect(() => {
-  //     // let isMounted = true;
-  //     // if (isMounted) {
-  //     handleOnlastChange(movvvv);
-  //     // }
-  //     // return () => {
-  //     //   isMounted = false;
-  //     // };
-  //     // }, []);
-  //   }
-  // };
+  const handleOnChange3 = (e) => {
+    // const abc = {};
+    // abc[e.target.className] = e.target.value;
+    setQuantity(e.target.value);
+    // setAmount(e.target.value * pPQuantityx);
+    console.log(pPQuantityx * e.target.value);
+    setAmountNotChange2(pPQuantityx * e.target.value);
+    const movvvv = parseInt(pPQuantityx, 10) * parseInt(e.target.value, 10);
+    console.log(movvvv);
+    console.log(e.target.value);
+    if (movvvv !== "") {
+      console.log(e.target.value * pPQuantityx);
+      console.log(amountNotChange2);
+      console.log(amountNotChange);
+      console.log(movvvv);
+      // callback(movvvv);
+      // useEffect(() => {
+      // let isMounted = true;
+      // if (isMounted) {
+      handleOnlastChange(movvvv);
+      // }
+      // return () => {
+      //   isMounted = false;
+      // };
+      // }, []);
+    }
+  };
   // const handleOnChange4 = () => {
   //   // const abc = {};
   //   // abc[e.target.className] = e.target.value;
@@ -633,7 +567,6 @@ function Sales() {
   // };
 
   console.log(handleOnNameKeys);
-  console.log(indix);
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -719,95 +652,16 @@ function Sales() {
   //     background-color: #dddddd;
   //   }}}
 
-  const handleChangeBranch = (value, event) => {
-    console.log(event);
-    const poolls = value.toString();
-    console.log(value);
-    setProd(value);
-    setOpened(true);
-    const headers = miHeaders;
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-    const orgIDs = data11.orgID;
-
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/productBranch/gets/${orgIDs}/${poolls}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        const resultres = await res.text();
-        if (resultres === null || resultres === undefined || resultres === "") {
-          return {};
-        }
-        return JSON.parse(resultres);
-      })
-      .then((result) => {
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (result !== "") {
-          setProductBran(result);
-        }
-        console.log(result);
-      });
-  };
-
   const handleFormChange = (event, index) => {
     console.log(event, index);
-    console.log(event.target.name);
-    const ids = event.target.name;
-    const data = [...counter];
-    console.log([...counter], ids);
-    console.log(data);
-    console.log(data[index][event.target.name]);
-    data[index][event.target.name] = event.target.value;
-    if (event.target.name === "pricePerUnit") {
-      data[index].amount = parseInt(data[index].quantity, 10) * parseInt(event.target.value, 10);
-      // parseInt(event.target.value, 10)
-      const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
-      console.log(zoom);
-      setSubTotalAmount(eval(zoom.join("+")));
-      // eslint-disable-next-line no-eval
-      console.log(eval(zoom.join("+")));
-    } else if (event.target.name === "quantity") {
-      data[index].amount =
-        parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10);
-      const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
-      console.log(zoom);
-      setSubTotalAmount(eval(zoom.join("+")));
-      // eslint-disable-next-line no-eval
-      console.log(eval(zoom.join("+")));
-      // parseInt(event.target.value, 10)
-    } else if (event.target.name === "product") {
-      handleChangeBranch(event.target.value);
-      // } else if (event.target.name === "branch") {
-      //   data[index][event.target.name] = event.target.value;
-      // } else if (event.target.name === "taxAmount") {
-      //   data[index].totalAmount = data[index].amount + event.target.value;
-    } else if (event.target.name === "taxAmount") {
-      data[index].totalAmount = parseInt(data[index].amount, 10) + parseInt(event.target.value, 10);
-      // parseInt(event.target.value, 10)
-      const zoom = counter.map((item) => item.taxAmount);
-      console.log(zoom);
-      setAllTax(eval(zoom.join("+")));
-    }
-    setCounter(data);
   };
 
-  // function load(e) {
-  //   handleOnlastChange(e);
-  //   // id = 1;
-  //   console.log(e);
-  // }
-  // console.log(load);
+  function load(e) {
+    handleOnlastChange(e);
+    // id = 1;
+    console.log(e);
+  }
+  console.log(load);
   console.log(salesTypex);
   console.log(quantityx);
   console.log(pPQuantityx);
@@ -841,208 +695,6 @@ function Sales() {
   //   // eslint-disable-next-line react/destructuring-assignment
   //   this.state.rows.slice(0, -1);
   // };
-
-  const addFields = () => {
-    const object = {
-      saleType: Number(""),
-      salesID: "",
-      branchID: "",
-      pricePerUnit: Number(""),
-      quantity: Number(""),
-      amount: Number(""),
-      taxAmount: Number(""),
-      totalAmount: Number(""),
-      product: Number(""),
-      // branch: "",
-      // bonusAmount: "",
-      // id: `SALE${new Date().getTime * 8 + 2}`,
-    };
-    // {
-    //   salesType: "",
-    //   pPQuantity: "",
-    //   quantity: "",
-    //   product: "",
-    //   amount: "",
-    //   branch: "",
-    //   taxAmountx: "",
-    //   bonusAmount: "",
-    //   id: `SALE${new Date().getTime * 8 + 2}`,
-    // };
-    setCounter([...counter, object]);
-  };
-
-  // console.log(
-  // eslint-disable-next-line array-callback-return
-  // counter.map((v) => {
-  //   // {
-  //   //   (v.quantity)
-  //   // }
-  //   console.log(v.quantity);
-  // });
-  // eslint-disable-next-line array-callback-return
-  // counter.map((v) => {
-  //   // {
-  //   //   (v.quantity)
-  //   // }
-  //   console.log(v.pPQuantity);
-  // });
-  // );
-  // console.log(counter.pPQuantity);
-  // if (counter.pPQuantity !== "" && counter.quantity) {
-  //   {
-  //     // eslint-disable-next-line array-callback-return
-  //     counter.map((apis) => {
-  //       const veel = parseInt(apis.pPQuantity, 10) * parseInt(apis.quantity, 10);
-  //       console.log(veel);
-  //       setAddict(veel);
-  //     });
-  //   }
-  // }
-  // if (counter.length === )
-
-  console.log(peeps);
-  console.log(setSubTotalAmount);
-
-  // {
-  // const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
-  // console.log(zoom);
-  // setSubTotalAmount(zoom);
-  // eslint-disable-next-line no-eval
-  // console.log(eval(zoom.join("+")));
-  // const escape = eval(zoom.join("+"));
-  // eslint-disable-next-line no-eval
-  // setSubTotalAmount(eval(zoom.join("+")));
-  // eslint-disable-next-line array-callback-return
-  // zoom.map((items) => {
-  //   // setPeeps(items);
-  //   console.log(items);
-  //   // console.log(items());
-  // });
-  // .reduce((acc, current) => acc + current, 0);
-  // const handleOnSelect2 = () => {
-  //   // const zoom = counter.map((item) => item.pPQuantity * item.quantity);
-  //   // const usseerr = [];
-  //   // console.log(zoom);
-
-  //   // eslint-disable-next-line array-callback-return
-  //   // zoom.map((items) => {
-  //   //   setPeeps(items);
-  //   //   console.log(items);
-  //   //   // console.log(items());
-  //   // });
-  //   // setApprov2(usseerr);
-  //   // };
-  //   // if (peeps === 0) {
-  //   //   console.log(peeps);
-  //   const speak = zoom;
-  //   console.log(speak);
-  // };
-  // console.log(zoom);
-  // if (zoom !== 0) {
-  //   useEffect(() => {
-  //     handleOnSelect2();
-  //   }, [zoom]);
-  // }
-  // }
-  console.log(peeps);
-  useEffect(() => {
-    const headers = miHeaders;
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    const orgIDs = data11.orgID;
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/products/gets/${orgIDs}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        console.log(result);
-        if (isMounted) {
-          setProduct(result);
-          console.log(result);
-        }
-        console.log(result);
-        console.log(prodx);
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, [prodx]);
-  console.log(prodx);
-  if (prodx !== "") {
-    // useEffect(() => {
-    //   const headers = miHeaders;
-    //   const data11 = JSON.parse(localStorage.getItem("user1"));
-    //   const orgIDs = data11.orgID;
-    //   console.log(prodx);
-    //   let isMounted = true;
-    //   fetch(`${process.env.REACT_APP_LOUGA_URL}/productBranch/gets/${orgIDs}/${prodx}`, {
-    //     headers,
-    //   })
-    //     .then(async (res) => {
-    //       const aToken = res.headers.get("token-1");
-    //       localStorage.setItem("rexxdex", aToken);
-    //       return res.json();
-    //     })
-    //     .then((result) => {
-    //       console.log(result);
-    //       if (result.message === "Expired Access") {
-    //         navigate("/authentication/sign-in");
-    //         window.location.reload();
-    //       }
-    //       if (result.message === "Token Does Not Exist") {
-    //         navigate("/authentication/sign-in");
-    //         window.location.reload();
-    //       }
-    //       if (result.message === "Unauthorized Access") {
-    //         navigate("/authentication/forbiddenPage");
-    //         window.location.reload();
-    //       }
-    //       console.log(result);
-    //       if (isMounted) {
-    //         if (result !== "") {
-    //           setProductBran(result);
-    //         }
-    //         console.log(result);
-    //       }
-    //       console.log(result);
-    //     });
-    //   return () => {
-    //     isMounted = false;
-    //   };
-    // }, []);
-  }
-  // console.log(subTotalAmountx(eval(zoom.join("+"))));
-  console.log(cashPaymentx);
-  console.log(transferPaymentx);
-  console.log(cardPaymentx);
-  const Payment = eval(
-    Number(cashPaymentx) + Number(cardPaymentx) + Number(transferPaymentx) - Number(subTotalAmountx)
-  );
-  // const Payment =
-  //   parseInt(cashPaymentx, 10) + parseInt(cardPaymentx, 10) + parseInt(transferPaymentx, 10);
-  // parseInt(subTotalAmountx, 10);
-  // console.log(Payment);
-  // const Balancex = eval(Payment - subTotalAmountx);
-  // console.log(Balancex);
-  const Pay = () => {
-    setShowPayment(true);
-  };
 
   return (
     <DashboardLayout>
@@ -1237,7 +889,7 @@ function Sales() {
                   <Form.Select
                     value={indix || ""}
                     aria-label="Default select example"
-                    onChange={(e) => setIndi(e.target.value)}
+                    onChange={setIndi}
                   >
                     <option>--Select Individual--</option>
                     {individualx.map((apis) => (
@@ -1292,7 +944,7 @@ function Sales() {
             aria-controls="primary-search-account-menu"
             aria-haspopup="true"
             color="inherit"
-            onClick={addFields}
+            onClick={() => handleNewInput()}
           >
             <Add sx={{ color: "#f96d02" }} />
           </IconButton>
@@ -1319,11 +971,6 @@ function Sales() {
             amount: "amountx",
             taxAmount: "taskAmountx",
             totalAmount: "totalAmountx", */}
-            </Grid>
-            <Grid item xs={1}>
-              <Item>
-                <b>Product</b>
-              </Item>
             </Grid>
             <Grid item xs={2}>
               <Item>
@@ -1352,9 +999,9 @@ function Sales() {
                 <b>Tax Amount</b>
               </Item>
             </Grid>
-            <Grid item xs={1}>
+            <Grid item xs={2}>
               <Item>
-                <b>Total Amount (NGN)</b>
+                <b>Bonus Amount (NGN)</b>
               </Item>
             </Grid>
           </Grid>
@@ -1363,273 +1010,136 @@ function Sales() {
         &nbsp;
         <Grid>
           {/* <Container> */}
-          {/* {Object.keys(amountx).map((c) => (
+          {Object.keys(amountx).map((c) => (
             <p>{salesTypex[c]}</p>
             // setdiots(c),
-          ))} */}
-          <div className="row">
-            {/* <div>{setppp(id)}</div> */}
-            {counter.map((form, index) => {
-              const amountxx = parseInt(form.pricePerUnit, 10) * parseInt(form.quantity, 10);
-              const branchx = form.branchID;
-              const totalAmountxx = parseInt(form.amount, 10) + parseInt(form.taxAmount, 10);
-              console.log(totalAmountxx);
-              console.log(form.amount);
-              console.log(form.totalAmount);
-              console.log(amountxx);
-              console.log(form.taxAmount);
-              // const ppq = Number(form.pricePerUnit);
-              // const qty = Number(form.quantity);
-              const taxAmoun = Number(form.taxAmount);
-              return (
-                <>
-                  <div className="col-sm-2">
-                    {/* <MDInput
-      type="text"
-      value={namex || ""}
-      onChange={(e) => setName(e.target.value)}
-      // onKeyUp={handleOnNameKeys}
-      label="First Name"
-      variant="standard"
-      fullWidth
-    /> */}
-                    {/* <TextField
-      id="outlined-error-helper-text"
-      label="Error"
-      // defaultValue="Hello World"
-      // helperText="Incorrect entry."
-    /> */}
-                    <MDBox>
-                      <Form.Select
-                        value={form.salesID}
-                        aria-label="Default select example"
-                        name="salesID"
-                        onChange={(event) => handleFormChange(event, index)}
-                      >
-                        <option value="">Sales Type</option>
-                        <option value="1">Product</option>
-                        <option value="2">Company Service</option>
-                        <option value="3">Custom Sales</option>
-                      </Form.Select>
-                    </MDBox>
+          ))}
+          {counter.map((form, index) => (
+            <div className="row" key={index()}>
+              {/* <div>{setppp(id)}</div> */}
+              <div className="col-sm-2">
+                {/* <MDInput
+                  type="text"
+                  value={namex || ""}
+                  onChange={(e) => setName(e.target.value)}
+                  // onKeyUp={handleOnNameKeys}
+                  label="First Name"
+                  variant="standard"
+                  fullWidth
+                /> */}
+                {/* <TextField
+                  id="outlined-error-helper-text"
+                  label="Error"
+                  // defaultValue="Hello World"
+                  // helperText="Incorrect entry."
+                /> */}
 
-                    {/* <input onChange={(e) => setName(e.target.value)} value={namex || ""} type="text" /> */}
-                  </div>
-                  <div className="col-sm-1">
-                    <MDBox>
-                      <Form.Select
-                        // value={form.product}
-                        aria-label="Default select example"
-                        name="product"
-                        onChange={(event) => handleFormChange(event, index)}
-                      >
-                        <option>Product</option>
-                        {productx.map((apis) => (
-                          <option key={apis.id} value={apis.id}>
-                            {apis.name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </MDBox>
-                  </div>
-                  <div className="col-sm-2">
-                    <MDBox>
-                      <Form.Select
-                        value={branchx}
-                        aria-label="Default select example"
-                        name="branchID"
-                        onChange={(event) => handleFormChange(event, index)}
-                      >
-                        <option>Branch</option>
-                        {productBranx.map((apis) => (
-                          <option key={apis.id} value={apis.id}>
-                            {apis.branchName}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </MDBox>
-                  </div>
-                  <div className="col-sm-2">
-                    {/* <TextField
-      id="outlined-error-helper-text"
-      label="First Name"
-      // defaultValue="Hello World"
-      // helperText="Incorrect entry."
-    /> */}
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={form.pricePerUnit}
-                          label="Pice Per Quantity "
-                          placeholder="Pice Per Quantity "
-                          size="small"
-                          name="pricePerUnit"
-                          // key={c}
-                          // className={index}
-                          type="number"
-                          onChange={(event) => handleFormChange(event, index)}
-                          // onChange={(e) => setPPQuantity(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          required
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  <div className="col-sm-1">
-                    <Box sx={{ minWidth: 100 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={form.quantity}
-                          label="Quantity "
-                          placeholder="Quantity "
-                          name="quantity"
-                          // key={c}
-                          // className={index}
-                          type="number"
-                          size="small"
-                          onChange={(event) => handleFormChange(event, index)}
-                          // onChange={(e) => setQuantity(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          required
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  <div className="col-sm-2">
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={amountxx}
-                          label="Amount "
-                          placeholder="Amount "
-                          name="Amount"
-                          // key={c}
-                          // className={index}
-                          size="small"
-                          type="number"
-                          // onChange={handleOnSelect2}
-                          // onChange={(e) => handleOnlastChange(e)}
-                          // onKeyUp={(e) => setAmount(e.target.value)}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  <div className="col-sm-1">
-                    <Box sx={{ minWidth: 100 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={taxAmoun}
-                          label="Tax Amount (NGN) "
-                          placeholder="Tax Amount "
-                          type="number"
-                          name="taxAmount"
-                          size="small"
-                          onChange={(event) => handleFormChange(event, index)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          required
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  <div className="col-sm-1">
-                    <Box sx={{ minWidth: 100 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={totalAmountxx}
-                          label="Total Amount "
-                          placeholder="Total Amount "
-                          type="number"
-                          size="small"
-                          name="totalAmount"
-                          // onChange={(event) => handleFormChange(event, index)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          // required
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  {/* <div className="col-sm-2">
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={amountxx}
-                          label="Amount "
-                          placeholder="Amount "
-                          name="Amount"
-                          // key={c}
-                          // className={index}
-                          size="small"
-                          type="number"
-                          // onChange={handleOnSelect2}
-                          // onChange={(e) => handleOnlastChange(e)}
-                          // onKeyUp={(e) => setAmount(e.target.value)}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </div> */}
-                  <br />
-                </>
-              );
-            })}
-            {/* {zoom.map((items) => (
-              <>
-                <div className="col-sm-2">
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <TextField
-                        id="filled-number"
-                        value={items}
-                        label="Amount "
-                        placeholder="Amount "
-                        name="Amount"
-                        // key={c}
-                        // className={index}
-                        size="small"
-                        type="number"
-                        // onChange={handleOnSelect2}
-                        // onChange={(e) => handleOnlastChange(e)}
-                        // onKeyUp={(e) => setAmount(e.target.value)}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-                <br />
-              </>
-            ))} */}
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-select-small">Sales Type</InputLabel>
+                    <Select
+                      labelId="demo-select-small"
+                      id="demo-select-small"
+                      value={form.salesType}
+                      // key={c}
+                      label="Age"
+                      sx={{ minHeight: 40 }}
+                      // fullWidth
+                      onChange={handleFormChange}
+                      // onChange={(e) => handleOnChange(e.target.value)}
+                    >
+                      <MenuItem value="1">Product</MenuItem>
+                      <MenuItem value="2">Company Sales</MenuItem>
+                      <MenuItem value="3">Custom Service</MenuItem>
+                      {/* <MenuItem value="4">Thirty</MenuItem> */}
+                    </Select>
+                  </FormControl>
+                </Box>
 
-            {/* {zoom.map((items) => (
+                {/* <input onChange={(e) => setName(e.target.value)} value={namex || ""} type="text" /> */}
+              </div>
+              <div className="col-sm-2">
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <TextField
+                      id="outlined-error-helper-text"
+                      label="First Name"
+                      size="small"
+                      // defaultValue="Hello World"
+                      // helperText="Incorrect entry."
+                    />
+                  </FormControl>
+                </Box>
+              </div>
+              <div className="col-sm-2">
+                {/* <TextField
+                  id="outlined-error-helper-text"
+                  label="First Name"
+                  // defaultValue="Hello World"
+                  // helperText="Incorrect entry."
+                /> */}
+                <Box sx={{ minWidth: 120 }}>
+                  <FormControl fullWidth>
+                    <TextField
+                      id="filled-number"
+                      value={form.pPQuantity}
+                      label="Pice Per Quantity "
+                      placeholder="Pice Per Quantity "
+                      size="small"
+                      // key={c}
+                      // className={index}
+                      type="number"
+                      onChange={(e) => handleOnChange2(e.target.value)}
+                      // onChange={(e) => setPPQuantity(e.target.value)}
+                      // onKeyUp={(e) => handleTaxAmount(e.target.value)}
+
+                      required
+                    />
+                  </FormControl>
+                </Box>
+
+                {/* <TextField
+                    label="Tax Amount *"
+                    type="number"
+                    value={taxAmountx}
+                    onKeyUp={(e) => handleOnTaxAmountKeys(e.target.value)}
+                    onChange={(e) => setTaxAmount(e.target.value)}
+                  /> */}
+              </div>
+              <div className="col-sm-1">
+                <Box sx={{ minWidth: 100 }}>
+                  <FormControl fullWidth>
+                    <TextField
+                      id="filled-number"
+                      value={form.quantity}
+                      label="Quantity "
+                      placeholder="Quantity "
+                      // key={c}
+                      // className={index}
+                      type="number"
+                      size="small"
+                      onChange={handleOnChange3}
+                      // onChange={(e) => setQuantity(e.target.value)}
+                      // onKeyUp={(e) => handleTaxAmount(e.target.value)}
+
+                      required
+                    />
+                  </FormControl>
+                </Box>
+              </div>
               <div className="col-sm-2">
                 <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <TextField
                       id="filled-number"
-                      value={items}
+                      value={form.amount}
                       label="Amount "
                       placeholder="Amount "
-                      name="Amount"
                       // key={c}
                       // className={index}
                       size="small"
                       type="number"
-                      // onChange={handleOnSelect2}
+                      onChange={(e) => setAmount(e)}
                       // onChange={(e) => handleOnlastChange(e)}
                       // onKeyUp={(e) => setAmount(e.target.value)}
 
@@ -1641,72 +1151,49 @@ function Sales() {
                   </FormControl>
                 </Box>
               </div>
-            ))} */}
-          </div>
-          &nbsp; &nbsp;
-          {/* </Container> */}
-        </Grid>
-        <MDBox>
-          <Container>
-            <div className="row">
-              {/* <Box sx={{ minWidth: 120 }} style={{ paddingLeft: "930px", paddingTop: "40px" }}>
-                  <FormControl fullWidth>
-                    {/* <MDBox> */}
-              {/* <TextField id="outlined-basic" label="Total Amount" variant="outlined" /> */}
-              {/* </MDBox>
-                  </FormControl>
-                </Box> */}
-
-              <div className="col-sm-3">
-                <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+              <div className="col-sm-1">
+                <Box sx={{ minWidth: 100 }}>
                   <FormControl fullWidth>
                     <TextField
                       id="filled-number"
-                      value={bonusAmountxx}
-                      label="Bonus Amount "
-                      placeholder="Bonus Amount "
+                      value={form.taxAmountx}
+                      label="Tax Amount (NGN) "
+                      placeholder="Tax Amount "
                       type="number"
-                      onChange={(e) => setBonusAmount(e.target.value)}
+                      size="small"
+                      onChange={(e) => setTaxAmount(e.target.value)}
+                      // onKeyUp={(e) => handleTaxAmount(e.target.value)}
+
+                      required
                     />
                   </FormControl>
                 </Box>
               </div>
-              <div className="col-sm-3" />
-              <div className="col-sm-3">
-                <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+              <div className="col-sm-2">
+                <Box sx={{ minWidth: 120 }}>
                   <FormControl fullWidth>
                     <TextField
                       id="filled-number"
-                      value={subTotalAmountx}
-                      label="Total Amount "
-                      placeholder="Total Amount "
+                      value={form.bonusAmount || ""}
+                      label="Bonus Amount "
+                      placeholder="Bonus Amount "
                       type="number"
-                      // size="small"
-                      name="totalAmount"
-                      // onChange={(event) => handleFormChange(event, index)}
+                      size="small"
+                      onChange={(e) => setTaxAmount(e.target.value)}
                       // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                      // required
-                      InputProps={{
-                        readOnly: true,
-                      }}
+
+                      required
                     />
                   </FormControl>
                 </Box>
               </div>
             </div>
-            {/* <div className="col-sm-6">
-                <Box sx={{ minWidth: 120 }} style={{ paddingRight: "930px", paddingTop: "20px" }}>
-                  <FormControl fullWidth>
-                    {/* <MDBox> */}
-            {/* <TextField id="outlined-basic" label="Bonus Amount" variant="outlined" /> */}
-            {/* </MDBox>
-                  </FormControl>
-                </Box>
-              </div> */}
-          </Container>
-        </MDBox>
+          ))}
+          &nbsp; &nbsp;
+          {/* </Container> */}
+        </Grid>
         <br />
-        {/* <div>
+        <div>
           <Card>
             <table>
               <tr>
@@ -1720,7 +1207,7 @@ function Sales() {
               </tr>
               {Array.from(Array(counter)).map(() => (
                 <tr style={{ backgroundColor: "#dddddd" }}>
-                  {/* <td>{idx}</td> 
+                  {/* <td>{idx}</td> */}
                   <td>
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>
@@ -1739,7 +1226,7 @@ function Sales() {
                           <MenuItem value="1">Product</MenuItem>
                           <MenuItem value="2">Company Sales</MenuItem>
                           <MenuItem value="3">Custom Service</MenuItem>
-                          {/* <MenuItem value="4">Thirty</MenuItem>
+                          {/* <MenuItem value="4">Thirty</MenuItem> */}
                         </Select>
                       </FormControl>
                     </Box>
@@ -1863,7 +1350,7 @@ function Sales() {
               ))}
             </table>
           </Card>
-        </div> */}
+        </div>
         <div>
           {/* <table>
             <thead>
@@ -1976,142 +1463,15 @@ function Sales() {
             </div>
           </Container>
         </MDBox>
-        <br />
-        &nbsp; &nbsp;
-        <MDBox>
-          {showPayment ? (
-            <Container>
-              <div className="row">
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                    <FormControl fullWidth>
-                      <MDTypography
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        style={Styles.textSx}
-                      >
-                        Cash Payment:
-                      </MDTypography>
-                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Cash Payment: </label>
-                      <TextField
-                        id="filled-number"
-                        value={cashPaymentx}
-                        label="Amount"
-                        placeholder="Amount"
-                        type="number"
-                        onChange={(e) => setCashPayment(e.target.value)}
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                    <FormControl fullWidth>
-                      <MDTypography
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        style={Styles.textSx}
-                      >
-                        Transfer Payment:
-                      </MDTypography>
-                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Transfer Payment: </label>
-                      <TextField
-                        id="filled-number"
-                        value={transferPaymentx}
-                        label="Amount"
-                        placeholder="Amount"
-                        type="number"
-                        onChange={(e) => setTransferPayment(e.target.value)}
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                    <FormControl fullWidth>
-                      <MDTypography
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        style={Styles.textSx}
-                      >
-                        Card Payment:
-                      </MDTypography>
-                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Card Payment: </label>
-                      <TextField
-                        id="filled-number"
-                        value={cardPaymentx}
-                        label="Amount"
-                        placeholder="Amount"
-                        type="number"
-                        onChange={(e) => setCardPayment(e.target.value)}
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-              </div>
-            </Container>
-          ) : (
-            <></>
-          )}
-
-          <MDBox style={{ paddingTop: "40px", paddingLeft: "400px" }}>
-            <Container>
-              <div className="row">
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <TextField
-                        id="filled-number"
-                        value={Payment}
-                        label="Balance "
-                        placeholder="Balance"
-                        type="number"
-                        // size="small"
-                        name="balance"
-                        // onChange={(event) => handleFormChange(event, index)}
-                        // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                        // required
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-              </div>
-            </Container>
-          </MDBox>
-        </MDBox>
         <MDBox mt={4} mb={1}>
           <MDButton
             variant="gradient"
-            onClick={Pay}
+            onClick={handleClick}
             style={Styles.buttonSx}
             width="50%"
             align="left"
           >
-            Pay
-          </MDButton>
-        </MDBox>
-        <MDBox mt={4} mb={1} style={{ paddingLeft: "400px" }}>
-          <MDButton
-            variant="gradient"
-            onClick={Pay}
-            style={Styles.buttonSx}
-            width="50%"
-            align="left"
-          >
-            Print
+            Save
           </MDButton>
         </MDBox>
         {/* <Grid>

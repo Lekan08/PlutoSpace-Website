@@ -286,7 +286,7 @@ function UpdateOtherInflow() {
             style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Update Other Inflow Type
+              Update Other Inflow
             </MDTypography>
           </MDBox>
           <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -378,7 +378,7 @@ function UpdateOtherInflow() {
                       />
                     </Form.Group>
 
-                    <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
+                    {/* <i style={{ fontSize: "11px", color: "gray" }}>optional</i> */}
                   </div>
                 </div>
               </Container>

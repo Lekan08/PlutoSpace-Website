@@ -237,8 +237,10 @@ import OtherInflowType from "layouts/otherInflowType";
 import OtherInflow from "layouts/otherInflow";
 import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
+import Sales from "layouts/sales";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
+import SalesPayment from "layouts/sales/salesPayment";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -501,7 +503,7 @@ const routes = [
     name: "Other Inflow",
     key: "otherinflow",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
-    route: "/otherinflow",
+    route: "/other-inflow",
     component: <OtherInflow />,
   },
   {
@@ -509,7 +511,7 @@ const routes = [
     name: "Update Other Inflow",
     key: "otherinflowupdate",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
-    route: "/otherinflow/update",
+    route: "/other-inflow/update",
     component: <UpdateOtherInflow />,
   },
   {
@@ -517,7 +519,7 @@ const routes = [
     name: "Filter Other Inflow",
     key: "filterotherinflow",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
-    route: "/otherinflow/filter-other-inflow",
+    route: "/other-inflow/filter-other-inflow",
     component: <FilterOtherInflow />,
   },
   {
@@ -525,7 +527,7 @@ const routes = [
     name: "Other Inflow Type",
     key: "otherinflowtype",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
-    route: "/otherinflowtype",
+    route: "/other-inflow-type",
     component: <OtherInflowType />,
   },
   {
@@ -987,6 +989,34 @@ const routes = [
     icon: <Icon fontSize="small">person_add_alt1</Icon>,
     route: "user-pension-settings",
     component: <UserPension />,
+  },
+  {
+    type: "divider",
+    name: "",
+    key: "divd979",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "sales",
+    key: "titd979",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Sales",
+    key: "sales",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/sales",
+    component: <Sales />,
+  },
+  {
+    // type: "collapse",
+    name: "Sales Payment",
+    key: "salespayment",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/sales/sales-payment",
+    component: <SalesPayment />,
   },
   {
     type: "divider",
