@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import DataTable from "examples/Tables/DataTable";
-import DepartmentData from "layouts/departments/data/departmentTableData";
+import InsuranceTypeData from "layouts/insuranceTypes/data/insuranceTypesTableData";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
 import { Container } from "react-bootstrap";
@@ -18,10 +18,11 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
-function Departments() {
+function InsuranceTypes() {
   const MySwal = withReactContent(Swal);
-  const { columns: pColumns, rows: pRows } = DepartmentData();
+  const { columns: pColumns, rows: pRows } = InsuranceTypeData();
 
   const [namex, setName] = useState("");
   const [descripx, setDescrip] = useState("");
@@ -36,11 +37,12 @@ function Departments() {
 
   // eslint-disable-next-line consistent-return
   const handleOnNameKeys = () => {
-    const letters = /^[a-zA-Z ]+$/;
+    const letters = /^[a-zA-Z0-9 ]+$/;
     if (!namex.match(letters)) {
       setCheckedName(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("name").innerHTML = "Name - input only capital and small letters<br>";
+      document.getElementById("name").innerHTML =
+        "Name - input only capital, small letters and numbers<br>";
     }
     if (namex.match(letters)) {
       setCheckedName(true);
@@ -71,7 +73,7 @@ function Departments() {
         redirect: "follow",
       };
 
-      fetch(`${process.env.REACT_APP_KUBU_URL}/department/add`, requestOptions)
+      fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceType/add`, requestOptions)
         .then(async (res) => {
           const aToken = res.headers.get("token-1");
           localStorage.setItem("rexxdex", aToken);
@@ -117,9 +119,9 @@ function Departments() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={{ backgroundColor: "#f96d02" }}
             mx={2}
             mt={-3}
             p={2}
@@ -127,7 +129,7 @@ function Departments() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add Departments
+              Add Insurance Type
             </MDTypography>
           </MDBox>
           <MDBox
@@ -178,7 +180,8 @@ function Departments() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                //   color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >
@@ -206,4 +209,4 @@ function Departments() {
   );
 }
 
-export default Departments;
+export default InsuranceTypes;

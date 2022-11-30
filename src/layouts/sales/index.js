@@ -1,7 +1,7 @@
 /* eslint-disable no-eval */
 /* eslint-disable no-lone-blocks */
 /* eslint-disable react/no-this-in-sfc */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDBox from "components/MDBox";
@@ -36,9 +36,14 @@ import { IconButton } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Add from "@mui/icons-material/Add";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
+import { useReactToPrint } from "react-to-print";
+import { MonnifyConsumer } from "react-monnify";
+import PhoneInput from "react-phone-input-2";
+// import
 // import { style } from "@mui/system";
 // import { NoBackpackSharp } from "@mui/icons-material";
 // zinoleesky wrote this part of d code called sales
+// incase another Printing {https://stackblitz.com/edit/react-print-receipt?file=index.js}
 
 function Sales() {
   const MySwal = withReactContent(Swal);
@@ -60,13 +65,20 @@ function Sales() {
   const [titlex, setTitle] = useState("");
 
   const [checkedName, setCheckedName] = useState("");
-  const [enabled, setEnabled] = useState("");
+  // const [enabled, setEnabled] = useState("");
   //   const [emailx, setEmail] = useState("");
   // const [pnox, setPno] = useState("");
   // const [maritalx, setMaritalx] = useState("");
   // const [duty, setDutyRelieverx] = useState("");
   const [user, setUser] = useState([]);
   const [commentx, setComment] = useState("");
+
+  const [emailx, setEmail] = useState("");
+  const currencyx = "NGN";
+  const [pnox, setPno] = useState("");
+  const [indiName, setIndiName] = useState("");
+  const [referenceSKey, setReferenceSKey] = useState();
+  const [listenn, setListenn] = useState(false);
 
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
@@ -80,7 +92,7 @@ function Sales() {
   const [amountNotChange, setAmountNotChange] = useState("");
   const [amountNotChange2, setAmountNotChange2] = useState("");
   const [productx, setProduct] = useState([]);
-  const [prodx, setProd] = useState("");
+  // const [prodx, setProd] = useState("");
   const [productBranx, setProductBran] = useState([]);
   const [prodBranx, setProdBran] = useState("");
   const [bonusAmountxx, setBonusAmount] = useState("");
@@ -90,6 +102,13 @@ function Sales() {
   const [cardPaymentx, setCardPayment] = useState("");
   const [transferPaymentx, setTransferPayment] = useState("");
   const [showPayment, setShowPayment] = useState(false);
+  const [showPrint, setShowPrint] = useState(false);
+  const [cashierx, setCashier] = useState([]);
+  const [productxx, setProductxx] = useState("");
+  const [checkedEmail, setCheckedEmail] = useState("");
+  // const [checkedFirst, setCheckedFirst] = useState("");
+  // const [checkedAExpense, handleOnEmailKeys] = useState("");
+  const onBeforeGetContentResolve = useRef();
   // const [addictx, setAddict] = useState("");
   const [peeps, setPeeps] = useState([]);
   console.log(setPeeps);
@@ -101,6 +120,11 @@ function Sales() {
   console.log(setProductBran);
   console.log(prodBranx);
   console.log(setProdBran);
+  <style type="text/css" media="print">
+    {"\
+  @page{ size: portrait; } \
+  "}
+  </style>;
 
   const [counter, setCounter] = useState([
     {
@@ -133,7 +157,7 @@ function Sales() {
   const [view, setView] = useState([]);
   // const [ppp, setppp] = useState(0);
   console.log(user);
-  console.log(enabled);
+  // console.log(enabled);
   console.log(Number(amountNotChange));
   console.log(amountNotChange2);
   console.log(setAmountNotChange2);
@@ -151,6 +175,31 @@ function Sales() {
   //   );
   // }
   console.log(view.map((apis) => apis.amountx));
+
+  // const handleOnNameKeys = (value) => {
+  //   const letters = /^[a-zA-Z ]+$/;
+  //   const Game = value.toString();
+  //   if (!Game.match(letters)) {
+  //     setCheckedFirst(false);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("first").innerHTML =
+  //       "First Name - input only capital and small letters<br>";
+  //   }
+  //   if (Game.match(letters)) {
+  //     setCheckedFirst(true);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("first").innerHTML = "";
+  //   }
+  //   if (Game.length === 0) {
+  //     setCheckedFirst(false);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("first").innerHTML = "First Name is required<br>";
+  //   } else {
+  //     setCheckedFirst(true);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("first").innerHTML = "";
+  //   }
+  // };
 
   //   useEffect(() => {
   //     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -331,7 +380,7 @@ function Sales() {
     boxShadow: 24,
     p: 4,
     overflow: "auto",
-    height: "35%",
+    height: "55%",
     display: "flex",
     "&::-webkit-scrollbar": {
       width: 40,
@@ -344,6 +393,41 @@ function Sales() {
       borderRadius: 10,
     },
   };
+
+  useEffect(() => {
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    const headers = miHeaders;
+    let isMounted = true;
+    fetch(`${process.env.REACT_APP_KUBU_URL}/branch/gets/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          setProductBran(result);
+        }
+        console.log(result);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   console.log(salesTypex);
 
@@ -392,10 +476,10 @@ function Sales() {
   const array = [];
   array.push(counter2);
   console.log(array);
-  const handleRemoveInput = () => {
-    setCounter(counter.pop());
-    console.log(counter);
-  };
+  // const handleRemoveInput = () => {
+  //   setCounter(counter.pop());
+  //   console.log(counter);
+  // };
   console.log(handleNewInput);
   console.log(pPQuantityx);
   console.log(quantityx);
@@ -406,88 +490,89 @@ function Sales() {
   const TOTAL = eval(subTotalAmountx + allTax - bonusAmountxx);
   console.log(TOTAL);
 
-  const handleClick = (e) => {
-    // handleOnTitleKeys();
-    // handleOnQuantityKeys();
-    // handleOnPPQuantityKeys();
-    // handleOnBonusAmountKeys();
-    // Amount * taxamount - bonus
-    // if (enabled) {
-    setOpened(true);
-    e.preventDefault();
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+  // const handleClick = (e) => {
+  //   // handleOnTitleKeys();
+  //   // handleOnQuantityKeys();
+  //   // handleOnPPQuantityKeys();
+  //   // handleOnBonusAmountKeys();
+  //   // Amount * taxamount - bonus
+  //   // if (enabled) {
+  //   setOpened(true);
+  //   e.preventDefault();
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
-    const idx = data11.personalID;
-    const raw = JSON.stringify({
-      orgID: orgIDs,
-      individualID: indix,
-      items: counter,
-      bonusAmount: bonusAmountxx,
-      subTotalAmount: subTotalAmountx,
-      totalAmount: TOTAL,
-      createdBy: idx,
-      comment: commentx,
-      receiptStatus: 0,
-      cardPaymentAmount: cardPaymentx,
-      transferPaymentAmount: transferPaymentx,
-      cashPaymentAmount: cashPaymentx,
-    });
-    console.log(raw);
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    // localStorage.setItem("Payload", JSON.stringify(raw));
-    // navigate("/sales/salesPayment");
-    // navigate(`/sales/sales-payment`);
+  //   const orgIDs = data11.orgID;
+  //   const idx = data11.personalID;
+  //   const raw = JSON.stringify({
+  //     orgID: orgIDs,
+  //     individualID: indix,
+  //     items: counter,
+  //     bonusAmount: bonusAmountxx,
+  //     subTotalAmount: subTotalAmountx,
+  //     totalAmount: TOTAL,
+  //     createdBy: idx,
+  //     comment: commentx,
+  //     receiptStatus: 1,
+  //     cardPaymentAmount: cardPaymentx,
+  //     transferPaymentAmount: transferPaymentx,
+  //     cashPaymentAmount: cashPaymentx,
+  //   });
+  //   console.log(raw);
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: raw,
+  //     redirect: "follow",
+  //   };
+  //   // localStorage.setItem("Payload", JSON.stringify(raw));
+  //   // navigate("/sales/salesPayment");
+  //   // navigate(`/sales/sales-payment`);
 
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/sales/add`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
+  //   fetch(`${process.env.REACT_APP_LOUGA_URL}/sales/add`, requestOptions)
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       setOpened(false);
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
 
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        })
-          .then(() => {
-            console.log(result.data.id);
-            //   handlePayVAT(result.data.id);
-            // window.location.reload();
-          })
-          .then(() => {
-            window.location.reload();
-          });
-      })
-      .catch((error) => {
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
-      });
-  };
-  console.log(handleClick);
+  //       MySwal.fire({
+  //         title: result.status,
+  //         type: "success",
+  //         text: result.message,
+  //       })
+  //         .then(() => {
+  //           console.log(result.data.id);
+  //           //   handlePayVAT(result.data.id);
+  //           // window.location.reload();
+  //         })
+  //         .then(() => {
+  //           window.location.reload();
+  //         });
+  //     })
+  //     .catch((error) => {
+  //       MySwal.fire({
+  //         title: error.status,
+  //         type: "error",
+  //         text: error.message,
+  //       });
+  //     });
+  // };
+
+  // console.log(handleClick);
   console.log(allTax);
   console.log(subTotalAmountx);
   console.log(bonusAmountxx);
@@ -508,7 +593,27 @@ function Sales() {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "Name is required<br>";
     }
-    setEnabled(checkedName === true);
+    // setEnabled(checkedName === true);
+  };
+  const handleOnEmailKeys = (value) => {
+    const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
+    const nylon = value.target.value.toString();
+    console.log(value);
+    if (!nylon.match(letters)) {
+      setCheckedEmail(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("email").innerHTML = "Email - input a valid email<br>";
+    }
+    if (nylon.match(letters)) {
+      setCheckedEmail(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("email").innerHTML = "";
+    }
+    if (nylon.length === 0) {
+      setCheckedEmail(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("email").innerHTML = "Email is required<br>";
+    }
   };
   //   const handleOnEmailKeys = () => {
   //     const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
@@ -644,7 +749,7 @@ function Sales() {
   }));
 
   const handleIndividual = (e) => {
-    if (namex.length > 1) {
+    if (pnox !== "") {
       setOpened(true);
       e.preventDefault();
       // handleClose();
@@ -719,50 +824,51 @@ function Sales() {
   //     background-color: #dddddd;
   //   }}}
 
-  const handleChangeBranch = (value, event) => {
-    console.log(event);
-    const poolls = value.toString();
-    console.log(value);
-    setProd(value);
-    setOpened(true);
-    const headers = miHeaders;
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-    const orgIDs = data11.orgID;
+  // const handleChangeBranch = (value, event) => {
+  //   console.log(event);
+  //   const poolls = value.toString();
+  //   console.log(value);
+  //   setProd(value);
+  //   setOpened(true);
+  //   const headers = miHeaders;
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
+  //   const orgIDs = data11.orgID;
 
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/productBranch/gets/${orgIDs}/${poolls}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        const resultres = await res.text();
-        if (resultres === null || resultres === undefined || resultres === "") {
-          return {};
-        }
-        return JSON.parse(resultres);
-      })
-      .then((result) => {
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (result !== "") {
-          setProductBran(result);
-        }
-        console.log(result);
-      });
-  };
+  //   fetch(`${process.env.REACT_APP_LOUGA_URL}/productBranch/gets/${orgIDs}/${poolls}`, { headers })
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       const resultres = await res.text();
+  //       if (resultres === null || resultres === undefined || resultres === "") {
+  //         return {};
+  //       }
+  //       return JSON.parse(resultres);
+  //     })
+  //     .then((result) => {
+  //       setOpened(false);
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
+  //       if (result !== "") {
+  //         setProductBran(result);
+  //       }
+  //       console.log(result);
+  //     });
+  // };
 
   const handleFormChange = (event, index) => {
     console.log(event, index);
     console.log(event.target.name);
+    // console.log(vee);
     const ids = event.target.name;
     const data = [...counter];
     console.log([...counter], ids);
@@ -771,6 +877,9 @@ function Sales() {
     data[index][event.target.name] = event.target.value;
     if (event.target.name === "pricePerUnit") {
       data[index].amount = parseInt(data[index].quantity, 10) * parseInt(event.target.value, 10);
+      data[index].totalAmount =
+        parseInt(data[index].quantity, 10) * parseInt(event.target.value, 10) +
+        parseInt(data[index].taxAmount, 10);
       // parseInt(event.target.value, 10)
       const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
       console.log(zoom);
@@ -780,6 +889,9 @@ function Sales() {
     } else if (event.target.name === "quantity") {
       data[index].amount =
         parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10);
+      data[index].totalAmount =
+        parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10) +
+        parseInt(data[index].taxAmount, 10);
       const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
       console.log(zoom);
       setSubTotalAmount(eval(zoom.join("+")));
@@ -787,9 +899,9 @@ function Sales() {
       console.log(eval(zoom.join("+")));
       // parseInt(event.target.value, 10)
     } else if (event.target.name === "product") {
-      handleChangeBranch(event.target.value);
+      // handleChangeBranch(event.target.value);
       // } else if (event.target.name === "branch") {
-      //   data[index][event.target.name] = event.target.value;
+      data[index][event.target.name] = event.target.value;
       // } else if (event.target.name === "taxAmount") {
       //   data[index].totalAmount = data[index].amount + event.target.value;
     } else if (event.target.name === "taxAmount") {
@@ -798,6 +910,12 @@ function Sales() {
       const zoom = counter.map((item) => item.taxAmount);
       console.log(zoom);
       setAllTax(eval(zoom.join("+")));
+    } else if (event.target.name === "product") {
+      // data[index][event.target.name] = event.target.value;
+      setProductxx((data[index][event.target.name] = event.target.value));
+    } else if (event.target.name === "quantity") {
+      data[index].totalAmount =
+        parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10);
     }
     setCounter(data);
   };
@@ -837,10 +955,11 @@ function Sales() {
   //   // };
   // };
   // console.log(handleAddRow);
-  // handleRemoveRow = () => {
-  //   // eslint-disable-next-line react/destructuring-assignment
-  //   this.state.rows.slice(0, -1);
-  // };
+  const handleRemoveRow = () => {
+    // eslint-disable-next-line react/destructuring-assignment
+    this.state.rows.slice(0, -1);
+  };
+  console.log(handleRemoveRow);
 
   const addFields = () => {
     const object = {
@@ -870,6 +989,14 @@ function Sales() {
     // };
     setCounter([...counter, object]);
   };
+  const removeFields = (index) => {
+    console.log(index);
+    const data = [...counter];
+    data.splice(index, 1);
+    // data.slice(0, -1);
+    setCounter(data);
+  };
+  console.log(removeFields);
 
   // console.log(
   // eslint-disable-next-line array-callback-return
@@ -977,56 +1104,56 @@ function Sales() {
           console.log(result);
         }
         console.log(result);
-        console.log(prodx);
+        // console.log(prodx);
       });
     return () => {
       isMounted = false;
     };
-  }, [prodx]);
-  console.log(prodx);
-  if (prodx !== "") {
-    // useEffect(() => {
-    //   const headers = miHeaders;
-    //   const data11 = JSON.parse(localStorage.getItem("user1"));
-    //   const orgIDs = data11.orgID;
-    //   console.log(prodx);
-    //   let isMounted = true;
-    //   fetch(`${process.env.REACT_APP_LOUGA_URL}/productBranch/gets/${orgIDs}/${prodx}`, {
-    //     headers,
-    //   })
-    //     .then(async (res) => {
-    //       const aToken = res.headers.get("token-1");
-    //       localStorage.setItem("rexxdex", aToken);
-    //       return res.json();
-    //     })
-    //     .then((result) => {
-    //       console.log(result);
-    //       if (result.message === "Expired Access") {
-    //         navigate("/authentication/sign-in");
-    //         window.location.reload();
-    //       }
-    //       if (result.message === "Token Does Not Exist") {
-    //         navigate("/authentication/sign-in");
-    //         window.location.reload();
-    //       }
-    //       if (result.message === "Unauthorized Access") {
-    //         navigate("/authentication/forbiddenPage");
-    //         window.location.reload();
-    //       }
-    //       console.log(result);
-    //       if (isMounted) {
-    //         if (result !== "") {
-    //           setProductBran(result);
-    //         }
-    //         console.log(result);
-    //       }
-    //       console.log(result);
-    //     });
-    //   return () => {
-    //     isMounted = false;
-    //   };
-    // }, []);
-  }
+  }, []);
+  // console.log(prodx);
+  // if (prodx !== "") {
+  //   // useEffect(() => {
+  //   //   const headers = miHeaders;
+  //   //   const data11 = JSON.parse(localStorage.getItem("user1"));
+  //   //   const orgIDs = data11.orgID;
+  //   //   console.log(prodx);
+  //   //   let isMounted = true;
+  //   //   fetch(`${process.env.REACT_APP_LOUGA_URL}/productBranch/gets/${orgIDs}/${prodx}`, {
+  //   //     headers,
+  //   //   })
+  //   //     .then(async (res) => {
+  //   //       const aToken = res.headers.get("token-1");
+  //   //       localStorage.setItem("rexxdex", aToken);
+  //   //       return res.json();
+  //   //     })
+  //   //     .then((result) => {
+  //   //       console.log(result);
+  //   //       if (result.message === "Expired Access") {
+  //   //         navigate("/authentication/sign-in");
+  //   //         window.location.reload();
+  //   //       }
+  //   //       if (result.message === "Token Does Not Exist") {
+  //   //         navigate("/authentication/sign-in");
+  //   //         window.location.reload();
+  //   //       }
+  //   //       if (result.message === "Unauthorized Access") {
+  //   //         navigate("/authentication/forbiddenPage");
+  //   //         window.location.reload();
+  //   //       }
+  //   //       console.log(result);
+  //   //       if (isMounted) {
+  //   //         if (result !== "") {
+  //   //           setProductBran(result);
+  //   //         }
+  //   //         console.log(result);
+  //   //       }
+  //   //       console.log(result);
+  //   //     });
+  //   //   return () => {
+  //   //     isMounted = false;
+  //   //   };
+  //   // }, []);
+  // }
   // console.log(subTotalAmountx(eval(zoom.join("+"))));
   console.log(cashPaymentx);
   console.log(transferPaymentx);
@@ -1034,6 +1161,7 @@ function Sales() {
   const Payment = eval(
     Number(cashPaymentx) + Number(cardPaymentx) + Number(transferPaymentx) - Number(subTotalAmountx)
   );
+  console.log(Payment);
   // const Payment =
   //   parseInt(cashPaymentx, 10) + parseInt(cardPaymentx, 10) + parseInt(transferPaymentx, 10);
   // parseInt(subTotalAmountx, 10);
@@ -1043,10 +1171,395 @@ function Sales() {
   const Pay = () => {
     setShowPayment(true);
   };
+  const handleOnBeforeGetContent = () =>
+    new Promise((resolve) => {
+      // `react-to-print` will wait for this Promise to resolve before continuing
+      // Load data
+      onBeforeGetContentResolve.current = resolve;
+      setShowPrint(true); // When data is done loading
+    });
+  // const componentRef = useRef();
+  const data111 = JSON.parse(localStorage.getItem("user1"));
+  console.log(data111);
+  const componentRef = useRef();
+  console.log(componentRef);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    // console.log(content);
+    // documentTitle: "Announcement_Dashboard",
+    onBeforeGetContent: handleOnBeforeGetContent,
+    onAfterPrint: () => window.location.reload(),
+  });
+  console.log(showPrint);
+  useEffect(() => {
+    const id = setImmediate(() => {
+      if (showPrint) {
+        // Resolves the Promise, telling `react-to-print` it is time to gather the content of the page for printing
+        onBeforeGetContentResolve.current();
+      }
+    });
+    return () => {
+      clearTimeout(id);
+    };
+  }, [showPrint, onBeforeGetContentResolve]);
+
+  const handleClick = (e) => {
+    if (Payment === 0) {
+      setOpened(true);
+      e.preventDefault();
+      const data11 = JSON.parse(localStorage.getItem("user1"));
+
+      const orgIDs = data11.orgID;
+      const idx = data11.personalID;
+      const raw = JSON.stringify({
+        orgID: orgIDs,
+        individualID: indix,
+        items: counter,
+        bonusAmount: bonusAmountxx,
+        subTotalAmount: subTotalAmountx,
+        totalAmount: TOTAL,
+        createdBy: idx,
+        comment: commentx,
+        receiptStatus: 1,
+        cardPaymentAmount: cardPaymentx,
+        transferPaymentAmount: transferPaymentx,
+        cashPaymentAmount: cashPaymentx,
+      });
+      console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      fetch(`${process.env.REACT_APP_LOUGA_URL}/sales/add`, requestOptions)
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          const result = await res.text();
+          if (result === null || result === undefined || result === "") {
+            return {};
+          }
+          return JSON.parse(result);
+        })
+        .then((result) => {
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          if (result.status === "SUCCESS") {
+            handlePrint();
+          }
+          console.log(result);
+          console.log(result.message);
+          setOpened(false);
+          MySwal.fire({
+            title: result.status,
+            type: "success",
+            text: result.message,
+          }).then(() => {
+            window.location.reload();
+          });
+        })
+        .catch((error) => {
+          setOpened(false);
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
+        });
+    }
+  };
+
+  // const orgIDs = data11.orgID;
+  // const idx = data11.personalID;
+  // const data11 = JSON.parse(localStorage.getItem("user1"));
+  // const orgIDs = data11.orgID;
+  useEffect(() => {
+    const headers = miHeaders;
+
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    const empID = data11.personalID;
+    let isMounted = true;
+    // setOpened(true);
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getUserInfo/${orgIDs}/${empID}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          setCashier(result);
+          // setOpened(false);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+  console.log(cashierx);
+  console.log(productxx);
+  // eslint-disable-next-line array-callback-return
+  counter.map((row, index) => {
+    // index.taxAmount;
+    console.log(index);
+    console.log(row);
+    console.log(index.taxAmount);
+    console.log(parseInt(row.pricePerUnit, 10) * parseInt(row.quantity, 10));
+  });
+  // console.log(eval(zoom.join("+")));
+  // const amountxxx = parseInt(counter.pricePerUnit, 10) * parseInt(form.quantity, 10);
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      setReferenceSKey(`${Math.floor(Math.random() * 1000000000 + 1)}`);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [listenn]);
+
+  const honClose = (response) => {
+    console.log(response);
+    // if (enabled) {
+    setListenn(!listenn);
+    setReferenceSKey(`${Math.floor(Math.random() * 1000000000 + 1)}`);
+
+    if (response.message === "Transaction Successful" && response.status === "SUCCESS") {
+      // call api after success from monnify
+    }
+    // }
+  };
+
+  // const personalApiKey = "MK_TEST_JB2L9T7HMG";
+  // const personalConCode = "6428086775";
+  console.log(`${process.env.REACT_APP_PERSONAL_API_KEY}`);
+  console.log(`${process.env.REACT_APP_PERSONAL_CONTRACT_KEY}`);
+  const monNey = {
+    onClose: honClose,
+    amount: cardPaymentx,
+    currency: currencyx,
+    reference: referenceSKey,
+    customerFullName: indiName,
+    customerEmail: emailx,
+    customerMobileNumber: pnox,
+    apiKey: `${process.env.REACT_APP_PERSONAL_API_KEY}`,
+    contractCode: `${process.env.REACT_APP_PERSONAL_CONTRACT_KEY}`,
+    paymentDescription: commentx,
+    isTestMode: true,
+  };
+
+  const handleValidate = (e) => {
+    // handleOnFirstKeys(namex);
+    // handleOnLastKeys(lnamex);
+    // handleOnOtherKeys(onamex);
+    // handleOnEmailKeys(emailx);
+    // handleOnOEmailKeys(emaily);
+    // handleOnStreetKeys(residentialStreetx);
+    // handleOnCityKeys(residentialCityx);
+    // handleOnPasswordKeys(passwordx);
+    // handleOnRTPasswordKeys(retypePasswordx);
+    console.log(checkedEmail);
+    console.log(checkedName);
+    if (checkedName && checkedEmail === true) {
+      handleIndividual(e);
+    }
+  };
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
+      <div align="center">
+        {/* <MDButton className="hide-on-print" onClick={handleClick}>
+          Print
+        </MDButton> */}
+      </div>
+      <div ref={componentRef}>
+        {showPrint ? (
+          <>
+            <div align="center">
+              <h6>Reprinted</h6>
+              <h2>House Of Tara</h2>
+              <h3>
+                <b>HOUSE OF TARA INTL LIMITED LEKKI</b>
+              </h3>
+              <p>13A Road 12, Onikepe Akande Street</p>
+              <p>Off Admiralty Road, Lekki Phase 1, Lagos</p>
+            </div>
+            <div style={{ paddingLeft: "160px" }}>
+              <p>
+                Cashier: {cashierx.personal.fname} {cashierx.personal.lname}
+              </p>
+            </div>
+            <div align="center">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Ext Price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {counter.map((row, index) => (
+                    <>
+                      <tr>
+                        {/* {} */}
+                        <td>{counter[index].product}</td>
+                        <td>{counter[index].quantity}</td>
+                        <td>{counter[index].pricePerUnit}</td>
+                        <td>
+                          {parseInt(counter[index].pricePerUnit, 10) *
+                            parseInt(counter[index].quantity, 10)}
+                        </td>
+                      </tr>
+                      <tr>
+                        {/* <td />
+                        <td />
+                        {/* <td>Subtotal</td> 
+                        {/* <td>N23,200.00</td>
+                      </tr>
+                      <tr>
+                        Local Sales Tax
+                        <td />
+                        <td>0% Tax:</td>
+                        <td>+N0.00</td> */}
+                      </tr>
+                    </>
+                  ))}
+                  <tr>
+                    <td />
+                    <td />
+                    <td>Subtotal</td>
+                    <td>N{subTotalAmountx}</td>
+                  </tr>
+                  <tr>
+                    Local Sales Tax
+                    <td />
+                    <td>{allTax}% Tax:</td>
+                    <td>+N{allTax}.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            {/* <br /> */}
+            <div style={{ paddingLeft: "350px" }}>
+              <b>Receipt Total: {subTotalAmountx} </b>
+            </div>
+            <p align="center">Charges Inclusive of 7.5% VAT</p>
+            <p align="center">
+              {" "}
+              Thank you for shopping with us, Products purchased in good condition are not
+              returnable
+            </p>
+            <h4 align="center">Have a great day |||</h4>
+          </>
+        ) : (
+          ""
+        )}
+      </div>
+      {/* <div>
+      {/* {counter.map((form) => {
+        const amountxx = parseInt(form.pricePerUnit, 10) * parseInt(form.quantity, 10);
+        const taxAmoun = Number(form.taxAmount); */}
+      {/* <div ref={componentRef}>
+        {showPrint ? (
+          <>
+            {/* eslint-disable-next-line array-callback-return */}
+      {/* {counter.map((form) => {
+              const amountxx = parseInt(form.pricePerUnit, 10) * parseInt(form.quantity, 10);
+              const taxAmoun = Number(form.taxAmount); 
+            <>
+              <div align="center">
+                <h6>Reprinted</h6>
+                <h2>House Of Tara</h2>
+                <h3>
+                  <b>HOUSE OF TARA INTL LIMITED LEKKI</b>
+                </h3>
+                <p>13A Road 12, Onikepe Akande Street</p>
+                <p>Off Admiralty Road, Lekki Phase 1, Lagos</p>
+              </div>
+              <div style={{ paddingLeft: "160px" }}>
+                <p>
+                  Cashier: {cashierx.personal.fname} {cashierx.personal.lname}
+                </p>
+              </div>
+              <div align="center">
+                {/* <table>
+                  <tr>
+                    <th>Item Name</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Ext Price</th>
+                  </tr>
+                  <tr>
+                    <td>SF 215</td>
+                    <td />
+                    <td>{form.quantity}</td>
+                    <td>{amountxx}</td>
+                  </tr>
+                  <tr>
+                    <td />
+                    <td />
+                    <td>Subtotal</td>
+                    <td>{amountxx}</td>
+                  </tr>
+                  <tr>
+                    Local Sales Tax
+                    <td />
+                    <td>{taxAmoun}% Tax:</td>
+                    <td>+N{amountxx}.00</td>
+                  </tr>
+                </table> 
+              </div>
+            </>
+            ;{/* <br /> 
+            <>
+              <div style={{ paddingLeft: "350px" }}>
+                <b>Receipt Total: {Payment} </b>
+              </div>
+              <p align="center">Charges Inclusive of 7.5% VAT</p>
+              <p align="center">
+                {" "}
+                Thank you for shopping with us, Products purchased in good condition are not
+                returnable
+              </p>
+              <h4 align="center">Have a great day |||</h4>
+            </>
+            {/* ; })} 
+          </>
+        ) : (
+          ""
+        )}
+      </div> */}
+      ;{/* </div> */}
       {/* <Card>
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
@@ -1237,7 +1750,23 @@ function Sales() {
                   <Form.Select
                     value={indix || ""}
                     aria-label="Default select example"
-                    onChange={(e) => setIndi(e.target.value)}
+                    onChange={(e) => {
+                      setIndi(e.target.value);
+                      const { value } = e.target;
+                      const fData = individualx.filter((indii) => indii.id === value);
+                      console.log(fData);
+                      setIndiName(`${fData[0].fname} ${fData[0].lname}`);
+                      if (fData[0].email) {
+                        setEmail(`${fData[0].email}`);
+                      } else {
+                        setEmail("");
+                      }
+                      if (fData[0].pno) {
+                        setPno(`${fData[0].pno}`);
+                      } else {
+                        setPno("");
+                      }
+                    }}
                   >
                     <option>--Select Individual--</option>
                     {individualx.map((apis) => (
@@ -1296,16 +1825,16 @@ function Sales() {
           >
             <Add sx={{ color: "#f96d02" }} />
           </IconButton>
-          <IconButton
+          {/* <IconButton
             size="large"
             aria-label="account of current user"
             aria-controls="primary-search-account-menu"
             aria-haspopup="true"
             color="inherit"
-            onClick={() => handleRemoveInput()}
+            onClick={removeFields}
           >
             <CancelPresentationIcon sx={{ color: "#f96d02" }} />
-          </IconButton>
+          </IconButton> */}
         </MDBox>
         <Card style={{ backgroundColor: "#CCC1FF" }}>
           <Grid container spacing={2}>
@@ -1362,11 +1891,73 @@ function Sales() {
         {/* <br /> */}
         &nbsp;
         <Grid>
+          {/* return ( */}
+          {/* {showPrint ? ( */}
+          {/* <div ref={componentRef} style={{ width: "100%", height: window.innerHeight }}>
+            {showPrint ? (
+              <>
+                <div align="center">
+                  <h6>Reprinted</h6>
+                  <h2>House Of Tara</h2>
+                  <p>HOUSE OF TARA INTL LIMITED LEKKI</p>
+                  <p>13A Road 12, Onikepe Akande Street</p>
+                  <p>Off Admiralty Road, Lekki Phase 1, Lagos</p>
+                </div>
+                <p>Cashier: Name of human being</p>
+                <div>
+                  <table>
+                    <tr>
+                      <th>Firstname</th>
+                      <th>Lastname</th>
+                    </tr>
+                    <tr>
+                      <td>Peter</td>
+                      <td>Griffin</td>
+                    </tr>
+                    <tr>
+                      <td>Lois</td>
+                      <td>Griffin</td>
+                    </tr>
+                  </table>
+                  <div className="row">
+                    <div className="col-sm-3">Item Name</div>
+                    <div className="col-sm-3">Qty</div>
+                    <div className="col-sm-3">Qty</div>
+                  </div>
+                </div>
+                <br />
+                <div style={{ paddingLeft: "200px" }}>Receipt Total anyamount</div>
+                <p align="center">Charges Inclusive of 7.5% VAT</p>
+                <p align="center">
+                  {" "}
+                  Thank you for shopping with us, Products purchased in good condition are not
+                  returnable
+                </p>
+                <h4 align="center">Have a great day |||</h4>
+              </>
+            ) : (
+              ""
+            )}
+          </div> */}
+          {/* <div> */}
+          {/* <table class="print-receipt"> */}
+          {/* <Hello name="Reprinted" /> */}
+
+          {/* <div align="center">
+                        <button className="hide-on-print" onClick={this.printReceipt}>
+                          Print
+                        </button>
+                      </div> */}
+          {/* </div> */}
+          {/* ); */}
+        </Grid>
+        <Grid>
           {/* <Container> */}
           {/* {Object.keys(amountx).map((c) => (
             <p>{salesTypex[c]}</p>
             // setdiots(c),
           ))} */}
+          {/* cns */}
           <div className="row">
             {/* <div>{setppp(id)}</div> */}
             {counter.map((form, index) => {
@@ -1380,7 +1971,7 @@ function Sales() {
               console.log(form.taxAmount);
               // const ppq = Number(form.pricePerUnit);
               // const qty = Number(form.quantity);
-              const taxAmoun = Number(form.taxAmount);
+              const taxAmoun = parseInt(form.taxAmount, 10);
               return (
                 <>
                   <div className="col-sm-2">
@@ -1418,14 +2009,14 @@ function Sales() {
                   <div className="col-sm-1">
                     <MDBox>
                       <Form.Select
-                        // value={form.product}
+                        value={form.product}
                         aria-label="Default select example"
                         name="product"
                         onChange={(event) => handleFormChange(event, index)}
                       >
                         <option>Product</option>
                         {productx.map((apis) => (
-                          <option key={apis.id} value={apis.id}>
+                          <option key={apis.id} value={apis.name}>
                             {apis.name}
                           </option>
                         ))}
@@ -1443,7 +2034,7 @@ function Sales() {
                         <option>Branch</option>
                         {productBranx.map((apis) => (
                           <option key={apis.id} value={apis.id}>
-                            {apis.branchName}
+                            {apis.name}
                           </option>
                         ))}
                       </Form.Select>
@@ -1521,7 +2112,7 @@ function Sales() {
                     </Box>
                   </div>
                   <div className="col-sm-1">
-                    <Box sx={{ minWidth: 100 }}>
+                    {/* <Box sx={{ minWidth: 100 }}>
                       <FormControl fullWidth>
                         <TextField
                           id="filled-number"
@@ -1532,6 +2123,25 @@ function Sales() {
                           name="taxAmount"
                           size="small"
                           onChange={(event) => handleFormChange(event, index)}
+                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
+                          required
+                        />
+                      </FormControl>
+                    </Box> */}
+                    <Box sx={{ minWidth: 100 }}>
+                      <FormControl fullWidth>
+                        <TextField
+                          id="filled-number"
+                          value={taxAmoun}
+                          label="Tax Amount (NGN) "
+                          placeholder="Tax Amount "
+                          size="small"
+                          name="taxAmount"
+                          // key={c}
+                          // className={index}
+                          type="number"
+                          onChange={(event) => handleFormChange(event, index)}
+                          // onChange={(e) => setPPQuantity(e.target.value)}
                           // onKeyUp={(e) => handleTaxAmount(e.target.value)}
                           required
                         />
@@ -1559,6 +2169,18 @@ function Sales() {
                       </FormControl>
                     </Box>
                   </div>
+                  <MDBox>
+                    <IconButton
+                      size="large"
+                      aria-label="account of current user"
+                      aria-controls="primary-search-account-menu"
+                      aria-haspopup="true"
+                      color="inherit"
+                      onClick={() => removeFields(index)}
+                    >
+                      <CancelPresentationIcon sx={{ color: "#f96d02" }} />
+                    </IconButton>
+                  </MDBox>
                   {/* <div className="col-sm-2">
                     <Box sx={{ minWidth: 120 }}>
                       <FormControl fullWidth>
@@ -1961,7 +2583,7 @@ function Sales() {
             <div className="row">
               <div className="col-sm-12">
                 <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
-                  <Form.Label style={{ fontSize: 14 }}>Portfolio</Form.Label>
+                  <Form.Label style={{ fontSize: 14 }}>Comment</Form.Label>
                   <Form.Control
                     as="textarea"
                     value={commentx || ""}
@@ -1971,7 +2593,7 @@ function Sales() {
                   />
                 </Form.Group>
 
-                <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
+                {/* <i style={{ fontSize: "11px", color: "gray" }}>optional</i> */}
               </div>
             </div>
           </Container>
@@ -2036,15 +2658,15 @@ function Sales() {
               <div className="row">
                 <div className="col-sm-3">
                   <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <MDTypography
+                      variant="button"
+                      color="info"
+                      fontWeight="medium"
+                      style={Styles.textSx}
+                    >
+                      Card Payment:
+                    </MDTypography>
                     <FormControl fullWidth>
-                      <MDTypography
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        style={Styles.textSx}
-                      >
-                        Card Payment:
-                      </MDTypography>
                       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
                       <label htmlFor="filled-number"> Card Payment: </label>
                       <TextField
@@ -2056,6 +2678,23 @@ function Sales() {
                         onChange={(e) => setCardPayment(e.target.value)}
                       />
                     </FormControl>
+                    <MDBox mt={4} mb={1}>
+                      <div>
+                        <MonnifyConsumer {...monNey} className="btn">
+                          {({ initializePayment }) => (
+                            // eslint-disable-next-line react/button-has-type
+                            <MDButton
+                              variant="gradient"
+                              onClick={() => initializePayment()}
+                              color="info"
+                              width="50%"
+                            >
+                              Pay
+                            </MDButton>
+                          )}
+                        </MonnifyConsumer>
+                      </div>
+                    </MDBox>
                   </Box>
                 </div>
               </div>
@@ -2103,10 +2742,10 @@ function Sales() {
             Pay
           </MDButton>
         </MDBox>
-        <MDBox mt={4} mb={1} style={{ paddingLeft: "400px" }}>
+        <MDBox mt={4} mb={1} align="center">
           <MDButton
             variant="gradient"
-            onClick={Pay}
+            onClick={handleClick}
             style={Styles.buttonSx}
             width="50%"
             align="left"
@@ -2155,72 +2794,125 @@ function Sales() {
                 <MDBox>
                   <MDBox component="form" role="form">
                     {/* <SidenavCollapse */}
-                    <MDBox mb={0}>
-                      <Container>
-                        <div className="row">
-                          <div className="col-sm-6">
-                            <MDInput
-                              type="text"
-                              value={namex || ""}
-                              onChange={(e) => setName(e.target.value)}
-                              // onKeyUp={handleOnNameKeys}
-                              label="First Name"
-                              variant="standard"
-                              fullWidth
-                            />
+                    <MDBox
+                      variant="gradient"
+                      // bgColor="info"
+                      borderRadius="lg"
+                      coloredShadow="success"
+                      mx={0}
+                      mt={0}
+                      p={3}
+                      mb={1}
+                      textAlign="center"
+                      style={Styles.boxSx}
+                    >
+                      <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
+                        Add New Individual
+                      </MDTypography>
+                    </MDBox>
+                    <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                      <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
+                        {" "}
+                      </MDTypography>
+                      <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
+                        {" "}
+                      </MDTypography>
+                      <MDBox mb={0}>
+                        <Container>
+                          <div className="row">
+                            <div className="col-sm-6">
+                              <MDInput
+                                type="text"
+                                value={namex || ""}
+                                onChange={(e) => setName(e.target.value)}
+                                onKeyUp={handleOnNameKeys}
+                                label="First Name"
+                                variant="standard"
+                                fullWidth
+                              />
+                            </div>
+                            <div className="col-sm-6">
+                              <MDInput
+                                type="text"
+                                value={lnamex || ""}
+                                onChange={(e) => setLnamex(e.target.value)}
+                                // onKeyUp={handleOnNameKeys}
+                                label="Last Name"
+                                variant="standard"
+                                fullWidth
+                              />
+                            </div>
                           </div>
-                          <div className="col-sm-6">
-                            <MDInput
-                              type="text"
-                              value={lnamex || ""}
-                              onChange={(e) => setLnamex(e.target.value)}
-                              // onKeyUp={handleOnNameKeys}
-                              label="Last Name"
-                              variant="standard"
-                              fullWidth
-                            />
+                          &nbsp; &nbsp;
+                          <div className="row">
+                            <div className="col-sm-10">
+                              <MDTypography
+                                variant="button"
+                                fontWeight="regular"
+                                fontSize="80%"
+                                textAlign="center"
+                                color="text"
+                              >
+                                Title
+                              </MDTypography>
+                              <Form.Select
+                                value={titlex}
+                                onChange={(e) => setTitle(e.target.value)}
+                                aria-label="Default select example"
+                              >
+                                <option value="">--Select Title--</option>
+                                <option value="Bishop">Bishop</option>
+                                <option value="Chancellor">Chancellor</option>
+                                <option value="Comrade">Comrade</option>
+                                <option value="Doctor">Doctor</option>
+                                <option value="Engineer">Engineer</option>
+                                <option value="Excellency">Excellency</option>
+                                <option value="Honorable">Honorable</option>
+                                <option value="Imam">Imam</option>
+                                <option value="Master">Master</option>
+                                <option value="Miss">Miss</option>
+                                <option value="Mr">Mr</option>
+                                <option value="Mrs">Mrs</option>
+                                <option value="Reverend">Reverend</option>
+                                <option value="Pastor">Pastor</option>
+                                <option value="Professor">Professor</option>
+                                <option value="Pope">Pope</option>
+                                <option value="Vice-Chancellor">Vice-Chancellor</option>
+                                <option value="Other">Others...</option>
+                              </Form.Select>
+                            </div>
                           </div>
-                        </div>
-                        &nbsp; &nbsp;
-                        <div className="row">
-                          <div className="col-sm-10">
-                            <MDTypography
-                              variant="button"
-                              fontWeight="regular"
-                              fontSize="80%"
-                              textAlign="center"
-                              color="text"
-                            >
-                              Title
-                            </MDTypography>
-                            <Form.Select
-                              value={titlex}
-                              onChange={(e) => setTitle(e.target.value)}
-                              aria-label="Default select example"
-                            >
-                              <option value="">--Select Title--</option>
-                              <option value="Bishop">Bishop</option>
-                              <option value="Chancellor">Chancellor</option>
-                              <option value="Comrade">Comrade</option>
-                              <option value="Doctor">Doctor</option>
-                              <option value="Engineer">Engineer</option>
-                              <option value="Excellency">Excellency</option>
-                              <option value="Honorable">Honorable</option>
-                              <option value="Imam">Imam</option>
-                              <option value="Master">Master</option>
-                              <option value="Miss">Miss</option>
-                              <option value="Mr">Mr</option>
-                              <option value="Mrs">Mrs</option>
-                              <option value="Reverend">Reverend</option>
-                              <option value="Pastor">Pastor</option>
-                              <option value="Professor">Professor</option>
-                              <option value="Pope">Pope</option>
-                              <option value="Vice-Chancellor">Vice-Chancellor</option>
-                              <option value="Other">Others...</option>
-                            </Form.Select>
+                          <div className="row">
+                            <div className="col-sm-6">
+                              <MDInput
+                                type="text"
+                                value={emailx || ""}
+                                onChange={(e) => setEmail(e.target.value)}
+                                onKeyUp={handleOnEmailKeys}
+                                label="Email"
+                                variant="standard"
+                                fullWidth
+                              />
+
+                              {/* <i style={{ fontSize: "11px", color: "gray" }}>optional</i> */}
+                            </div>
+
+                            <div className="col-sm-6">
+                              <MDTypography variant="button" fontWeight="regular" color="text">
+                                Phone Number
+                              </MDTypography>
+                              <PhoneInput
+                                value={pnox}
+                                inputStyle={{ width: "100%" }}
+                                buttonStyle={{}}
+                                onChange={setPno}
+                              />
+
+                              {/* <i style={{ fontSize: "11px", color: "gray" }}>optional</i> */}
+                            </div>
                           </div>
-                        </div>
-                      </Container>
+                        </Container>
+                      </MDBox>
                     </MDBox>
                     {/* <MDBox>
                       <Container>
@@ -2269,7 +2961,7 @@ function Sales() {
                     <MDBox mt={4} mb={1}>
                       <MDButton
                         variant="gradient"
-                        onClick={handleIndividual}
+                        onClick={handleValidate}
                         // color="info"
                         style={Styles.buttonSx}
                         width="50%"
