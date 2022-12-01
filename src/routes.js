@@ -244,6 +244,7 @@ import Sales from "layouts/sales";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
 import SalesPayment from "layouts/sales/salesPayment";
+import FilterSales from "layouts/sales/filterSales";
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
 import SBranches from "layouts/services/branches";
@@ -1023,13 +1024,13 @@ const routes = [
   {
     type: "divider",
     name: "",
-    key: "divd979",
+    key: "divd980",
     route: "",
   },
   {
     type: "title",
-    title: "Insurance",
-    key: "titdins2",
+    title: "Sales",
+    key: "titdinssal2",
     route: "",
   },
   {
@@ -1047,6 +1048,26 @@ const routes = [
     icon: <Icon fontSize="small">point_of_sale</Icon>,
     route: "/sales/sales-payment",
     component: <SalesPayment />,
+  },
+  {
+    type: "collapse",
+    name: "Filter Sales",
+    key: "filtersales",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/sales/filterSales",
+    component: <FilterSales />,
+  },
+  {
+    type: "divider",
+    name: "",
+    key: "divd979",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Insurance",
+    key: "titdins2",
+    route: "",
   },
   {
     name: "Insurance Types",

@@ -39,6 +39,8 @@ import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import { useReactToPrint } from "react-to-print";
 import { MonnifyConsumer } from "react-monnify";
 import PhoneInput from "react-phone-input-2";
+// import houseOfTara from "./HouseOfTara.jpg";
+// import "./Force.css";
 // import
 // import { style } from "@mui/system";
 // import { NoBackpackSharp } from "@mui/icons-material";
@@ -106,6 +108,7 @@ function Sales() {
   const [cashierx, setCashier] = useState([]);
   const [productxx, setProductxx] = useState("");
   const [checkedEmail, setCheckedEmail] = useState("");
+  const [checkedPortfolio, setCheckedPortfolio] = useState("");
   // const [checkedFirst, setCheckedFirst] = useState("");
   // const [checkedAExpense, handleOnEmailKeys] = useState("");
   const onBeforeGetContentResolve = useRef();
@@ -1279,6 +1282,7 @@ function Sales() {
         });
     }
   };
+  console.log(handleClick);
 
   // const orgIDs = data11.orgID;
   // const idx = data11.personalID;
@@ -1375,6 +1379,17 @@ function Sales() {
     isTestMode: true,
   };
 
+  const handleOnPortfolioKeys = () => {
+    if (commentx.length === 0) {
+      setCheckedPortfolio(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("portfolio").innerHTML = "A text is required<br>";
+    } else {
+      setCheckedPortfolio(true);
+    }
+    // setEnabled(checkedPortfolio === true);
+  };
+
   const handleValidate = (e) => {
     // handleOnFirstKeys(namex);
     // handleOnLastKeys(lnamex);
@@ -1389,6 +1404,12 @@ function Sales() {
     console.log(checkedName);
     if (checkedName && checkedEmail === true) {
       handleIndividual(e);
+    }
+  };
+  const handleValidate2 = (e) => {
+    console.log(checkedPortfolio);
+    if (checkedPortfolio === true) {
+      handleClick(e);
     }
   };
 
@@ -1406,6 +1427,9 @@ function Sales() {
             <div align="center">
               <h6>Reprinted</h6>
               <h2>House Of Tara</h2>
+              {/* <MDBox style={{ paddingTop: "260px" }}> */}
+              {/* <img className="img" src={houseOfTara} alt="example" /> */}
+              {/* </MDBox> */}
               <h3>
                 <b>HOUSE OF TARA INTL LIMITED LEKKI</b>
               </h3>
@@ -2587,7 +2611,7 @@ function Sales() {
                   <Form.Control
                     as="textarea"
                     value={commentx || ""}
-                    // onKeyUp={handleOnPortfolioKeys}
+                    onKeyUp={handleOnPortfolioKeys}
                     onChange={(e) => setComment(e.target.value)}
                     rows={2}
                   />
@@ -2745,7 +2769,7 @@ function Sales() {
         <MDBox mt={4} mb={1} align="center">
           <MDButton
             variant="gradient"
-            onClick={handleClick}
+            onClick={handleValidate2}
             style={Styles.buttonSx}
             width="50%"
             align="left"
