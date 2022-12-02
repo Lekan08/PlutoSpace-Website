@@ -1583,7 +1583,7 @@ function Sales() {
           ""
         )}
       </div> */}
-      ;{/* </div> */}
+      {/* </div> */}
       {/* <Card>
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
@@ -1742,9 +1742,9 @@ function Sales() {
             Add New Individual
           </MDButton>
         </MDBox> */}
-        <MDBox style={{ paddingLeft: "450px" }}>
+        <MDBox style={{ paddingLeft: "360px" }}>
           <Container>
-            <div className="row" style={{ paddingLeft: "700px" }}>
+            <div className="row" style={{ paddingLeft: "450px" }}>
               <div className="col-sm-12">
                 <MDTypography
                   variant="button"
@@ -2076,8 +2076,8 @@ function Sales() {
                         <TextField
                           id="filled-number"
                           value={form.pricePerUnit}
-                          label="Pice Per Quantity "
-                          placeholder="Pice Per Quantity "
+                          label="Price Per Unit"
+                          placeholder="Pice Per Unit "
                           size="small"
                           name="pricePerUnit"
                           // key={c}

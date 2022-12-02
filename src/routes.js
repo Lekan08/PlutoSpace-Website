@@ -536,10 +536,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "TimeSheet",
+    name: "Time Sheet",
     key: "timeSheet",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/timeSheet/timeSheet.js",
+    route: "/timeSheet/timeSheet",
     component: <TimeSheetManual />,
   },
   {
@@ -1095,6 +1095,7 @@ const routes = [
     route: "",
   },
   {
+    type: "collapse",
     name: "Insurance Types",
     key: "insuranceType",
     icon: <Icon fontSize="small">receipt_long</Icon>,
