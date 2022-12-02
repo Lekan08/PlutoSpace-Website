@@ -262,6 +262,9 @@ export default function InsuranceTypesTableData() {
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => handleShow(items, value)}>Update</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item>
+                <Dropdown.Item onClick={() => navigate(`/insurance-Types/attachPlan?id=${value}`)}>
+                  Attach Plan
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>

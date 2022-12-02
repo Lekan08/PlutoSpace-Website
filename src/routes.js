@@ -245,6 +245,7 @@ import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant"
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
 import SBranches from "layouts/services/branches";
+import AttachPlanCheckox from "layouts/insuranceTypes/attachPlan";
 import InsuranceTypes from "layouts/insuranceTypes";
 import InsurancePlans from "layouts/insurancePlans";
 import OnboardingCompany from "./layouts/onboardingCompany";
@@ -1045,6 +1046,20 @@ const routes = [
     icon: <Icon fontSize="small">book_online</Icon>,
     route: "/insurance/plan",
     component: <InsurancePlans />,
+  },
+  // {
+  //   name: "Attach Plan",
+  //   key: "Attachplan",
+  //   icon: <Icon fontSize="small">meeting_room</Icon>,
+  //   route: "/insurance-Types/attach-Plan",
+  //   component: <AttachPlan />,
+  // },
+  {
+    name: "Attach Plan",
+    key: "attachplan",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/insurance-Types/attachPlan",
+    component: <AttachPlanCheckox />,
   },
   {
     type: "divider",

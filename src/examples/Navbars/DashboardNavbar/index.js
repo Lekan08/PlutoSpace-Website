@@ -357,7 +357,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
       <MDBox pt={4} pb={3} px={3}>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
+          style={{ backgroundColor: "#f96d02" }}
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
