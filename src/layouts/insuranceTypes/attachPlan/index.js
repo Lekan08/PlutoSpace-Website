@@ -533,10 +533,9 @@ function AttachPlanCheckox() {
       <Card>
         <MDBox
           variant="gradient"
-          // bgColor="info"
+          bgColor="info"
           borderRadius="lg"
           coloredShadow="success"
-          style={{ backgroundColor: "#f96d02" }}
           mx={30}
           mt={2}
           p={2}
