@@ -209,7 +209,7 @@ function UpdateMySubscription() {
     console.log(requestOptions);
 
     setOpened(true);
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/bills/update`, requestOptions)
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/update`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
