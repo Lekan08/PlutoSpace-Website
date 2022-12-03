@@ -15,10 +15,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 
 function AttachPlanCheckox() {
-  const [itemsx, setItems] = useState([]);
-  const [gInsureTypx, setGInsureTYP] = useState("");
-  // const [users, setUsers] = useState([]);
-  // const [usermembers, setUserMember] = useState([]);
+  const [items, setItems] = useState([]);
+  const [currentInsuranceType, setCurrentInsuranceType] = useState({});
 
   const [opened, setOpened] = useState(false);
 
@@ -29,12 +27,11 @@ function AttachPlanCheckox() {
   const { allGHeaders: miHeaders } = GHeaders();
   const MySwal = withReactContent(Swal);
 
-  console.log(gInsureTypx);
   useEffect(() => {
-    // const permissionsList = [];
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
+    const permissionsList = [];
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
 
-    // const orgIDs = data11.orgID;
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
@@ -46,6 +43,7 @@ function AttachPlanCheckox() {
         localStorage.setItem("rexxdex", aToken);
         return res.json();
       })
+      // eslint-disable-next-line consistent-return
       .then((result) => {
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
@@ -60,12 +58,61 @@ function AttachPlanCheckox() {
           window.location.reload();
         }
         if (isMounted) {
-          if (result !== "") {
-            setGInsureTYP(result);
-            // setTitle(result);
-            console.log(result);
-          }
-          console.log(result);
+          setCurrentInsuranceType(result[0]);
+          fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insurancePlan/gets/${orgIDs}`, {
+            headers,
+          })
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultx) => {
+              if (resultx.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultx.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultx.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              if (isMounted) {
+                if (resultx.length > 0) {
+                  // eslint-disable-next-line array-callback-return
+                  resultx.map((plan) => {
+                    let check = false;
+                    if (result[0].planIDs != null) {
+                      // eslint-disable-next-line array-callback-return
+                      result[0].planIDs.map((planID) => {
+                        if (planID === plan.id) {
+                          check = true;
+                        }
+                      });
+                    }
+
+                    const pObj = {
+                      id: plan.id,
+                      title: plan.title,
+                      descrip: plan.descrip,
+                      montlyContribution: plan.montlyContribution,
+                      yearlyContribution: plan.yearlyContribution,
+                      isCheck: check,
+                    };
+
+                    permissionsList.push(pObj);
+                  });
+                }
+
+                setItems(permissionsList);
+              }
+            });
+          return () => {
+            isMounted = false;
+          };
         }
       });
     return () => {
@@ -74,34 +121,37 @@ function AttachPlanCheckox() {
   }, []);
 
   const handleOnClick = (e, apix) => {
-    e.preventDefault();
     setOpened(true);
 
-    // const checks = e.target.checked;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    console.log(gInsureTypx);
-    console.log(apix);
-    console.log(apix.title);
-    const PLANSx = [];
+    const plansx = [];
+    if (currentInsuranceType.planIDs.length > 0) {
+      const checks = e.target.checked;
+      if (checks) {
+        plansx.push(apix.id);
+      }
+      // eslint-disable-next-line array-callback-return
+      currentInsuranceType.planIDs.map((planID) => {
+        if (!checks) {
+          if (planID !== apix.id) {
+            plansx.push(planID);
+          }
+        } else {
+          plansx.push(planID);
+        }
+      });
+    }
 
-    PLANSx.push(apix.title);
-    console.log(PLANSx);
-    // if (checks) {
     const raw = JSON.stringify({
-      // orgID: orgIDs,
-      // groupID: apix.groupID,
-      // empID: apix.empID,
-
-      id: gInsureTypx[0].id,
+      id: currentInsuranceType.id,
       orgID: orgIDs,
-      name: gInsureTypx[0].name,
-      descrip: gInsureTypx[0].descrip,
-      createdTime: gInsureTypx[0].createdTime,
-      deleteFlag: gInsureTypx[0].deleteFlag,
-      planIDs: PLANSx,
+      name: currentInsuranceType.name,
+      descrip: currentInsuranceType.descrip,
+      createdTime: currentInsuranceType.createdTime,
+      deleteFlag: currentInsuranceType.deleteFlag,
+      planIDs: plansx,
     });
-    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -109,7 +159,6 @@ function AttachPlanCheckox() {
       redirect: "follow",
     };
 
-    // const headers = miHeaders;
     fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceType/update`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -150,141 +199,6 @@ function AttachPlanCheckox() {
     // }
   };
 
-  // useEffect(() => {
-  //   setOpened(true);
-  //   const headers = miHeaders;
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   const orgIDs = data11.orgID;
-
-  //   const permissionsList = [];
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((resultd) => {
-  //       if (resultd.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //       }
-  //       if (resultd.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //       }
-  //       if (resultd.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //       }
-  //       if (isMounted) {
-  //         setUsers(resultd);
-  //       }
-
-  //       const queryString = window.location.search;
-  //       const urlParams = new URLSearchParams(queryString);
-  //       const id = urlParams.get("id");
-
-  //       fetch(`${process.env.REACT_APP_SHASHA_URL}/groups/getByIds/${id}`, {
-  //         headers,
-  //       })
-  //         .then(async (res) => {
-  //           const aToken = res.headers.get("token-1");
-  //           localStorage.setItem("rexxdex", aToken);
-  //           return res.json();
-  //         })
-  //         .then((resultrs) => {
-  //           setOpened(false);
-  //           if (resultrs.message === "Expired Access") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resultrs.message === "Token Does Not Exist") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resultrs.message === "Unauthorized Access") {
-  //             navigate("/authentication/forbiddenPage");
-  //           }
-  //           if (isMounted) {
-  //             setName(resultrs[0].group.name);
-  //             setGroupMember(resultrs[0].groupMembers);
-  //           }
-
-  //           // eslint-disable-next-line array-callback-return
-  //           resultd.map((emp) => {
-  //             let check = false;
-  //             if (resultrs[0].groupMembers != null) {
-  //               // eslint-disable-next-line array-callback-return
-  //               resultrs[0].groupMembers.map((member) => {
-  //                 if (member.empID === emp.personal.id) {
-  //                   // if (rolPermi.isCheck === 1) {
-  //                   check = true;
-  //                   // }
-  //                 }
-  //                 // check = false;
-  //               });
-  //             }
-
-  //             const pObj = {
-  //               groupID: id,
-  //               empID: emp.personal.id,
-  //               fname: emp.personal.fname,
-  //               lname: emp.personal.lname,
-  //               isCheck: check,
-  //             };
-
-  //             permissionsList.push(pObj);
-  //           });
-  //           console.log(users);
-  //           console.log(groupmembers);
-  //           setUserMember(permissionsList);
-  //         });
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, []);
-
-  useEffect(() => {
-    // const permissionsList = [];
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    const orgIDs = data11.orgID;
-    // const queryString = window.location.search;
-    // const urlParams = new URLSearchParams(queryString);
-    // const ids = urlParams.get("id");
-    const headers = miHeaders;
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insurancePlan/gets/${orgIDs}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          if (result !== "") {
-            setItems(result);
-            // setTitle(result);
-            console.log(result);
-          }
-          console.log(result);
-        }
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-  console.log(itemsx);
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -308,7 +222,7 @@ function AttachPlanCheckox() {
         <MDBox pt={0} px={4}>
           &nbsp;
           <Form>
-            {itemsx.map((api) => (
+            {items.map((api) => (
               <div key={api.empID} className="mb-3">
                 <Form.Check type="checkbox">
                   <Form.Check.Input
@@ -318,6 +232,17 @@ function AttachPlanCheckox() {
                   />
                   <Form.Check.Label>{api.title}</Form.Check.Label>
                 </Form.Check>
+                &nbsp;
+                <h6>{api.descrip}</h6>
+                &nbsp;
+                <h6>
+                  Monthly Contribution (in %): <b>{api.monthlyContribution}</b>
+                </h6>
+                &nbsp;
+                <h6>
+                  Yearly Contribution (in %): <b>{api.yearlyContribution}</b>
+                </h6>
+                <hr style={{ backgroundColor: "#f96d02" }} />
               </div>
             ))}
           </Form>
