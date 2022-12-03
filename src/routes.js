@@ -251,6 +251,8 @@ import SBranches from "layouts/services/branches";
 import AttachPlanCheckox from "layouts/insuranceTypes/attachPlan";
 import InsuranceTypes from "layouts/insuranceTypes";
 import InsurancePlans from "layouts/insurancePlans";
+import Insurance from "layouts/insurance";
+import InsuranceUpdate from "layouts/insurance/update";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -1096,6 +1098,21 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Insurance",
+    key: "insurance",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/insurance",
+    component: <Insurance />,
+  },
+  {
+    name: "Insurance Update",
+    key: "updateInsurance",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/insurance/update",
+    component: <InsuranceUpdate />,
+  },
+  {
+    type: "collapse",
     name: "Insurance Types",
     key: "insuranceType",
     icon: <Icon fontSize="small">receipt_long</Icon>,
@@ -1110,18 +1127,11 @@ const routes = [
     route: "/insurance/plan",
     component: <InsurancePlans />,
   },
-  // {
-  //   name: "Attach Plan",
-  //   key: "Attachplan",
-  //   icon: <Icon fontSize="small">meeting_room</Icon>,
-  //   route: "/insurance-Types/attach-Plan",
-  //   component: <AttachPlan />,
-  // },
   {
     name: "Attach Plan",
     key: "attachplan",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/insurance-Types/attachPlan",
+    route: "/insurance/type/attach-plan",
     component: <AttachPlanCheckox />,
   },
   {
