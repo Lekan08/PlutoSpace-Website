@@ -290,7 +290,7 @@ function Insurance() {
   const selectPlan = (value) => {
     const filteredItems = type.filter((item) => item.id === value);
     const headers = miHeaders;
-    const selectedPlanIDs = filteredItems.planIDs;
+    const selectedPlanIDs = filteredItems[0].planIDs;
 
     let isMounted = true;
     fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insurancePlan/getByIds/${selectedPlanIDs}`, {
@@ -490,9 +490,10 @@ function Insurance() {
                     <br />
                     <Form.Select
                       value={planx}
-                      onChange={(e) => setPlanx(e)}
+                      onChange={(e) => setPlanx(e.target.value)}
                       aria-label="Default select example"
                     >
+                      <option value="">--Select Insurance Plan--</option>
                       {plan.map((api) => (
                         <option key={api.id} value={api.id}>
                           {api.title}
@@ -519,13 +520,13 @@ function Insurance() {
                     <br />
                     <Form.Select
                       value={accountOwnerx}
-                      onChange={(e) => setAccountOwner(e)}
+                      onChange={(e) => setAccountOwner(e.target.value)}
                       aria-label="Default select example"
                     >
                       <option value="">--Select Account Owner--</option>
                       {users.map((api) => (
-                        <option key={api.id} value={api.id}>
-                          {api.fname} {api.lname}
+                        <option key={api.personal.id} value={api.personal.id}>
+                          {api.personal.fname} {api.personal.lname}
                         </option>
                       ))}
                     </Form.Select>

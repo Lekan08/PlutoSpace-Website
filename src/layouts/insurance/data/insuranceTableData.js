@@ -32,7 +32,7 @@ export default function InsuranceTableData() {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, terminate it!",
     }).then((result) => {
       if (result.isConfirmed) {
         const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -118,6 +118,7 @@ export default function InsuranceTableData() {
 
   // Method to change date from timestamp
   const changeDate = (timestamp) => {
+    if (timestamp <= 0) return "";
     const date = new Date(timestamp);
     const retDate = date.toDateString();
     return retDate;
@@ -126,7 +127,7 @@ export default function InsuranceTableData() {
   // Method to change display for status
   const changeStatus = (status) => {
     const filteredItems = items.filter((item) => item.id === status);
-    if (filteredItems[0].status === "0") {
+    if (filteredItems[0].status === 0) {
       return "Running";
     }
     return "Terminated";
@@ -134,10 +135,10 @@ export default function InsuranceTableData() {
 
   const changeCol = (status) => {
     const filteredItems = items.filter((item) => item.id === status);
-    if (filteredItems[0].status === "0") {
-      return "#FAFA33";
+    if (filteredItems[0].status === 0) {
+      return "#0096FF";
     }
-    return "#0096FF";
+    return "#FF0000";
   };
 
   // Method to change display for client type
