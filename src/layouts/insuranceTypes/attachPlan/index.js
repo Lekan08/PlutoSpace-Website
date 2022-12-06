@@ -126,7 +126,7 @@ function AttachPlanCheckox() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const plansx = [];
-    if (currentInsuranceType.planIDs.length > 0) {
+    if (currentInsuranceType.planIDs !== null) {
       const checks = e.target.checked;
       if (checks) {
         plansx.push(apix.id);

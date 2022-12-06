@@ -55,7 +55,6 @@ function PollsView() {
         }
         if (isMounted) {
           setItems(result);
-          console.log(result);
         }
       });
     return () => {
@@ -99,15 +98,6 @@ function PollsView() {
             }).then(() => {
               navigate("/dashboard");
             });
-            // } else if (resultx[0].status === 2 || resultx[0].status === "2") {
-            //   MySwal.fire({
-            //     title: "Poll Closed",
-            //     icon: "info",
-            //     type: "info",
-            //     text: `You can't vote on this poll`,
-            //   }).then(() => {
-            //     navigate("/dashboard");
-            //   });
           }
           setQuestion(resultx[0].question);
         }
@@ -156,9 +146,6 @@ function PollsView() {
         />
       </MDBox>
       <Footer />
-      {/* <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
-        <CircularProgress color="info" />
-      </Backdrop> */}
     </DashboardLayout>
   );
 }

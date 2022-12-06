@@ -16,7 +16,6 @@ import GHeaders from "getHeader";
 import Styles from "styles";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
-// import PhoneInput from "react-phone-input-2";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Backdrop from "@mui/material/Backdrop";
@@ -26,13 +25,9 @@ import Grid from "@mui/material/Grid";
 import Modal from "@mui/material/Modal";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { styled } from "@mui/material/styles";
-// import Box from '@mui/material/Box';
 import Paper from "@mui/material/Paper";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { IconButton } from "@mui/material";
-// import MenuItem from "@mui/material/MenuItem";
-// import InputLabel from "@mui/material/InputLabel";
-// import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import Add from "@mui/icons-material/Add";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
@@ -41,9 +36,6 @@ import { MonnifyConsumer } from "react-monnify";
 import PhoneInput from "react-phone-input-2";
 // import houseOfTara from "./HouseOfTara.jpg";
 // import "./Force.css";
-// import
-// import { style } from "@mui/system";
-// import { NoBackpackSharp } from "@mui/icons-material";
 // zinoleesky wrote this part of d code called sales
 // incase another Printing {https://stackblitz.com/edit/react-print-receipt?file=index.js}
 
@@ -52,26 +44,13 @@ function Sales() {
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
-  //   const [branId, setBranId] = useState([]);
-  //   const [branx, setBranx] = useState("");
-  //   const [quantityx, setQuantity] = useState("");
-  //   const [ppQuantity, setPPQuantity] = useState("");
-  //   const [amountx, setAmount] = useState(0);
-  //   const [taskAmountx, setTaskAmount] = useState(0);
-
   const [individualx, setIndividual] = useState([]);
   const [indix, setIndi] = useState("");
-  //   const [craze, setCraze] = useState(false);
   const [namex, setName] = useState("");
   const [lnamex, setLnamex] = useState("");
   const [titlex, setTitle] = useState("");
 
   const [checkedName, setCheckedName] = useState("");
-  // const [enabled, setEnabled] = useState("");
-  //   const [emailx, setEmail] = useState("");
-  // const [pnox, setPno] = useState("");
-  // const [maritalx, setMaritalx] = useState("");
-  // const [duty, setDutyRelieverx] = useState("");
   const [user, setUser] = useState([]);
   const [commentx, setComment] = useState("");
 
@@ -86,17 +65,8 @@ function Sales() {
   const [opened, setOpened] = useState(false);
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-  const [salesTypex, setSalesType] = useState("");
-  const [pPQuantityx, setPPQuantity] = useState("");
-  const [quantityx, setQuantity] = useState("");
-  const [amountx, setAmount] = useState("");
-  // const [taxAmountx, setTaxAmount] = useState("");
-  const [amountNotChange, setAmountNotChange] = useState("");
-  const [amountNotChange2, setAmountNotChange2] = useState("");
   const [productx, setProduct] = useState([]);
-  // const [prodx, setProd] = useState("");
   const [productBranx, setProductBran] = useState([]);
-  const [prodBranx, setProdBran] = useState("");
   const [bonusAmountxx, setBonusAmount] = useState("");
   const [subTotalAmountx, setSubTotalAmount] = useState([]);
   const [allTax, setAllTax] = useState("");
@@ -106,23 +76,9 @@ function Sales() {
   const [showPayment, setShowPayment] = useState(false);
   const [showPrint, setShowPrint] = useState(false);
   const [cashierx, setCashier] = useState([]);
-  const [productxx, setProductxx] = useState("");
   const [checkedEmail, setCheckedEmail] = useState("");
   const [checkedPortfolio, setCheckedPortfolio] = useState("");
-  // const [checkedFirst, setCheckedFirst] = useState("");
-  // const [checkedAExpense, handleOnEmailKeys] = useState("");
   const onBeforeGetContentResolve = useRef();
-  // const [addictx, setAddict] = useState("");
-  const [peeps, setPeeps] = useState([]);
-  console.log(setPeeps);
-  console.log(setSalesType);
-  console.log(setPPQuantity);
-  console.log(setQuantity);
-  // console.log(setTaxAmount);
-  console.log(setAmountNotChange);
-  console.log(setProductBran);
-  console.log(prodBranx);
-  console.log(setProdBran);
   <style type="text/css" media="print">
     {"\
   @page{ size: portrait; } \
@@ -139,104 +95,9 @@ function Sales() {
       amount: Number(""),
       taxAmount: Number(""),
       totalAmount: Number(""),
-      // product: "",
-      // branch: "",
-      // bonusAmount: "",
-      // id: `SALE${new Date().getTime * 8 + 2}`,
     },
-    // {
-    //   saleType: "",
-    //   salesID: "",
-    //   branchID: "",
-    //   pricePerUnit: "",
-    //   quantity: "",
-    //   amount: "",
-    //   taxAmount: "",
-    //   totalAmount: "",
-    //   id: `SALE${new Date().getTime * 8 + 2}`,
-    // },
   ]);
-  const [counter2, setCounter2] = useState([]);
-  const [view, setView] = useState([]);
-  // const [ppp, setppp] = useState(0);
   console.log(user);
-  // console.log(enabled);
-  console.log(Number(amountNotChange));
-  console.log(amountNotChange2);
-  console.log(setAmountNotChange2);
-  console.log(view);
-  console.log(counter);
-  // console.log(ppp);
-  // eslint-disable-next-line no-lone-blocks
-  // {
-  //   view.map(
-  //     (apis) =>
-  //       // <option key={apis.code} value={apis.name}>
-  //       apis.amountx
-  //     // console.log(apis.amountx);
-  //     // </option>
-  //   );
-  // }
-  console.log(view.map((apis) => apis.amountx));
-
-  // const handleOnNameKeys = (value) => {
-  //   const letters = /^[a-zA-Z ]+$/;
-  //   const Game = value.toString();
-  //   if (!Game.match(letters)) {
-  //     setCheckedFirst(false);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("first").innerHTML =
-  //       "First Name - input only capital and small letters<br>";
-  //   }
-  //   if (Game.match(letters)) {
-  //     setCheckedFirst(true);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("first").innerHTML = "";
-  //   }
-  //   if (Game.length === 0) {
-  //     setCheckedFirst(false);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("first").innerHTML = "First Name is required<br>";
-  //   } else {
-  //     setCheckedFirst(true);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("first").innerHTML = "";
-  //   }
-  // };
-
-  //   useEffect(() => {
-  //     const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //     const orgIDs = data11.orgID;
-  //     const headers = miHeaders;
-  //     let isMounted = true;
-  //     fetch(`${process.env.REACT_APP_KUBU_URL}/branch/gets/${orgIDs}`, { headers })
-  //       .then(async (res) => {
-  //         const aToken = res.headers.get("token-1");
-  //         localStorage.setItem("rexxdex", aToken);
-  //         return res.json();
-  //       })
-  //       .then((result) => {
-  //         if (result.message === "Expired Access") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Token Does Not Exist") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Unauthorized Access") {
-  //           navigate("/authentication/forbiddenPage");
-  //           window.location.reload();
-  //         }
-  //         if (isMounted) {
-  //           setBranId(result);
-  //         }
-  //       });
-  //     return () => {
-  //       isMounted = false;
-  //     };
-  //   }, []);
 
   useEffect(() => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -264,7 +125,6 @@ function Sales() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
           setIndividual(result);
         }
       });
@@ -273,17 +133,6 @@ function Sales() {
     };
   }, []);
 
-  const handleOnlastChange = (e) => {
-    //   // amountNotChange;
-    const abc = e;
-    console.log(abc);
-    // abc[e.target.className] = e.target.value;
-    // setAmount({ ...amountx, abc });
-    setAmount(abc);
-    console.log(e);
-    console.log({ amountx, abc });
-  };
-
   useEffect(() => {
     const headers = miHeaders;
 
@@ -291,7 +140,6 @@ function Sales() {
 
     const orgIDs = data11.orgID;
     let isMounted = true;
-    // setOpened(true);
     fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -315,62 +163,11 @@ function Sales() {
           setUser(result);
           setOpened(false);
         }
-        if (amountNotChange2 !== "") {
-          handleOnlastChange(amountNotChange2);
-          // setAmount(amountNotChange2);
-          console.log(amountNotChange2);
-        }
       });
     return () => {
       isMounted = false;
     };
   }, []);
-  // useEffect(() => {
-  //   const headers = miHeaders;
-
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //   const orgIDs = data11.orgID;
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       console.log(result);
-  //       if (isMounted) {
-  //         const newMap = [];
-
-  //         // eslint-disable-next-line array-callback-return
-  //         result.map((item) => {
-  //           const NewMapp = {
-  //             value: item.personal.id,
-  //             label: `${item.personal.fname}`,
-  //           };
-  //           newMap.push(NewMapp);
-  //         });
-  //         setUser(newMap);
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, []);
-
   const modalStyle = {
     position: "absolute",
     top: "50%",
@@ -425,160 +222,13 @@ function Sales() {
         if (isMounted) {
           setProductBran(result);
         }
-        console.log(result);
       });
     return () => {
       isMounted = false;
     };
   }, []);
 
-  console.log(salesTypex);
-
-  const handleNewInput = () => {
-    // setCounter(counter + 1);
-    setCounter2(counter);
-    console.log(counter);
-    const item = {
-      saleType: "",
-      salesID: "",
-      branchID: "",
-      pricePerUnit: "",
-      quantity: "",
-      amount: "",
-      taxAmount: "",
-      totalAmount: "",
-      product: "",
-      // branch: "",
-      // bonusAmount: "",
-      // id: `SALE${new Date().getTime * 8 + 2}`,
-    };
-    // {
-    //   saleType: [salesTypex],
-    //   branch: "",
-    //   pricePerUnit: "",
-    //   product: "",
-    //   quantity: "",
-    //   amount: [amountx],
-    //   taxAmount: "",
-    //   totalAmount: "",
-    //   id: counter,
-    // };
-
-    console.log(item);
-    console.log(counter2);
-    console.log(item.amount.amountx);
-    console.log(item.amount);
-    setView(item.amount);
-    // console.log(counter.current);
-  };
-
-  // if (counter === item.id) {
-
-  // }
-
-  const array = [];
-  array.push(counter2);
-  console.log(array);
-  // const handleRemoveInput = () => {
-  //   setCounter(counter.pop());
-  //   console.log(counter);
-  // };
-  console.log(handleNewInput);
-  console.log(pPQuantityx);
-  console.log(quantityx);
-  // const amountx = parseInt(pPQuantityx, 10) * parseInt(quantityx, 10);
-  console.log(amountx);
-  // setAmountNotChange2(amountxx);
-
   const TOTAL = eval(subTotalAmountx + allTax - bonusAmountxx);
-  console.log(TOTAL);
-
-  // const handleClick = (e) => {
-  //   // handleOnTitleKeys();
-  //   // handleOnQuantityKeys();
-  //   // handleOnPPQuantityKeys();
-  //   // handleOnBonusAmountKeys();
-  //   // Amount * taxamount - bonus
-  //   // if (enabled) {
-  //   setOpened(true);
-  //   e.preventDefault();
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //   const orgIDs = data11.orgID;
-  //   const idx = data11.personalID;
-  //   const raw = JSON.stringify({
-  //     orgID: orgIDs,
-  //     individualID: indix,
-  //     items: counter,
-  //     bonusAmount: bonusAmountxx,
-  //     subTotalAmount: subTotalAmountx,
-  //     totalAmount: TOTAL,
-  //     createdBy: idx,
-  //     comment: commentx,
-  //     receiptStatus: 1,
-  //     cardPaymentAmount: cardPaymentx,
-  //     transferPaymentAmount: transferPaymentx,
-  //     cashPaymentAmount: cashPaymentx,
-  //   });
-  //   console.log(raw);
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: "follow",
-  //   };
-  //   // localStorage.setItem("Payload", JSON.stringify(raw));
-  //   // navigate("/sales/salesPayment");
-  //   // navigate(`/sales/sales-payment`);
-
-  //   fetch(`${process.env.REACT_APP_LOUGA_URL}/sales/add`, requestOptions)
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       setOpened(false);
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-
-  //       MySwal.fire({
-  //         title: result.status,
-  //         type: "success",
-  //         text: result.message,
-  //       })
-  //         .then(() => {
-  //           console.log(result.data.id);
-  //           //   handlePayVAT(result.data.id);
-  //           // window.location.reload();
-  //         })
-  //         .then(() => {
-  //           window.location.reload();
-  //         });
-  //     })
-  //     .catch((error) => {
-  //       MySwal.fire({
-  //         title: error.status,
-  //         type: "error",
-  //         text: error.message,
-  //       });
-  //     });
-  // };
-
-  // console.log(handleClick);
-  console.log(allTax);
-  console.log(subTotalAmountx);
-  console.log(bonusAmountxx);
 
   const handleOnNameKeys = () => {
     const letters = /^[a-zA-Z ]+$/;
@@ -601,7 +251,6 @@ function Sales() {
   const handleOnEmailKeys = (value) => {
     const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
     const nylon = value.target.value.toString();
-    console.log(value);
     if (!nylon.match(letters)) {
       setCheckedEmail(false);
       // eslint-disable-next-line no-unused-expressions
@@ -618,130 +267,9 @@ function Sales() {
       document.getElementById("email").innerHTML = "Email is required<br>";
     }
   };
-  //   const handleOnEmailKeys = () => {
-  //     const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
-  //     if (!emailx.match(letters)) {
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("email").innerHTML = "Email - input a valid email<br>";
-  //     }
-  //     if (emailx.match(letters)) {
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("email").innerHTML = "";
-  //     }
-  //     if (emailx.length === 0) {
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("email").innerHTML = "Email is required<br>";
-  //     }
-  //   };
-
-  const openModal = (id) => {
-    console.log("This is for modal");
-    // setTaskid(id);
+  const openModal = () => {
     setOpen(true);
-    console.log(id);
   };
-  // const handleOnChange = (e) => {
-  //   const abc = {};
-  //   abc[e.target.className] = e.target.value;
-  //   setSalesType({ ...salesTypex, ...abc });
-  //   console.log({ ...salesTypex, ...abc });
-  // };
-  // const handleOnChange2 = (e) => {
-  //   console.log(e);
-  //   console.log(pPQuantityx);
-  //   const abc = parseInt(e, 10) * parseInt(quantityx, 10);
-  //   const belgium = e * quantityx;
-  //   console.log(abc);
-  //   console.log(belgium);
-  //   // abc[e.target.className] = e.target.value;
-  //   setPPQuantity(e);
-  //   const invest = Number(abc);
-  //   console.log(invest);
-  //   setAmountNotChange(belgium);
-  //   // setAmount(quantityx * e);
-  // };
-  // console.log(setAmount);
-  // const handleOnChange4 = (e) => {
-  //   console.log(e);
-  //   // const abc = e;
-  //   // abc = e.target.value;
-  //   // setAmount(e);
-  //   console.log({ ...amountx, ...e });
-  // };
-
-  // const callback = (e) => {
-  //   useEffect(() => {
-  //     let isMounted = true;
-  //     if (isMounted) {
-  //       // handleOnlastChange(e);
-  //       console.log(e);
-  //     }
-  //     return () => {
-  //       isMounted = false;
-  //     };
-  //   }, []);
-  // };
-  // console.log(handleOnlastChange);
-  // useEffect(() => {
-  //   // let isMounted = true;
-  //   // if (isMounted) {
-  //   //   // handleOnlastChange(amountNotChange2);
-  //   console.log(amountNotChange2);
-  //   // }
-  //   // return () => {
-  //   //   isMounted = false;
-  //   // };
-  // }, []);
-  if (amountNotChange2 !== "") {
-    console.log(amountNotChange2);
-    // useEffect(() => {
-    //   // let isMounted = true;
-    //   // if (isMounted) {
-    //   handleOnlastChange(amountNotChange2);
-    //   console.log(amountNotChange2);
-    //   // }
-    //   // return () => {
-    //   //   isMounted = false;
-    //   // };
-    // }, [amountx]);
-  }
-  // const handleOnChange3 = (e) => {
-  //   // const abc = {};
-  //   // abc[e.target.className] = e.target.value;
-  //   setQuantity(e.target.value);
-  //   // setAmount(e.target.value * pPQuantityx);
-  //   console.log(pPQuantityx * e.target.value);
-  //   setAmountNotChange2(pPQuantityx * e.target.value);
-  //   const movvvv = parseInt(pPQuantityx, 10) * parseInt(e.target.value, 10);
-  //   console.log(movvvv);
-  //   console.log(e.target.value);
-  //   if (movvvv !== "") {
-  //     console.log(e.target.value * pPQuantityx);
-  //     console.log(amountNotChange2);
-  //     console.log(amountNotChange);
-  //     console.log(movvvv);
-  //     // callback(movvvv);
-  //     // useEffect(() => {
-  //     // let isMounted = true;
-  //     // if (isMounted) {
-  //     handleOnlastChange(movvvv);
-  //     // }
-  //     // return () => {
-  //     //   isMounted = false;
-  //     // };
-  //     // }, []);
-  //   }
-  // };
-  // const handleOnChange4 = () => {
-  //   // const abc = {};
-  //   // abc[e.target.className] = e.target.value;
-  //   // setQuantity(e.target.value);
-  //   // setAmount(quantityx * pPQuantityx);
-  //   console.log(quantityx * pPQuantityx);
-  // };
-
-  console.log(handleOnNameKeys);
-  console.log(indix);
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -760,14 +288,12 @@ function Sales() {
       const data11 = JSON.parse(localStorage.getItem("user1"));
       const orgIDs = data11.orgID;
       const personalIDs = data11.personalID;
-      // const dutyx = Number(duty);
       const raw = JSON.stringify([
         {
           orgID: orgIDs,
           fname: namex,
           lname: lnamex,
           title: titlex,
-          // clientLevelID: clientLevel,
           createdBy: personalIDs,
           accountOwnerID: personalIDs,
         },
@@ -820,63 +346,8 @@ function Sales() {
     }
   };
 
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setAge(event.target.value as string);
-  // };
-  // style={{ tr {
-  //     background-color: #dddddd;
-  //   }}}
-
-  // const handleChangeBranch = (value, event) => {
-  //   console.log(event);
-  //   const poolls = value.toString();
-  //   console.log(value);
-  //   setProd(value);
-  //   setOpened(true);
-  //   const headers = miHeaders;
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   const orgIDs = data11.orgID;
-
-  //   fetch(`${process.env.REACT_APP_LOUGA_URL}/productBranch/gets/${orgIDs}/${poolls}`, { headers })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       const resultres = await res.text();
-  //       if (resultres === null || resultres === undefined || resultres === "") {
-  //         return {};
-  //       }
-  //       return JSON.parse(resultres);
-  //     })
-  //     .then((result) => {
-  //       setOpened(false);
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       if (result !== "") {
-  //         setProductBran(result);
-  //       }
-  //       console.log(result);
-  //     });
-  // };
-
   const handleFormChange = (event, index) => {
-    console.log(event, index);
-    console.log(event.target.name);
-    // console.log(vee);
-    const ids = event.target.name;
     const data = [...counter];
-    console.log([...counter], ids);
-    console.log(data);
-    console.log(data[index][event.target.name]);
     data[index][event.target.name] = event.target.value;
     if (event.target.name === "pricePerUnit") {
       data[index].amount = parseInt(data[index].quantity, 10) * parseInt(event.target.value, 10);
@@ -885,10 +356,8 @@ function Sales() {
         parseInt(data[index].taxAmount, 10);
       // parseInt(event.target.value, 10)
       const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
-      console.log(zoom);
       setSubTotalAmount(eval(zoom.join("+")));
       // eslint-disable-next-line no-eval
-      console.log(eval(zoom.join("+")));
     } else if (event.target.name === "quantity") {
       data[index].amount =
         parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10);
@@ -896,73 +365,20 @@ function Sales() {
         parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10) +
         parseInt(data[index].taxAmount, 10);
       const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
-      console.log(zoom);
       setSubTotalAmount(eval(zoom.join("+")));
       // eslint-disable-next-line no-eval
-      console.log(eval(zoom.join("+")));
-      // parseInt(event.target.value, 10)
     } else if (event.target.name === "product") {
-      // handleChangeBranch(event.target.value);
-      // } else if (event.target.name === "branch") {
       data[index][event.target.name] = event.target.value;
-      // } else if (event.target.name === "taxAmount") {
-      //   data[index].totalAmount = data[index].amount + event.target.value;
     } else if (event.target.name === "taxAmount") {
       data[index].totalAmount = parseInt(data[index].amount, 10) + parseInt(event.target.value, 10);
-      // parseInt(event.target.value, 10)
       const zoom = counter.map((item) => item.taxAmount);
-      console.log(zoom);
       setAllTax(eval(zoom.join("+")));
-    } else if (event.target.name === "product") {
-      // data[index][event.target.name] = event.target.value;
-      setProductxx((data[index][event.target.name] = event.target.value));
     } else if (event.target.name === "quantity") {
       data[index].totalAmount =
         parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10);
     }
     setCounter(data);
   };
-
-  // function load(e) {
-  //   handleOnlastChange(e);
-  //   // id = 1;
-  //   console.log(e);
-  // }
-  // console.log(load);
-  console.log(salesTypex);
-  console.log(quantityx);
-  console.log(pPQuantityx);
-  // // eslint-disable-next-line no-lone-blocks
-  // {
-  //   Object.keys(amountx).map((c) => (
-  //     <p>{salesTypex[c]}</p>
-  //     console.log(c);
-  //     // setdiots(c),
-  //   ));
-  // }
-
-  // handleAddRow = () => {
-  //   const item = {
-  //     saleType: "",
-  //     branchID: "",
-  //     pricePerUnit: "",
-  //     quantity: "",
-  //     amount: "",
-  //     taxAmount: "",
-  //     totalAmount: "",
-  //   };
-  //   console.log(item);
-  //   // this.setState = {
-  //   //   // eslint-disable-next-line react/destructuring-assignment, react/no-this-in-sfc
-  //   //   rows: this.state.rows.slice(0, -1),
-  //   // };
-  // };
-  // console.log(handleAddRow);
-  const handleRemoveRow = () => {
-    // eslint-disable-next-line react/destructuring-assignment
-    this.state.rows.slice(0, -1);
-  };
-  console.log(handleRemoveRow);
 
   const addFields = () => {
     const object = {
@@ -975,106 +391,15 @@ function Sales() {
       taxAmount: Number(""),
       totalAmount: Number(""),
       product: Number(""),
-      // branch: "",
-      // bonusAmount: "",
-      // id: `SALE${new Date().getTime * 8 + 2}`,
     };
-    // {
-    //   salesType: "",
-    //   pPQuantity: "",
-    //   quantity: "",
-    //   product: "",
-    //   amount: "",
-    //   branch: "",
-    //   taxAmountx: "",
-    //   bonusAmount: "",
-    //   id: `SALE${new Date().getTime * 8 + 2}`,
-    // };
     setCounter([...counter, object]);
   };
   const removeFields = (index) => {
-    console.log(index);
     const data = [...counter];
     data.splice(index, 1);
-    // data.slice(0, -1);
     setCounter(data);
   };
-  console.log(removeFields);
 
-  // console.log(
-  // eslint-disable-next-line array-callback-return
-  // counter.map((v) => {
-  //   // {
-  //   //   (v.quantity)
-  //   // }
-  //   console.log(v.quantity);
-  // });
-  // eslint-disable-next-line array-callback-return
-  // counter.map((v) => {
-  //   // {
-  //   //   (v.quantity)
-  //   // }
-  //   console.log(v.pPQuantity);
-  // });
-  // );
-  // console.log(counter.pPQuantity);
-  // if (counter.pPQuantity !== "" && counter.quantity) {
-  //   {
-  //     // eslint-disable-next-line array-callback-return
-  //     counter.map((apis) => {
-  //       const veel = parseInt(apis.pPQuantity, 10) * parseInt(apis.quantity, 10);
-  //       console.log(veel);
-  //       setAddict(veel);
-  //     });
-  //   }
-  // }
-  // if (counter.length === )
-
-  console.log(peeps);
-  console.log(setSubTotalAmount);
-
-  // {
-  // const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
-  // console.log(zoom);
-  // setSubTotalAmount(zoom);
-  // eslint-disable-next-line no-eval
-  // console.log(eval(zoom.join("+")));
-  // const escape = eval(zoom.join("+"));
-  // eslint-disable-next-line no-eval
-  // setSubTotalAmount(eval(zoom.join("+")));
-  // eslint-disable-next-line array-callback-return
-  // zoom.map((items) => {
-  //   // setPeeps(items);
-  //   console.log(items);
-  //   // console.log(items());
-  // });
-  // .reduce((acc, current) => acc + current, 0);
-  // const handleOnSelect2 = () => {
-  //   // const zoom = counter.map((item) => item.pPQuantity * item.quantity);
-  //   // const usseerr = [];
-  //   // console.log(zoom);
-
-  //   // eslint-disable-next-line array-callback-return
-  //   // zoom.map((items) => {
-  //   //   setPeeps(items);
-  //   //   console.log(items);
-  //   //   // console.log(items());
-  //   // });
-  //   // setApprov2(usseerr);
-  //   // };
-  //   // if (peeps === 0) {
-  //   //   console.log(peeps);
-  //   const speak = zoom;
-  //   console.log(speak);
-  // };
-  // console.log(zoom);
-  // if (zoom !== 0) {
-  //   useEffect(() => {
-  //     handleOnSelect2();
-  //   }, [zoom]);
-  // }
-  // }
-  console.log(peeps);
   useEffect(() => {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -1088,7 +413,6 @@ function Sales() {
         return res.json();
       })
       .then((result) => {
-        console.log(result);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -1101,76 +425,17 @@ function Sales() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
           setProduct(result);
-          console.log(result);
         }
-        console.log(result);
-        // console.log(prodx);
       });
     return () => {
       isMounted = false;
     };
   }, []);
-  // console.log(prodx);
-  // if (prodx !== "") {
-  //   // useEffect(() => {
-  //   //   const headers = miHeaders;
-  //   //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   //   const orgIDs = data11.orgID;
-  //   //   console.log(prodx);
-  //   //   let isMounted = true;
-  //   //   fetch(`${process.env.REACT_APP_LOUGA_URL}/productBranch/gets/${orgIDs}/${prodx}`, {
-  //   //     headers,
-  //   //   })
-  //   //     .then(async (res) => {
-  //   //       const aToken = res.headers.get("token-1");
-  //   //       localStorage.setItem("rexxdex", aToken);
-  //   //       return res.json();
-  //   //     })
-  //   //     .then((result) => {
-  //   //       console.log(result);
-  //   //       if (result.message === "Expired Access") {
-  //   //         navigate("/authentication/sign-in");
-  //   //         window.location.reload();
-  //   //       }
-  //   //       if (result.message === "Token Does Not Exist") {
-  //   //         navigate("/authentication/sign-in");
-  //   //         window.location.reload();
-  //   //       }
-  //   //       if (result.message === "Unauthorized Access") {
-  //   //         navigate("/authentication/forbiddenPage");
-  //   //         window.location.reload();
-  //   //       }
-  //   //       console.log(result);
-  //   //       if (isMounted) {
-  //   //         if (result !== "") {
-  //   //           setProductBran(result);
-  //   //         }
-  //   //         console.log(result);
-  //   //       }
-  //   //       console.log(result);
-  //   //     });
-  //   //   return () => {
-  //   //     isMounted = false;
-  //   //   };
-  //   // }, []);
-  // }
-  // console.log(subTotalAmountx(eval(zoom.join("+"))));
-  console.log(cashPaymentx);
-  console.log(transferPaymentx);
-  console.log(cardPaymentx);
   const Payment = eval(
     Number(cashPaymentx) + Number(cardPaymentx) + Number(transferPaymentx) - Number(subTotalAmountx)
   );
-  console.log(Payment);
-  // const Payment =
-  //   parseInt(cashPaymentx, 10) + parseInt(cardPaymentx, 10) + parseInt(transferPaymentx, 10);
-  // parseInt(subTotalAmountx, 10);
-  // console.log(Payment);
-  // const Balancex = eval(Payment - subTotalAmountx);
-  // console.log(Balancex);
   const Pay = () => {
     setShowPayment(true);
   };
@@ -1181,19 +446,12 @@ function Sales() {
       onBeforeGetContentResolve.current = resolve;
       setShowPrint(true); // When data is done loading
     });
-  // const componentRef = useRef();
-  const data111 = JSON.parse(localStorage.getItem("user1"));
-  console.log(data111);
   const componentRef = useRef();
-  console.log(componentRef);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    // console.log(content);
-    // documentTitle: "Announcement_Dashboard",
     onBeforeGetContent: handleOnBeforeGetContent,
     onAfterPrint: () => window.location.reload(),
   });
-  console.log(showPrint);
   useEffect(() => {
     const id = setImmediate(() => {
       if (showPrint) {
@@ -1228,7 +486,6 @@ function Sales() {
         transferPaymentAmount: transferPaymentx,
         cashPaymentAmount: cashPaymentx,
       });
-      console.log(raw);
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -1261,8 +518,6 @@ function Sales() {
           if (result.status === "SUCCESS") {
             handlePrint();
           }
-          console.log(result);
-          console.log(result.message);
           setOpened(false);
           MySwal.fire({
             title: result.status,
@@ -1282,12 +537,6 @@ function Sales() {
         });
     }
   };
-  console.log(handleClick);
-
-  // const orgIDs = data11.orgID;
-  // const idx = data11.personalID;
-  // const data11 = JSON.parse(localStorage.getItem("user1"));
-  // const orgIDs = data11.orgID;
   useEffect(() => {
     const headers = miHeaders;
 
@@ -1296,7 +545,6 @@ function Sales() {
     const orgIDs = data11.orgID;
     const empID = data11.personalID;
     let isMounted = true;
-    // setOpened(true);
     fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getUserInfo/${orgIDs}/${empID}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -1318,26 +566,12 @@ function Sales() {
         }
         if (isMounted) {
           setCashier(result);
-          // setOpened(false);
         }
       });
     return () => {
       isMounted = false;
     };
   }, []);
-  console.log(cashierx);
-  console.log(productxx);
-  // eslint-disable-next-line array-callback-return
-  counter.map((row, index) => {
-    // index.taxAmount;
-    console.log(index);
-    console.log(row);
-    console.log(index.taxAmount);
-    console.log(parseInt(row.pricePerUnit, 10) * parseInt(row.quantity, 10));
-  });
-  // console.log(eval(zoom.join("+")));
-  // const amountxxx = parseInt(counter.pricePerUnit, 10) * parseInt(form.quantity, 10);
-
   useEffect(() => {
     let isMounted = true;
     if (isMounted) {
@@ -1350,21 +584,14 @@ function Sales() {
   }, [listenn]);
 
   const honClose = (response) => {
-    console.log(response);
-    // if (enabled) {
     setListenn(!listenn);
     setReferenceSKey(`${Math.floor(Math.random() * 1000000000 + 1)}`);
 
     if (response.message === "Transaction Successful" && response.status === "SUCCESS") {
       // call api after success from monnify
     }
-    // }
   };
 
-  // const personalApiKey = "MK_TEST_JB2L9T7HMG";
-  // const personalConCode = "6428086775";
-  console.log(`${process.env.REACT_APP_PERSONAL_API_KEY}`);
-  console.log(`${process.env.REACT_APP_PERSONAL_CONTRACT_KEY}`);
   const monNey = {
     onClose: honClose,
     amount: cardPaymentx,
@@ -1387,27 +614,14 @@ function Sales() {
     } else {
       setCheckedPortfolio(true);
     }
-    // setEnabled(checkedPortfolio === true);
   };
 
   const handleValidate = (e) => {
-    // handleOnFirstKeys(namex);
-    // handleOnLastKeys(lnamex);
-    // handleOnOtherKeys(onamex);
-    // handleOnEmailKeys(emailx);
-    // handleOnOEmailKeys(emaily);
-    // handleOnStreetKeys(residentialStreetx);
-    // handleOnCityKeys(residentialCityx);
-    // handleOnPasswordKeys(passwordx);
-    // handleOnRTPasswordKeys(retypePasswordx);
-    console.log(checkedEmail);
-    console.log(checkedName);
     if (checkedName && checkedEmail === true) {
       handleIndividual(e);
     }
   };
   const handleValidate2 = (e) => {
-    console.log(checkedPortfolio);
     if (checkedPortfolio === true) {
       handleClick(e);
     }
@@ -1416,20 +630,12 @@ function Sales() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <div align="center">
-        {/* <MDButton className="hide-on-print" onClick={handleClick}>
-          Print
-        </MDButton> */}
-      </div>
       <div ref={componentRef}>
         {showPrint ? (
           <>
             <div align="center">
               <h6>Reprinted</h6>
               <h2>House Of Tara</h2>
-              {/* <MDBox style={{ paddingTop: "260px" }}> */}
-              {/* <img className="img" src={houseOfTara} alt="example" /> */}
-              {/* </MDBox> */}
               <h3>
                 <b>HOUSE OF TARA INTL LIMITED LEKKI</b>
               </h3>
@@ -1509,240 +715,8 @@ function Sales() {
           ""
         )}
       </div>
-      {/* <div>
-      {/* {counter.map((form) => {
-        const amountxx = parseInt(form.pricePerUnit, 10) * parseInt(form.quantity, 10);
-        const taxAmoun = Number(form.taxAmount); */}
-      {/* <div ref={componentRef}>
-        {showPrint ? (
-          <>
-            {/* eslint-disable-next-line array-callback-return */}
-      {/* {counter.map((form) => {
-              const amountxx = parseInt(form.pricePerUnit, 10) * parseInt(form.quantity, 10);
-              const taxAmoun = Number(form.taxAmount); 
-            <>
-              <div align="center">
-                <h6>Reprinted</h6>
-                <h2>House Of Tara</h2>
-                <h3>
-                  <b>HOUSE OF TARA INTL LIMITED LEKKI</b>
-                </h3>
-                <p>13A Road 12, Onikepe Akande Street</p>
-                <p>Off Admiralty Road, Lekki Phase 1, Lagos</p>
-              </div>
-              <div style={{ paddingLeft: "160px" }}>
-                <p>
-                  Cashier: {cashierx.personal.fname} {cashierx.personal.lname}
-                </p>
-              </div>
-              <div align="center">
-                {/* <table>
-                  <tr>
-                    <th>Item Name</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Ext Price</th>
-                  </tr>
-                  <tr>
-                    <td>SF 215</td>
-                    <td />
-                    <td>{form.quantity}</td>
-                    <td>{amountxx}</td>
-                  </tr>
-                  <tr>
-                    <td />
-                    <td />
-                    <td>Subtotal</td>
-                    <td>{amountxx}</td>
-                  </tr>
-                  <tr>
-                    Local Sales Tax
-                    <td />
-                    <td>{taxAmoun}% Tax:</td>
-                    <td>+N{amountxx}.00</td>
-                  </tr>
-                </table> 
-              </div>
-            </>
-            ;{/* <br /> 
-            <>
-              <div style={{ paddingLeft: "350px" }}>
-                <b>Receipt Total: {Payment} </b>
-              </div>
-              <p align="center">Charges Inclusive of 7.5% VAT</p>
-              <p align="center">
-                {" "}
-                Thank you for shopping with us, Products purchased in good condition are not
-                returnable
-              </p>
-              <h4 align="center">Have a great day |||</h4>
-            </>
-            {/* ; })} 
-          </>
-        ) : (
-          ""
-        )}
-      </div> */}
-      {/* </div> */}
-      {/* <Card>
-        <MDBox pt={4} pb={3} px={30}>
-          <MDBox
-            variant="gradient"
-            // bgColor="info"
-            borderRadius="lg"
-            coloredShadow="info"
-            mx={2}
-            mt={-3}
-            p={2}
-            mb={1}
-            textAlign="center"
-            style={Styles.boxSx}
-          >
-            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Sales
-            </MDTypography>
-          </MDBox>
-          <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
-              {" "}
-            </MDTypography>
-          </MDBox>
-          <MDBox component="form" role="form">
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    {/* <MDInput
-                      type="text"
-                      label="Quantity *"
-                      value={quantityx || ""}
-                      onKeyUp={handleOnNameKeys}
-                      className="form-control"
-                      onChange={(e) => setQuantity(e.target.value)}
-                      variant="standard"
-                      fullWidth
-                    /> 
-                    <TextField
-                      label="Amount *"
-                      type="number"
-                      value={amountx}
-                      onKeyUp={handleOnNameKeys}
-                      onChange={(e) => setAmount(e.target.value)}
-                    />
-                  </div>
-                  <div className="col-sm-6">
-                    {/* <MDInput
-                      type="text"
-                      value={ppQuantity || ""}
-                      onChange={(e) => setPPQuantity(e.target.value)}
-                      label="Price Per Quantity"
-                      variant="standard"
-                      fullWidth
-                    /> 
-                    <TextField
-                      label="Price Per Quantity "
-                      type="number"
-                      value={ppQuantity}
-                      onChange={(e) => setPPQuantity(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    {/* <MDInput
-                      type="text"
-                      label="Quantity *"
-                      value={amountx || ""}
-                      onKeyUp={handleOnNameKeys}
-                      className="form-control"
-                      onChange={(e) => setAmount(e.target.value)}
-                      variant="standard"
-                      fullWidth
-                    /> 
-                    <TextField
-                      label="Quantity *"
-                      type="number"
-                      value={quantityx}
-                      onChange={(e) => setQuantity(e.target.value)}
-                    />
-                  </div>
-                  <div className="col-sm-6">
-                    {/* <MDInput
-                      type="text"
-                      value={ppQuantity || ""}
-                      onChange={(e) => setPPQuantity(e.target.value)}
-                      label="Price Per Quantity"
-                      variant="standard"
-                      fullWidth
-                    /> 
-                    <TextField
-                      label="Price Per Quantity "
-                      type="number"
-                      value={taskAmountx}
-                      onChange={(e) => setAmount(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      Branch
-                    </MDTypography>
-                    <MDBox textAlign="right">
-                      <Form.Select
-                        value={branx || ""}
-                        aria-label="Default select example"
-                        onChange={setBranx}
-                      >
-                        <option>--Select Branch--</option>
-                        {branId.map((apis) => (
-                          <option key={apis.id} value={apis.id}>
-                            {apis.name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </MDBox>
-                  </div>
-                  <div className="col-sm-6">
-                    <TextField
-                      label="Task Amount "
-                      type="number"
-                      value={taskAmountx}
-                      onChange={(e) => setTaskAmount(e.target.value)}
-                    />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleClick}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Save
-              </MDButton>
-            </MDBox>
-          </MDBox>
-        </MDBox>
-      </Card> */}
       <Card>
-        {/* <MDBox style={{ paddingLeft: "200px" }}>
-          <MDButton variant="gradient" onClick={() => openModal()}>
-            Add New Individual
-          </MDButton>
-        </MDBox> */}
-        <MDBox style={{ paddingLeft: "360px" }}>
+        <MDBox style={{ paddingLeft: "450px" }}>
           <Container>
             <div className="row" style={{ paddingLeft: "450px" }}>
               <div className="col-sm-12">
@@ -1755,9 +729,6 @@ function Sales() {
                 >
                   Individual
                 </MDTypography>
-                {/* <IconButton onClick={() => openModal()}>
-                  <PersonAddIcon />
-                </IconButton> */}
                 <MDBox>
                   <IconButton
                     size="large"
@@ -1778,7 +749,6 @@ function Sales() {
                       setIndi(e.target.value);
                       const { value } = e.target;
                       const fData = individualx.filter((indii) => indii.id === value);
-                      console.log(fData);
                       setIndiName(`${fData[0].fname} ${fData[0].lname}`);
                       if (fData[0].email) {
                         setEmail(`${fData[0].email}`);
@@ -1803,39 +773,7 @@ function Sales() {
               </div>
             </div>
           </Container>
-          {/* <MDBox mt={1} style={{ paddingLeft: "700px" }}>
-            <MDTypography variant="button" color="text">
-              Individual not in organization yet ?
-              {/* <MDTypography
-                component={Link}
-                // to="/authentication/sign-up"
-                onClick={}
-                variant="button"
-                color="info"
-                fontWeight="medium"
-                // textGradient
-                style={Styles.textSx}
-              >
-                Add New Individual
-              </MDTypography>
-              <MDButton variant="gradient" onClick={() => openModal()}>
-                Add New Individual
-              </MDButton>
-            </MDTypography>
-          </MDBox> */}
         </MDBox>
-        {/* <MDBox>
-          {/* startAction= */}
-        {/* <IconButton
-            onClick={handleNewInput}
-            aria-label="Add"
-            size="sm"
-            variant="plain"
-            color="neutral"
-          > */}
-        {/* <Add /> */}
-        {/* </IconButton>
-        </MDBox> */}
         <br />
         &nbsp; &nbsp;
         <MDBox>
@@ -1849,16 +787,6 @@ function Sales() {
           >
             <Add sx={{ color: "#f96d02" }} />
           </IconButton>
-          {/* <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            aria-haspopup="true"
-            color="inherit"
-            onClick={removeFields}
-          >
-            <CancelPresentationIcon sx={{ color: "#f96d02" }} />
-          </IconButton> */}
         </MDBox>
         <Card style={{ backgroundColor: "#CCC1FF" }}>
           <Grid container spacing={2}>
@@ -1866,12 +794,6 @@ function Sales() {
               <Item>
                 <b>saleType</b>
               </Item>
-              {/* branchID: "branx",
-            pricePerUnit: "ppQuantity",
-            quantity: "quantityx",
-            amount: "amountx",
-            taxAmount: "taskAmountx",
-            totalAmount: "totalAmountx", */}
             </Grid>
             <Grid item xs={1}>
               <Item>
@@ -1912,89 +834,13 @@ function Sales() {
             </Grid>
           </Grid>
         </Card>
-        {/* <br /> */}
         &nbsp;
         <Grid>
-          {/* return ( */}
-          {/* {showPrint ? ( */}
-          {/* <div ref={componentRef} style={{ width: "100%", height: window.innerHeight }}>
-            {showPrint ? (
-              <>
-                <div align="center">
-                  <h6>Reprinted</h6>
-                  <h2>House Of Tara</h2>
-                  <p>HOUSE OF TARA INTL LIMITED LEKKI</p>
-                  <p>13A Road 12, Onikepe Akande Street</p>
-                  <p>Off Admiralty Road, Lekki Phase 1, Lagos</p>
-                </div>
-                <p>Cashier: Name of human being</p>
-                <div>
-                  <table>
-                    <tr>
-                      <th>Firstname</th>
-                      <th>Lastname</th>
-                    </tr>
-                    <tr>
-                      <td>Peter</td>
-                      <td>Griffin</td>
-                    </tr>
-                    <tr>
-                      <td>Lois</td>
-                      <td>Griffin</td>
-                    </tr>
-                  </table>
-                  <div className="row">
-                    <div className="col-sm-3">Item Name</div>
-                    <div className="col-sm-3">Qty</div>
-                    <div className="col-sm-3">Qty</div>
-                  </div>
-                </div>
-                <br />
-                <div style={{ paddingLeft: "200px" }}>Receipt Total anyamount</div>
-                <p align="center">Charges Inclusive of 7.5% VAT</p>
-                <p align="center">
-                  {" "}
-                  Thank you for shopping with us, Products purchased in good condition are not
-                  returnable
-                </p>
-                <h4 align="center">Have a great day |||</h4>
-              </>
-            ) : (
-              ""
-            )}
-          </div> */}
-          {/* <div> */}
-          {/* <table class="print-receipt"> */}
-          {/* <Hello name="Reprinted" /> */}
-
-          {/* <div align="center">
-                        <button className="hide-on-print" onClick={this.printReceipt}>
-                          Print
-                        </button>
-                      </div> */}
-          {/* </div> */}
-          {/* ); */}
-        </Grid>
-        <Grid>
-          {/* <Container> */}
-          {/* {Object.keys(amountx).map((c) => (
-            <p>{salesTypex[c]}</p>
-            // setdiots(c),
-          ))} */}
-          {/* cns */}
           <div className="row">
-            {/* <div>{setppp(id)}</div> */}
             {counter.map((form, index) => {
               const amountxx = parseInt(form.pricePerUnit, 10) * parseInt(form.quantity, 10);
               const branchx = form.branchID;
               const totalAmountxx = parseInt(form.amount, 10) + parseInt(form.taxAmount, 10);
-              console.log(totalAmountxx);
-              console.log(form.amount);
-              console.log(form.totalAmount);
-              console.log(amountxx);
-              console.log(form.taxAmount);
-              // const ppq = Number(form.pricePerUnit);
-              // const qty = Number(form.quantity);
               const taxAmoun = parseInt(form.taxAmount, 10);
               return (
                 <>
@@ -2205,104 +1051,16 @@ function Sales() {
                       <CancelPresentationIcon sx={{ color: "#f96d02" }} />
                     </IconButton>
                   </MDBox>
-                  {/* <div className="col-sm-2">
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={amountxx}
-                          label="Amount "
-                          placeholder="Amount "
-                          name="Amount"
-                          // key={c}
-                          // className={index}
-                          size="small"
-                          type="number"
-                          // onChange={handleOnSelect2}
-                          // onChange={(e) => handleOnlastChange(e)}
-                          // onKeyUp={(e) => setAmount(e.target.value)}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </div> */}
                   <br />
                 </>
               );
             })}
-            {/* {zoom.map((items) => (
-              <>
-                <div className="col-sm-2">
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <TextField
-                        id="filled-number"
-                        value={items}
-                        label="Amount "
-                        placeholder="Amount "
-                        name="Amount"
-                        // key={c}
-                        // className={index}
-                        size="small"
-                        type="number"
-                        // onChange={handleOnSelect2}
-                        // onChange={(e) => handleOnlastChange(e)}
-                        // onKeyUp={(e) => setAmount(e.target.value)}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-                <br />
-              </>
-            ))} */}
-
-            {/* {zoom.map((items) => (
-              <div className="col-sm-2">
-                <Box sx={{ minWidth: 120 }}>
-                  <FormControl fullWidth>
-                    <TextField
-                      id="filled-number"
-                      value={items}
-                      label="Amount "
-                      placeholder="Amount "
-                      name="Amount"
-                      // key={c}
-                      // className={index}
-                      size="small"
-                      type="number"
-                      // onChange={handleOnSelect2}
-                      // onChange={(e) => handleOnlastChange(e)}
-                      // onKeyUp={(e) => setAmount(e.target.value)}
-
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                      // disabled
-                    />
-                  </FormControl>
-                </Box>
-              </div>
-            ))} */}
           </div>
           &nbsp; &nbsp;
-          {/* </Container> */}
         </Grid>
         <MDBox>
           <Container>
             <div className="row">
-              {/* <Box sx={{ minWidth: 120 }} style={{ paddingLeft: "930px", paddingTop: "40px" }}>
-                  <FormControl fullWidth>
-                    {/* <MDBox> */}
-              {/* <TextField id="outlined-basic" label="Total Amount" variant="outlined" /> */}
-              {/* </MDBox>
-                  </FormControl>
-                </Box> */}
-
               <div className="col-sm-3">
                 <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
                   <FormControl fullWidth>
@@ -2327,11 +1085,7 @@ function Sales() {
                       label="Total Amount "
                       placeholder="Total Amount "
                       type="number"
-                      // size="small"
                       name="totalAmount"
-                      // onChange={(event) => handleFormChange(event, index)}
-                      // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                      // required
                       InputProps={{
                         readOnly: true,
                       }}
@@ -2340,267 +1094,9 @@ function Sales() {
                 </Box>
               </div>
             </div>
-            {/* <div className="col-sm-6">
-                <Box sx={{ minWidth: 120 }} style={{ paddingRight: "930px", paddingTop: "20px" }}>
-                  <FormControl fullWidth>
-                    {/* <MDBox> */}
-            {/* <TextField id="outlined-basic" label="Bonus Amount" variant="outlined" /> */}
-            {/* </MDBox>
-                  </FormControl>
-                </Box>
-              </div> */}
           </Container>
         </MDBox>
         <br />
-        {/* <div>
-          <Card>
-            <table>
-              <tr>
-                <th>Sales Type</th>
-                <th>Branch</th>
-                <th>Price Per Unit (NGN)</th>
-                <th>Quantity</th>
-                <th>Amount (NGN)</th>
-                <th>Tax Amount</th>
-                <th>Bonus Amount (NGN)</th>
-              </tr>
-              {Array.from(Array(counter)).map(() => (
-                <tr style={{ backgroundColor: "#dddddd" }}>
-                  {/* <td>{idx}</td> 
-                  <td>
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <InputLabel id="demo-select-small">Sales Type</InputLabel>
-                        <Select
-                          labelId="demo-select-small"
-                          id="demo-select-small"
-                          // value={salesTypex || ""}
-                          // key={c}
-                          label="Age"
-                          sx={{ minHeight: 40 }}
-                          // fullWidth
-                          onChange={handleOnChange}
-                          // onChange={(e) => handleOnChange(e.target.value)}
-                        >
-                          <MenuItem value="1">Product</MenuItem>
-                          <MenuItem value="2">Company Sales</MenuItem>
-                          <MenuItem value="3">Custom Service</MenuItem>
-                          {/* <MenuItem value="4">Thirty</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </Box>
-                  </td>
-                  <td>
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="outlined-error-helper-text"
-                          label="First Name"
-                          size="small"
-                          // defaultValue="Hello World"
-                          // helperText="Incorrect entry."
-                        />
-                      </FormControl>
-                    </Box>
-                  </td>
-
-                  <td>
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          // value={pPQuantityx || ""}
-                          label="Pice Per Quantity "
-                          placeholder="Pice Per Quantity "
-                          size="small"
-                          // key={c}
-                          // className={index}
-                          type="number"
-                          onChange={(e) => handleOnChange2(e.target.value)}
-                          // onChange={(e) => setPPQuantity(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-
-                          required
-                        />
-                      </FormControl>
-                    </Box>
-                  </td>
-                  <td>
-                    <Box sx={{ minWidth: 100 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          // value={quantityx || ""}
-                          label="Quantity "
-                          placeholder="Quantity "
-                          // key={c}
-                          // className={index}
-                          type="number"
-                          size="small"
-                          onChange={handleOnChange3}
-                          // onChange={(e) => setQuantity(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-
-                          required
-                        />
-                      </FormControl>
-                    </Box>
-                  </td>
-                  <td>
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          // value={amountx || ""}
-                          label="Amount "
-                          placeholder="Amount "
-                          // key={c}
-                          // className={index}
-                          size="small"
-                          type="number"
-                          // onChange={(e) => handleOnChange4(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                          // disabled
-                        />
-                      </FormControl>
-                    </Box>
-                  </td>
-                  <td>
-                    <Box sx={{ minWidth: 100 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={taxAmountx || ""}
-                          label="Tax Amount (NGN) "
-                          placeholder="Tax Amount "
-                          type="number"
-                          size="small"
-                          onChange={(e) => setTaxAmount(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-
-                          required
-                        />
-                      </FormControl>
-                    </Box>
-                  </td>
-                  <td>
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={taxAmountx || ""}
-                          label="Bonus Amount "
-                          placeholder="Bonus Amount "
-                          type="number"
-                          size="small"
-                          onChange={(e) => setTaxAmount(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-
-                          required
-                        />
-                      </FormControl>
-                    </Box>
-                  </td>
-                </tr>
-              ))}
-            </table>
-          </Card>
-        </div> */}
-        <div>
-          {/* <table>
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <input />
-              </tr>
-              <tr>
-                <input />
-              </tr>
-            </tbody>
-          </table> */}
-          {/* <table>
-            <tr>
-              <th>Company</th>
-              <th>Contact</th>
-              <th>Country</th>
-            </tr>
-            <tr>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-
-              <td>
-                <input />
-              </td>
-            </tr>
-            <input />
-            <tr>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input />
-              </td>
-              <td>
-                <input />
-              </td>
-              <td>Italy</td>
-            </tr>
-          </table> */}
-        </div>
         &nbsp; &nbsp;
         <MDBox style={{ paddingLeft: "30px" }}>
           <Container>
@@ -2616,8 +1112,6 @@ function Sales() {
                     rows={2}
                   />
                 </Form.Group>
-
-                {/* <i style={{ fontSize: "11px", color: "gray" }}>optional</i> */}
               </div>
             </div>
           </Container>
@@ -2739,11 +1233,7 @@ function Sales() {
                         label="Balance "
                         placeholder="Balance"
                         type="number"
-                        // size="small"
                         name="balance"
-                        // onChange={(event) => handleFormChange(event, index)}
-                        // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                        // required
                         InputProps={{
                           readOnly: true,
                         }}
@@ -2777,16 +1267,6 @@ function Sales() {
             Print
           </MDButton>
         </MDBox>
-        {/* <Grid>
-          <Grid>
-            <li className="list-group-item" item xs={8}>
-              machala
-            </li>
-            <li className="list-group-item" item xs={4}>
-              machala2
-            </li>
-          </Grid>
-        </Grid> */}
       </Card>
       <div>
         <Modal
@@ -2797,12 +1277,7 @@ function Sales() {
         >
           <Box sx={modalStyle}>
             <Grid>
-              <Grid
-                item
-                xs={6}
-                md={6}
-                // style={{ backgroundColor: "ButtonFace", minHeight: "550px" }}
-              >
+              <Grid item xs={6} md={6}>
                 {" "}
                 <HighlightOffIcon
                   onClick={handleClose}
@@ -2814,13 +1289,10 @@ function Sales() {
                     cursor: "pointer",
                   }}
                 />
-                {/* <SubTaskComment subTaskId={taskId} /> */}
                 <MDBox>
                   <MDBox component="form" role="form">
-                    {/* <SidenavCollapse */}
                     <MDBox
                       variant="gradient"
-                      // bgColor="info"
                       borderRadius="lg"
                       coloredShadow="success"
                       mx={0}
@@ -2860,7 +1332,6 @@ function Sales() {
                                 type="text"
                                 value={lnamex || ""}
                                 onChange={(e) => setLnamex(e.target.value)}
-                                // onKeyUp={handleOnNameKeys}
                                 label="Last Name"
                                 variant="standard"
                                 fullWidth
@@ -2917,8 +1388,6 @@ function Sales() {
                                 variant="standard"
                                 fullWidth
                               />
-
-                              {/* <i style={{ fontSize: "11px", color: "gray" }}>optional</i> */}
                             </div>
 
                             <div className="col-sm-6">
@@ -2931,62 +1400,15 @@ function Sales() {
                                 buttonStyle={{}}
                                 onChange={setPno}
                               />
-
-                              {/* <i style={{ fontSize: "11px", color: "gray" }}>optional</i> */}
                             </div>
                           </div>
                         </Container>
                       </MDBox>
                     </MDBox>
-                    {/* <MDBox>
-                      <Container>
-                        <div className="row">
-                          <div className="col-sm-10">
-                            <MDBox textAlign="center">
-                              <MDTypography
-                                variant="button"
-                                fontWeight="regular"
-                                fontSize="80%"
-                                textAlign="center"
-                                color="text"
-                              >
-                                Title
-                              </MDTypography>
-                              <Form.Select
-                                value={titlex}
-                                onChange={(e) => setTitle(e.target.value)}
-                                aria-label="Default select example"
-                              >
-                                <option value="">--Select Title--</option>
-                                <option value="Bishop">Bishop</option>
-                                <option value="Chancellor">Chancellor</option>
-                                <option value="Comrade">Comrade</option>
-                                <option value="Doctor">Doctor</option>
-                                <option value="Engineer">Engineer</option>
-                                <option value="Excellency">Excellency</option>
-                                <option value="Honorable">Honorable</option>
-                                <option value="Imam">Imam</option>
-                                <option value="Master">Master</option>
-                                <option value="Miss">Miss</option>
-                                <option value="Mr">Mr</option>
-                                <option value="Mrs">Mrs</option>
-                                <option value="Reverend">Reverend</option>
-                                <option value="Pastor">Pastor</option>
-                                <option value="Professor">Professor</option>
-                                <option value="Pope">Pope</option>
-                                <option value="Vice-Chancellor">Vice-Chancellor</option>
-                                <option value="Other">Others...</option>
-                              </Form.Select>
-                            </MDBox>
-                          </div>
-                        </div>
-                      </Container>
-                    </MDBox> */}
                     <MDBox mt={4} mb={1}>
                       <MDButton
                         variant="gradient"
                         onClick={handleValidate}
-                        // color="info"
                         style={Styles.buttonSx}
                         width="50%"
                         align="left"
@@ -2997,328 +1419,11 @@ function Sales() {
                   </MDBox>
                 </MDBox>
               </Grid>
-              {/* <MDTypography>Trying to create a modal</MDTypography> */}
             </Grid>
           </Box>
         </Modal>
       </div>
-      {/* {craze ? (
-        <Card />
-      ) : (
-        <MDBox>
-          <MDBox component="form" role="form">
-          <SidenavCollapse
-            <MDBox mb={0}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      value={namex || ""}
-                      onChange={(e) => setName(e.target.value)}
-                      onKeyUp={handleOnNameKeys}
-                      label="First Name"
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                  <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      value={lnamex || ""}
-                      onChange={(e) => setLnamex(e.target.value)}
-                      onKeyUp={handleOnNameKeys}
-                      label="Last Name"
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                  {/* <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      value={onamex || ""}
-                      onChange={(e) => setOnamex(e.target.value)}
-                      onKeyUp={handleOnNameKeys}
-                      label="Other Name"
-                      variant="standard"
-                      fullWidth
-                    />
-                    <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                  </div> 
-                </div>
-                <br />
-                {/* <div className="row">
-                  <div className="col-sm-10">
-                    <MDBox textAlign="center">
-                      <MDTypography
-                        variant="button"
-                        fontWeight="regular"
-                        fontSize="80%"
-                        textAlign="center"
-                        color="text"
-                      >
-                        Title
-                      </MDTypography>
-                      <Form.Select
-                        value={titlex}
-                        onChange={(e) => setTitlex(e.target.value)}
-                        aria-label="Default select example"
-                      >
-                        <option value="">--Select Title--</option>
-                        <option value="Bishop">Bishop</option>
-                        <option value="Chancellor">Chancellor</option>
-                        <option value="Comrade">Comrade</option>
-                        <option value="Doctor">Doctor</option>
-                        <option value="Engineer">Engineer</option>
-                        <option value="Excellency">Excellency</option>
-                        <option value="Honorable">Honorable</option>
-                        <option value="Imam">Imam</option>
-                        <option value="Master">Master</option>
-                        <option value="Miss">Miss</option>
-                        <option value="Mr">Mr</option>
-                        <option value="Mrs">Mrs</option>
-                        <option value="Reverend">Reverend</option>
-                        <option value="Pastor">Pastor</option>
-                        <option value="Professor">Professor</option>
-                        <option value="Pope">Pope</option>
-                        <option value="Vice-Chancellor">Vice-Chancellor</option>
-                        <option value="Other">Others...</option>
-                      </Form.Select>
-                    </MDBox>
-                  </div>
-                </div> */}
       <br />
-      {/* <div className="row">
-                  <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      value={streetx || ""}
-                      onChange={(e) => setStreet(e.target.value)}
-                      label="Street"
-                      variant="standard"
-                      fullWidth
-                    />
-
-                    <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                  </div>
-                  <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      value={cityx || ""}
-                      onChange={(e) => setCity(e.target.value)}
-                      onKeyUp={handleOnCityKeys}
-                      label="City"
-                      variant="standard"
-                      fullWidth
-                    />
-
-                    <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                  </div>
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                        Country
-                      </MDTypography>
-                      <MDBox textAlign="right">
-                        <Form.Select
-                          value={residentialCountryx || ""}
-                          aria-label="Default select example"
-                          onChange={handleOnChangeRCCountry}
-                        >
-                          <option>--Select Country--</option>
-                          {AlCountry.map((apic) => (
-                            <option key={apic.code3} value={apic.name}>
-                              {apic.name}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </MDBox>
-
-                      <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                    </div>
-                    <div className="col-sm-6">
-                      <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                        State
-                      </MDTypography>
-                      <MDBox textAlign="right">
-                        <Form.Select
-                          value={residentialStatex || ""}
-                          aria-label="Default select example"
-                          onChange={handleOnChangeRCState}
-                        >
-                          <option>--Select State--</option>
-                          {allStates.map((apis) => (
-                            <option key={apis.code} value={apis.name}>
-                              {apis.name}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </MDBox>
-
-                      <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                    </div>
-                  </div>
-                </div> 
-              </Container>
-            </MDBox>
-            <br />
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      value={emailx || ""}
-                      onChange={(e) => setEmail(e.target.value)}
-                      onKeyUp={handleOnEmailKeys}
-                      label="Email"
-                      variant="standard"
-                      fullWidth
-                    />
-
-                    <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                  </div>
-
-                  <div className="col-sm-6">
-                    <MDTypography variant="button" fontWeight="regular" color="text">
-                      Phone Number
-                    </MDTypography>
-                    <PhoneInput
-                      value={pnox}
-                      inputStyle={{ width: "100%" }}
-                      buttonStyle={{}}
-                      onChange={setPno}
-                    />
-
-                    <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                  </div>
-                </div>
-                <br />
-                {/* <MDBox textAlign="center">
-                  <MDTypography variant="h4" fontWeight="medium" fontSize="55%">
-                    Date Of Birth
-                  </MDTypography>
-                  <DatePicker
-                    date={startDate}
-                    wrapperClassName="date-picker"
-                    placeholder="Select Birth Date"
-                    dateFormat="MM/dd/yyyy"
-                    confirmBtnText="Confirm"
-                    showCancelButton="true"
-                    customStyles={{
-                      placeholderText: {
-                        fontSize: 5,
-                      },
-                      dateIcon: {
-                        height: 0,
-                        width: 0,
-                      },
-                      dateText: {
-                        color: "#b3b4b5",
-                        fontSize: 16,
-                      },
-                      dateInput: {
-                        borderWidth: 0,
-                      },
-                    }}
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    peekNextMonth
-                    showMonthDropdown
-                    showYearDropdown
-                    dropdownMode="select"
-                  />
-                  <br />
-                  <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                </MDBox>
-              </Container>
-            </MDBox>
-            <br />
-            <MDBox textAlign="center" align="center">
-              <Container>
-                <div className="row">
-                  <MDBox mt={4}>
-                    <MDBox textAlign="center">
-                      <MDTypography
-                        variant="button"
-                        fontWeight="regular"
-                        fontSize="80%"
-                        textAlign="center"
-                        color="text"
-                      >
-                        Marital Status
-                      </MDTypography>
-                      <Form.Select
-                        value={maritalx}
-                        onChange={(e) => setMaritalx(e.target.value)}
-                        aria-label="Default select example"
-                      >
-                        <option value="">Select Marital Status</option>
-                        <option value="Single">Single</option>
-                        <option value="Married">Married</option>
-                        <option value="Divorced">Divorced</option>
-                        <option value="Widowed">Widowed</option>
-                      </Form.Select>
-                    </MDBox>
-                  </MDBox>
-
-                  <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                </div>
-              </Container>
-              <Container>
-                <div className="row">
-                  <MDBox mt={4}>
-                    <MDBox textAlign="center">
-                      <MDTypography
-                        variant="button"
-                        fontWeight="regular"
-                        fontSize="80%"
-                        textAlign="center"
-                        color="text"
-                      >
-                        Account Owner
-                      </MDTypography>
-                      <Form.Select
-                        value={duty}
-                        onChange={(e) => setDutyRelieverx(e.target.value)}
-                        aria-label="Default select example"
-                      >
-                        <option value="">Select Account Owner</option>
-                        {user.map((api) => (
-                          <option key={api.personal.id} value={api.personal.id}>
-                            {api.personal.fname} {api.personal.lname}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </MDBox>
-                  </MDBox>
-                </div>
-              </Container>
-              <br />
-              {/* <Container>
-                <div className="row">
-                  <MDTypography
-                    variant="button"
-                    fontWeight="regular"
-                    fontSize="80%"
-                    textAlign="center"
-                    color="text"
-                  >
-                    Corporate Name
-                  </MDTypography>
-                  <Select options={options} onChange={handleChanges} styles={customStyles} />
-                  <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
-                </div>
-              </Container> 
-            </MDBox>
-            <MDBox mt={4} mb={1} textAlign="center">
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
-                Save
-              </MDButton>
-            </MDBox>
-          </MDBox>
-        </MDBox>
-      )} */}
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />
       </Backdrop>

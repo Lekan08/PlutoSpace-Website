@@ -7,7 +7,6 @@ import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
 import { Container, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { Select } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -20,6 +19,7 @@ import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import UserData from "./data/userTableData";
+// Big Zzz neva sabi anything this time
 
 function UserManagement() {
   const MySwal = withReactContent(Swal);
@@ -44,7 +44,6 @@ function UserManagement() {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDz = data11.orgID;
-    // const idVal = JSON.parse([orgIDz]);
     let isMounted = true;
     fetch(`${process.env.REACT_APP_KUBU_URL}/company/get/${orgIDz}`, { headers })
       .then(async (res) => {

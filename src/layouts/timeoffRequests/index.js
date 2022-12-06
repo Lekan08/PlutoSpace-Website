@@ -18,9 +18,9 @@ import withReactContent from "sweetalert2-react-content";
 import DataTable from "examples/Tables/DataTable";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
-// import DateRangePicker from "react-dates";
 import { useNavigate } from "react-router-dom";
 import TimeOffRequestData from "layouts/timeoffRequests/timeOffRequestTable/timeOffRequests";
+// Dem no aw we do it every december 😎 --ZINO
 
 function TimeOff() {
   const [purposex, setPurpose] = useState("");
@@ -152,7 +152,6 @@ function TimeOff() {
         const varx = 24 * 60 * 60 * 1000;
         const numofdays = Math.ceil(startDateandendDate / varx) - numberOfFreedays;
 
-        // const orgIDs = data11.orgID;
         const currentholderID = data11.personalID;
         let eTOTId = {};
         const raw = JSON.stringify({
@@ -226,47 +225,37 @@ function TimeOff() {
                 title: resultx.status,
                 type: "success",
                 text: resultx.message,
-              })
-                .then(() => {
-                  // const ids = data11.id;
-                  const raw2 = JSON.stringify({
-                    orgID: orgIDs,
-                    employeeTimeOffTransactionID: eTOTId.data.id,
-                    currentHolderID: currentholderID,
-                  });
-                  const requestOptions2 = {
-                    method: "POST",
-                    headers: myHeaders,
-                    body: raw2,
-                    redirect: "follow",
-                  };
-                  fetch(`${process.env.REACT_APP_NSUTANA_URL}/timeoffjourney/add`, requestOptions2)
-                    .then(async (res) => {
-                      const aToken = res.headers.get("token-1");
-                      localStorage.setItem("rexxdex", aToken);
-                      return res.json();
-                    })
-                    .then((resulty) => {
-                      if (resulty.message === "Expired Access") {
-                        navigate("/authentication/sign-in");
-                      }
-                      if (resulty.message === "Token Does Not Exist") {
-                        navigate("/authentication/sign-in");
-                      }
-                      if (resulty.message === "Unauthorized Access") {
-                        navigate("/authentication/forbiddenPage");
-                      }
-                      console.log(resulty);
-                    });
-                  window.location.reload();
-                })
-                .catch((error) => {
-                  console.log({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
+              }).then(() => {
+                const raw2 = JSON.stringify({
+                  orgID: orgIDs,
+                  employeeTimeOffTransactionID: eTOTId.data.id,
+                  currentHolderID: currentholderID,
                 });
+                const requestOptions2 = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: raw2,
+                  redirect: "follow",
+                };
+                fetch(`${process.env.REACT_APP_NSUTANA_URL}/timeoffjourney/add`, requestOptions2)
+                  .then(async (res) => {
+                    const aToken = res.headers.get("token-1");
+                    localStorage.setItem("rexxdex", aToken);
+                    return res.json();
+                  })
+                  .then((resulty) => {
+                    if (resulty.message === "Expired Access") {
+                      navigate("/authentication/sign-in");
+                    }
+                    if (resulty.message === "Token Does Not Exist") {
+                      navigate("/authentication/sign-in");
+                    }
+                    if (resulty.message === "Unauthorized Access") {
+                      navigate("/authentication/forbiddenPage");
+                    }
+                  });
+                window.location.reload();
+              });
             })
             .catch((error) => {
               MySwal.fire({
@@ -276,9 +265,6 @@ function TimeOff() {
               });
             });
         }
-      })
-      .catch((error) => {
-        console.log({ error });
       });
   };
 

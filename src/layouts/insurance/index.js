@@ -316,6 +316,7 @@ function Insurance() {
         }
         if (isMounted) {
           setPlan(result);
+          console.log(result);
         }
       });
     return () => {

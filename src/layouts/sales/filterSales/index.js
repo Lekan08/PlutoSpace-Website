@@ -1,46 +1,31 @@
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import { Form, Container, Button } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import Card from "@mui/material/Card";
-// import Paper from "@mui/material/Paper";
-// import Accordion from "react-bootstrap/Accordion";
 import TextField from "@mui/material/TextField";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Footer from "examples/Footer";
 import Select from "react-select";
-// import Styles from "styles";
-// import Swal from "sweetalert2";
-// import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import DataTable from "examples/Tables/DataTable";
 import Styles from "styles";
-// import AccordionSummary from "@mui/material/AccordionSummary";
-// import Typography from "@mui/material/Typography";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-// import { Accordion } from "@material-ui/core";
-// import { CheckBox } from "@mui/icons-material";
-// import OtherInflowntable from "./data/table";
 // Big Zzzz new doins 👏👏😀
 // 😴😫☺😎😍🥱windows .
 // na the 🐐 of all time write dis code 😎
-console.log(Form);
 
 function FilterSales() {
-  //   const MySwal = withReactContent(Swal);
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
   const navigate = useNavigate();
-  // const { columns: pColumns, rows: pRows } = OtherInflowntable();
 
   const [opened, setOpened] = useState(false);
-  console.log(setOpened);
 
   const [startAmountx, setStartAmount] = useState("");
   const [endTimex, setEndTime] = useState("");
@@ -51,9 +36,6 @@ function FilterSales() {
   const [approv, setApprov] = useState([]);
   const [approv2, setApprov2] = useState([]);
   const [individual, setIndividual] = useState([]);
-  console.log(gOI);
-  console.log(userx);
-  console.log(individual);
 
   useEffect(() => {
     const headers = miHeaders;
@@ -81,7 +63,6 @@ function FilterSales() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
           const newMap = [];
 
@@ -127,8 +108,6 @@ function FilterSales() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
-          //   setIndividual(result);
           const newMap = [];
 
           // eslint-disable-next-line array-callback-return
@@ -174,11 +153,8 @@ function FilterSales() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
-    // const idx = data11.personalID;
     const newStart = new Date(startTimex).getTime();
     const newEnd = new Date(endTimex).getTime();
-    // const raww = applicantx.map((api) => api.personalID);
-    // raww.push(idx);
     let isMounted = true;
     const raw = JSON.stringify({
       orgID: orgIDs,
@@ -189,7 +165,6 @@ function FilterSales() {
       startTime: newStart,
       endTime: newEnd,
     });
-    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -201,7 +176,6 @@ function FilterSales() {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
         const result = await res.text();
-        console.log(result);
         if (result === null || result === undefined || result === "") {
           return {};
         }
@@ -226,7 +200,6 @@ function FilterSales() {
             setGOI(result);
           }
         }
-        console.log(result);
       });
     return () => {
       isMounted = false;
@@ -256,11 +229,6 @@ function FilterSales() {
         accessor: "totalAmount",
         align: "left",
       },
-      //   {
-      //     Header: "Tax Amount",
-      //     accessor: "items.taxAmount",
-      //     align: "left",
-      //   },
       {
         Header: "Sub Total Amount",
         accessor: "subTotalAmount",
@@ -296,12 +264,10 @@ function FilterSales() {
     return (
       <DashboardLayout>
         <DashboardNavbar />
-        {/* <MDBox>Finish halftime</MDBox> */}
         <Card>
           <MDBox pt={4} pb={3} px={30}>
             <MDBox
               variant="gradient"
-              // bgColor="info"
               borderRadius="lg"
               coloredShadow="info"
               mx={2}
@@ -359,19 +325,15 @@ function FilterSales() {
                         label="Start Total Amount *"
                         type="number"
                         value={startAmountx}
-                        // onKeyUp={handleOnAmountKeys}
                         onChange={(e) => setStartAmount(e.target.value)}
                       />
                     </div>
                     <br />
-                    {/* &nbsp; &nbsp; */}
-                    {/* <div className="col-sm-2" /> */}
                     <div className="col-sm-6">
                       <TextField
                         label="End Total Amount *"
                         type="number"
                         value={endAmountx}
-                        // onKeyUp={handleOnTaxAmountKeys}
                         onChange={(e) => setEndAmount(e.target.value)}
                       />
                     </div>
@@ -393,7 +355,6 @@ function FilterSales() {
                         Select Individuals
                       </MDTypography>
                       <Select
-                        // defaultValue={[colourOptions[2], colourOptions[3]]}
                         isMulti
                         name="colors"
                         options={individual}
@@ -413,7 +374,6 @@ function FilterSales() {
                         Created By
                       </MDTypography>
                       <Select
-                        // defaultValue={[colourOptions[2], colourOptions[3]]}
                         isMulti
                         name="colors"
                         options={userx}

@@ -83,8 +83,6 @@ export default function PollsData() {
     navigate(`/polls/Option?id=${value}`);
   };
 
-  // Method to fetch all departments
-  // env.environments
   useEffect(() => {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -145,17 +143,7 @@ export default function PollsData() {
     }
   };
 
-  // const handleStatus = (status) => {
-  //   if (status === 1) {
-  //     return "OPENED";
-  //   }
-  //   if (status === 2) {
-  //     return "CLOSED";
-  //   }
-  // };
-
   const handleOpen = (value) => {
-    // navigate(`/open-polls?id=${value}`);
     const requestOptions = {
       method: "GET",
       headers: miHeaders,
@@ -220,10 +208,6 @@ export default function PollsData() {
   const handleView = (value) => {
     navigate(`/polls/view?id=${value}`);
   };
-
-  // const handleVote = (value) => {
-  //   navigate(`/polls/vote-polls?id=${value}`);
-  // };
 
   // Return table
   return {

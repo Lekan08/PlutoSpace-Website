@@ -12,11 +12,8 @@ import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import MDButton from "components/MDButton";
-// import Swal from "sweetalert2";
-// import withReactContent from "sweetalert2-react-content";
 
 function updatesystemrole() {
-  // const MySwal = withReactContent(Swal);
   const [users, setUsers] = useState({});
   const [lists, setLists] = useState([]);
   const [opened, setOpened] = useState(false);
@@ -144,7 +141,6 @@ function updatesystemrole() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result.status);
       })
       .catch((error) => {
         setOpened(false);
