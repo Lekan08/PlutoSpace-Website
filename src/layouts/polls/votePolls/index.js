@@ -1,7 +1,4 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-// import Radio from "@mui/material/Radio";
-// import RadioGroup from "@mui/material/RadioGroup";
-// import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import MDTypography from "components/MDTypography";
 import { useNavigate } from "react-router-dom";
@@ -10,15 +7,10 @@ import GHeaders from "getHeader";
 import PHeaders from "postHeader";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-// import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
 import Card from "@mui/material/Card";
 import { Form } from "react-bootstrap";
-
-// import MDInput from "components/MDInput";
 import Footer from "examples/Footer";
-// import Backdrop from "@mui/material/Backdrop";
-// import CircularProgress from "@mui/material/CircularProgress";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 
@@ -32,7 +24,6 @@ function VotePolls() {
 
   const [questionx, setQuestion] = useState("");
   const [items, setItems] = useState([]);
-  // const [radio, setRadio] = useState([]);
 
   useEffect(() => {
     const headers = miHeaders;
@@ -66,7 +57,6 @@ function VotePolls() {
         }
         if (isMounted) {
           setItems(result);
-          // setResponsex(result);
         }
       });
     return () => {
@@ -227,27 +217,12 @@ function VotePolls() {
                     </Form>
                   </MDBox>
                 </FormControl>
-                {/* <MDBox mt={4} mb={1}>
-                <MDButton
-                  variant="gradient"
-                  onClick={(e) => handleClick(e)}
-                  // disabled={!enabled}
-                  color="info"
-                  width="50%"
-                  align="center"
-                >
-                  Update
-                </MDButton>
-              </MDBox> */}
               </MDBox>
             </MDBox>
           </Card>
         </div>
       </div>
       <Footer />
-      {/* <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
-        <CircularProgress color="info" />
-      </Backdrop> */}
     </DashboardLayout>
   );
 }

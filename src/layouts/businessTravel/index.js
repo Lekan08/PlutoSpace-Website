@@ -16,8 +16,6 @@ import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import AllCountriesAndStates from "countries-states-master/countries";
-// import AllCountryCode from "countries-states-master/country-code";
-// import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -63,12 +61,6 @@ function BusinessTravel() {
   const [checkedAExpense, setCheckedAExpense] = useState("");
   const [checkedDaySpent, setCheckedDaySpent] = useState("");
   const [checkedDayRequest, setCheckedDayRequest] = useState("");
-  //   console.log(checkedName);
-  //   console.log(checkedAddress);
-  //   console.log(checkedCity);
-  //   console.log(checkedExtra);
-  //   console.log(checkedExpense);
-
   const [opened, setOpened] = useState(false);
   const { allPHeaders: myHeaders } = PHeaders();
 
@@ -77,12 +69,6 @@ function BusinessTravel() {
     setAllStates(filteredItems[0].states);
     setResidentialCountry(e.target.value);
   };
-
-  //   const handleOnChangeRCCountry = (e) => {
-  //     const filteredItems = AlCountry.filter((item) => item.name === e.target.value);
-  //     setAllStates(filteredItems[0].states);
-  //     setCountry(e.target.value);
-  //   };
 
   const handleOnChangeRCState = (e) => {
     setResidentialState(e.target.value);
@@ -228,61 +214,6 @@ function BusinessTravel() {
     }
   };
 
-  //   const handleOnRequestKeys = (value) => {
-  //     const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
-  //     if (!value.match(letters)) {
-  //       setCheckedEmail(false);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("email").innerHTML = "Email - input a valid email<br>";
-  //     }
-  //     if (value.match(letters)) {
-  //       setCheckedEmail(true);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("email").innerHTML = "";
-  //     }
-  //     if (value.length === 0) {
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("email").innerHTML = "Email is required<br>";
-  //     }
-  //   };
-
-  //   const handleOnStreetKeys = (value) => {
-  //     // eslint-disable-next-line no-invalid-regexp
-  //     const letters = /^[a-zA-Z0-9 .,-]+$/;
-  //     if (!value.match(letters)) {
-  //       setCheckedStreet(false);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("street").innerHTML = "Street - use only [ - . , ] as symbols<br>";
-  //     }
-  //     if (value.match(letters)) {
-  //       setCheckedStreet(true);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("street").innerHTML = "";
-  //     }
-  //     if (value.length === 0) {
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("street").innerHTML = "Street is required<br>";
-  //     }
-  //   };
-
-  //   const handleOnCityKeys = (value) => {
-  //     const letters = /^[a-zA-Z ]+$/;
-  //     if (!value.match(letters)) {
-  //       setCheckedCity(false);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("city").innerHTML = "City - input only capital and small letters<br>";
-  //     }
-  //     if (value.match(letters)) {
-  //       setCheckedCity(true);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("city").innerHTML = "";
-  //     }
-  //     if (value.length === 0) {
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("city").innerHTML = "City is required<br>";
-  //     }
-  //   };
-
   useEffect(() => {
     const headers = miHeaders;
 
@@ -326,18 +257,13 @@ function BusinessTravel() {
     const orgIDs = data11.orgID;
     const personalIDs = data11.personalID;
     const startCDate = new Date(startDate).getTime();
-    // const time = new Date(newEvent.time).getTime();
     const raww = applicantx.map((api) => api.personalID);
     raww.push(personalIDs);
-    // const raww = {applicantx.map((new) => (
-    //     {new.personalID}
-    // ))};
     const raw = JSON.stringify({
       orgID: orgIDs,
       createdBy: personalIDs,
       startTime: startCDate,
       noOfDaysRequested: noOfDaysRequestedx,
-      //   noOfDaysApproved: "",
       employees: raww,
       location: {
         address: addressx,
@@ -345,36 +271,13 @@ function BusinessTravel() {
         state: residentialStatex,
         country: residentialCountryx,
       },
-      //   locationState: residentialStatex,
-      //   locationCountry: residentialCountryx,
-      //   locationAddress: addressx,
-      //   locationCity: cityx,
       expectedExpenses: expectedExpensesx,
       actualExpenses: actualExpensesx,
       actualDaysSpent: actualDaysSpentx,
-      //   status: "",
       purpose: purposex,
       extraInformation: extraInformationx,
-      //   attachedDocs: "",
       approverID: duty,
-      //   approveTime: "",
-      //   approvalStatus: "",
-      //   name: namex,
-      //   email: emailx,
-      //   street: streetx,
-      //   city: cityx,
-      //   state: statex,
-      //   country: countryx,
-      //   pno: pnox,
-
-      //       orgID, List<Long> employees, createdBy, startTime,
-      //       noOfDaysRequested, noOfDaysApproved,
-      // locationState, locationCountry, locationAddress, locationCity,
-      //  expectedExpenses, actualExpenses, actualDaysSpent, status,
-      // purpose, extraInformation, List<String> attachedDocs, approverID,
-      //  approveTime, approvalStatus
     });
-    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -424,7 +327,6 @@ function BusinessTravel() {
   };
 
   const addEm = (api) => {
-    // const applicantr = [];
     const mapper = {
       orgID: api.personalCompany.orgID,
       name: `${api.personal.fname} ${api.personal.lname}`,
@@ -444,14 +346,12 @@ function BusinessTravel() {
   };
 
   const applicant = (e, api) => {
-    // e.preventDefault();
     if (e.target.checked === true) {
       addEm(api);
     }
     if (e.target.checked === false) {
       deleteEm(api);
     }
-    console.log(applicantx);
   };
 
   const handleValidate = (e) => {

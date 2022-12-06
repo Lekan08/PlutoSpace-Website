@@ -8,21 +8,17 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
 import React, { useState, useEffect } from "react";
-// import DataTable from "examples/Tables/DataTable";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
-// import ForwardTimeOffRequests from "layouts/timeoffRequests/forwardTimeOffRequests/table/forwardadd";
 
 function ForwardTimeOff() {
   const [currentHolder, setCurrentHolder] = useState("");
   const [employeeRecord, setEmployeeRecord] = useState([]);
 
   const [user, setUser] = useState([]);
-  // const { columns: pColumns, rows: pRows } = ForwardTimeOffRequests();
-
   const { allPHeaders: myHeaders } = PHeaders();
 
   const MySwal = withReactContent(Swal);
@@ -35,13 +31,11 @@ function ForwardTimeOff() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
-    // const ids = data11.id;
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const currentholderID = urlParams.get("id");
 
-    // const eTOTId = {};
     const raw = JSON.stringify({
       orgID: orgIDs,
       employeeTimeOffTransactionID: currentholderID,
@@ -79,8 +73,6 @@ function ForwardTimeOff() {
           type: "success",
           text: result.message,
         }).then(() => {
-          // const personalIds = data11.personalID;
-
           const raw2 = JSON.stringify({
             id: employeeRecord[0].id,
             orgID: employeeRecord[0].orgID,
@@ -144,109 +136,6 @@ function ForwardTimeOff() {
       });
   };
 
-  /* const handleShow = (filteredData, value) => {
-    let empSetupIdx = "";
-    let daysx = "";
-    let daysapprovex = "";
-    let startx = "";
-    let endx = "";
-    let resumex = "";
-    let dutyrelieverx = "";
-    let createdx = "";
-    let purposex = "";
-    let deletex = "";
-    let approvex = "";
-    let adminx = "";
-    let reasonx = "";
-    // Avoid filter for empty string
-    if (!value) {
-      empSetupIdx = "";
-      daysx = "";
-      daysapprovex = "";
-      startx = "";
-      endx = "";
-      resumex = "";
-      dutyrelieverx = "";
-      createdx = "";
-      purposex = "";
-      deletex = "";
-      approvex = "";
-      adminx = "";
-      reasonx = "";
-    } else {
-      const filteredItems = filteredData.filter((item) => item.id === value);
-
-      empSetupIdx = filteredItems[0].employeeTimeOffTransactionID;
-      daysx = filteredItems[0].employeeTimeOffTransactionID;
-      daysapprovex = filteredItems[0].employeeTimeOffTransactionID;
-      startx = filteredItems[0].employeeTimeOffTransactionID;
-      endx = filteredItems[0].employeeTimeOffTransactionID;
-      resumex = filteredItems[0].employeeTimeOffTransactionID;
-      dutyrelieverx = filteredItems[0].employeeTimeOffTransactionID;
-      createdx = filteredItems[0].employeeTimeOffTransactionID;
-      purposex = filteredItems[0].employeeTimeOffTransactionID;
-      deletex = filteredItems[0].employeeTimeOffTransactionID;
-      approvex = filteredItems[0].approverID;
-      adminx = filteredItems[0].employeeTimeOffTransactionID;
-      reasonx = filteredItems[0].employeeTimeOffTransactionID;
-    }
-    const sDate = new Date(startx);
-    startx = sDate.getDate();
-    const eDate = new Date(endx);
-    endx = eDate.getDate();
-
-    MySwal.fire({
-      title: "Update Timeoff Type",
-      html: `<table><tr><td>
-      <tr><td><label for="starting">Start Date</label></td>
-      <td><input type="text" class="swal2-input" id="starting" value="${startx}" placeholder="Start Date"></td></tr>
-      <tr><td><label for="end">End Date</label></td>
-      <td><input type="text" class="swal2-input" id="end" value="${endx}" placeholder="End Date"></td></tr>
-      <tr><td><label for="dutyreliever">Duty Reliever</label></td>
-      <td><input type="text" class="swal2-input" id="dutyreliever" value="${dutyrelieverx}" placeholder="Duty Reliever"></td></tr>
-      <tr><td><label for="purpose">Purpose</label></td>
-      <td><input type="text" class="swal2-input" id="purpose" value="${purposex}" placeholder="Purpose"></td></tr></table>`,
-      confirmButtonText: "Save",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      preConfirm: () => {
-        const startDate = Swal.getPopup().querySelector("#starting").value;
-        const end = Swal.getPopup().querySelector("#end").value;
-        const dutyreliever = Swal.getPopup().querySelector("#dutyreliever").value;
-        const purpose = Swal.getPopup().querySelector("#purpose").value;
-        const id = value;
-        const letters = /^[a-zA-Z]+$/;
-        const numbers = /^[0-9]+$/;
-        if (
-          (startDate.length > 0 && !startDate.match(numbers)) ||
-          (end.length > 0 && !end.match(numbers)) ||
-          (dutyreliever.length > 0 && !dutyreliever.match(letters)) ||
-          (purpose.length > 0 && !purpose.match(letters))
-        ) {
-          Swal.showValidationMessage(`Days Requested - Please choose a day and use only numbers`);
-        } else {
-          handleUpdate(
-            id,
-            empSetupIdx,
-            daysx,
-            daysapprovex,
-            startDate,
-            end,
-            resumex,
-            dutyreliever,
-            createdx,
-            purpose,
-            deletex,
-            approvex,
-            adminx,
-            reasonx
-          );
-        }
-      },
-    });
-  }; */
-
   useEffect(() => {
     const headers = miHeaders;
 
@@ -289,9 +178,6 @@ function ForwardTimeOff() {
   useEffect(() => {
     const headers = miHeaders;
 
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    /// const ids = data11.id;
     let isMounted = true;
     fetch(`${process.env.REACT_APP_NSUTANA_URL}/employeetimeofftransaction/getByIds/${ids}`, {
       headers,
@@ -382,16 +268,6 @@ function ForwardTimeOff() {
           </MDBox>
         </MDBox>
       </Card>
-      {/* <MDBox pt={3}>
-        <DataTable
-          table={{ columns: pColumns, rows: pRows }}
-          isSorted
-          entriesPerPage
-          showTotalEntries
-          noEndBorder
-          canSearch
-        />
-      </MDBox> */}
       <Footer />
     </DashboardLayout>
   );

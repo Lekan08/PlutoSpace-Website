@@ -14,20 +14,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Select from "react-select";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-// import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-// import Backdrop from "@mui/material/Backdrop";
-// import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
 import AllCountriesAndStates from "countries-states-master/countries";
-
-// import SingleCorporateTable from "./data";
 // ZINOLEESKY
 
 function UpdateSingleIndividual() {
@@ -45,7 +38,6 @@ function UpdateSingleIndividual() {
   const [onamex, setOnamex] = useState("");
   const [streetx, setStreet] = useState("");
   const [cityx, setCity] = useState("");
-  // const [statex, setState] = useState("");
   const [items, setItems] = useState([]);
   const [allStates, setAllStates] = useState([]);
   const [residentialStatex, setResidentialState] = useState("");
@@ -80,26 +72,16 @@ function UpdateSingleIndividual() {
     label: d.name,
   }));
   options.unshift({ value: "", label: "None" });
-  // eslint-disable-next-line no-unused-vars
-  const [day, setDay] = useState("");
   const [startDate, setStartDate] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [month, setMonth] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [year, setYear] = useState("");
   const [createdt, setCreatedt] = useState("");
   const [imageUrlx, setImageUrlx] = useState("");
   const [imageKeyx, setImageKeyx] = useState("");
   const [deletex, setDeletex] = useState("");
   const [occupationx, setOccupationx] = useState("");
-  // const [createdByx, setCreatedBy] = useState("");
-  // const [accountOwnerIDx, setAccountOwnerID] = useState("");
   const [duty, setDutyRelieverx] = useState("");
 
   const [checkedName, setCheckedName] = useState("");
   const [checkedCity, setCheckedCity] = useState("");
-  // const [checkedState, setCheckedState] = useState("");
-  // const [checkedCountry, setCheckedCountry] = useState("");
   const [checkedPortfolio, setCheckedPortfolio] = useState("");
   const [clientLevel, setClientLevel] = useState("");
 
@@ -114,11 +96,6 @@ function UpdateSingleIndividual() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
-    // const ids = JSON.parse([id]);
-
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    // const ids = data11.id;
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
@@ -133,7 +110,6 @@ function UpdateSingleIndividual() {
         return res.json();
       })
       .then((result) => {
-        console.log(result);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -146,7 +122,6 @@ function UpdateSingleIndividual() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
           // eslint-disable-next-line eqeqeq
           if (result.length != 0) {
@@ -157,31 +132,18 @@ function UpdateSingleIndividual() {
             // console.log(`${da}/${ma}/${ya}`);
             const dantex = `"${ma}/${da}/${ya}"`;
             const dx = new Date(dantex);
-            console.log(dantex);
-            console.log(dx);
             if (dantex === `"0/0/0"`) {
               setStartDate(new Date());
             } else {
               setStartDate(dx);
             }
-            // setStartDate(dx);
-            // setDay(result[0].dayOfBirth);
-            // setMonth(result[0].monthOfBirth);
-            // setYear(result[0].yearOfBirth);
             setOpened(false);
-            // console.log(day);
-            // const dt = new Date(daten);
-            // console.log(dt);
-            // result.map((idk) =>
-            //   setDaten(`"${idk.dayOfBirth}/${idk.monthOfBirth}/${idk.yearOfBirth}"`)
-            // );
             if (result[0].corporateName === "") {
               setLabelz("None");
             } else {
               setLabelz(result[0].corporateName);
             }
             setIdz(result[0].corporateID);
-            console.log(labelz);
             const x = JSON.stringify(result[0].corporateID);
             setIdx(result[0].id);
             setName(result[0].fname);
@@ -339,50 +301,9 @@ function UpdateSingleIndividual() {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("city").innerHTML = "";
     }
-    // if (cityx.length === 0) {
-    //   // eslint-disable-next-line no-unused-expressions
-    //   document.getElementById("city").innerHTML = "Name is required<br>";
-    // }
     setEnabled(checkedCity === true);
   };
-  // const handleOnStateKeys = () => {
-  //   const letters = /^[a-zA-Z ]+$/;
-  //   if (!cityx.match(letters)) {
-  //     setCheckedState(false);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("state").innerHTML =
-  //       "State - input only capital and small letters<br>";
-  //   }
-  //   if (cityx.match(letters)) {
-  //     setCheckedState(true);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("state").innerHTML = "";
-  //   }
-  //   // if (cityx.length === 0) {
-  //   //   // eslint-disable-next-line no-unused-expressions
-  //   //   document.getElementById("city").innerHTML = "Name is required<br>";
-  //   // }
-  //   setEnabled(checkedState === true);
-  // };
-  // const handleOnCountryKeys = () => {
-  //   const letters = /^[a-zA-Z ]+$/;
-  //   if (!countryx.match(letters)) {
-  //     setCheckedCountry(false);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("country").innerHTML =
-  //       "State - input only capital and small letters<br>";
-  //   }
-  //   if (countryx.match(letters)) {
-  //     setCheckedCountry(true);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("country").innerHTML = "";
-  //   }
-  //   // if (cityx.length === 0) {
-  //   //   // eslint-disable-next-line no-unused-expressions
-  //   //   document.getElementById("city").innerHTML = "Name is required<br>";
-  //   // }
-  //   setEnabled(checkedCountry === true);
-  // };
+
   const handleOnEmailKeys = () => {
     const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
     if (!emailx.match(letters)) {
@@ -466,7 +387,6 @@ function UpdateSingleIndividual() {
       body: raw,
       redirect: "follow",
     };
-    console.log(raw);
     fetch(`${process.env.REACT_APP_LOUGA_URL}/individual/update`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -506,10 +426,8 @@ function UpdateSingleIndividual() {
   };
 
   const handleChanges = (selectedOption) => {
-    // this.setState({ selectedOption });
     setIdz(selectedOption.value);
     setLabelz(selectedOption.label);
-    console.log(`Option selected:`, selectedOption);
   };
   const handleOnChangeRCCountry = (e) => {
     const filteredItems = AlCountry.filter((item) => item.name === e.target.value);

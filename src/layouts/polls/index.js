@@ -75,18 +75,6 @@ function Polls() {
 
   // eslint-disable-next-line consistent-return
   const handleOnQuestionKeys = () => {
-    // const letters = /^[a-zA-Z0-9 ]+$/;
-    // if (!questionx.match(letters)) {
-    //   setCheckedQuestion(false);
-    //   // eslint-disable-next-line no-unused-expressions
-    //   document.getElementById("question").innerHTML =
-    //     "Question - input only capital and small letters<br>";
-    // }
-    // if (questionx.match(letters)) {
-    //   setCheckedQuestion(true);
-    //   // eslint-disable-next-line no-unused-expressions
-    //   document.getElementById("question").innerHTML = "";
-    // }
     if (questionx.length === 0) {
       setCheckedQuestion(false);
       // eslint-disable-next-line no-unused-expressions

@@ -329,44 +329,6 @@ function ViewUser() {
                                             });
                                         }
                                       });
-
-                                      // fetch(
-                                      //   `${process.env.REACT_APP_KUBU_URL}/rolestep/gets/${orgIDs}/${result[0].roleID}`,
-                                      //   { headers }
-                                      // )
-                                      //   .then(async (res) => {
-                                      //     const aToken = res.headers.get("token-1");
-                                      //     localStorage.setItem("rexxdex", aToken);
-                                      //     return res.json();
-                                      //   })
-                                      //   .then((resultst) => {
-                                      //     if (resultst.message === "Expired Access") {
-                                      //       navigate("/authentication/sign-in");
-                                      //     }
-                                      //     if (resultst.message === "Token Does Not Exist") {
-                                      //       navigate("/authentication/sign-in");
-                                      //     }
-                                      //     if (resultst.message === "Unauthorized Access") {
-                                      //       navigate("/authentication/forbiddenPage");
-                                      //     }
-                                      //     if (isMounted) {
-                                      //       setStep(resultst.steps);
-                                      //       console.log(resultst);
-
-                                      //       if (result[0].stepID != null) {
-                                      //         // let fStep = {};
-                                      //         // eslint-disable-next-line array-callback-return
-                                      //         resultst.steps.map((item) => {
-                                      //           if (item.id === result[0].stepID) {
-                                      //             // eslint-disable-next-line prefer-destructuring
-                                      //             // fStep = item;
-                                      //             console.log(item);
-                                      //             // stepStepx(fStep.id);
-                                      //           }
-                                      //         });
-                                      //       }
-                                      //     }
-                                      //   });
                                     }
                                   }
                                 }

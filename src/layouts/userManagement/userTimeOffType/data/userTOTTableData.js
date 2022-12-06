@@ -75,11 +75,6 @@ export default function UserTOTdata() {
     });
   };
 
-  // Function to get cell value
-  // const getCellValue = (value) => {
-  //   setId(value);
-  // };
-  // Method to fetch all Branch
   useEffect(() => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 

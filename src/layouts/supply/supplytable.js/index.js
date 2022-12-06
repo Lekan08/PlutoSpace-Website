@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Icon from "@mui/material/Icon";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-// import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +12,6 @@ export default function SupplyTable() {
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
 
-  // const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
   const navigate = useNavigate();
@@ -22,7 +20,6 @@ export default function SupplyTable() {
     navigate(`/supply/update-Supply?id=${value}`);
   };
 
-  // Method to handle update
   // Method to handle diable
   function handleDisable(id) {
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -79,62 +76,7 @@ export default function SupplyTable() {
       }
     });
   }
-  // Method to handle confirm
-  // const handleConfirm = (id) => {
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   const personalIDs = data11.personalID;
-  //   const approvedBy = personalIDs;
-  //   const status = 1;
-  //   MySwal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, Confirm it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       const headers = miHeaders;
-  //       fetch(
-  //         `${process.env.REACT_APP_LOUGA_URL}/supply/approveOrDecline/${id}/${approvedBy}/${status}`,
-  //         {
-  //           headers,
-  //         }
-  //       )
-  //         .then(async (res) => {
-  //           const aToken = res.headers.get("token-1");
-  //           localStorage.setItem("rexxdex", aToken);
-  //           return res.json();
-  //         })
-  //         .then((resx) => {
-  //           if (resx.message === "Expired Access") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Token Does Not Exist") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Unauthorized Access") {
-  //             navigate("/authentication/forbiddenPage");
-  //           }
-  //           MySwal.fire({
-  //             title: resx.status,
-  //             type: "success",
-  //             text: resx.message,
-  //           }).then(() => {
-  //             window.location.reload();
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           MySwal.fire({
-  //             title: error.status,
-  //             type: "error",
-  //             text: error.message,
-  //           });
-  //         });
-  //     }
-  //   });
-  // };
+
   // Method to handle approved
   const handleapprove = (id) => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -164,7 +106,6 @@ export default function SupplyTable() {
             return res.json();
           })
           .then((resx) => {
-            console.log(resx);
             if (resx.message === "Expired Access") {
               navigate("/authentication/sign-in");
             }
@@ -193,7 +134,7 @@ export default function SupplyTable() {
     });
   };
 
-  // Method to handle approved
+  // Method to handle disapproved
   const handleDisapprove = (id) => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const personalIDs = data11.personalID;
@@ -249,152 +190,18 @@ export default function SupplyTable() {
       }
     });
   };
-  // Method to handle Disapproved
-  // function handleDisapproved(id) {
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   const personalIDs = data11.personalID;
-  //   const terminatedBy = personalIDs;
-  //   MySwal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, Terminate it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       const requestOptions = {
-  //         method: "DELETE",
-  //         headers: miHeaders,
-  //       };
-  //       fetch(
-  //         `${process.env.REACT_APP_LOUGA_URL}/supply/terminate/${id}/${terminatedBy}`,
-  //         requestOptions
-  //       )
-  //         .then(async (res) => {
-  //           const aToken = res.headers.get("token-1");
-  //           localStorage.setItem("rexxdex", aToken);
-  //           return res.json();
-  //         })
-  //         .then((resx) => {
-  //           console.log(resx);
-  //           if (resx.message === "Expired Access") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Token Does Not Exist") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Unauthorized Access") {
-  //             navigate("/authentication/forbiddenPage");
-  //           }
-  //           MySwal.fire({
-  //             title: resx.status,
-  //             type: "success",
-  //             text: resx.message,
-  //           }).then(() => {
-  //             window.location.reload();
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           MySwal.fire({
-  //             title: error.status,
-  //             type: "error",
-  //             text: error.message,
-  //           });
-  //         });
-  //     }
-  //   });
-  // }
-  // function handleDisapproved(id) {
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   const personalIDs = data11.personalID;
-  //   const terminatedBy = personalIDs;
-  //   MySwal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, Terminate it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       const requestOptions = {
-  //         method: "DELETE",
-  //         headers: miHeaders,
-  //       };
-  //       fetch(
-  //         `${process.env.REACT_APP_LOUGA_URL}/supply/terminate/${id}/${terminatedBy}`,
-  //         requestOptions
-  //       )
-  //         .then(async (res) => {
-  //           const aToken = res.headers.get("token-1");
-  //           localStorage.setItem("rexxdex", aToken);
-  //           return res.json();
-  //         })
-  //         .then((resx) => {
-  //           if (resx.message === "Expired Access") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Token Does Not Exist") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Unauthorized Access") {
-  //             navigate("/authentication/forbiddenPage");
-  //           }
-  //           MySwal.fire({
-  //             title: resx.status,
-  //             type: "success",
-  //             text: resx.message,
-  //           }).then(() => {
-  //             window.location.reload();
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           MySwal.fire({
-  //             title: error.status,
-  //             type: "error",
-  //             text: error.message,
-  //           });
-  //         });
-  //     }
-  //   });
-  // }
+
   // Method to change date from timestamp
   const changeDate = (timestamp) => {
     const date = new Date(timestamp);
     const retDate = date.toDateString();
     return retDate;
   };
-  //   const changeStartTime = (timestamp) => {
-  //     // const startTime = new Date(timestamp);
-  //   };
-  //   const changeStartTime = (timestamp) => {
-  //     const date = new Date(timestamp);
-  //     const retDate = date.Time();
-  //     return retDate;
-  //   };
-  //   const changeEndTime = (timestamp) => {
-  //     const date = new time(timestamp);
-  //     const retTime = date.time();
-  //     return retTime;
-  //   };
-  // date1 = new DateTime(timestamp);
-  // const getCurrentDate = () => new Date().getTime();
 
   useEffect(() => {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    // const startTime = new Date(timestamp);
-    // // console.log(startTime);
-    // // const startTimex = startTime(timestamp);
-    // // console.log(startTimex);
-    // const endTime = new Date(timestamp);
-    // console.log(endTime);
-    // const endTimex = endTime(timestamp);
-    // console.log(endTimex);
     const date = new Date();
     const startTime = new Date(date.getFullYear(), date.getMonth(), 1).getTime();
     const endTime = new Date(date.getFullYear(), date.getMonth() + 1, 0).getTime();
@@ -426,7 +233,6 @@ export default function SupplyTable() {
         }
         if (isMounted) {
           setItems(result);
-          console.log(result);
         }
       });
     return () => {
@@ -443,20 +249,6 @@ export default function SupplyTable() {
       return "Corporate";
     }
   };
-  // eslint-disable-next-line consistent-return
-  // const handleStatus = (status) => {
-  //   if (status === 0) {
-  //     return "";
-  //   }
-  //   if (status === 1) {
-  //     return "APPROVED";
-  //   }
-  //   if (status === 2) {
-  //     return "DISAPPROVED";
-  //   }
-  // };
-  // Method to change Color
-
   const changeCol = (status) => {
     if (status === 1) {
       return "#3CCF4E";
@@ -479,8 +271,6 @@ export default function SupplyTable() {
   const handleViewSupply = (value) => {
     navigate(`/supply/view-Supply?id=${value}`);
   };
-
-  // Return tableclienttype supplying branchgname client name supplying branch name paying amoumt approvbyname
 
   return {
     columns: [
@@ -511,19 +301,6 @@ export default function SupplyTable() {
             {changeStatusCol(value)}
           </span>
         ),
-        //   // eslint-disable-next-line react/prop-types
-        //   // Cell: ({ cell: { status } }) => (
-        //   //   <span className="badge badge-pill" style={{ backgroundColor: changeStatusCol(status) }}>
-        //   //     {changeStatusCol(status)}
-        //   //   </span>
-        //   // ),
-        //   align: "left",
-        // },
-        // {
-        //   Header: "Status",
-        //   accessor: "status",
-        //   Cell: ({ cell: { value } }) => handleStatus(value),
-        //   align: "left",
       },
       {
         Header: "actions",
@@ -545,9 +322,6 @@ export default function SupplyTable() {
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => handleUpdateSupply(value)}>Update</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleViewSupply(value)}>View Supply</Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item> */}
-                {/* <Dropdown.Item onClick={() => handleShow(items, value)}>Update</Dropdown.Item> */}
-                {/* <Dropdown.Item onClick={() => handleConfirm(value)}>Confirm</Dropdown.Item> */}
                 <Dropdown.Item onClick={() => handleapprove(value)}>Approve</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisapprove(value)}>Disapprove</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisable(value)}>Terminate</Dropdown.Item>

@@ -48,7 +48,6 @@ export default function UserData() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
           setItems(result);
         }
@@ -159,7 +158,6 @@ export default function UserData() {
 
   const handlePasswordReset = (value) => {
     const headers = miHeaders;
-    console.log(value);
     fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/get/${value}`, { headers })
       .then((res) => res.json())
       .then((resultp) => {
@@ -172,7 +170,6 @@ export default function UserData() {
           body: raw,
           redirect: "follow",
         };
-        console.log(resultp);
         if (resultp.length > 0) {
           fetch(`${process.env.REACT_APP_ZAVE_URL}/login/resetpassword/`, requestOptions)
             .then(async (res) => {
@@ -214,10 +211,6 @@ export default function UserData() {
         }
       });
   };
-  // const handleAddsalary = (value) => {
-  //   navigate(`/user-Management/user-Salary`(value));
-  // };
-
   const handleAddsalary = (value) => {
     navigate(`/user-Management/user-Salary?id=${value}`);
   };

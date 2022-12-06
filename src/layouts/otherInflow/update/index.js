@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
-// import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
@@ -12,9 +11,6 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-// import AllCountriesAndStates from "countries-states-master/countries";
-// import AllCountryCode from "countries-states-master/country-code";
-// import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -28,22 +24,16 @@ import TextField from "@mui/material/TextField";
 function UpdateOtherInflow() {
   const MySwal = withReactContent(Swal);
 
-  //   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
   const navigate = useNavigate();
 
   const [amountx, setAmount] = useState("");
   const [taxAmountx, setTaxAmount] = useState("");
-  //   const [totalAmountx, setTotalAmount] = useState("");
   const [otherInflowTypex, setOtherInflowType] = useState("");
   const [oitx, setOIT] = useState([]);
   const [particularz, setParticular] = useState("");
 
   const [checkedAmount, setCheckedAmount] = useState("");
   const [checkedTaxAmount, setCheckedTaxAmount] = useState("");
-  //   const [startAmountx, setStartAmount] = useState("");
-  //   const [endTimex, setEndTime] = useState("");
-  //   const [endAmountx, setEndAmount] = useState("");
-  //   const [startTimex, setStartTime] = useState("");
   const [itemsx, setItems] = useState([]);
 
   const [opened, setOpened] = useState(false);
@@ -51,7 +41,6 @@ function UpdateOtherInflow() {
   const { allGHeaders: miHeaders } = GHeaders();
 
   const handleOnAmountKeys = (value) => {
-    console.log(value);
     const letters = /^[0-9 ]+$/;
     if (!value.toString().match(letters)) {
       setCheckedAmount(false);
@@ -150,33 +139,11 @@ function UpdateOtherInflow() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
-        // setId(result[0].id);
-        // setName(result[0].amount);
-        // setEmail(result[0].taxAmount);
-        // setPno(result[0].totalAmount);
-        // setDayOfBirth(result[0].otherInflowType.Zinoleeky);
         setItems(result);
         setAmount(result[0].amount);
         setTaxAmount(result[0].taxAmount);
         setOtherInflowType(result[0].otherInflowTypeID);
-        // setOIT(result[0].particulars);
         setParticular(result[0].particulars);
-        // setTotalAmount(result[0].totalAmount);
-        // //   setYearOfBirth(result[0].yearOfBirth);
-        // const filteredItems = AlCountry.filter((item) => item.name === result[0].country);
-        // setAllStates(filteredItems[0].otherInflowType.Zinoleeky);
-        // setStreet(result[0].street);
-        // setCity(result[0].city);
-        // setState(result[0].state);
-        // setCountry(result[0].country);
-        // setDeleteFlag(result[0].deleteFlag);
-        // setCreatedTime(result[0].createdTime);
-        // handleOnNameKeys(result[0].name);
-        // handleOnEmailKeys(result[0].email);
-        // handleOnStreetKeys(result[0].street);
-        // handleOnCityKeys(result[0].city);
-
         handleOnAmountKeys(result[0].amount);
         handleOnTaxAmountKeys(result[0].taxAmount);
       });
@@ -213,7 +180,6 @@ function UpdateOtherInflow() {
       approveStatus: itemsx[0].approveStatus,
       approverTime: itemsx[0].approverTime,
     });
-    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -333,18 +299,10 @@ function UpdateOtherInflow() {
                       InputProps={{
                         readOnly: true,
                       }}
-                      //   label="Amount *"
                       type="number"
-                      //   value={TotalAmountx}
-                      //   onKeyUp={handleOnNameKeys}
-                      //   onChange={(e) => setTotalAmount(e.target.value)}
-                      //   disabled
                     />
                   </div>
                   <div className="col-sm-6">
-                    {/* <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      Other Inflow Type
-                    </MDTypography> */}
                     <MDBox textAlign="right">
                       <Form.Select
                         value={otherInflowTypex || ""}
@@ -377,8 +335,6 @@ function UpdateOtherInflow() {
                         rows={2}
                       />
                     </Form.Group>
-
-                    {/* <i style={{ fontSize: "11px", color: "gray" }}>optional</i> */}
                   </div>
                 </div>
               </Container>

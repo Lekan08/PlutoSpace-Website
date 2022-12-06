@@ -200,6 +200,7 @@ function OnboardingSession() {
     console.log(data[0]);
     const OpeningDate = new Date(start).getTime();
     const ClosingDate = new Date(end).getTime();
+    const CurTime = new Date().getTime();
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const [filteredItems] = userxx.filter((item) => item.personal.id === Number(mentorx));
@@ -224,129 +225,148 @@ function OnboardingSession() {
       body: raw3,
       redirect: "follow",
     };
-    fetch(`${process.env.REACT_APP_RAGA_URL}/appointment/add`, requestOptions3)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        setOpened(false);
-        console.log(result);
-        // setAppID(result.data.id);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-        }
-        const raw2 = JSON.stringify([
-          {
-            orgID: data[0].orgID,
-            appointmentID: result.data.id,
-            name: data[0].empName,
-            email: filteredItemsEmp.personal.email,
-            personalID: data[0].empID,
-            appointmentTime: OpeningDate,
-          },
-          {
-            orgID: data[0].orgID,
-            appointmentID: result.data.id,
-            name: `${filteredItems.personal.fname} ${filteredItems.personal.lname}`,
-            email: filteredItems.personal.email,
-            personalID: Number(mentorx),
-            appointmentTime: OpeningDate,
-          },
-        ]);
-        console.log(raw2);
-        const requestOptions2 = {
-          method: "POST",
-          headers: myHeaders,
-          body: raw2,
-          redirect: "follow",
-        };
-        fetch(`${process.env.REACT_APP_RAGA_URL}/appointmentParticipant/add`, requestOptions2)
-          .then(async (res) => {
-            const aToken = res.headers.get("token-1");
-            localStorage.setItem("rexxdex", aToken);
-            return res.json();
-          })
-          .then((resultr) => {
-            console.log(resultr);
-            const raw = JSON.stringify({
-              orgID: orgIDs,
-              mentorID: Number(mentorx),
-              onboardingID: data[0].id,
-              appointmentID: result.data.id,
-            });
-            console.log(raw);
-            const requestOptions = {
-              method: "POST",
-              headers: myHeaders,
-              body: raw,
-              redirect: "follow",
-            };
-
-            fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/add`, requestOptions)
-              .then(async (res) => {
-                const aToken = res.headers.get("token-1");
-                localStorage.setItem("rexxdex", aToken);
-                return res.json();
-              })
-              .then((resultx) => {
-                console.log(resultx);
-                // setOpened(false);
-                if (resultx.message === "Expired Access") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (resultx.message === "Token Does Not Exist") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (resultx.message === "Unauthorized Access") {
-                  navigate("/authentication/forbiddenPage");
-                  window.location.reload();
-                }
-                MySwal.fire({
-                  title: resultx.status,
-                  type: "success",
-                  text: resultx.message,
-                }).then(() => {
-                  window.location.reload();
-                });
-              })
-              .catch((error) => {
-                setOpened(false);
-                MySwal.fire({
-                  title: error.status,
-                  type: "error",
-                  text: error.message,
-                });
-              });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          window.location.reload();
-        });
-      })
-      .catch((error) => {
-        setOpened(false);
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
+    let check = 0;
+    if (OpeningDate < CurTime) {
+      check = 1;
+      MySwal.fire({
+        title: "Invalid Date",
+        type: "error",
+        text: "Please Enter A Date From The Future",
       });
+    }
+    if (check === 0 && ClosingDate < OpeningDate) {
+      check = 1;
+      MySwal.fire({
+        title: "Invalid Closing Date",
+        type: "error",
+        text: "Please Enter A Date From The Future",
+      });
+    }
+    if (check === 0) {
+      fetch(`${process.env.REACT_APP_RAGA_URL}/appointment/add`, requestOptions3)
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          setOpened(false);
+          console.log(result);
+          // setAppID(result.data.id);
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+          }
+          const raw2 = JSON.stringify([
+            {
+              orgID: data[0].orgID,
+              appointmentID: result.data.id,
+              name: data[0].empName,
+              email: filteredItemsEmp.personal.email,
+              personalID: data[0].empID,
+              appointmentTime: OpeningDate,
+            },
+            {
+              orgID: data[0].orgID,
+              appointmentID: result.data.id,
+              name: `${filteredItems.personal.fname} ${filteredItems.personal.lname}`,
+              email: filteredItems.personal.email,
+              personalID: Number(mentorx),
+              appointmentTime: OpeningDate,
+            },
+          ]);
+          console.log(raw2);
+          const requestOptions2 = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw2,
+            redirect: "follow",
+          };
+          fetch(`${process.env.REACT_APP_RAGA_URL}/appointmentParticipant/add`, requestOptions2)
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultr) => {
+              console.log(resultr);
+              const raw = JSON.stringify({
+                orgID: orgIDs,
+                mentorID: Number(mentorx),
+                onboardingID: data[0].id,
+                appointmentID: result.data.id,
+              });
+              console.log(raw);
+              const requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow",
+              };
+
+              fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/add`, requestOptions)
+                .then(async (res) => {
+                  const aToken = res.headers.get("token-1");
+                  localStorage.setItem("rexxdex", aToken);
+                  return res.json();
+                })
+                .then((resultx) => {
+                  console.log(resultx);
+                  // setOpened(false);
+                  if (resultx.message === "Expired Access") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (resultx.message === "Token Does Not Exist") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (resultx.message === "Unauthorized Access") {
+                    navigate("/authentication/forbiddenPage");
+                    window.location.reload();
+                  }
+                  MySwal.fire({
+                    title: resultx.status,
+                    type: "success",
+                    text: resultx.message,
+                  }).then(() => {
+                    window.location.reload();
+                  });
+                })
+                .catch((error) => {
+                  setOpened(false);
+                  MySwal.fire({
+                    title: error.status,
+                    type: "error",
+                    text: error.message,
+                  });
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          MySwal.fire({
+            title: result.status,
+            type: "success",
+            text: result.message,
+          }).then(() => {
+            window.location.reload();
+          });
+        })
+        .catch((error) => {
+          setOpened(false);
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
+        });
+    }
   };
   return (
     <DashboardLayout>

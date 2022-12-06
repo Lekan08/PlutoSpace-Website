@@ -87,7 +87,6 @@ function Updatepolls() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        // console.log(result);
         if (isMounted) {
           if (result[0].status !== 0 || result[0].status !== "0") {
             MySwal.fire({
@@ -102,7 +101,6 @@ function Updatepolls() {
           setItems(result);
           setQuestionx(result[0].question);
           setGroupIDx(result[0].groupID);
-          // setStatus(result[0].status);
         }
       });
     return () => {
@@ -156,7 +154,6 @@ function Updatepolls() {
         });
       })
       .catch((error) => {
-        // setOpened(false);
         MySwal.fire({
           title: error.status,
           type: "error",
@@ -251,7 +248,6 @@ function Updatepolls() {
             <MDButton
               variant="gradient"
               onClick={(e) => handleUpdate(e)}
-              // disabled={!enabled}
               color="info"
               width="50%"
               align="center"

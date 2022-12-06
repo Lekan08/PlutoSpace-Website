@@ -81,7 +81,6 @@ function Addpolloptions() {
         });
       })
       .catch((error) => {
-        // setOpened(false);
         MySwal.fire({
           title: error.status,
           type: "error",
@@ -269,7 +268,6 @@ function Addpolloptions() {
             <MDButton
               variant="gradient"
               onClick={(e) => handleUpdate(e)}
-              // disabled={!enabled}
               color="info"
               width="50%"
               align="center"
