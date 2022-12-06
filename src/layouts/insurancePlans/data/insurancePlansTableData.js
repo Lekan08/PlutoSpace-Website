@@ -162,17 +162,19 @@ export default function InsurancePlansTableData() {
           Swal.showValidationMessage(
             `Please enter valid inputs for title, damage client contribution, monthly contribution and yearly contribution`
           );
+        } else {
+          Swal.resetValidationMessage();
+          handleUpdate(
+            id,
+            title,
+            descrip,
+            createdTime,
+            deleteFlag,
+            damageClientContribution,
+            monthlyContribution,
+            yearlyContribution
+          );
         }
-        handleUpdate(
-          id,
-          title,
-          descrip,
-          createdTime,
-          deleteFlag,
-          damageClientContribution,
-          monthlyContribution,
-          yearlyContribution
-        );
       },
     });
   };

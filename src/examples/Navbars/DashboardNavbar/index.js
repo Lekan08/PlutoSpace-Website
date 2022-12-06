@@ -357,7 +357,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
       <MDBox pt={4} pb={3} px={3}>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
+          style={{ backgroundColor: "#f96d02" }}
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
@@ -499,7 +500,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                       open={state[anchor]}
                       onClose={toggleDrawer(anchor, false)}
                       sx={{
-                        "& .MuiDrawer-paper": { boxSizing: "border-box", width: 500 },
+                        "& .MuiDrawer-paper": { boxSizing: "border-box", width: 460 },
                       }}
                     >
                       {drawer(anchor)}

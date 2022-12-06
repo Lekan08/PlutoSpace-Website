@@ -87,8 +87,8 @@ function Export() {
         align: "left",
       },
       {
-        Header: "Paying Amount",
-        accessor: "payingAmount",
+        Header: "Client Type",
+        accessor: "clientType",
         align: "left",
       },
       {

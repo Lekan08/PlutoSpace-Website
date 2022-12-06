@@ -718,7 +718,7 @@ function Sales() {
       <Card>
         <MDBox style={{ paddingLeft: "450px" }}>
           <Container>
-            <div className="row" style={{ paddingLeft: "700px" }}>
+            <div className="row" style={{ paddingLeft: "450px" }}>
               <div className="col-sm-12">
                 <MDTypography
                   variant="button"
@@ -922,8 +922,8 @@ function Sales() {
                         <TextField
                           id="filled-number"
                           value={form.pricePerUnit}
-                          label="Pice Per Quantity "
-                          placeholder="Pice Per Quantity "
+                          label="Price Per Unit"
+                          placeholder="Pice Per Unit "
                           size="small"
                           name="pricePerUnit"
                           // key={c}

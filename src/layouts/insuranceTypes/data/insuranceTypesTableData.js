@@ -120,8 +120,10 @@ export default function InsuranceTypesTableData() {
         const id = value;
         if (!name) {
           Swal.showValidationMessage(`Please enter name`);
+        } else {
+          Swal.resetValidationMessage();
+          handleUpdate(id, name, descrip, createdTime, deleteFlag, plansx);
         }
-        handleUpdate(id, name, descrip, createdTime, deleteFlag, plansx);
       },
     });
   };
@@ -262,6 +264,9 @@ export default function InsuranceTypesTableData() {
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => handleShow(items, value)}>Update</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item>
+                <Dropdown.Item onClick={() => navigate(`/insurance/type/attach-plan?id=${value}`)}>
+                  Attach Plan
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>
