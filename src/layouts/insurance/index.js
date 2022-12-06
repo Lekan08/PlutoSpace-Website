@@ -290,7 +290,7 @@ function Insurance() {
   const selectPlan = (value) => {
     const filteredItems = type.filter((item) => item.id === value);
     const headers = miHeaders;
-    const selectedPlanIDs = filteredItems.planIDs;
+    const selectedPlanIDs = filteredItems[0].planIDs;
 
     let isMounted = true;
     fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insurancePlan/getByIds/${selectedPlanIDs}`, {
@@ -316,6 +316,7 @@ function Insurance() {
         }
         if (isMounted) {
           setPlan(result);
+          console.log(result);
         }
       });
     return () => {
