@@ -253,6 +253,7 @@ import InsuranceTypes from "layouts/insuranceTypes";
 import InsurancePlans from "layouts/insurancePlans";
 import Insurance from "layouts/insurance";
 import InsuranceUpdate from "layouts/insurance/update";
+import InsuranceView from "layouts/insurance/view";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -1110,6 +1111,13 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/insurance/update",
     component: <InsuranceUpdate />,
+  },
+  {
+    name: "Insurance View",
+    key: "viewInsurance",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/insurance/view",
+    component: <InsuranceView />,
   },
   {
     type: "collapse",
