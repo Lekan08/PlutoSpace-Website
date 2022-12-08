@@ -27,6 +27,10 @@ export default function InsuranceTableData() {
     navigate(`/insurance/view?id=${value}`);
   };
 
+  const handleInsuranceContribution = (value) => {
+    navigate(`/insurance/contribution?id=${value}`);
+  };
+
   // Method to handle diable
   const handleDisable = (idx, commentx) => {
     MySwal.fire({
@@ -254,6 +258,9 @@ export default function InsuranceTableData() {
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => handleUpdateInsurance(value)}>Update</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleViewInsurance(value)}>View</Dropdown.Item>
+                <Dropdown.Item onClick={() => handleInsuranceContribution(value)}>
+                  Contribution
+                </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleTerminate(value)}>Terminate</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
