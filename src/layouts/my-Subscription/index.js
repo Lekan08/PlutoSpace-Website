@@ -482,7 +482,7 @@ function MySubscription() {
       align: "left",
     },
     {
-      Header: "Approver Name",
+      Header: "Decision Made By",
       accessor: "approverName",
       align: "left",
     },
