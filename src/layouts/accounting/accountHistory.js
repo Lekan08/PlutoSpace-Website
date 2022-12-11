@@ -66,6 +66,10 @@ function AccountHistory() {
     };
   }, []);
 
+  const handlePDF = (value) => {
+    console.log(value);
+  };
+
   // Method to change type
   const changeType = (valuee) => {
     let colorr = "#000000";
@@ -145,9 +149,7 @@ function AccountHistory() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigate(`/my-Bills/update-My-Bills?id=${value}`)}>
-                Download As PDF
-              </Dropdown.Item>
+              <Dropdown.Item onClick={() => handlePDF(value)}>Download As PDF</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
