@@ -1,3 +1,4 @@
+import * as React from "react";
 import { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
 // import DataTable from "examples/Tables/DataTable";
@@ -19,13 +20,53 @@ import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { Container } from "react-bootstrap";
 import DataTable from "examples/Tables/DataTable";
+import Typography from "@mui/material/Typography";
 // import TextField from "@mui/material/TextField";
 
 import { useNavigate } from "react-router-dom";
 import GHeaders from "getHeader";
 // import Button from "@mui/material/Button";
+import PropTypes from "prop-types";
 import Styles from "styles";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import AccountHistory from "./accountHistory";
 import accountingLoader from "./accountingLoader.gif";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  // eslint-disable-next-line react/require-default-props
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 
 function Accounting() {
   const { allGHeaders: miHeaders } = GHeaders();
@@ -44,7 +85,11 @@ function Accounting() {
   const navigate = useNavigate();
 
   const { allPHeaders: myHeaders } = PHeaders();
+  const [valuesx, setValuesx] = React.useState(0);
 
+  const handleChange = (event, newValue) => {
+    setValuesx(newValue);
+  };
   // const columns = [
   //   {
   //     name: "category",
@@ -202,7 +247,6 @@ function Accounting() {
           }
         }
       });
-    setOpened(true);
     fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/runAccounts/${orgIDs}/${typex}`, {
       headers,
     })
@@ -307,195 +351,216 @@ function Accounting() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Card>
-        <MDBox pt={4} pb={3} px={30}>
-          <MDBox
-            variant="gradient"
-            // bgColor="info"
-            borderRadius="lg"
-            style={{ backgroundColor: "#f96d02" }}
-            mx={2}
-            mt={-3}
-            p={2}
-            mb={1}
-            textAlign="center"
+      <Box sx={{ width: "100%" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Tabs
+            value={valuesx}
+            onChange={handleChange}
+            aria-label="basic tabs example"
+            sx={{ bgcolor: "#f96d02" }}
           >
-            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Accounting
-            </MDTypography>
-          </MDBox>
-        </MDBox>
-        <Container>
-          <MDBox mt={4} mb={4} ml={17}>
-            <div className="row">
-              <div className="col-sm-4">
-                <MDButton
-                  variant="gradient"
-                  onClick={() => handleRunCal(1)}
-                  style={{ backgroundColor: "#B01E68", color: "#fff" }}
-                  width="50%"
-                  align="left"
-                  ml={5}
-                  mr={5}
-                >
-                  Daily
-                </MDButton>
-              </div>
-              <div className="col-sm-4">
-                <MDButton
-                  variant="gradient"
-                  onClick={() => handleRunCal(2)}
-                  style={{ backgroundColor: "#DC3535", color: "#fff" }}
-                  width="50%"
-                  align="center"
-                  ml={5}
-                  mr={5}
-                >
-                  Monthly
-                </MDButton>
-              </div>
-              <div className="col-sm-4">
-                <MDButton
-                  variant="gradient"
-                  onClick={() => handleRunCal(3)}
-                  style={{ backgroundColor: "#F49D1A", color: "#fff" }}
-                  width="50%"
-                  align="right"
-                >
-                  Yearly
-                </MDButton>
-              </div>
-            </div>
-          </MDBox>
-        </Container>
-      </Card>
-      &nbsp; &nbsp;
-      {display ? (
-        <>
+            <Tab label="Process Account" {...a11yProps(0)} />
+            <Tab label="Account History" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <TabPanel value={valuesx} index={0}>
           <Card>
-            <MDBox mt={4} mb={4} ml={17}>
-              <div className="row">
-                <div className="col-sm-4">
-                  <div className="center">
-                    <h4>TOTAL INCOME</h4>
-                  </div>
-                  <MDBox
-                    variant="gradient"
-                    // bgColor="info"
-                    borderRadius="lg"
-                    style={{ backgroundColor: "#4E9F3D" }}
-                    mx={2}
-                    p={2}
-                    mb={1}
-                    textAlign="center"
-                  >
-                    <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                      ₦ {totalIncome.toLocaleString(undefined)}
-                    </MDTypography>
-                  </MDBox>
-                </div>
-                <div className="col-sm-2">
-                  <></>
-                </div>
-                <div className="col-sm-4">
-                  <div className="center">
-                    <h4>TOTAL EXPENSES</h4>
-                  </div>
-                  <MDBox
-                    variant="gradient"
-                    // bgColor="info"
-                    borderRadius="lg"
-                    style={{ backgroundColor: "#CF0A0A" }}
-                    mx={2}
-                    p={2}
-                    mb={1}
-                    textAlign="center"
-                  >
-                    <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                      ₦ {totalExpenses.toLocaleString(undefined)}
-                    </MDTypography>
-                  </MDBox>
-                </div>
-              </div>
-              <br />
-              <br />
-              <div className="row">
-                <div className="col-sm-3">
-                  <></>
-                </div>
-                <div className="col-sm-4">
-                  <div className="center">
-                    <h4>TOTAL BALANCE</h4>
-                  </div>
-                  <MDBox
-                    variant="gradient"
-                    // bgColor="info"
-                    borderRadius="lg"
-                    style={{ backgroundColor: `${totalBalance >= 0 ? "#4E9F3D" : "#CF0A0A"}` }}
-                    mx={2}
-                    p={2}
-                    mb={1}
-                    textAlign="center"
-                  >
-                    <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                      ₦ {totalBalance.toLocaleString(undefined)}
-                    </MDTypography>
-                  </MDBox>
-                </div>
-                <div className="col-sm-3">
-                  <></>
-                </div>
-              </div>
+            <MDBox pt={4} pb={3} px={30}>
+              <MDBox
+                variant="gradient"
+                // bgColor="info"
+                borderRadius="lg"
+                style={{ backgroundColor: "#f96d02" }}
+                mx={2}
+                mt={-3}
+                p={2}
+                mb={1}
+                textAlign="center"
+              >
+                <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                  Accounting
+                </MDTypography>
+              </MDBox>
             </MDBox>
+            <Container>
+              <MDBox mt={4} mb={4} ml={17}>
+                <div className="row">
+                  <div className="col-sm-4">
+                    <MDButton
+                      variant="gradient"
+                      onClick={() => handleRunCal(1)}
+                      style={{ backgroundColor: "#B01E68", color: "#fff" }}
+                      width="50%"
+                      align="left"
+                      ml={5}
+                      mr={5}
+                    >
+                      Daily
+                    </MDButton>
+                  </div>
+                  <div className="col-sm-4">
+                    <MDButton
+                      variant="gradient"
+                      onClick={() => handleRunCal(2)}
+                      style={{ backgroundColor: "#DC3535", color: "#fff" }}
+                      width="50%"
+                      align="center"
+                      ml={5}
+                      mr={5}
+                    >
+                      Monthly
+                    </MDButton>
+                  </div>
+                  <div className="col-sm-4">
+                    <MDButton
+                      variant="gradient"
+                      onClick={() => handleRunCal(3)}
+                      style={{ backgroundColor: "#F49D1A", color: "#fff" }}
+                      width="50%"
+                      align="right"
+                    >
+                      Yearly
+                    </MDButton>
+                  </div>
+                </div>
+              </MDBox>
+            </Container>
           </Card>
-          <div>
-            <MDBox pt={3}>
-              <div style={{ display: "flex", justifyContent: "center", flexDirection: "row" }}>
-                {" "}
-                <MDButton
-                  variant="gradient"
-                  onClick={handleClick}
-                  style={Styles.buttonSx}
-                  width="50%"
-                  align="center"
-                  ml={15}
-                  mr={5}
-                >
-                  Process Account
-                </MDButton>
+          &nbsp; &nbsp;
+          {display ? (
+            <>
+              <Card>
+                <MDBox mt={4} mb={4} ml={17}>
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <div className="center">
+                        <h4>TOTAL INCOME</h4>
+                      </div>
+                      <MDBox
+                        variant="gradient"
+                        // bgColor="info"
+                        borderRadius="lg"
+                        style={{ backgroundColor: "#4E9F3D" }}
+                        mx={2}
+                        p={2}
+                        mb={1}
+                        textAlign="center"
+                      >
+                        <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                          ₦ {totalIncome.toLocaleString(undefined)}
+                        </MDTypography>
+                      </MDBox>
+                    </div>
+                    <div className="col-sm-2">
+                      <></>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="center">
+                        <h4>TOTAL EXPENSES</h4>
+                      </div>
+                      <MDBox
+                        variant="gradient"
+                        // bgColor="info"
+                        borderRadius="lg"
+                        style={{ backgroundColor: "#CF0A0A" }}
+                        mx={2}
+                        p={2}
+                        mb={1}
+                        textAlign="center"
+                      >
+                        <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                          ₦ {totalExpenses.toLocaleString(undefined)}
+                        </MDTypography>
+                      </MDBox>
+                    </div>
+                  </div>
+                  <br />
+                  <br />
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <></>
+                    </div>
+                    <div className="col-sm-4">
+                      <div className="center">
+                        <h4>TOTAL BALANCE</h4>
+                      </div>
+                      <MDBox
+                        variant="gradient"
+                        // bgColor="info"
+                        borderRadius="lg"
+                        style={{ backgroundColor: `${totalBalance >= 0 ? "#4E9F3D" : "#CF0A0A"}` }}
+                        mx={2}
+                        p={2}
+                        mb={1}
+                        textAlign="center"
+                      >
+                        <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                          ₦ {totalBalance.toLocaleString(undefined)}
+                        </MDTypography>
+                      </MDBox>
+                    </div>
+                    <div className="col-sm-3">
+                      <></>
+                    </div>
+                  </div>
+                </MDBox>
+              </Card>
+              <div>
+                <MDBox pt={3}>
+                  <div style={{ display: "flex", justifyContent: "center", flexDirection: "row" }}>
+                    {" "}
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleClick}
+                      style={Styles.buttonSx}
+                      width="50%"
+                      align="center"
+                      ml={15}
+                      mr={5}
+                    >
+                      Process Account
+                    </MDButton>
+                  </div>
+                  &nbsp; &nbsp;
+                  <DataTable
+                    table={{ columns: pColumns, rows: runAccData }}
+                    isSorted
+                    entriesPerPage
+                    showTotalEntries
+                    noEndBorder
+                    canSearch
+                  />
+                </MDBox>
               </div>
-              &nbsp; &nbsp;
-              <DataTable
-                table={{ columns: pColumns, rows: runAccData }}
-                isSorted
-                entriesPerPage
-                showTotalEntries
-                noEndBorder
-                canSearch
-              />
-            </MDBox>
-          </div>
-          {/* <MDBox mt={4} mb={1} ml></MDBox> */}
-        </>
-      ) : (
-        <></>
-      )}
-      <Footer />
-      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
-        <>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <img
-              src={accountingLoader}
-              alt="work"
-              style={{
-                height: "50%",
-                width: "35%",
-              }}
-            />
-            {/* <CircularProgress color="info" /> */}
-          </div>
-        </>
-      </Backdrop>
+              {/* <MDBox mt={4} mb={1} ml></MDBox> */}
+            </>
+          ) : (
+            <></>
+          )}
+          <Footer />
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={opened}
+          >
+            <>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <img
+                  src={accountingLoader}
+                  alt="work"
+                  style={{
+                    height: "50%",
+                    width: "35%",
+                  }}
+                />
+                {/* <CircularProgress color="info" /> */}
+              </div>
+            </>
+          </Backdrop>
+        </TabPanel>
+        <TabPanel value={valuesx} index={1}>
+          <AccountHistory />
+        </TabPanel>
+      </Box>
     </DashboardLayout>
   );
 }
