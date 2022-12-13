@@ -20,6 +20,8 @@ import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { Container } from "react-bootstrap";
 import DataTable from "examples/Tables/DataTable";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import Typography from "@mui/material/Typography";
 // import TextField from "@mui/material/TextField";
 
@@ -89,6 +91,51 @@ function Accounting() {
 
   const handleChange = (event, newValue) => {
     setValuesx(newValue);
+  };
+
+  const ValuesToCommaIndented = (values) => {
+    const num = Number(values);
+    return num.toLocaleString(undefined);
+  };
+
+  const changeColor = (valuee) => {
+    let colorr = "#000000";
+    if (valuee === "INCOME") {
+      colorr = "#4E9F3D";
+    } else if (valuee === "EXPENSES") {
+      colorr = "#CF0A0A";
+    }
+    const colorChange = {
+      value: valuee,
+      color: colorr,
+    };
+    return colorChange;
+  };
+
+  // To handle pdf download
+  const downloadPdf = () => {
+    // eslint-disable-next-line new-cap
+    const doc = new jsPDF();
+    doc.text("Accounting Details", 20, 10);
+    doc.autoTable({
+      theme: "grid",
+      columns: [
+        { header: "Source", dataKey: "source" },
+        {
+          header: "Category",
+          dataKey: "category",
+        },
+        {
+          header: "Total Amount (NGN)",
+          dataKey: "totalAmount",
+        },
+      ],
+      body: runAccData,
+    });
+    doc.text(`Total Income = NGN${totalIncome.toLocaleString(undefined)}`, 10, 5);
+    doc.text(`Total Expenses = NGN${totalExpenses.toLocaleString(undefined)}`, 10, 5);
+    doc.text(`Total Balance = NGN${totalBalance.toLocaleString(undefined)}`, 10, 5);
+    doc.save("Accounting.pdf");
   };
   // const columns = [
   //   {
@@ -197,6 +244,7 @@ function Accounting() {
           type: "success",
           text: result.message,
         }).then(() => {
+          downloadPdf();
           window.location.reload();
         });
         console.log(result);
@@ -300,25 +348,6 @@ function Accounting() {
   useEffect(() => {
     setTotalBalance(totalBalanceValue + totalIncome - totalExpenses);
   }, [totalBalanceValue, totalIncome, totalExpenses]);
-
-  const ValuesToCommaIndented = (values) => {
-    const num = Number(values);
-    return num.toLocaleString(undefined);
-  };
-
-  const changeColor = (valuee) => {
-    let colorr = "#000000";
-    if (valuee === "INCOME") {
-      colorr = "#4E9F3D";
-    } else if (valuee === "EXPENSES") {
-      colorr = "#CF0A0A";
-    }
-    const colorChange = {
-      value: valuee,
-      color: colorr,
-    };
-    return colorChange;
-  };
 
   const pColumns = [
     {
