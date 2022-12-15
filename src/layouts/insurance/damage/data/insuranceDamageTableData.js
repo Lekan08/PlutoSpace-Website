@@ -408,7 +408,7 @@ export default function InsuranceContributionTableData() {
       },
       { Header: "decision by", accessor: "approvedByName", align: "left" },
       {
-        Header: "decision Date",
+        Header: "Approved Date",
         accessor: "approvedTime",
         Cell: ({ cell: { value } }) => changeDate(value),
         align: "left",
