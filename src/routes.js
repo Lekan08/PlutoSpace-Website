@@ -255,6 +255,8 @@ import Insurance from "layouts/insurance";
 import InsuranceUpdate from "layouts/insurance/update";
 import InsuranceView from "layouts/insurance/view";
 import InsuranceContribution from "layouts/insurance/contribution";
+import AssetTypes from "layouts/asset-Types";
+import UpdateAssetTypes from "layouts/asset-Types/update";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -860,6 +862,33 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-travel/forward-for-approval",
     component: <ForwardApproval />,
+  },
+  {
+    type: "divider",
+    name: "",
+    key: "divd444",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Assets",
+    key: "titd444",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Asset-Types",
+    key: "assetTypes",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/asset-Types",
+    component: <AssetTypes />,
+  },
+  {
+    name: "Update Asset-Types",
+    key: "updateassetTypes",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/asset-Types/update",
+    component: <UpdateAssetTypes />,
   },
   {
     type: "divider",
