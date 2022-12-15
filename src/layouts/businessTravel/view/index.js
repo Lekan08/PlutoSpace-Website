@@ -26,7 +26,6 @@ function ViewBusiness() {
   const [opened, setOpened] = useState(false);
 
   const [allx, setAll] = useState([]);
-  console.log(allx);
   const navigate = useNavigate();
   const { allGHeaders: miHeaders } = GHeaders();
 
@@ -58,10 +57,8 @@ function ViewBusiness() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
           if (result.length !== 0) {
-            console.log("entered");
             setAll(result[0].employeesName);
           }
         }
@@ -72,7 +69,6 @@ function ViewBusiness() {
   }, []);
 
   const handleRemove = (value) => {
-    console.log(value);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
