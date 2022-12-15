@@ -24,12 +24,12 @@ function InsuranceContribution() {
   const MySwal = withReactContent(Swal);
   const { columns: pColumns, rows: pRows } = InsuranceContributionTable();
 
-  const [cash, setCash] = useState("");
-  const [card, setCard] = useState("");
-  const [check, setCheck] = useState("");
-  const [checkCash, setCheckCash] = useState(false);
-  const [checkCard, setCheckCard] = useState(false);
-  const [checkCheck, setCheckCheck] = useState(false);
+  const [cash, setCash] = useState("0");
+  const [card, setCard] = useState("0");
+  const [check, setCheck] = useState("0");
+  const [checkCash, setCheckCash] = useState(true);
+  const [checkCard, setCheckCard] = useState(true);
+  const [checkCheck, setCheckCheck] = useState(true);
 
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
@@ -211,7 +211,7 @@ function InsuranceContribution() {
                     <MDInput
                       type="text"
                       label="Cash Payment Amount (NGN)"
-                      value={cash || ""}
+                      value={cash || "0"}
                       onChange={(e) => setCash(e.target.value)}
                       variant="standard"
                       fullWidth
@@ -228,7 +228,7 @@ function InsuranceContribution() {
                     <MDInput
                       type="text"
                       label="Check Payment Amount (NGN)"
-                      value={check || ""}
+                      value={check || "0"}
                       onChange={(e) => setCheck(e.target.value)}
                       variant="standard"
                       fullWidth
@@ -245,7 +245,7 @@ function InsuranceContribution() {
                     <MDInput
                       type="text"
                       label="Card Payment Amount (NGN)"
-                      value={card || ""}
+                      value={card || "0"}
                       onChange={(e) => setCard(e.target.value)}
                       variant="standard"
                       fullWidth

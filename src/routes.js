@@ -93,6 +93,7 @@ import SalaryPayment from "layouts/salaryPayment";
 
 import Bonusdeduction from "layouts/bonusdeduction";
 import MyBills from "layouts/my-Bills";
+import Accounting from "layouts/accounting";
 import MySubscription from "layouts/my-Subscription";
 import GeneralBills from "layouts/general-Bill";
 import GeneralSubscription from "layouts/general-Subscription";
@@ -491,6 +492,26 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/my-Subscription/update-My-Subscription",
     component: <UpdateMySubscription />,
+  },
+  {
+    type: "divider",
+    name: "",
+    key: "divd1Accounting",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Accounting",
+    key: "titd2Accounting",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Accounting",
+    key: "accounting",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/accounting",
+    component: <Accounting />,
   },
   {
     type: "divider",
