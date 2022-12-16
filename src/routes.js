@@ -258,6 +258,10 @@ import InsuranceView from "layouts/insurance/view";
 import InsuranceContribution from "layouts/insurance/contribution";
 import AssetTypes from "layouts/asset-Types";
 import UpdateAssetTypes from "layouts/asset-Types/update";
+import Assets from "layouts/assets";
+import UpdateAssets from "layouts/assets/update";
+import CompanyAssets from "layouts/company-Assets";
+import CustomerAssets from "layouts/customer-Assets";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -910,6 +914,37 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/asset-Types/update",
     component: <UpdateAssetTypes />,
+  },
+  {
+    type: "collapse",
+    name: "Assets",
+    key: "assets",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/assets",
+    component: <Assets />,
+  },
+  {
+    name: "Update Assets",
+    key: "updateassets",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/assets/update",
+    component: <UpdateAssets />,
+  },
+  {
+    type: "collapse",
+    name: "Company Assets",
+    key: "companyassets",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/company-Assets",
+    component: <CompanyAssets />,
+  },
+  {
+    type: "collapse",
+    name: "Customer Assets",
+    key: "customerassets",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/customer-Assets",
+    component: <CustomerAssets />,
   },
   {
     type: "divider",
