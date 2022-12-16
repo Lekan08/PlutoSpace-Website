@@ -10,7 +10,7 @@ import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 
-export default function InsuranceContributionTableData() {
+export default function InsuranceDamageTableData() {
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
 
@@ -84,7 +84,7 @@ export default function InsuranceContributionTableData() {
       });
   };
 
-  const handleUpdateInsuranceContribution = (value) => {
+  const handleUpdateInsuranceDamage = (value) => {
     let cashx = 0;
     let cardx = 0;
     let checkx = 0;
@@ -155,7 +155,7 @@ export default function InsuranceContributionTableData() {
         };
 
         fetch(
-          `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceContribution/delete/${value}`,
+          `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/delete/${value}`,
           requestOptions
         )
           .then(async (res) => {
@@ -215,7 +215,7 @@ export default function InsuranceContributionTableData() {
     };
 
     fetch(
-      `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceContribution/approveOrDecline`,
+      `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/approveOrDecline`,
       requestOptions
     )
       .then(async (res) => {
@@ -257,11 +257,11 @@ export default function InsuranceContributionTableData() {
       });
   };
 
-  // Method to handle decision making on insurance
+  // Method to handle decision making on insurance damage request
   const handleDecisionInsurance = (value, status) => {
     if (status === 1) {
       MySwal.fire({
-        title: "Approve Insurance Contribution",
+        title: "Approve Insurance Damage Request",
         html: ` <table><tr><td>
                  <label for="comment">Comment*</label></td>
                  <td><input type="text" id="comment" class="swal2-input"></td></tr><br>
@@ -282,7 +282,7 @@ export default function InsuranceContributionTableData() {
       });
     } else {
       MySwal.fire({
-        title: "Decline Insurance Contribution",
+        title: "Decline Insurance Damage Request",
         html: ` <table><tr><td>
                      <label for="comment">Comment*</label></td>
                      <td><input type="text" id="comment" class="swal2-input"></td></tr><br>
@@ -335,7 +335,7 @@ export default function InsuranceContributionTableData() {
     return "#FF0000";
   };
 
-  // Method to fetch all insurance contributions
+  // Method to fetch all insurance damage requests
   useEffect(() => {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -346,7 +346,7 @@ export default function InsuranceContributionTableData() {
     const ids = urlParams.get("id");
     let isMounted = true;
     fetch(
-      `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceContribution/getForInsurance/${orgIDs}/${ids}`,
+      `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/getForInsurance/${orgIDs}/${ids}`,
       { headers }
     )
       .then(async (res) => {
@@ -384,9 +384,8 @@ export default function InsuranceContributionTableData() {
   return {
     columns: [
       { Header: "created by", accessor: "createdByName", align: "left" },
-      { Header: "cash payment amount (in NGN)", accessor: "cashPaymentAmount", align: "left" },
-      { Header: "card payment amount (in NGN)", accessor: "cardPaymentAmount", align: "left" },
-      { Header: "check payment amount (in NGN)", accessor: "checkPaymentAmount", align: "left" },
+      { Header: "damage amount (in NGN)", accessor: "damageAmount", align: "left" },
+      { Header: "damage contribution (in NGN)", accessor: "damageContribution", align: "left" },
       {
         Header: "Created Date",
         accessor: "createdTime",
@@ -408,7 +407,7 @@ export default function InsuranceContributionTableData() {
       },
       { Header: "decision by", accessor: "approvedByName", align: "left" },
       {
-        Header: "Approved Date",
+        Header: "Decision Date",
         accessor: "approvedTime",
         Cell: ({ cell: { value } }) => changeDate(value),
         align: "left",
@@ -431,7 +430,7 @@ export default function InsuranceContributionTableData() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={() => handleUpdateInsuranceContribution(value)}>
+                <Dropdown.Item onClick={() => handleUpdateInsuranceDamage(value)}>
                   Update
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDecisionInsurance(value, 1)}>
