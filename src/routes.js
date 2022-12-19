@@ -234,6 +234,7 @@ import TimeOffRequestsDashboard from "layouts/timeoffrequest-dashboard";
 // import FunctionalComponent from "layouts/businesstravel-dashboard/exportpdf";
 // import Html from "layouts/businesstravel-dashboard/exporthtml";
 
+import VideoChat from "layouts/videoChat";
 import OnboardingSession from "layouts/onboardingCompany/sessions";
 import AssignedOnboarding from "layouts/assignedOnboarding";
 import GenerateProductionReport from "layouts/products/reportProduction/generateProductionReport";
@@ -290,6 +291,14 @@ const routes = [
     icon: <Icon fontSize="small">create_new_folder</Icon>,
     route: "/Document-Library",
     component: <DocumentLibrary />,
+  },
+  {
+    type: "collapse",
+    name: "Video Chat",
+    key: "videoChat",
+    icon: <Icon fontSize="small">video_call</Icon>,
+    route: "/video-chat",
+    component: <VideoChat />,
   },
   {
     type: "collapse",
