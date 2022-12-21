@@ -263,6 +263,7 @@ import Assets from "layouts/assets";
 import UpdateAssets from "layouts/assets/update";
 import CompanyAssets from "layouts/company-Assets";
 import CustomerAssets from "layouts/customer-Assets";
+import AssetAttachDocument from "layouts/assets/attachDocuments";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -930,6 +931,13 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/assets/update",
     component: <UpdateAssets />,
+  },
+  {
+    name: "Attach Documents",
+    key: "attachDocuments",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/assets/attach-Documents",
+    component: <AssetAttachDocument />,
   },
   {
     type: "collapse",
