@@ -166,6 +166,9 @@ export default function AssetsData() {
                 <Dropdown.Item onClick={() => navigate(`/assets/update?id=${value}`)}>
                   Update
                 </Dropdown.Item>
+                <Dropdown.Item onClick={() => navigate(`/assets/attach-Documents?id=${value}`)}>
+                  Attach Documents
+                </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisable(value)}>Delete</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
