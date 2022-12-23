@@ -245,6 +245,7 @@ import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
+import ViewResultsAdmin from "layouts/cbt/viewResults";
 import SalesPayment from "layouts/sales/salesPayment";
 import FilterSales from "layouts/sales/filterSales";
 import Services from "layouts/services";
@@ -1698,6 +1699,13 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/cbt/assignCbtTestToJobPostApplicant/",
     component: <AssignCbtTestToJobPost />,
+  },
+  {
+    name: "ViewCbtResult",
+    key: "viewCbtResult",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/cbt/view-Results/",
+    component: <ViewResultsAdmin />,
   },
   {
     name: "Answer",

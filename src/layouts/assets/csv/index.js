@@ -197,6 +197,98 @@ function Csv() {
     };
   }, []);
 
+  //   const chanllgeHandler = (event) => {
+  //     Papa.parse(event.target.files[0], {
+  //       header: true,
+  //       skipEmptyLines: true,
+  //       complete(results) {
+  //         const data11 = JSON.parse(localStorage.getItem("user1"));
+  //         const orgIDs = data11.orgID;
+  //         const idx = data11.personalID;
+  //         const obj = results.data;
+  //         const branch = Number(branchx);
+  //         const objx = obj.map(
+  //           ({
+  //             item,
+  //             itemWorth,
+  //             itemBoughtDate,
+  //             itemWarrantyDate,
+  //             serialNumber,
+  //             manufacturer,
+  //             components,
+  //             // eslint-disable-next-line arrow-body-style
+  //           }) => {
+  //             console.log(itemBoughtDate);
+  //             console.log(item);
+  //             console.log(itemWorth);
+  //             console.log(itemBoughtDate);
+  //             const itembought = new Date().getTime(itemBoughtDate);
+  //             const itemwarranty = new Date().getTime(itemWarrantyDate);
+  //             return {
+  //               item,
+  //               itemWorth: Number(itemWorth),
+  //               itemBoughtDate: itembought,
+  //               itemWarrantyDate: itemwarranty,
+  //               serialNumber,
+  //               manufacturer,
+  //               components,
+  //             };
+  //           }
+  //         );
+
+  //         objx.forEach((element) => {
+  //           element.orgID = orgIDs;
+  //           element.assetTypeID = assetTypeIDx;
+  //           element.createdBy = idx;
+  //           element.branchID = branch;
+  //           element.clientType = clientTypex;
+  //           element.clientID = clientIDx;
+  //           element.assignedTo = assignedTox;
+  //           console.log(element);
+  //         });
+  //         console.log(objx);
+  //         const objc = objx.map(
+  //           ({
+  //             orgID,
+  //             item,
+  //             clientType,
+  //             clientID,
+  //             assetTypeID,
+  //             itemWorth,
+  //             createdBy,
+  //             itemBoughtDate,
+  //             itemWarrantyDate,
+  //             branchID,
+  //             serialNumber,
+  //             manufacturer,
+  //             components,
+  //             assignedTo,
+  //             // eslint-disable-next-line arrow-body-style
+  //           }) => {
+  //             return {
+  //               orgID,
+  //               item,
+  //               clientType,
+  //               clientID,
+  //               assetTypeID,
+  //               itemWorth,
+  //               createdBy,
+  //               itemBoughtDate,
+  //               itemWarrantyDate,
+  //               branchID,
+  //               serialNumber,
+  //               manufacturer,
+  //               components,
+  //               assignedTo,
+  //             };
+  //           }
+  //         );
+  //         console.log(objc);
+  //         const why = JSON.stringify(objc);
+  //         setFile(why);
+  //       },
+  //     });
+  //   };
   const changeHandler = (event) => {
     Papa.parse(event.target.files[0], {
       header: true,
@@ -206,86 +298,76 @@ function Csv() {
         const orgIDs = data11.orgID;
         // const personalIDs = data11.personalID;
         const idx = data11.personalID;
+        // const branch = Number(branchx);
+        const clientType = clientTypex;
+        const clientId = clientIDx;
+        const assignToo = assignedTox;
         const obj = results.data;
         const objx = obj.map(
           ({
             item,
-            // clientType,
-            // clientID,
-            // assetTypeID,
             itemWorth,
-            // createdBy,
             itemBoughtDate,
             itemWarrantyDate,
-            // branchID,
             serialNumber,
             manufacturer,
-            components,
-            // assignedTo,
+            // components,
             // eslint-disable-next-line arrow-body-style
           }) => {
-            const itembought = new Date().getTime(itemBoughtDate);
-            const itemwarranty = new Date().getTime(itemWarrantyDate);
             return {
               item,
-              //   clientType,
-              //   clientID,
-              //   assetTypeID,
               itemWorth: Number(itemWorth),
-              //   createdBy,
-              itemBoughtDate: itembought,
-              itemWarrantyDate: itemwarranty,
-              //   branchID,
-              serialNumber,
+              itemBoughtDate: new Date(itemBoughtDate).getTime(),
+              itemWarrantyDate: new Date(itemWarrantyDate).getTime(),
+              serialNumber: Number(serialNumber),
               manufacturer,
-              components,
-              //   assignedTo,
+              //   components,
             };
           }
         );
 
         objx.forEach((element) => {
           element.orgID = orgIDs;
-          element.assetTypeID = assetTypeIDx;
           element.createdBy = idx;
           element.branchID = branchx;
-          element.clientType = clientTypex;
-          element.clientID = clientIDx;
-          element.assignedTo = assignedTox;
+          element.assetTypeID = assetTypeIDx;
+          element.clientType = clientType;
+          element.clientID = clientId;
+          element.assignedTo = assignToo;
         });
         const objc = objx.map(
           ({
             orgID,
-            item,
+            createdBy,
+            branchID,
+            assetTypeID,
             clientType,
             clientID,
-            assetTypeID,
+            assignedTo,
+            item,
             itemWorth,
-            createdBy,
             itemBoughtDate,
             itemWarrantyDate,
-            branchID,
             serialNumber,
             manufacturer,
-            components,
-            assignedTo,
+            // components,
             // eslint-disable-next-line arrow-body-style
           }) => {
             return {
               orgID,
-              item,
+              createdBy,
+              branchID,
+              assetTypeID,
               clientType,
               clientID,
-              assetTypeID,
+              assignedTo,
+              item,
               itemWorth,
-              createdBy,
               itemBoughtDate,
               itemWarrantyDate,
-              branchID,
               serialNumber,
               manufacturer,
-              components,
-              assignedTo,
+              //   components,
             };
           }
         );
@@ -398,14 +480,24 @@ function Csv() {
                 <Container>
                   <div className="row">
                     <div className="col-sm-6">
-                      <MDBox>
+                      <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        fontSize="80%"
+                        align="left"
+                        color="text"
+                        mt={0}
+                      >
+                        Branch *
+                      </MDTypography>
+                      <MDBox textAlign="right">
                         <Form.Select
                           value={branchx}
                           aria-label="Default select example"
                           name="branchID"
                           onChange={(e) => setBranch(e.target.value)}
                         >
-                          <option>Branch</option>
+                          <option>--Branch--</option>
                           {getAllBranch.map((apis) => (
                             <option key={apis.id} value={apis.id}>
                               {apis.name}
@@ -416,7 +508,7 @@ function Csv() {
                     </div>
                     <br />
                     <div className="col-sm-6">
-                      {/* <MDTypography
+                      <MDTypography
                         variant="button"
                         fontWeight="regular"
                         fontSize="80%"
@@ -425,7 +517,7 @@ function Csv() {
                         mt={0}
                       >
                         Assets Types *
-                      </MDTypography> */}
+                      </MDTypography>
                       <MDBox textAlign="right">
                         <Form.Select
                           value={assetTypeIDx}
@@ -513,7 +605,17 @@ function Csv() {
                 </Container>
                 <div className="row">
                   <div className="col-sm-6">
-                    <MDBox>
+                    <MDTypography
+                      variant="button"
+                      fontWeight="regular"
+                      fontSize="80%"
+                      align="left"
+                      color="text"
+                      mt={0}
+                    >
+                      Assigned To *
+                    </MDTypography>
+                    <MDBox textAlign="right">
                       <Form.Select
                         value={assignedTox}
                         aria-label="Default select example"
