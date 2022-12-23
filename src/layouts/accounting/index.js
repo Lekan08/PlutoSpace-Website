@@ -23,7 +23,6 @@ import DataTable from "examples/Tables/DataTable";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import Typography from "@mui/material/Typography";
-// import TextField from "@mui/material/TextField";
 
 import { useNavigate } from "react-router-dom";
 import GHeaders from "getHeader";
@@ -33,8 +32,10 @@ import Styles from "styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+// import HtmlTable from "./htmlTable";
 import AccountHistory from "./accountHistory";
 import accountingLoader from "./accountingLoader.gif";
+import NoTransaction from "./NoTransaction.png";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -82,8 +83,9 @@ function Accounting() {
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalBalance, setTotalBalance] = useState(0);
   const [typexxx, setTypexx] = useState("");
+  const [orgIDDet, setOrgIDDet] = useState("");
   const [totalBalanceValue, setTotalBalanceValue] = useState(0);
-  // const [changeColor, setChangeColor] = useState(false);
+  const [noTransactionsMade, setNoTransactionsMade] = useState(false);
   const navigate = useNavigate();
 
   const { allPHeaders: myHeaders } = PHeaders();
@@ -112,14 +114,171 @@ function Accounting() {
     return colorChange;
   };
 
+  // Document Upload
+  const handlePDFUpload = (e, files) => {
+    console.log(files);
+    if (files !== "" && files !== 0) {
+      if (files === undefined) {
+        MySwal.fire({
+          title: "INVALID_INPUT",
+          type: "error",
+          text: "Please input a file",
+          // })  //.then(() => {
+          // handleOpen();
+        });
+      } else {
+        setOpened(true);
+        e.preventDefault();
+        // Headers for upload image
+        const GenToken = localStorage.getItem("rexxdex1");
+        const apiiToken = localStorage.getItem("rexxdex");
+
+        if (apiiToken !== "null" && apiiToken !== null) {
+          localStorage.setItem("rexxdex1", apiiToken);
+        }
+        const iiHeaders = new Headers();
+        iiHeaders.append("Token-1", GenToken);
+
+        const data11 = JSON.parse(localStorage.getItem("user1"));
+        // const personalIDs = data11.id;
+        const orgIdx = data11.orgID;
+        // const imgKey = `PROF_PIC_EMP-${personalIDs}`;
+        // console.log(imgKey);
+
+        const dateQ = new Date().getTime();
+        const accountKey = `accountDoc${1 * 2 + 3 + dateQ}`;
+        console.log(accountKey);
+        console.log(files);
+        const formDataxx = new FormData();
+        formDataxx.append("file", files[0]);
+        formDataxx.append("orgID", orgIdx);
+        formDataxx.append("key", accountKey);
+        formDataxx.append("type", files[0].type);
+
+        const raw = formDataxx;
+        console.log(raw);
+
+        const requestOptions = {
+          method: "POST",
+          headers: iiHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
+          .then(async (res) => {
+            const aToken = res.headers.get("token-1");
+            localStorage.setItem("rexxdex", aToken);
+            return res.json();
+          })
+          .then((result) => {
+            setOpened(false);
+            if (result.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (result.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (result.message === "Unauthorized Access") {
+              navigate("/authentication/forbiddenPage");
+              window.location.reload();
+            }
+            console.log(result);
+            if (result.status === "SUCCESS") {
+              const orgIDs = data11.orgID;
+              const createdByx = data11.personalID;
+
+              const rawAccount = JSON.stringify({
+                orgID: orgIDs,
+                createdBy: createdByx,
+                closingBalance: totalBalance,
+                type: typexxx,
+                documentKey: accountKey,
+              });
+              console.log(rawAccount);
+              const requestOptionsXS = {
+                method: "POST",
+                headers: myHeaders,
+                body: rawAccount,
+                redirect: "follow",
+              };
+
+              setOpened(true);
+              fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/add`, requestOptionsXS)
+                .then(async (res) => {
+                  const aToken = res.headers.get("token-1");
+                  localStorage.setItem("rexxdex", aToken);
+                  return res.json();
+                })
+                .then((resultxp) => {
+                  console.log(resultxp);
+                  setOpened(false);
+                  if (resultxp.message === "Expired Access") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (resultxp.message === "Token Does Not Exist") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (resultxp.message === "Unauthorized Access") {
+                    navigate("/authentication/forbiddenPage");
+                    window.location.reload();
+                  }
+                  MySwal.fire({
+                    title: resultxp.status,
+                    type: "success",
+                    text: resultxp.message,
+                  }).then(() => {
+                    // window.location.reload();
+                  });
+                  console.log(resultxp);
+                })
+                .catch((error) => {
+                  setOpened(false);
+                  MySwal.fire({
+                    title: error.status,
+                    type: "error",
+                    text: error.message,
+                  });
+                });
+            }
+            // .then(() => {
+            //   if (result.status !== "SUCCESS") {
+            //     handleOpen();
+            //   }
+            //   console.log("SUCCESS");
+            // });
+          });
+      }
+    }
+  };
+
+  //  Method to change date from timestamp
+  const changeDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const retDate = date.toDateString();
+    return retDate;
+  };
+
   // To handle pdf download
-  const downloadPdf = () => {
+  const downloadPdf = (e) => {
     // eslint-disable-next-line new-cap
     const doc = new jsPDF();
     doc.text("Accounting Details", 20, 10);
     doc.autoTable({
       theme: "grid",
       columns: [
+        {
+          header: "Crreated Time",
+          dataKey: "changeDate(createdTime)",
+        },
+        {
+          header: "Particulars",
+          dataKey: "particulars",
+        },
         { header: "Source", dataKey: "source" },
         {
           header: "Category",
@@ -132,11 +291,18 @@ function Accounting() {
       ],
       body: runAccData,
     });
-    doc.text(`Total Income = NGN${totalIncome.toLocaleString(undefined)}`, 10, 5);
-    doc.text(`Total Expenses = NGN${totalExpenses.toLocaleString(undefined)}`, 10, 5);
-    doc.text(`Total Balance = NGN${totalBalance.toLocaleString(undefined)}`, 10, 5);
-    doc.save("Accounting.pdf");
+    // doc.text(`Total Income = NGN${totalIncome.toLocaleString(undefined)}`, 10, 5);
+    // doc.text(`Total Expenses = NGN${totalExpenses.toLocaleString(undefined)}`, 10, 5);
+    // doc.text(`Total Balance = NGN${totalBalance.toLocaleString(undefined)}`, 10, 5);
+    console.log(orgIDDet);
+    const accountingDocuments = "./uploads/";
+    const dateNow = new Date().getTime();
+    const fileName = doc.save(`ACCT-${dateNow}-${orgIDDet}.pdf`);
+    const filePath = `${accountingDocuments}${fileName}`;
+    console.log(filePath);
+    handlePDFUpload(e, doc);
   };
+
   // const columns = [
   //   {
   //     name: "category",
@@ -196,68 +362,68 @@ function Accounting() {
   // };
 
   // eslint-disable-next-line consistent-return
-  const handleClick = (e) => {
-    e.preventDefault();
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-    const orgIDs = data11.orgID;
-    const createdByx = data11.personalID;
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
+  //   const orgIDs = data11.orgID;
+  //   const createdByx = data11.personalID;
 
-    const raw = JSON.stringify({
-      orgID: orgIDs,
-      createdBy: createdByx,
-      closingBalance: totalBalance,
-      type: typexxx,
-      documentKey: "string",
-    });
-    console.log(raw);
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
+  //   const raw = JSON.stringify({
+  //     orgID: orgIDs,
+  //     createdBy: createdByx,
+  //     closingBalance: totalBalance,
+  //     type: typexxx,
+  //     documentKey: "string",
+  //   });
+  //   console.log(raw);
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: raw,
+  //     redirect: "follow",
+  //   };
 
-    setOpened(true);
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/add`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          downloadPdf();
-          window.location.reload();
-        });
-        console.log(result);
-      })
-      .catch((error) => {
-        setOpened(false);
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
-      });
-  };
+  //   setOpened(true);
+  //   fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/add`, requestOptions)
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       console.log(result);
+  //       setOpened(false);
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
+  //       MySwal.fire({
+  //         title: result.status,
+  //         type: "success",
+  //         text: result.message,
+  //       }).then(() => {
+  //         downloadPdf();
+  //         // window.location.reload();
+  //       });
+  //       console.log(result);
+  //     })
+  //     .catch((error) => {
+  //       setOpened(false);
+  //       MySwal.fire({
+  //         title: error.status,
+  //         type: "error",
+  //         text: error.message,
+  //       });
+  //     });
+  // };
 
   // eslint-disable-next-line consistent-return
   const handleRunCal = (typex) => {
@@ -267,6 +433,7 @@ function Accounting() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
+    setOrgIDDet(orgIDs);
     let isMounted = true;
     setOpened(true);
     fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/getLast/${orgIDs}/${typex}`, { headers })
@@ -336,7 +503,7 @@ function Accounting() {
               console.log(expensesValues);
               setTotalExpenses(expensesValues.reduce((a, b) => a + b, 0));
             }
-          }
+          } else setNoTransactionsMade(true);
         }
       });
 
@@ -350,6 +517,17 @@ function Accounting() {
   }, [totalBalanceValue, totalIncome, totalExpenses]);
 
   const pColumns = [
+    {
+      Header: "Created Time ",
+      accessor: "createdTime",
+      Cell: ({ cell: { value } }) => changeDate(value),
+      align: "left",
+    },
+    {
+      Header: "Particulars ",
+      accessor: "particulars",
+      align: "left",
+    },
     {
       Header: "Source ",
       accessor: "source",
@@ -540,7 +718,7 @@ function Accounting() {
                     {" "}
                     <MDButton
                       variant="gradient"
-                      onClick={handleClick}
+                      onClick={downloadPdf}
                       style={Styles.buttonSx}
                       width="50%"
                       align="center"
@@ -559,12 +737,98 @@ function Accounting() {
                     noEndBorder
                     canSearch
                   />
+                  {/* &nbsp; &nbsp;
+                  <table
+                    style={{
+                      border: "2px solid #f96d02",
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  >
+                    <caption style={{ fontSize: "30px" }}>Account Details</caption>
+                    <caption style={{ fontSize: "30px" }}>Closing Balance</caption>
+                    <tr
+                      style={{
+                        padding: "0.25rem 1rem",
+                        border: "1px solid rgb(190, 190, 190)",
+                        textAlign: "center",
+                      }}
+                    >
+                      <th
+                        style={{
+                          padding: "0.25rem 1rem",
+                          border: "1px solid rgb(190, 190, 190)",
+                          textAlign: "center",
+                        }}
+                      >
+                        Source
+                      </th>
+                      <th
+                        style={{
+                          padding: "0.25rem 1rem",
+                          border: "1px solid rgb(190, 190, 190)",
+                          textAlign: "center",
+                        }}
+                      >
+                        Category
+                      </th>
+                      <th
+                        style={{
+                          padding: "0.25rem 1rem",
+                          border: "1px solid rgb(190, 190, 190)",
+                          textAlign: "center",
+                        }}
+                      >
+                        Total Amount (NGN)
+                      </th>
+                    </tr>
+                    <tbody>
+                      {runAccData.map((val, index) => (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <tr key={index}>
+                          <td
+                            style={{
+                              padding: "0.25rem 1rem",
+                              border: "1px solid rgb(190, 190, 190)",
+                              textAlign: "center",
+                            }}
+                          >
+                            {val.source}
+                          </td>
+                          <td
+                            style={{
+                              padding: "0.25rem 1rem",
+                              border: "1px solid rgb(190, 190, 190)",
+                              textAlign: "center",
+                            }}
+                          >
+                            {val.category}
+                          </td>
+                          <td
+                            style={{
+                              padding: "0.25rem 1rem",
+                              border: "1px solid rgb(190, 190, 190)",
+                              textAlign: "center",
+                            }}
+                          >
+                            {val.totalAmount}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table> */}
                 </MDBox>
               </div>
               {/* <MDBox mt={4} mb={1} ml></MDBox> */}
             </>
           ) : (
-            <></>
+            <>
+              {noTransactionsMade === true && (
+                <div>
+                  <img src={NoTransaction} alt="No Transaction" />
+                </div>
+              )}
+            </>
           )}
           <Footer />
           <Backdrop

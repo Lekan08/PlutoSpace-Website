@@ -99,11 +99,39 @@ function AccountHistory() {
     return retDate;
   };
 
+  const ValuesToCommaIndented = (values) => {
+    const num = Number(values);
+    return num.toLocaleString(undefined);
+  };
+
+  const changeColor = (valuee) => {
+    let colorr = "#f96d02";
+    if (valuee > 0) {
+      colorr = "#4E9F3D";
+    } else if (valuee < 0) {
+      colorr = "#CF0A0A";
+    }
+    const colorChange = {
+      value: ValuesToCommaIndented(valuee),
+      color: colorr,
+    };
+    return colorChange;
+  };
+
   // Table for Data
   const pColumns = [
     {
       Header: "Closing Balance ",
       accessor: "closingBalance",
+      // eslint-disable-next-line react/prop-types
+      Cell: ({ cell: { value } }) => (
+        <span
+          className="badge badge-pill"
+          style={{ backgroundColor: changeColor(value).color, fontSize: "100%" }}
+        >
+          {changeColor(value).value}
+        </span>
+      ),
       align: "left",
     },
     {
