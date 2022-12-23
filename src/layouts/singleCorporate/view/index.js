@@ -1042,7 +1042,7 @@ function ViewSingleCorporate() {
                                             textAlign="left"
                                             mt={1}
                                           >
-                                            {`${index + 1}.`} Client&apos;s Name - {item.agentName}
+                                            {`${index + 1}.`} Agent&apos;s Name - {item.agentName}
                                           </MDTypography>
                                           <MDTypography
                                             variant="h6"
