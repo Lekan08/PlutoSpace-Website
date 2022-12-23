@@ -145,7 +145,7 @@ export default function BusinessData() {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
           }
-          console.log(result);
+          console.log("result");
           if (isMounted) {
             setItems(result);
           }
@@ -170,7 +170,7 @@ export default function BusinessData() {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
           }
-          console.log(resultx);
+          console.log("resultx");
           if (isMounted) {
             setItems(resultx);
           }

@@ -372,6 +372,7 @@ const TakeCBT = () => {
         localStorage.setItem("rexxdex", aToken);
         return res.json();
       })
+      // eslint-disable-next-line consistent-return
       .then((result) => {
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
@@ -384,6 +385,45 @@ const TakeCBT = () => {
         if (result.message === "Unauthorized Access") {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
+        }
+        console.log(result);
+        if (result.status === "SUCCESS") {
+          const cbtIDsx = urlParams.get("id");
+          const empID = data11.personalID;
+          const headers = miHeaders;
+          let isMounted = true;
+          fetch(`${process.env.REACT_APP_RAGA_URL}/cbt/getCBTResultsForEmp/${cbtIDsx}/${empID}`, {
+            headers,
+          })
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultx) => {
+              if (resultx.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultx.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultx.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              console.log(resultx);
+              // const zinoleesky = [result[0]];
+              // setImage(zinoleesky);
+              if (isMounted) {
+                // setPicImage(result);
+                console.log(resultx);
+              }
+            });
+          return () => {
+            isMounted = false;
+          };
         }
         setOpened(false);
         MySwal.fire({

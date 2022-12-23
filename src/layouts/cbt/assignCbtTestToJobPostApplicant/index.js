@@ -92,6 +92,7 @@ function AssignCbtTestToJobPost() {
         createdTime: items[0].createdTime,
         deleteFlag: items[0].deleteFlag,
       });
+      console.log(raw);
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -120,6 +121,7 @@ function AssignCbtTestToJobPost() {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
           }
+          console.log(result);
           MySwal.fire({
             title: result.status,
             type: "success",

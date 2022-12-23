@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import DataTable from "examples/Tables/DataTable";
@@ -16,74 +16,92 @@ import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
+import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
-import InsuranceContributionTable from "layouts/insurance/contribution/data/insuranceContributionTableData";
+import InsuranceDamageTable from "layouts/insurance/damage/data/insuranceDamageTableData";
 import Styles from "styles";
 
-function InsuranceContribution() {
+function InsuranceDamage() {
   const MySwal = withReactContent(Swal);
-  const { columns: pColumns, rows: pRows } = InsuranceContributionTable();
+  const { columns: pColumns, rows: pRows } = InsuranceDamageTable();
 
-  const [cash, setCash] = useState("0");
-  const [card, setCard] = useState("0");
-  const [check, setCheck] = useState("0");
-  const [checkCash, setCheckCash] = useState(true);
-  const [checkCard, setCheckCard] = useState(true);
-  const [checkCheck, setCheckCheck] = useState(true);
+  const [damageAmountx, setDamageAmount] = useState("0");
+  const [insurances, setInsurances] = useState([]);
+  const [checkDamageAmount, setCheckDamageAmount] = useState(true);
 
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
 
   const { allPHeaders: myHeaders } = PHeaders();
+  const { allGHeaders: miHeaders } = GHeaders();
 
-  const handleOnCashKeys = (valuee) => {
+  // Method to fetch particular insurance
+  useEffect(() => {
+    const headers = miHeaders;
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const ids = urlParams.get("id");
+    // const ids = JSON.parse([id]);
+
+    let isMounted = true;
+    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insurance/getByIds/${ids}`, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          setInsurances(result);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleOnDamageAmountKeys = (valuee) => {
     const number = /^[0-9.]+$/;
     const value = valuee.toString();
     if (!value.match(number)) {
-      setCheckCash(false);
+      setCheckDamageAmount(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("cash").innerHTML = "Cash - input only numbers<br>";
+      document.getElementById("amount").innerHTML = "Damage Amount - input only numbers<br>";
     }
     if (value.match(number)) {
-      setCheckCash(true);
+      setCheckDamageAmount(true);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("cash").innerHTML = "";
+      document.getElementById("amount").innerHTML = "";
     }
-  };
-
-  const handleOnCheckKeys = (valuee) => {
-    const number = /^[0-9.]+$/;
-    const value = valuee.toString();
-    if (!value.match(number)) {
-      setCheckCheck(false);
+    if (value.length === 0) {
+      setCheckDamageAmount(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("check").innerHTML = "Check - input only numbers<br>";
-    }
-    if (value.match(number)) {
-      setCheckCheck(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("check").innerHTML = "";
-    }
-  };
-
-  const handleOnCardKeys = (valuee) => {
-    const number = /^[0-9.]+$/;
-    const value = valuee.toString();
-    if (!value.match(number)) {
-      setCheckCard(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("card").innerHTML = "Card - input only numbers<br>";
-    }
-    if (value.match(number)) {
-      setCheckCard(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("card").innerHTML = "";
+      document.getElementById("amount").innerHTML = "Damage Amount is required<br>";
     }
   };
 
   const handleClick = (e) => {
     setOpened(true);
     e.preventDefault();
+
+    // Calculating Damage Contribution
+    const companyContributionPercent = insurances[0].plan.damageCompanyContribution / 100;
+    const companyContribution = companyContributionPercent * damageAmountx;
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
@@ -95,9 +113,8 @@ function InsuranceContribution() {
     const raw = JSON.stringify({
       orgID: orgIDs,
       insuranceID: ids,
-      cashPaymentAmount: cash,
-      cardPaymentAmount: card,
-      checkPaymentAmount: check,
+      damageAmount: damageAmountx,
+      damageContribution: companyContribution,
       createdBy: personalIds,
     });
     const requestOptions = {
@@ -107,7 +124,7 @@ function InsuranceContribution() {
       redirect: "follow",
     };
 
-    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceContribution/add`, requestOptions)
+    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/add`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -145,17 +162,9 @@ function InsuranceContribution() {
   };
 
   const handleValidate = (e) => {
-    handleOnCardKeys(card);
-    handleOnCashKeys(cash);
-    handleOnCheckKeys(check);
-    if (checkCard === true && checkCash === true && checkCheck === true) {
-      if (Number(card) === 0 && Number(cash) === 0 && Number(check) === 0) {
-        document.getElementById("general").innerHTML =
-          "Amount is required whether check or cash or card<br>";
-      } else {
-        document.getElementById("general").innerHTML = "";
-        handleClick(e);
-      }
+    handleOnDamageAmountKeys(damageAmountx);
+    if (checkDamageAmount === true) {
+      handleClick(e);
     }
   };
 
@@ -176,7 +185,7 @@ function InsuranceContribution() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add Insurance Contribution
+              Add Insurance Damage Request
             </MDTypography>
           </MDBox>
           <MDBox
@@ -210,43 +219,9 @@ function InsuranceContribution() {
                   <div className="col-sm-8">
                     <MDInput
                       type="text"
-                      label="Cash Payment Amount (NGN)"
-                      value={cash || "0"}
-                      onChange={(e) => setCash(e.target.value)}
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-8">
-                    <MDInput
-                      type="text"
-                      label="Check Payment Amount (NGN)"
-                      value={check || "0"}
-                      onChange={(e) => setCheck(e.target.value)}
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-8">
-                    <MDInput
-                      type="text"
-                      label="Card Payment Amount (NGN)"
-                      value={card || "0"}
-                      onChange={(e) => setCard(e.target.value)}
+                      label="Damage Amount (NGN)"
+                      value={damageAmountx || "0"}
+                      onChange={(e) => setDamageAmount(e.target.value)}
                       variant="standard"
                       fullWidth
                     />
@@ -287,4 +262,4 @@ function InsuranceContribution() {
   );
 }
 
-export default InsuranceContribution;
+export default InsuranceDamage;

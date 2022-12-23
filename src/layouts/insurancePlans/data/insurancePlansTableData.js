@@ -128,7 +128,7 @@ export default function InsurancePlansTableData() {
            <td><input type="text" id="title" value="${titlex}" class="swal2-input" placeholder="Title"></td></tr><br>
            <tr><td><label for="descrip">Description</label></td>
            <td><input type="text" class="swal2-input" id="descrip" value="${descripx}" placeholder="Description"></td></tr>
-           <tr><td><label for="damageClientContribution">Damage Client Contribution (in %)*</label></td>
+           <tr><td><label for="damageClientContribution">Client Damage Contribution (in %)*</label></td>
            <td><input type="text" class="swal2-input" id="damageClientContribution" value="${damageClientContributionx}"></td></tr>
            <tr><td><label for="monthlyContribution">Monthly Contribution (in %)</label></td>
            <td><input type="text" class="swal2-input" id="monthlyContribution" value="${monthlyContributionx}"></td></tr>
@@ -299,18 +299,18 @@ export default function InsurancePlansTableData() {
       { Header: "title", accessor: "title", align: "left" },
       { Header: "description", accessor: "descrip", align: "left" },
       {
-        Header: "damage client contribution (in %)",
+        Header: "client damage contribution (in %)",
         accessor: "damageClientContribution",
         align: "left",
       },
       {
-        Header: "monthly contribution (in %)",
+        Header: "client monthly contribution (in %)",
         accessor: "monthlyContribution",
         Cell: ({ cell: { value } }) => changeDisplay(value),
         align: "left",
       },
       {
-        Header: "yearly contribution (in %)",
+        Header: "client yearly contribution (in %)",
         accessor: "yearlyContribution",
         Cell: ({ cell: { value } }) => changeDisplay(value),
         align: "left",
