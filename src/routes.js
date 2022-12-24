@@ -259,6 +259,7 @@ import InsuranceUpdate from "layouts/insurance/update";
 import InsuranceView from "layouts/insurance/view";
 import InsuranceContribution from "layouts/insurance/contribution";
 import InsuranceDamage from "layouts/insurance/damage";
+import UpdateInsuranceDamage from "layouts/insurance/damage/data/update";
 import AssetTypes from "layouts/asset-Types";
 import UpdateAssetTypes from "layouts/asset-Types/update";
 import Assets from "layouts/assets";
@@ -1042,6 +1043,13 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/insurance/damage",
     component: <InsuranceDamage />,
+  },
+  {
+    name: "Insurance Damage Update",
+    key: "insuranceDamageUpdate",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/insurance/damage/update",
+    component: <UpdateInsuranceDamage />,
   },
   {
     type: "collapse",
