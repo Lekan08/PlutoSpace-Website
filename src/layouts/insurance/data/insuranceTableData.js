@@ -194,6 +194,7 @@ export default function InsuranceTableData() {
         }
         if (isMounted) {
           setItems(result);
+          console.log(result);
         }
       });
     return () => {
