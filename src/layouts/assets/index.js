@@ -392,6 +392,7 @@ function Assets() {
       }
     }
   };
+  const ALPHA_NUMERIC_DASH_REGEX = /^[a-zA-Z]+$/;
 
   return (
     <DashboardLayout>
@@ -618,7 +619,14 @@ function Assets() {
                             label="Manufacturer"
                             value={manufacturerx || ""}
                             // onKeyUp={(e) => handleOnManfacturerKeys(e.target.value)}
-                            onChange={(e) => setManufacturer(e.target.value)}
+                            // onChange={(e) => setManufacturer(e.target.value)}
+                            onChange={(event) => {
+                              const { value } = event.target;
+                              if (value !== "" && !ALPHA_NUMERIC_DASH_REGEX.test(value)) {
+                                return;
+                              }
+                              setManufacturer(value);
+                            }}
                             variant="standard"
                             fullWidth
                           />

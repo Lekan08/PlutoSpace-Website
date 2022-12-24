@@ -342,9 +342,23 @@ function MyBills() {
   };
 
   const handleOpenModal = (id) => {
+    const checkDataAttached = dataTablex.filter((data) => data.id === id);
     console.log(id);
-    setBillID(id);
-    setOpen(true);
+    if (checkDataAttached[0].attachedDocs !== null) {
+      if (checkDataAttached[0].attachedDocs.length === 0) {
+        setBillID(id);
+        setOpen(true);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: " Document Already Attached",
+        });
+      }
+    } else {
+      setBillID(id);
+      setOpen(true);
+    }
   };
 
   useEffect(() => {
@@ -481,54 +495,62 @@ function MyBills() {
     const checkDoc = filterFirstedd[0].attachedDocs;
     console.log(checkDoc);
     if (checkDoc !== null) {
-      const documentID = filterFirstedd[0].attachedDocs[0];
-      console.log(documentID);
-      MySwal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!",
-      }).then((result) => {
-        if (result.isConfirmed === true) {
-          const requestOptions = {
-            method: "DELETE",
-            headers: miHeaders,
-          };
-          fetch(
-            `${process.env.REACT_APP_LOUGA_URL}/bills/removeDocument/${id}/${documentID}`,
-            requestOptions
-          )
-            .then((res) => res.json())
-            .then((resx) => {
-              if (resx.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-              }
-              if (resx.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-              }
-              if (resx.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-              }
-              MySwal.fire({
-                title: resx.status,
-                type: "success",
-                text: resx.message,
-              }).then(() => {
-                window.location.reload();
+      if (checkDoc.length === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No Document Attached to this Bill",
+        });
+      } else {
+        const documentID = filterFirstedd[0].attachedDocs[0];
+        console.log(documentID);
+        MySwal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed === true) {
+            const requestOptions = {
+              method: "DELETE",
+              headers: miHeaders,
+            };
+            fetch(
+              `${process.env.REACT_APP_LOUGA_URL}/bills/removeDocument/${id}/${documentID}`,
+              requestOptions
+            )
+              .then((res) => res.json())
+              .then((resx) => {
+                if (resx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                }
+                if (resx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                }
+                if (resx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                }
+                MySwal.fire({
+                  title: resx.status,
+                  type: "success",
+                  text: resx.message,
+                }).then(() => {
+                  window.location.reload();
+                });
+              })
+              .catch((error) => {
+                MySwal.fire({
+                  title: error.status,
+                  type: "error",
+                  text: error.message,
+                });
               });
-            })
-            .catch((error) => {
-              MySwal.fire({
-                title: error.status,
-                type: "error",
-                text: error.message,
-              });
-            });
-        }
-      });
+          }
+        });
+      }
     } else {
       Swal.fire({
         icon: "error",
@@ -575,6 +597,87 @@ function MyBills() {
     const date = new Date(timestamp);
     const retDate = date.toDateString();
     return retDate;
+  };
+
+  // eslint-disable-next-line consistent-return
+  const openInNewTab = (id) => {
+    let docKey = "";
+    const checkDataAttached = dataTablex.filter((data) => data.id === id);
+    console.log(id);
+    if (checkDataAttached[0].attachedDocs !== null) {
+      if (checkDataAttached[0].attachedDocs.length === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No Document Attached to this Bill",
+        });
+      } else {
+        // eslint-disable-next-line prefer-destructuring
+        docKey = checkDataAttached[0].attachedDocs[0];
+        console.log(docKey);
+        const data11 = JSON.parse(localStorage.getItem("user1"));
+
+        const orgIDs = data11.orgID;
+        const headers = miHeaders;
+        fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${docKey}`, {
+          headers,
+        })
+          .then(async (res) => {
+            const aToken = res.headers.get("token-1");
+            localStorage.setItem("rexxdex", aToken);
+            return res.json();
+          })
+          .then((result) => {
+            setOpened(false);
+            if (result.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (result.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (result.message === "Unauthorized Access") {
+              navigate("/authentication/forbiddenPage");
+              window.location.reload();
+            }
+            console.log(result.name);
+            fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.name}`, {
+              headers,
+            })
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                return res.json();
+              })
+              .then((resultx) => {
+                if (resultx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+
+                // if (isMounted) {
+                console.log(`link [${resultx[0]}]`);
+                const url = resultx[0];
+                window.open(url, "_blank", "noopener,noreferrer");
+              });
+          });
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No Document Attached to this Bill",
+      });
+    }
   };
 
   // MODAL STYLE
@@ -683,6 +786,9 @@ function MyBills() {
               <Dropdown.Item onClick={() => handleOpenModal(value)}>Attach Document</Dropdown.Item>
               <Dropdown.Item onClick={() => handledeleteBillDoc(value)}>
                 Delete Attached Document
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => openInNewTab(value)}>
+                View Attached Document
               </Dropdown.Item>
 
               <Dropdown.Item onClick={() => handledeleteq(value)}>Delete Bill</Dropdown.Item>
