@@ -52,17 +52,17 @@ function Insurance() {
     if (!value.match(number)) {
       setCheckItemWorth(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("quantity").innerHTML = "Item Worth - input only numbers<br>";
+      document.getElementById("itemworth").innerHTML = "Item Worth - input only numbers<br>";
     }
     if (value.match(number)) {
       setCheckItemWorth(true);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("quantity").innerHTML = "";
+      document.getElementById("itemworth").innerHTML = "";
     }
     if (value.length === 0) {
       setCheckItemWorth(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("quantity").innerHTML = "Item Worth is required<br>";
+      document.getElementById("itemworth").innerHTML = "Item Worth is required<br>";
     }
   };
 
@@ -175,13 +175,11 @@ function Insurance() {
     }
   };
 
-  // if (statusTYpex === 1) {
   useEffect(() => {
     const headers = miHeaders;
 
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    // const clientID = data11.id;
     let isMounted = true;
     fetch(`${process.env.REACT_APP_LOUGA_URL}/individual/gets/${orgIDs}`, {
       headers,
@@ -212,13 +210,12 @@ function Insurance() {
       isMounted = false;
     };
   }, []);
-  // } else {
+
   useEffect(() => {
     const headers = miHeaders;
 
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    // const clientID = data11.id;
     let isMounted = true;
     fetch(`${process.env.REACT_APP_LOUGA_URL}/corporate/gets/${orgIDs}`, {
       headers,
@@ -249,7 +246,6 @@ function Insurance() {
       isMounted = false;
     };
   }, []);
-  // }
 
   useEffect(() => {
     const headers = miHeaders;
@@ -316,7 +312,6 @@ function Insurance() {
         }
         if (isMounted) {
           setPlan(result);
-          console.log(result);
         }
       });
     return () => {
@@ -368,7 +363,7 @@ function Insurance() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="quantity">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="itemworth">
               {" "}
             </MDTypography>
           </MDBox>
@@ -491,9 +486,10 @@ function Insurance() {
                     <br />
                     <Form.Select
                       value={planx}
-                      onChange={(e) => setPlanx(e)}
+                      onChange={(e) => setPlanx(e.target.value)}
                       aria-label="Default select example"
                     >
+                      <option value="">--Select Insurance Plan--</option>
                       {plan.map((api) => (
                         <option key={api.id} value={api.id}>
                           {api.title}
@@ -520,7 +516,7 @@ function Insurance() {
                     <br />
                     <Form.Select
                       value={accountOwnerx}
-                      onChange={(e) => setAccountOwner(e)}
+                      onChange={(e) => setAccountOwner(e.target.value)}
                       aria-label="Default select example"
                     >
                       <option value="">--Select Account Owner--</option>

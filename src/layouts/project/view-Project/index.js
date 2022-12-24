@@ -1033,79 +1033,77 @@ export default function Pipeline() {
     setModalAssignTo(filterFirstedd[0].assignedTo);
   };
 
-  console.log(openModal);
+  // const handleClick = (e) => {
+  //   // handleOnNameKeys();
+  //   // if (enabled) {
+  //   setOpened(true);
+  //   e.preventDefault();
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
 
-  const handleClick = (e) => {
-    // handleOnNameKeys();
-    // if (enabled) {
-    setOpened(true);
-    e.preventDefault();
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+  //   const orgIDs = data11.orgID;
+  //   const personalIds = data11.personalID;
 
-    const orgIDs = data11.orgID;
-    const personalIds = data11.personalID;
+  //   const queryString = window.location.search;
+  //   const urlParams = new URLSearchParams(queryString);
+  //   const ids = urlParams.get("id");
 
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const ids = urlParams.get("id");
-
-    const raw = JSON.stringify({
-      orgID: orgIDs,
-      projectID: ids,
-      taskID: taskId,
-      subTaskID: "string",
-      // comment: commentx,
-      empID: personalIds,
-    });
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    console.log(raw);
-    fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/add`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        setOpened(false);
-        // MySwal.fire({
-        //   title: result.status,
-        //   type: "success",
-        //   text: result.message,
-        // }).then(() => {
-        //   window.location.reload();
-        // });
-      })
-      .then(() => {
-        window.location.reload();
-      });
-    // .catch((error) => {
-    //   setOpened(false);
-    //   MySwal.fire({
-    //     title: error.status,
-    //     type: "error",
-    //     text: error.message,
-    //   });
-    // });
-    // }
-  };
-  console.log(handleClick);
+  //   const raw = JSON.stringify({
+  //     orgID: orgIDs,
+  //     projectID: ids,
+  //     taskID: taskId,
+  //     subTaskID: "string",
+  //     // comment: commentx,
+  //     empID: personalIds,
+  //   });
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: raw,
+  //     redirect: "follow",
+  //   };
+  //   console.log(raw);
+  //   fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/add`, requestOptions)
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
+  //       setOpened(false);
+  //       // MySwal.fire({
+  //       //   title: result.status,
+  //       //   type: "success",
+  //       //   text: result.message,
+  //       // }).then(() => {
+  //       //   window.location.reload();
+  //       // });
+  //     })
+  //     .then(() => {
+  //       window.location.reload();
+  //     });
+  //   // .catch((error) => {
+  //   //   setOpened(false);
+  //   //   MySwal.fire({
+  //   //     title: error.status,
+  //   //     type: "error",
+  //   //     text: error.message,
+  //   //   });
+  //   // });
+  //   // }
+  // };
+  // console.log(handleClick);
   console.log(taskId);
   const handleViewSupply = () => {
     navigate(`/project/subtask?id=${taskId}&workflowID=${projectGet[0].workflowID}`);

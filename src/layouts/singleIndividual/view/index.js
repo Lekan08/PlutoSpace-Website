@@ -73,6 +73,7 @@ function ViewSingleIndividual() {
   const [supply, setSupply] = useState([]);
   const [demand, setDemand] = useState([]);
   const [ticket, setTicket] = useState([]);
+  const [assetsx, setAssets] = useState([]);
 
   const [supplyNo, setSupplyNo] = useState("");
   const [demandNo, setDemandNo] = useState("");
@@ -639,37 +640,37 @@ function ViewSingleIndividual() {
     };
   }, []);
 
-  const changeDateandTime = (timestamp) => {
-    const date = new Date(timestamp);
-    const retDate = date.toDateString();
-    let hour = "0";
-    let minutes = "0";
-    let seconds = "0";
+  // const changeDateandTime = (timestamp) => {
+  //   const date = new Date(timestamp);
+  //   const retDate = date.toDateString();
+  //   let hour = "0";
+  //   let minutes = "0";
+  //   let seconds = "0";
 
-    if (date.getHours() < 10) {
-      hour += date.getHours();
-    } else {
-      hour = date.getHours();
-    }
+  //   if (date.getHours() < 10) {
+  //     hour += date.getHours();
+  //   } else {
+  //     hour = date.getHours();
+  //   }
 
-    if (date.getMinutes() < 10) {
-      minutes += date.getMinutes();
-    } else {
-      minutes = date.getMinutes();
-    }
+  //   if (date.getMinutes() < 10) {
+  //     minutes += date.getMinutes();
+  //   } else {
+  //     minutes = date.getMinutes();
+  //   }
 
-    if (date.getSeconds() < 10) {
-      seconds += date.getSeconds();
-    } else {
-      seconds = date.getSeconds();
-    }
-    let newDate = `${retDate} ${hour}:${minutes}:${seconds} AM`;
-    if (hour > "12") {
-      const nHour = parseInt(hour, 10) - 12;
-      newDate = `${retDate} ${nHour}:${minutes}:${seconds} PM`;
-    }
-    return newDate;
-  };
+  //   if (date.getSeconds() < 10) {
+  //     seconds += date.getSeconds();
+  //   } else {
+  //     seconds = date.getSeconds();
+  //   }
+  //   let newDate = `${retDate} ${hour}:${minutes}:${seconds} AM`;
+  //   if (hour > "12") {
+  //     const nHour = parseInt(hour, 10) - 12;
+  //     newDate = `${retDate} ${nHour}:${minutes}:${seconds} PM`;
+  //   }
+  //   return newDate;
+  // };
 
   useEffect(() => {
     const headers = miHeaders;
@@ -708,7 +709,10 @@ function ViewSingleIndividual() {
           window.location.reload();
         }
         if (isMounted) {
-          setLastEngagementTime(changeDateandTime(result));
+          console.log(result);
+          const date = new Date(result);
+          const numOfDays = date.getDate();
+          setLastEngagementTime(numOfDays);
         }
       });
     return () => {
@@ -737,6 +741,51 @@ function ViewSingleIndividual() {
     height: 195,
     maxHeight: "100%",
   };
+
+  useEffect(() => {
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const ids = urlParams.get("id");
+    const clientID = ids;
+
+    const clientType = 1;
+    let isMounted = true;
+    fetch(
+      `${process.env.REACT_APP_JOHANNESBURG_URL}/assets/getForClient/${orgIDs}/${clientType}/${clientID} `,
+      {
+        headers,
+      }
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          setAssets(result);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <DashboardLayout>
@@ -933,7 +982,7 @@ function ViewSingleIndividual() {
                         textAlign="center"
                         mt={1}
                       >
-                        {lastEngagementTime}
+                        {lastEngagementTime} day(s) ago.
                       </MDTypography>
                     </MDBox>
                   </Paper>
@@ -986,7 +1035,7 @@ function ViewSingleIndividual() {
                                             textAlign="left"
                                             mt={1}
                                           >
-                                            {`${index + 1}.`} Client&apos;s Name - {item.clientName}
+                                            {`${index + 1}.`} Agent&apos;s Name - {item.agentName}
                                           </MDTypography>
                                           <MDTypography
                                             variant="h6"
@@ -1488,6 +1537,79 @@ function ViewSingleIndividual() {
           </Card>
         </Backdrop>
       </div>
+      <MDBox my={1} />
+      <Grid container spacing={0.5}>
+        <Grid item xs={6}>
+          {" "}
+          <Paper sx={styleT} variant="outlined" square>
+            <MDBox sx={{ maxHeight: 399 }}>
+              {/* <div
+                className="scrollbar scrollbar-primary mt-2 mx-auto"
+                style={scrollContainerStyle}
+              > */}
+              <MDBox mb={1.5}>
+                <MDBox
+                  variant="gradient"
+                  bgColor="info"
+                  borderRadius="lg"
+                  coloredShadow="success"
+                  mt={0}
+                  mx={2}
+                  p={1}
+                  mb={2}
+                  textAlign="left"
+                >
+                  <MDTypography
+                    variant="h4"
+                    fontWeight="medium"
+                    color="white"
+                    textAlign="center"
+                    mt={1}
+                  >
+                    Assets
+                  </MDTypography>
+                </MDBox>
+                <Container>
+                  <div className="row">
+                    <MDBox>
+                      {assetsx.map((item) => (
+                        // <Link to={`/Tickets/Chats?id=${item.id}`}>
+                        <Grid item xs={12} md={12} lg={12} key={item.id}>
+                          <Card sx={{ maxWidth: 345 }}>
+                            <CardContent>
+                              <MDTypography
+                                variant="h6"
+                                color="text"
+                                fontSize="75%"
+                                textAlign="left"
+                                mt={1}
+                              >
+                                Item - {item.item}
+                              </MDTypography>
+                              <MDTypography
+                                variant="h6"
+                                color="text"
+                                fontSize="75%"
+                                textAlign="left"
+                                mt={1}
+                              >
+                                Item Worth - {item.itemWorth}
+                              </MDTypography>
+                            </CardContent>
+                          </Card>
+                          &nbsp;
+                        </Grid>
+                        // </Link>
+                      ))}
+                    </MDBox>
+                  </div>
+                </Container>
+              </MDBox>
+              {/* </div> */}
+            </MDBox>
+          </Paper>{" "}
+        </Grid>{" "}
+      </Grid>
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />
       </Backdrop>
