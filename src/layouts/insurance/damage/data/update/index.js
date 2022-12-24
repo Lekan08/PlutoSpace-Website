@@ -23,10 +23,9 @@ import Styles from "styles";
 function UpdateInsuranceDamage() {
   const MySwal = withReactContent(Swal);
   // const { columns: pColumns, rows: pRows } = InsuranceDamageTable();
-  const [damageAmountx, setDamageAmount] = useState(0);
+  const [damageAmountx, setDamageAmount] = useState("0");
   const [updates, setUpdates] = useState([]);
   const [user, setUser] = useState([]);
-  const [checkDamageAmount, setCheckDamageAmount] = useState(true);
   const [ownerx, setOwnerx] = useState("");
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
@@ -115,88 +114,91 @@ function UpdateInsuranceDamage() {
 
   const handleOnDamageAmountKeys = (valuee) => {
     const number = /^[0-9.]+$/;
-    const value = valuee.toString();
+    const value = String(valuee);
     if (!value.match(number)) {
-      setCheckDamageAmount(false);
-      // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "Damage Amount - input only numbers<br>";
+      return false;
     }
-    if (value.match(number)) {
-      setCheckDamageAmount(true);
-      // eslint-disable-next-line no-unused-expressions
+    if (value.match(number) && valuee !== "0") {
       document.getElementById("amount").innerHTML = "";
+      return true;
     }
-    if (value.length === 0) {
-      setCheckDamageAmount(false);
-      // eslint-disable-next-line no-unused-expressions
+    if (value === "0") {
       document.getElementById("amount").innerHTML = "Damage Amount is required<br>";
+      return false;
     }
+    return false;
   };
 
   const handleValidate = (e) => {
     handleOnDamageAmountKeys(damageAmountx);
-    if (checkDamageAmount === true) {
-      // eslint-disable-next-line no-use-before-define
-      handleUpdate(e);
-    }
+    // eslint-disable-next-line no-use-before-define
+    handleUpdate(e);
   };
   const handleUpdate = () => {
-    const companyContributionPercent = updates[0].insurance.plan.damageCompanyContribution / 100;
-    const companyContribution = companyContributionPercent * damageAmountx;
-    const raw = JSON.stringify({
-      ...updates[0],
-      approvedBy: ownerx,
-      approvedByName: `${user.find((r) => r.personal.id === Number(ownerx)).personal.fname} ${
-        user.find((r) => r.personal.id === Number(ownerx)).personal.lname
-      }`,
-      damageAmount: Number(damageAmountx),
-      damageContribution: companyContribution,
-    });
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    console.log(raw);
-    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/update`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        const resultres = await res.text();
-        if (resultres === null || resultres === undefined || resultres === "") {
-          return {};
-        }
-        return JSON.parse(resultres);
-      })
-      .then((resultx) => {
-        if (resultx.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (resultx.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (resultx.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        MySwal.fire({
-          title: resultx.status,
-          type: "success",
-          text: resultx.message,
-        }).then(() => {
-          window.location.reload();
-        });
-      })
-      .catch((error) => {
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
+    if (handleOnDamageAmountKeys(damageAmountx)) {
+      setOpened(true);
+      const companyContributionPercent = updates[0].insurance.plan.damageCompanyContribution / 100;
+      const companyContribution = companyContributionPercent * damageAmountx;
+      const raw = JSON.stringify({
+        ...updates[0],
+        approvedBy: ownerx,
+        approvedByName: `${user.find((r) => r.personal.id === Number(ownerx)).personal.fname} ${
+          user.find((r) => r.personal.id === Number(ownerx)).personal.lname
+        }`,
+        damageAmount: Number(damageAmountx),
+        damageContribution: companyContribution,
       });
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      console.log(raw);
+      fetch(
+        `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/update`,
+        requestOptions
+      )
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          const resultres = await res.text();
+          if (resultres === null || resultres === undefined || resultres === "") {
+            return {};
+          }
+          return JSON.parse(resultres);
+        })
+        .then((resultx) => {
+          if (resultx.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (resultx.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (resultx.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          setOpened(false);
+          MySwal.fire({
+            title: resultx.status,
+            type: "success",
+            text: resultx.message,
+          }).then(() => {
+            window.location.reload();
+          });
+        })
+        .catch((error) => {
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
+        });
+    }
   };
   return (
     <DashboardLayout>
@@ -232,7 +234,7 @@ function UpdateInsuranceDamage() {
             <MDTypography variant="gradient" fontSize="60%" color="error" id="amount">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="card">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="user">
               {" "}
             </MDTypography>
             <MDTypography variant="gradient" fontSize="60%" color="error" id="check">
@@ -250,7 +252,7 @@ function UpdateInsuranceDamage() {
                     <MDInput
                       type="text"
                       label="Damage Amount (NGN)"
-                      value={damageAmountx || 0}
+                      value={damageAmountx || "0"}
                       onChange={(e) => setDamageAmount(e.target.value)}
                       variant="standard"
                       fullWidth

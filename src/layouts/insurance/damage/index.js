@@ -51,8 +51,6 @@ function InsuranceDamage() {
   const [user, setUser] = useState([]);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [checkDamageAmount, setCheckDamageAmount] = useState(true);
   const [ownerx, setOwnerx] = useState("");
   const [ownerx2, setOwnerx2] = useState("");
   const [opened, setOpened] = useState(false);
@@ -142,20 +140,14 @@ function InsuranceDamage() {
     const number = /^[0-9.]+$/;
     const value = String(valuee);
     if (!value.match(number)) {
-      setCheckDamageAmount(false);
-      // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "Damage Amount - input only numbers<br>";
       return false;
     }
     if (value.match(number) && valuee !== "0") {
-      setCheckDamageAmount(true);
-      // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "";
       return true;
     }
     if (value === "0") {
-      setCheckDamageAmount(false);
-      // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "Damage Amount is required<br>";
       return false;
     }
@@ -230,9 +222,7 @@ function InsuranceDamage() {
 
   const handleValidate = (e) => {
     handleOnDamageAmountKeys(damageAmountx);
-    // if (checkDamageAmount === true) {
     handleClick(e);
-    // }
   };
   // eslint-disable-next-line consistent-return
   const handleGets = () => {
