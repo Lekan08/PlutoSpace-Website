@@ -68,7 +68,6 @@ function UpdateInsuranceDamage() {
           setUpdates(result);
           setDamageAmount(result[0].damageAmount);
           setOwnerx(result[0].approvedBy);
-          console.log(result);
         }
       });
     return () => {
@@ -155,7 +154,6 @@ function UpdateInsuranceDamage() {
         body: raw,
         redirect: "follow",
       };
-      console.log(raw);
       fetch(
         `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/update`,
         requestOptions

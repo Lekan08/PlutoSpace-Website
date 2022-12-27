@@ -1275,7 +1275,7 @@ function ConvertDemandToSupply() {
                       type="text"
                       label="Title *"
                       value={titlex || ""}
-                      onKeyUp={handleOnTitleKeys}
+                      // onKeyUp={handleOnTitleKeys}
                       onChange={(e) => setTitle(e.target.value)}
                       variant="standard"
                       fullWidth
@@ -1286,7 +1286,7 @@ function ConvertDemandToSupply() {
                     <MDInput
                       type="text"
                       value={quantityx || ""}
-                      onKeyUp={handleOnQuantityKeys}
+                      // onKeyUp={handleOnQuantityKeys}
                       onChange={(e) => setQuantity(e.target.value)}
                       label="Quantity *"
                       variant="standard"

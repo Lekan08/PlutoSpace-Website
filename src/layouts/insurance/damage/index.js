@@ -92,7 +92,6 @@ function InsuranceDamage() {
         }
         if (isMounted) {
           setInsurances(result);
-          console.log(result);
         }
       });
     return () => {
@@ -183,7 +182,6 @@ function InsuranceDamage() {
         body: raw,
         redirect: "follow",
       };
-      console.log(raw);
       fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/add`, requestOptions)
         .then(async (res) => {
           const aToken = res.headers.get("token-1");
@@ -267,7 +265,6 @@ function InsuranceDamage() {
             setItems(result);
             setGets(true);
             setOpened(false);
-            console.log(result);
           }
         });
       return () => {
@@ -277,8 +274,6 @@ function InsuranceDamage() {
   };
 
   const handleUpdateInsuranceDamage = (value) => {
-    const filteredItems = items.filter((item) => item.id === value);
-    console.log(filteredItems);
     navigate(`/insurance/damage/update?id=${value}`);
   };
   // Method to handle disable
@@ -370,7 +365,6 @@ function InsuranceDamage() {
       body: raw,
       redirect: "follow",
     };
-    console.log(raw);
     fetch(
       `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/approveOrDecline`,
       requestOptions
@@ -420,7 +414,6 @@ function InsuranceDamage() {
     setIDX(value);
     if (filteredItems.approvedBy === personalIds) {
       handleOpen2();
-      console.log("aiitings");
     } else {
       MySwal.fire({
         title: "ERROR",
@@ -438,7 +431,6 @@ function InsuranceDamage() {
       body: raw,
       redirect: "follow",
     };
-    console.log(IDX);
     fetch(
       `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/forward/${IDX}/${ownerx2}`,
       requestOptions
