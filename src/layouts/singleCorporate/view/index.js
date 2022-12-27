@@ -92,6 +92,7 @@ function ViewSingleCorporate() {
   const [demandNo, setDemandNo] = useState("");
   const [ticketNo, setTicketNo] = useState("");
   const [demandSupplyNo, setDemandSupplyNo] = useState("");
+  const [lastEngagementTime, setLastEngagementTime] = useState("");
 
   const [product, setProduct] = useState([]);
   // const [productSupplyRequest, setProductSupplyRequest] = useState([]);
@@ -344,6 +345,54 @@ function ViewSingleCorporate() {
           if (result.length > 0) {
             setItems(result);
           }
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const ids = urlParams.get("id");
+    const clientID = ids;
+
+    const clientType = 2;
+    let isMounted = true;
+    fetch(
+      `${process.env.REACT_APP_LOUGA_URL}/supply/getLastClientEngagement/${orgIDs}/${clientType}/${clientID} `,
+      {
+        headers,
+      }
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          console.log(result);
+          const date = new Date(result);
+          const numOfDays = date.getDate();
+          setLastEngagementTime(numOfDays);
         }
       });
     return () => {
@@ -991,6 +1040,24 @@ function ViewSingleCorporate() {
                       >
                         {namex || "Name"}
                       </MDTypography>
+                      <MDTypography
+                        variant="h6"
+                        fontWeight="medium"
+                        fontSize="70%"
+                        color="white"
+                        textAlign="center"
+                      >
+                        Last Engagement
+                      </MDTypography>
+                      <MDTypography
+                        variant="h6"
+                        fontWeight="medium"
+                        color="white"
+                        textAlign="center"
+                        mt={1}
+                      >
+                        {lastEngagementTime} day(s) ago.
+                      </MDTypography>
                     </MDBox>
                   </Paper>
                 </Grid>
@@ -1042,7 +1109,7 @@ function ViewSingleCorporate() {
                                             textAlign="left"
                                             mt={1}
                                           >
-                                            {`${index + 1}.`} Client&apos;s Name - {item.agentName}
+                                            {`${index + 1}.`} Agent&apos;s Name - {item.agentName}
                                           </MDTypography>
                                           <MDTypography
                                             variant="h6"

@@ -640,37 +640,37 @@ function ViewSingleIndividual() {
     };
   }, []);
 
-  const changeDateandTime = (timestamp) => {
-    const date = new Date(timestamp);
-    const retDate = date.toDateString();
-    let hour = "0";
-    let minutes = "0";
-    let seconds = "0";
+  // const changeDateandTime = (timestamp) => {
+  //   const date = new Date(timestamp);
+  //   const retDate = date.toDateString();
+  //   let hour = "0";
+  //   let minutes = "0";
+  //   let seconds = "0";
 
-    if (date.getHours() < 10) {
-      hour += date.getHours();
-    } else {
-      hour = date.getHours();
-    }
+  //   if (date.getHours() < 10) {
+  //     hour += date.getHours();
+  //   } else {
+  //     hour = date.getHours();
+  //   }
 
-    if (date.getMinutes() < 10) {
-      minutes += date.getMinutes();
-    } else {
-      minutes = date.getMinutes();
-    }
+  //   if (date.getMinutes() < 10) {
+  //     minutes += date.getMinutes();
+  //   } else {
+  //     minutes = date.getMinutes();
+  //   }
 
-    if (date.getSeconds() < 10) {
-      seconds += date.getSeconds();
-    } else {
-      seconds = date.getSeconds();
-    }
-    let newDate = `${retDate} ${hour}:${minutes}:${seconds} AM`;
-    if (hour > "12") {
-      const nHour = parseInt(hour, 10) - 12;
-      newDate = `${retDate} ${nHour}:${minutes}:${seconds} PM`;
-    }
-    return newDate;
-  };
+  //   if (date.getSeconds() < 10) {
+  //     seconds += date.getSeconds();
+  //   } else {
+  //     seconds = date.getSeconds();
+  //   }
+  //   let newDate = `${retDate} ${hour}:${minutes}:${seconds} AM`;
+  //   if (hour > "12") {
+  //     const nHour = parseInt(hour, 10) - 12;
+  //     newDate = `${retDate} ${nHour}:${minutes}:${seconds} PM`;
+  //   }
+  //   return newDate;
+  // };
 
   useEffect(() => {
     const headers = miHeaders;
@@ -709,7 +709,10 @@ function ViewSingleIndividual() {
           window.location.reload();
         }
         if (isMounted) {
-          setLastEngagementTime(changeDateandTime(result));
+          console.log(result);
+          const date = new Date(result);
+          const numOfDays = date.getDate();
+          setLastEngagementTime(numOfDays);
         }
       });
     return () => {
@@ -979,7 +982,7 @@ function ViewSingleIndividual() {
                         textAlign="center"
                         mt={1}
                       >
-                        {lastEngagementTime}
+                        {lastEngagementTime} day(s) ago.
                       </MDTypography>
                     </MDBox>
                   </Paper>
@@ -1032,7 +1035,7 @@ function ViewSingleIndividual() {
                                             textAlign="left"
                                             mt={1}
                                           >
-                                            {`${index + 1}.`} Client&apos;s Name - {item.clientName}
+                                            {`${index + 1}.`} Agent&apos;s Name - {item.agentName}
                                           </MDTypography>
                                           <MDTypography
                                             variant="h6"

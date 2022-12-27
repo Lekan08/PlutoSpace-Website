@@ -245,6 +245,7 @@ import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
+import ViewResultsAdmin from "layouts/cbt/viewResults";
 import SalesPayment from "layouts/sales/salesPayment";
 import FilterSales from "layouts/sales/filterSales";
 import Services from "layouts/services";
@@ -258,6 +259,7 @@ import InsuranceUpdate from "layouts/insurance/update";
 import InsuranceView from "layouts/insurance/view";
 import InsuranceContribution from "layouts/insurance/contribution";
 import InsuranceDamage from "layouts/insurance/damage";
+import UpdateInsuranceDamage from "layouts/insurance/damage/data/update";
 import AssetTypes from "layouts/asset-Types";
 import UpdateAssetTypes from "layouts/asset-Types/update";
 import Assets from "layouts/assets";
@@ -1043,6 +1045,13 @@ const routes = [
     component: <InsuranceDamage />,
   },
   {
+    name: "Insurance Damage Update",
+    key: "insuranceDamageUpdate",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/insurance/damage/update",
+    component: <UpdateInsuranceDamage />,
+  },
+  {
     type: "collapse",
     name: "Insurance Types",
     key: "insuranceType",
@@ -1470,6 +1479,13 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/cbt/assignCbtTestToJobPostApplicant/",
     component: <AssignCbtTestToJobPost />,
+  },
+  {
+    name: "ViewCbtResult",
+    key: "viewCbtResult",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/cbt/view-Results/",
+    component: <ViewResultsAdmin />,
   },
   {
     name: "Answer",
