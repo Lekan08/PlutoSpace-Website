@@ -1027,7 +1027,7 @@ function MyBills() {
                     textAlign="center"
                   >
                     <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                      Upload Docunent
+                      Upload Document
                     </MDTypography>
                   </MDBox>
                   <MDBox

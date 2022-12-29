@@ -228,6 +228,7 @@ import UpdateBusinessTravel from "layouts/businessTravel/update";
 import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
 import MarkAsCompleted from "layouts/businessTravel/mark-as-completed";
 import ViewBusiness from "layouts/businessTravel/view";
+import AttachDocument from "layouts/businessTravel/attachdocument";
 import ForwardApproval from "layouts/businessTravel/forwardforapproval";
 import TimeSheetManual from "layouts/timeSheet/timeSheet";
 import TimeOffRequestsDashboard from "layouts/timeoffrequest-dashboard";
@@ -713,6 +714,14 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-travel/view",
     component: <ViewBusiness />,
+  },
+  {
+    // type: "collapse",
+    name: "Attach Document",
+    key: "attachdocument",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/business-travel/attachdocument",
+    component: <AttachDocument />,
   },
   {
     // type: "collapse",
