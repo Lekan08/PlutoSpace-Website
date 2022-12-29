@@ -45,8 +45,56 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 
+import { styled } from "@mui/material/styles";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+
 import ContentView from "./libraryView/contentView";
 import IconView from "./libraryView/iconView";
+
+const AntTabs = styled(Tabs)({
+  borderBottom: "1px solid #e8e8e8",
+  borderRadius: "0px",
+  "& .MuiTabs-indicator": {
+    // backgroundColor: "#1890ff",
+    borderRadius: "0px",
+    borderBottom: "5px solid #1890ff",
+  },
+});
+
+const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
+  textTransform: "none",
+  minWidth: 0,
+  [theme.breakpoints.up("sm")]: {
+    minWidth: 0,
+  },
+  fontWeight: theme.typography.fontWeightRegular,
+  marginRight: theme.spacing(1),
+  color: "rgba(0, 0, 0, 0.85)",
+  fontFamily: [
+    "-apple-system",
+    "BlinkMacSystemFont",
+    '"Segoe UI"',
+    "Roboto",
+    '"Helvetica Neue"',
+    "Arial",
+    "sans-serif",
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(","),
+  "&:hover": {
+    color: "#40a9ff",
+    opacity: 1,
+  },
+  "&.Mui-selected": {
+    color: "#1890ff",
+    fontWeight: theme.typography.fontWeightMedium,
+  },
+  "&.Mui-focusVisible": {
+    backgroundColor: "#ffffff",
+  },
+}));
 
 function DocumentLibrary() {
   const style = {
@@ -56,16 +104,18 @@ function DocumentLibrary() {
     transform: "translate(-50%, -50%)",
     bgcolor: "background.paper",
     boxShadow: 24,
-    p: 4,
-    borderRadius: 0,
+    p: 10,
+    borderRadius: 5,
     overflow: "scroll",
+    // overflowY: "auto",
     height: "auto",
-    maxHeight: "50vh",
+    maxHeight: "70vh",
     display: "block",
 
     "&::-webkit-scrollbar": {
       width: "6px",
       height: "2px",
+      display: "none",
     },
     "&::-webkit-scrollbar-track": {
       boxShadow: "inset 0 0 1px rgba(0,0,0,0.00)",
@@ -100,8 +150,8 @@ function DocumentLibrary() {
   };
 
   const cardBorder = {
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
+    // borderTopLeftRadius: 20,
+    // borderBottomLeftRadius: 20,
   };
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -132,6 +182,8 @@ function DocumentLibrary() {
 
   const [groupidx, setGroupIdx] = useState("");
   const [groups, setGroups] = useState([]);
+  const [accessLevelx, setAccessLevel] = useState("");
+  const [value, setValue] = React.useState(0);
 
   const [items, setItems] = useState([]);
   const [mainItems, setMainItems] = useState([]);
@@ -178,11 +230,102 @@ function DocumentLibrary() {
           window.location.reload();
         }
         console.log(result);
-        if (result) {
-          if (result.length !== 0) {
-            setItems(result);
-            setMainItems(result);
-          }
+        if (result.length !== 0) {
+          setItems(result);
+          setMainItems(result);
+        } else {
+          setItems([]);
+          setMainItems([]);
+        }
+        setOpened(false);
+      });
+  };
+
+  // Method to filter tickets
+  const handleGetsGroup = () => {
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    // const orgIDs = data11.orgID;
+    console.log(groups);
+    const allGroupID = groups.map((group) => group.group.id);
+    console.log(allGroupID);
+    setOpened(true);
+    const headers = miHeaders;
+    fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/documentLibrary/getByGroups/${allGroupID}`, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(result);
+        if (result.length !== 0) {
+          setItems(result);
+          setMainItems(result);
+        } else {
+          setItems([]);
+          setMainItems([]);
+        }
+        setOpened(false);
+      });
+  };
+
+  // Method to filter tickets
+  const handleGetsOrg = () => {
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    // const personalIDs = data11.personalID;
+    setOpened(true);
+    const headers = miHeaders;
+    fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/documentLibrary/gets/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(result);
+        if (result.length !== 0) {
+          setItems(result);
+          setMainItems(result);
+        } else {
+          setItems([]);
+          setMainItems([]);
         }
 
         setOpened(false);
@@ -207,8 +350,11 @@ function DocumentLibrary() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
+    const personalIDs = data11.personalID;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_SHASHA_URL}/groups/gets/${orgIDs}`, { headers })
+    fetch(`${process.env.REACT_APP_SHASHA_URL}/groups/getForEmp/${orgIDs}/${personalIDs}`, {
+      headers,
+    })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -283,7 +429,7 @@ function DocumentLibrary() {
       const rawDL = JSON.stringify({
         orgID: orgIDs,
         empID: personalIDs,
-        // accessLevel: 0,
+        accessLevel: parseInt(accessLevelx, 10),
         groupID: groupidx,
         type: files[0].type,
         size: files[0].size,
@@ -374,8 +520,10 @@ function DocumentLibrary() {
                     text: resultDL.message,
                   }).then(() => {
                     handleClose();
-                    handleGets();
-                    setGroupIdx("");
+                    // setValue(0);
+                    // handleGets();
+                    // setGroupIdx("");
+                    window.location.reload();
                   });
                 }
               })
@@ -404,11 +552,19 @@ function DocumentLibrary() {
   };
 
   const checkUDoc = (e) => {
-    if (files !== "") {
+    if (files !== "" && accessLevelx !== "") {
+      if (accessLevelx === "1") {
+        if (groupidx === "") {
+          // eslint-disable-next-line no-unused-expressions
+          document.getElementById("groupVal").innerHTML = "please choose a group<br>";
+          return;
+        }
+      }
       handleDocUpload(e);
     } else {
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("imageVal").innerHTML = "input a document<br>";
+      document.getElementById("imageVal").innerHTML =
+        "input a document and choose an access level<br>";
     }
   };
 
@@ -544,6 +700,18 @@ function DocumentLibrary() {
   //   },
   // }));
 
+  const handleChangeTab = (event, newValue) => {
+    console.log(newValue);
+    setValue(newValue);
+    if (newValue === 0) {
+      handleGets();
+    } else if (newValue === 1) {
+      handleGetsGroup();
+    } else if (newValue === 2) {
+      handleGetsOrg();
+    }
+  };
+
   // Function to search table
   const searchFunc = (val) => {
     console.log(val);
@@ -579,9 +747,23 @@ function DocumentLibrary() {
               Documents
             </Typography>
             <Button onClick={() => handleOpen()} sx={{ color: "inherit" }}>
-              <Box component="div" sx={{ display: "contents" }}>
-                <AddIcon sx={{ mr: 0.5, ml: 2 }} />
-                <Typography variant="h6" sx={{ color: "inherit", ml: 0, mr: 1 }}>
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <AddIcon style={{ marginRight: 2, color: "white" }} />
+                <Typography
+                  // variant="h6"
+                  style={{
+                    color: "#fff",
+                    fontSize: "15px",
+                    fontWeight: "bold",
+                  }}
+                >
                   New
                 </Typography>
               </Box>
@@ -614,17 +796,28 @@ function DocumentLibrary() {
                 onKeyUp={(e) => searchFunc(e.target.value)}
               />
             </Search> */}
-            <Button onClick={handleOpenUserMenu} sx={{ color: "inherit" }}>
-              <Box component="div" sx={{ display: "contents" }}>
-                <ViewComfyIcon sx={{ mr: 0.5, ml: 2 }} />
+            <Button onClick={handleOpenUserMenu}>
+              <Box
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "5px",
+                  backgroundColor: "#ffffff",
+                  borderRadius: "5px",
+                }}
+              >
+                <ViewComfyIcon color="info" style={{ marginRight: 2, color: "#777" }} />
                 <Typography
-                  variant="h6"
-                  sx={{
-                    color: "inherit",
-                    mr: 1,
+                  // variant="h6"
+                  style={{
+                    color: "#777",
+                    fontSize: "15px",
+                    fontWeight: "bold",
                   }}
                 >
-                  VIEW
+                  view
                 </Typography>
               </Box>
             </Button>
@@ -657,36 +850,31 @@ function DocumentLibrary() {
             </Box>
           </Toolbar>
         </AppBar>
+        <Box sx={{ width: "40vw" }}>
+          <Box sx={{ bgcolor: "#fff" }}>
+            <AntTabs value={value} onChange={handleChangeTab} aria-label="ant example" centered>
+              <AntTab label="personal" />
+              <AntTab label="group" />
+              <AntTab label="organisation" />
+            </AntTabs>
+          </Box>
+        </Box>
         <MDBox sx={DocViewScrollstyle}>
           {viewType ? (
-            <ContentView items={items} groups={groups} />
+            <ContentView items={items} groups={groups} level={value} />
           ) : (
-            <IconView items={items} groups={groups} />
+            <IconView items={items} groups={groups} level={value} />
           )}
         </MDBox>
       </Card>
       &nbsp;
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
-        <Card sx={style} style={cardBorder}>
-          <MDBox>
-            <MDTypography id="modal-modal-title" variant="h6" component="h2">
-              Upload Document
-            </MDTypography>{" "}
-            <MDTypography
-              variant="button"
-              fontWeight="regular"
-              fontSize="80%"
-              align="right"
-              color="text"
-            >
-              Document
-            </MDTypography>
-            <br />
-            <MDInput type="file" files={files} onChange={previewImage} />
-            <p id="imageVal" style={{ color: "red", fontSize: 13 }}>
-              <i> </i>
-            </p>
-            <MDBox mt={2}>
+        <MDBox style={{ overflow: "hidden" }}>
+          <Card sx={style} style={cardBorder}>
+            <MDBox>
+              <MDTypography id="modal-modal-title" variant="h6" component="h2">
+                Upload Document
+              </MDTypography>{" "}
               <MDTypography
                 variant="button"
                 fontWeight="regular"
@@ -694,45 +882,88 @@ function DocumentLibrary() {
                 align="right"
                 color="text"
               >
-                Group <i>(optional)</i>
+                Document
               </MDTypography>
-              <Form.Select
-                value={groupidx || ""}
-                onChange={(e) => setGroupIdx(e.target.value)}
-                aria-label="Default select example"
-              >
-                <option value="">Select Group</option>
-                {groups.map((api) => (
-                  <option key={api.group.id} value={api.group.id}>
-                    {api.group.name}
-                  </option>
-                ))}
-              </Form.Select>
               <br />
+              <MDInput type="file" files={files} onChange={previewImage} />
+              <MDBox mt={2}>
+                <MDTypography
+                  variant="button"
+                  fontWeight="regular"
+                  fontSize="80%"
+                  align="right"
+                  color="text"
+                >
+                  Access Level
+                </MDTypography>
+                <Form.Select
+                  value={accessLevelx || ""}
+                  onChange={(e) => setAccessLevel(e.target.value)}
+                  aria-label="Default select example"
+                >
+                  <option value="">Select Access Level</option>
+                  <option value="0">Personal</option>
+                  <option value="1">Group</option>
+                  <option value="2">Organisation</option>
+                </Form.Select>
+                <br />
+                <p id="imageVal" style={{ color: "red", fontSize: 13 }}>
+                  <i> </i>
+                </p>
+              </MDBox>
+              {accessLevelx === "1" && (
+                <MDBox mt={0}>
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    fontSize="80%"
+                    align="right"
+                    color="text"
+                  >
+                    Group
+                  </MDTypography>
+                  <Form.Select
+                    value={groupidx || ""}
+                    onChange={(e) => setGroupIdx(e.target.value)}
+                    aria-label="Default select example"
+                  >
+                    <option value="">Select Group</option>
+                    {groups.map((api) => (
+                      <option key={api.group.id} value={api.group.id}>
+                        {api.group.name}
+                      </option>
+                    ))}
+                  </Form.Select>
+                  <br />
+                  <p id="groupVal" style={{ color: "red", fontSize: 13 }}>
+                    <i> </i>
+                  </p>
+                </MDBox>
+              )}
+              <MDBox mt={0} mb={1}>
+                <MDButton
+                  variant="gradient"
+                  onClick={checkUDoc}
+                  color="info"
+                  width="50%"
+                  align="left"
+                >
+                  Upload
+                </MDButton>
+                &nbsp;
+                <MDButton
+                  variant="gradient"
+                  onClick={handleClose}
+                  color="error"
+                  width="50%"
+                  align="center"
+                >
+                  Cancel
+                </MDButton>
+              </MDBox>
             </MDBox>
-            <MDBox mt={0} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={checkUDoc}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Upload
-              </MDButton>
-              &nbsp;
-              <MDButton
-                variant="gradient"
-                onClick={handleClose}
-                color="error"
-                width="50%"
-                align="center"
-              >
-                Cancel
-              </MDButton>
-            </MDBox>
-          </MDBox>
-        </Card>
+          </Card>
+        </MDBox>
       </Backdrop>
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
