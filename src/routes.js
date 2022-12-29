@@ -273,6 +273,8 @@ import CustomerAssets from "layouts/customer-Assets";
 import AssetAttachDocument from "layouts/assets/attachDocuments";
 import Coupons from "layouts/coupons";
 import AppointmentOffboardingSession from "layouts/assignedOffboarding/appointmentSession";
+
+import AppraisalHistory from "layouts/appraisal/appraisalHistory";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
@@ -490,6 +492,14 @@ const routes = [
     icon: <Icon fontSize="small">rate_review</Icon>,
     route: "/Appraisals",
     component: <Appraisal />,
+  },
+  {
+    type: "collapse",
+    name: "Appraisal History",
+    key: "appraisalHistory",
+    icon: <Icon fontSize="small">rate_review</Icon>,
+    route: "/Appraisal-History",
+    component: <AppraisalHistory />,
   },
   {
     name: "View Appraisal",
