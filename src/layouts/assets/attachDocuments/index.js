@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -402,91 +404,50 @@ function AssetAttachDocument() {
       if (resultd.isConfirmed) {
         handleClose();
         setOpened(true);
-        const requestOptions = {
+
+        const requestOptionsd = {
           method: "DELETE",
           headers: miHeaders,
         };
-        const data11 = JSON.parse(localStorage.getItem("user1"));
-        const orgIDs = data11.orgID;
-        const mOrgID = orgIDs;
-        // console.log(filteredItems);
-        // const docKey = filteredItems[0].attachedDocs;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const idx = urlParams.get("id");
+
         fetch(
-          `${process.env.REACT_APP_EKOATLANTIC_URL}/media/delete/${mOrgID}/${value}`,
-          requestOptions
+          `${process.env.REACT_APP_JOHANNESBURG_URL}/assets/removeDocument/${idx}/${value}`,
+          requestOptionsd
         )
           .then(async (res) => {
             const aToken = res.headers.get("token-1");
             localStorage.setItem("rexxdex", aToken);
-            const result = await res.text();
-            if (result === null || result === undefined || result === "") {
-              return {};
-            }
-            return JSON.parse(result);
+            return res.json();
           })
-          .then((resx) => {
-            console.log(resx);
-            if (resx.message === "Unauthorized Access") {
+          .then((resxx) => {
+            if (resxx.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+            }
+            if (resxx.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+            }
+            if (resxx.message === "Unauthorized Access") {
               navigate("/authentication/forbiddenPage");
             }
-            console.log(`STATUS - ${resx.status} - - - - - - MESSAGE - ${resx.message}`);
-
-            if (resx.status !== "SUCCESS") {
-              setOpened(false);
-              MySwal.fire({
-                title: "DELETE_UNSUCCESSFUL",
-                type: "error",
-                text: "Document Delete Was Unsuccessful",
-              });
-            } else {
-              const requestOptionsd = {
-                method: "DELETE",
-                headers: miHeaders,
-              };
-              const queryString = window.location.search;
-              const urlParams = new URLSearchParams(queryString);
-              const idx = urlParams.get("id");
-
-              fetch(
-                `${process.env.REACT_APP_SHASHA_URL}/assets/removeDocument/${idx}/${value}`,
-                requestOptionsd
-              )
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  return res.json();
-                })
-                .then((resxx) => {
-                  if (resxx.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                  }
-                  setOpened(false);
-                  MySwal.fire({
-                    title: resxx.status,
-                    type: "success",
-                    text: resxx.message,
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                })
-                .catch((error) => {
-                  setOpened(false);
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
-            }
+            setOpened(false);
+            MySwal.fire({
+              title: resxx.status,
+              type: "success",
+              text: resxx.message,
+            }).then(() => {
+              window.location.reload();
+            });
           })
           .catch((error) => {
-            console.log(`STATUS - ${error.status} - - - - - - MESSAGE - ${error.message}`);
+            setOpened(false);
+            MySwal.fire({
+              title: error.status,
+              type: "error",
+              text: error.message,
+            });
           });
       }
     });
@@ -775,76 +736,78 @@ function AssetAttachDocument() {
               //  const docName = api.name;
               console.log(api);
               console.log(index);
-              const docType = api.type;
-              //  const docSize = api.size;
-              //  const docDate = api.createdTime;
-              let pngType;
-              if (
-                docType === "image/png" ||
-                docType === "image/jpg" ||
-                docType === "image/jpeg" ||
-                docType === "image/gif"
-              ) {
-                pngType = ImagePng;
-              } else if (docType === "application/msword") {
-                pngType = WordPng;
-              } else if (
-                docType ===
-                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-              ) {
-                pngType = PowerPointPng;
-              } else if (docType === "application/pdf") {
-                pngType = PdfPng;
-              } else if (
-                docType === "text/csv" ||
-                docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              ) {
-                pngType = ExcelPng;
-              } else {
-                pngType = DocPng;
+              if (api !== null) {
+                const docType = api.type;
+                //  const docSize = api.size;
+                //  const docDate = api.createdTime;
+                let pngType;
+                if (
+                  docType === "image/png" ||
+                  docType === "image/jpg" ||
+                  docType === "image/jpeg" ||
+                  docType === "image/gif"
+                ) {
+                  pngType = ImagePng;
+                } else if (docType === "application/msword") {
+                  pngType = WordPng;
+                } else if (
+                  docType ===
+                  "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                ) {
+                  pngType = PowerPointPng;
+                } else if (docType === "application/pdf") {
+                  pngType = PdfPng;
+                } else if (
+                  docType === "text/csv" ||
+                  docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                ) {
+                  pngType = ExcelPng;
+                } else {
+                  pngType = DocPng;
+                }
+                return (
+                  <>
+                    {api !== null ? (
+                      <Grid key={api} item xs={12} md={6} lg={3}>
+                        <Card style={{ backgroundColor: "#EB5353" }}>
+                          <Button
+                            id="demo-customized-button"
+                            aria-controls="demo-customized-menu"
+                            aria-haspopup="true"
+                            aria-expanded="true"
+                            disableElevation
+                            sx={{ color: "inherit" }}
+                            // onClick={() => handleView(api.id, index)}
+                          >
+                            <CardContent>
+                              <img src={pngType} alt="Icon" width="78" height="78" />
+                            </CardContent>
+                          </Button>
+                          <CardActions>
+                            <Button
+                              onClick={() => handleDelete(api, index)}
+                              style={{ color: "white" }}
+                              startIcon={<DeleteIcon />}
+                            >
+                              Remove
+                            </Button>
+                            <Button
+                              onClick={() => handleDownload(api, index)}
+                              style={{ color: "white" }}
+                              startIcon={<DownloadIcon />}
+                            >
+                              Download
+                            </Button>
+                          </CardActions>
+                        </Card>{" "}
+                        &nbsp; &nbsp;{" "}
+                      </Grid>
+                    ) : (
+                      <MDBox />
+                    )}
+                  </>
+                );
               }
-              return (
-                <>
-                  {api !== null ? (
-                    <Grid key={api} item xs={12} md={6} lg={3}>
-                      <Card style={{ backgroundColor: "#EB5353" }}>
-                        <Button
-                          id="demo-customized-button"
-                          aria-controls="demo-customized-menu"
-                          aria-haspopup="true"
-                          aria-expanded="true"
-                          disableElevation
-                          sx={{ color: "inherit" }}
-                          // onClick={() => handleView(api.id, index)}
-                        >
-                          <CardContent>
-                            <img src={pngType} alt="Icon" width="78" height="78" />
-                          </CardContent>
-                        </Button>
-                        <CardActions>
-                          <Button
-                            onClick={() => handleDelete(api, index)}
-                            style={{ color: "white" }}
-                            startIcon={<DeleteIcon />}
-                          >
-                            Remove
-                          </Button>
-                          <Button
-                            onClick={() => handleDownload(api, index)}
-                            style={{ color: "white" }}
-                            startIcon={<DownloadIcon />}
-                          >
-                            Download
-                          </Button>
-                        </CardActions>
-                      </Card>{" "}
-                      &nbsp; &nbsp;{" "}
-                    </Grid>
-                  ) : (
-                    <MDBox />
-                  )}
-                </>
-              );
             })}
           </Grid>
         </Box>
