@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import DataTable from "examples/Tables/DataTable";
@@ -17,7 +17,7 @@ import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
-import GHeaders from "getHeader";
+// import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -33,8 +33,8 @@ function Coupons() {
   const [typex, setType] = useState("");
   const [frequencyx, setFrequency] = useState("");
   const [leftUsagex, setLeftUsage] = useState("");
-  const [createdByx, setCreatedBy] = useState([]);
-  const [createdx, setCreated] = useState("");
+  // const [createdByx, setCreatedBy] = useState([]);
+  // const [createdx, setCreated] = useState("");
 
   const [enabled, setEnabled] = useState("");
   const [checkedName, setCheckedName] = useState("");
@@ -43,7 +43,7 @@ function Coupons() {
   const navigate = useNavigate();
 
   const { allPHeaders: myHeaders } = PHeaders();
-  const { allGHeaders: miHeaders } = GHeaders();
+  // const { allGHeaders: miHeaders } = GHeaders();
 
   // eslint-disable-next-line consistent-return
   const handleOnNameKeys = () => {
@@ -74,6 +74,7 @@ function Coupons() {
       const data11 = JSON.parse(localStorage.getItem("user1"));
 
       const orgIDs = data11.orgID;
+      const idx = data11.personalID;
       const raw = JSON.stringify({
         orgID: orgIDs,
         text: textx,
@@ -81,7 +82,7 @@ function Coupons() {
         type: typex,
         frequency: frequencyx,
         leftUsage: leftUsagex,
-        createdBy: createdx,
+        createdBy: idx,
         expireTime: 0,
       });
       const requestOptions = {
@@ -129,41 +130,6 @@ function Coupons() {
         });
     }
   };
-  useEffect(() => {
-    const headers = miHeaders;
-
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    const orgIDs = data11.orgID;
-    const empID = data11.personalID;
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getUserInfo/${orgIDs}/${empID}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          setCreatedBy(result);
-        }
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   return (
     <DashboardLayout>
@@ -280,7 +246,7 @@ function Coupons() {
                     </FormControl>
                   </Box>
                 </div>
-                <div className="col-sm-2">
+                {/* <div className="col-sm-2">
                   <MDBox>
                     <Form.Select
                       value={createdx}
@@ -295,7 +261,7 @@ function Coupons() {
                       ))}
                     </Form.Select>
                   </MDBox>
-                </div>
+                </div> */}
               </div>
             </MDBox>
             <MDBox mt={4} mb={1}>

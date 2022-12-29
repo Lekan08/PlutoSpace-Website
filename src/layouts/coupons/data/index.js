@@ -145,8 +145,14 @@ export default function CuponsData() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
+    const date = new Date();
+    const startTime = new Date(date.getFullYear(), date.getMonth(), 1).getTime();
+    const endTime = new Date(new Date()).getTime();
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/coupons/gets/${orgIDs}`, { headers })
+    fetch(
+      `${process.env.REACT_APP_LOUGA_URL}/coupons/gets/${orgIDs}?startTime=${startTime}&endTime=${endTime}`,
+      { headers }
+    )
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -169,6 +175,7 @@ export default function CuponsData() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log(result);
         if (isMounted) {
           setItems(result);
         }
