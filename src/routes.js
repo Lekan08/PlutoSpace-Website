@@ -267,6 +267,7 @@ import UpdateAssets from "layouts/assets/update";
 import CompanyAssets from "layouts/company-Assets";
 import CustomerAssets from "layouts/customer-Assets";
 import AssetAttachDocument from "layouts/assets/attachDocuments";
+import Coupons from "layouts/coupons";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 
@@ -1734,6 +1735,14 @@ const routes = [
     icon: <Icon fontSize="small">point_of_sale</Icon>,
     route: "/sales/filterSales",
     component: <FilterSales />,
+  },
+  {
+    type: "collapse",
+    name: "Coupons",
+    key: "coupons",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/coupons",
+    component: <Coupons />,
   },
   {
     type: "divider",
