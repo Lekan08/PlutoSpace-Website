@@ -229,7 +229,8 @@ import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
 import MarkAsCompleted from "layouts/businessTravel/mark-as-completed";
 import ViewBusiness from "layouts/businessTravel/view";
 import ForwardApproval from "layouts/businessTravel/forwardforapproval";
-import TimeSheetManual from "layouts/timeSheet/timeSheet";
+import TimeSheetManual from "layouts/timesheet";
+import UpdateTimesheet from "layouts/timesheet/update-Timesheet";
 import TimeOffRequestsDashboard from "layouts/timeoffrequest-dashboard";
 // import FunctionalComponent from "layouts/businesstravel-dashboard/exportpdf";
 // import Html from "layouts/businesstravel-dashboard/exporthtml";
@@ -1352,11 +1353,18 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Time Sheet",
+    name: "Timesheet",
     key: "timeSheet",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/timeSheet/timeSheet",
+    route: "/timesheet",
     component: <TimeSheetManual />,
+  },
+  {
+    name: "Update Timesheet",
+    key: "timesheetUpdate",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/timesheet/update-Timesheet",
+    component: <UpdateTimesheet />,
   },
   {
     type: "divider",
