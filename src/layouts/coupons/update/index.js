@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
+// import MDInput from "components/MDInput";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
 import { Container, Form } from "react-bootstrap";
@@ -20,8 +20,12 @@ import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
+import Styles from "styles";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-function Departments() {
+function UpdateCoupons() {
   const MySwal = withReactContent(Swal);
 
   const [textx, setText] = useState("");
@@ -29,13 +33,14 @@ function Departments() {
   const [typex, setType] = useState("");
   const [frequencyx, setFrequency] = useState("");
   const [leftUsagex, setLeftUsage] = useState("");
-  const [createdByx, setCreatedBy] = useState([]);
-  const [createdx, setCreated] = useState("");
   const [idx, setId] = useState("");
   const [itemsx, setItems] = useState("");
+  const [expireTimex, setExpireTime] = useState("");
 
-  //   const [enabled, setEnabled] = useState("");
-  //   const [checkedName, setCheckedName] = useState("");
+  const [checkedAmount, setCheckedAmount] = useState("");
+  // const [checkedText, setCheckedText] = useState("");
+  const [checkedFrequency, setCheckedFrequency] = useState("");
+  const [checkedLeftUsage, setCheckedLeftUsage] = useState("");
 
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
@@ -43,22 +48,35 @@ function Departments() {
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
-  // eslint-disable-next-line consistent-return
-  const handleOnNameKeys = () => {
-    const letters = /^[a-zA-Z ]+$/;
-    if (!textx.match(letters)) {
-      // setCheckedName(false);
+  const handleOnAmountKeys = (value) => {
+    if (value.length === 0) {
+      setCheckedAmount(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("name").innerHTML = "Text - input only capital and small letters<br>";
+      document.getElementById("amount").innerHTML = "Amount is required<br>";
     }
-    if (textx.match(letters)) {
-      // setCheckedName(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("name").innerHTML = "";
+    if (value.length !== 0) {
+      setCheckedAmount(true);
     }
-    if (textx.length === 0) {
+  };
+  const handleOnFrequencyKeys = (value) => {
+    if (value.length === 0) {
+      setCheckedFrequency(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("name").innerHTML = "Text is required<br>";
+      document.getElementById("frequency").innerHTML = "Amount is required<br>";
+    }
+    if (value.length !== 0) {
+      setCheckedFrequency(true);
+    }
+  };
+
+  const handleOnLeftUsageKeys = (value) => {
+    if (value.length === 0) {
+      setCheckedLeftUsage(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("leftUsage").innerHTML = "Left Usage is required<br>";
+    }
+    if (value.length !== 0) {
+      setCheckedLeftUsage(true);
     }
   };
 
@@ -90,15 +108,26 @@ function Departments() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        setItems(result[0].result);
+        console.log(result);
+        setItems(result);
         setId(result[0].id);
         setText(result[0].text);
         setAmount(result[0].amount);
         setType(result[0].type);
         setFrequency(result[0].frequency);
         setLeftUsage(result[0].leftUsage);
-        setCreated(result[0].createdBy);
-        // handleOnTaxAmountKeys(result[0].expireTime);
+        const date = new Date(result[0].expireTime);
+        setExpireTime(date);
+        // setTimezone(`${storedArray.timezone.split("|")[0]}|${storedArray.timezone.split("|")[1]}`);
+        // setNewEvent({
+        //   time: timezoneConverter(date),
+        //   // title: storedArray.title,
+        //   // end: timezoneConverter(endx),
+        // });
+
+        handleOnFrequencyKeys(result[0].frequency);
+        handleOnLeftUsageKeys(result[0].leftUsage);
+        handleOnAmountKeys(result[0].amount);
       });
   };
 
@@ -126,7 +155,7 @@ function Departments() {
       type: typex,
       frequency: frequencyx,
       leftUsage: leftUsagex,
-      createdBy: createdx,
+      createdBy: itemsx[0].createdBy,
       expireTime: itemsx[0].expireTime,
       status: itemsx[0].status,
       createdTime: itemsx[0].createdTime,
@@ -139,7 +168,7 @@ function Departments() {
       body: raw,
       redirect: "follow",
     };
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/otherInflow/update`, requestOptions)
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/coupons/update`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -180,41 +209,14 @@ function Departments() {
         });
       });
   };
-  useEffect(() => {
-    const headers = miHeaders;
 
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+  const handleValidate = (e) => {
+    if (checkedAmount && checkedFrequency && checkedLeftUsage === true) {
+      handleClick(e);
+    }
+  };
 
-    const orgIDs = data11.orgID;
-    const empID = data11.personalID;
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getUserInfo/${orgIDs}/${empID}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          setCreatedBy(result);
-        }
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  console.log(expireTimex);
 
   return (
     <DashboardLayout>
@@ -223,7 +225,7 @@ function Departments() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -231,63 +233,48 @@ function Departments() {
             p={2}
             mb={1}
             textAlign="center"
+            style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Update Coupons
             </MDTypography>
           </MDBox>
-          <MDBox
-            variant="gradient"
-            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-            borderRadius="lg"
-            coloredShadow="success"
-            mx={3}
-            mt={1}
-            p={1}
-            mb={1}
-            textAlign="center"
-          >
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
+          <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="amount">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="frequency">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="leftUsage">
               {" "}
             </MDTypography>
           </MDBox>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      label="Name *"
-                      value={textx || ""}
-                      onKeyUp={handleOnNameKeys}
-                      className="form-control"
-                      onChange={(e) => setText(e.target.value)}
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                  <div className="col-sm-6">
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={amountx}
-                          label="Amount"
-                          placeholder="Amount* "
-                          size="small"
-                          type="number"
-                          onChange={(e) => setAmount(e.target.value)}
-                          required
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                </div>
+                <div className="row" />
               </Container>
             </MDBox>
             <MDBox mb={2}>
               <div className="row">
+                <div className="col-sm-6">
+                  <Box sx={{ minWidth: 120 }}>
+                    <FormControl fullWidth>
+                      <TextField
+                        id="filled-number"
+                        value={frequencyx}
+                        onKeyUp={handleOnFrequencyKeys}
+                        label="Frequency"
+                        placeholder="Frequency "
+                        size="small"
+                        type="number"
+                        onChange={(e) => setFrequency(e.target.value)}
+                        required
+                      />
+                    </FormControl>
+                  </Box>
+                </div>
                 <div className="col-sm-6">
                   <MDBox>
                     <Form.Select
@@ -301,26 +288,27 @@ function Departments() {
                     </Form.Select>
                   </MDBox>
                 </div>
+              </div>
+            </MDBox>
+            <MDBox>
+              <div className="row">
                 <div className="col-sm-6">
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
                       <TextField
                         id="filled-number"
-                        value={frequencyx}
-                        label="Frequency"
-                        placeholder="Frequency "
+                        value={amountx}
+                        label="Amount"
+                        placeholder="Amount* "
+                        onKeyUp={handleOnAmountKeys}
                         size="small"
                         type="number"
-                        onChange={(e) => setFrequency(e.target.value)}
+                        onChange={(e) => setAmount(e.target.value)}
                         required
                       />
                     </FormControl>
                   </Box>
                 </div>
-              </div>
-            </MDBox>
-            <MDBox mb={2}>
-              <div className="row">
                 <div className="col-sm-6">
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
@@ -328,6 +316,7 @@ function Departments() {
                         id="filled-number"
                         value={leftUsagex}
                         label="Left Usage"
+                        onKeyUp={handleOnLeftUsageKeys}
                         placeholder="Left Usage "
                         size="small"
                         type="number"
@@ -337,7 +326,60 @@ function Departments() {
                     </FormControl>
                   </Box>
                 </div>
-                <div className="col-sm-2">
+              </div>
+            </MDBox>
+            <MDBox>
+              <div className="row">
+                {/* <div className="col-sm-5">
+                  <div align="center">
+                    <MDTypography
+                      variant="button"
+                      fontWeight="regular"
+                      fontSize="80%"
+                      align="center"
+                      color="text"
+                      mt={2}
+                    >
+                      Expire Time
+                    </MDTypography>
+                    <DatePicker
+                      placeholderText="MM/DD/YY hh:mm"
+                      style={{ marginRight: "10px" }}
+                      selected={expireTimex.time}
+                      peekNextMonth
+                      showMonthDropdown
+                      showYearDropdown
+                      showTimeSelect
+                      dateFormat="MM/dd/yyyy h:mm aa"
+                      dropdownMode="select"
+                      onChange={(time) => setExpireTime({ ...expireTimex, time })}
+                    />
+                  </div>
+                </div> */}
+                <div className="col-sm-5">
+                  <MDBox mt={2}>
+                    <MDTypography
+                      variant="button"
+                      fontWeight="regular"
+                      fontSize="80%"
+                      align="left"
+                      color="text"
+                    >
+                      Expire Time
+                    </MDTypography>
+                    <DatePicker
+                      placeholderText="Start Date"
+                      style={{ marginRight: "10px" }}
+                      selected={expireTimex}
+                      peekNextMonth
+                      showMonthDropdown
+                      showYearDropdown
+                      dropdownMode="select"
+                      onChange={(start) => setExpireTime(start)}
+                    />
+                  </MDBox>
+                </div>
+                {/* <div className="col-sm-2">
                   <MDBox>
                     <Form.Select
                       value={createdx}
@@ -352,18 +394,19 @@ function Departments() {
                       ))}
                     </Form.Select>
                   </MDBox>
-                </div>
+                </div> */}
               </div>
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton
                 variant="gradient"
-                onClick={handleClick}
-                color="info"
+                onClick={handleValidate}
+                // color="info"
                 width="50%"
                 align="left"
+                style={Styles.buttonSx}
               >
-                Update
+                Save
               </MDButton>
             </MDBox>
           </MDBox>
@@ -377,4 +420,4 @@ function Departments() {
   );
 }
 
-export default Departments;
+export default UpdateCoupons;

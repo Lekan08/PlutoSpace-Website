@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Icon from "@mui/material/Icon";
-// import Swal from "sweetalert2";
-// import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 // import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 
 export default function CuponsData() {
-  //   const MySwal = withReactContent(Swal);
+  const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
 
   //   const { allPHeaders: myHeaders } = PHeaders();
@@ -188,11 +188,97 @@ export default function CuponsData() {
     navigate(`/coupons/update?id=${value}`);
   };
 
+  function handleTerminate(id) {
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const personalIDs = data11.personalID;
+    const terminatedBy = personalIDs;
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Terminate it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const requestOptions = {
+          method: "GET",
+          headers: miHeaders,
+        };
+        fetch(
+          `${process.env.REACT_APP_LOUGA_URL}/coupons/terminate/${id}/${terminatedBy}`,
+          requestOptions
+        )
+          .then(async (res) => {
+            const aToken = res.headers.get("token-1");
+            localStorage.setItem("rexxdex", aToken);
+            return res.json();
+          })
+          .then((resx) => {
+            if (resx.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+            }
+            if (resx.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+            }
+            if (resx.message === "Unauthorized Access") {
+              navigate("/authentication/forbiddenPage");
+            }
+            MySwal.fire({
+              title: resx.status,
+              type: "success",
+              text: resx.message,
+            }).then(() => {
+              window.location.reload();
+            });
+          })
+          .catch((error) => {
+            MySwal.fire({
+              title: error.status,
+              type: "error",
+              text: error.message,
+            });
+          });
+      }
+    });
+  }
+
+  // eslint-disable-next-line consistent-return
+  // const handleOnClientType = (clientType) => {
+  //   if (clientType === 1) {
+  //     return "Type";
+  //   }
+  //   if (clientType === 2) {
+  //     return "Frequency";
+  //   }
+  // };
+
   // Return table
   return {
     columns: [
-      // { Header: "name", accessor: "name", align: "left" },
-      // { Header: "description", accessor: "descrip", align: "left" },
+      // { Header: "Text", accessor: "text", align: "left" },
+      { Header: "Amount", accessor: "amount", align: "left" },
+      { Header: "Frequency", accessor: "frequency", align: "left" },
+      { Header: "Left Usage", accessor: "leftUsage", align: "left" },
+      // {
+      //   Header: "Sales Type",
+      //   accessor: "type",
+
+      //   // eslint-disable-next-line react/prop-types
+      //   Cell: ({ cell: { value } }) => (
+      //     <span className="badge badge-pill" style={{ backgroundColor: changeCol(value) }}>
+      //       {changeStatusCol(value)}
+      //     </span>
+      //   ),
+      //   align: "left",
+      // },
+      // {
+      //   Header: "Sales Type",
+      //   accessor: "type",
+      //   // Cell: ({ cell: { value } }) => console.log(value), // handleOnClientType(value),
+      //   align: "left",
+      // },
       {
         Header: "Date Created",
         accessor: "createdTime",
@@ -218,7 +304,7 @@ export default function CuponsData() {
 
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => handleShow(value)}>Update</Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item> */}
+                <Dropdown.Item onClick={() => handleTerminate(value)}>Terminate</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>
