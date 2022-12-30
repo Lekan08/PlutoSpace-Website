@@ -38,7 +38,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import DownloadIcon from "@mui/icons-material/Download";
-import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
+import ShareIcon from "@mui/icons-material/Share";
 import { DeleteForever } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
 
@@ -124,18 +124,16 @@ const style = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 10,
+  p: 4,
   borderRadius: 5,
   overflow: "scroll",
-  // overflowY: "auto",
   height: "auto",
-  maxHeight: "70vh",
+  maxHeight: "50vh",
   display: "block",
 
   "&::-webkit-scrollbar": {
     width: "6px",
     height: "2px",
-    display: "none",
   },
   "&::-webkit-scrollbar-track": {
     boxShadow: "inset 0 0 1px rgba(0,0,0,0.00)",
@@ -152,20 +150,8 @@ const cardBorder = {
   // borderBottomLeftRadius: 20,
 };
 
-function ContentView({ items, groups, level }) {
+function ContentView({ items, groups }) {
   const [iiidd, setIIIDD] = useState("");
-  const [accessLevelx, setAccessLevel] = useState("");
-
-  React.useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      setAccessLevel(`${level}`);
-    }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [level]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -463,7 +449,7 @@ function ContentView({ items, groups, level }) {
       orgID: orgIDs,
       empID: filteredItems[0].empID,
       key: filteredItems[0].key,
-      accessLevel: parseInt(accessLevelx, 10),
+      accessLevel: filteredItems[0].accessLevel,
       groupID: groupidx,
       type: filteredItems[0].type,
       size: filteredItems[0].size,
@@ -516,22 +502,6 @@ function ContentView({ items, groups, level }) {
           handleOpen();
         });
       });
-  };
-
-  const checkUDoc = () => {
-    if (accessLevelx !== "") {
-      if (accessLevelx === "1") {
-        if (groupidx === "") {
-          // eslint-disable-next-line no-unused-expressions
-          document.getElementById("groupVal").innerHTML = "please choose a group<br>";
-          return;
-        }
-      }
-      handleShare(documentIDx);
-    } else {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("imageVal").innerHTML = "choose an access level<br>";
-    }
   };
 
   const handleDownload = (value) => {
@@ -660,92 +630,100 @@ function ContentView({ items, groups, level }) {
           pngType = DocPng;
         }
         return (
-          <Grid container spacing={1} key={item.id}>
-            <Grid item xs={6} md={6} lg={6}>
-              <Button
-                sx={{ color: "inherit", fontSize: "70%" }}
-                onClick={(e) => handleShowMenu(e, item.id)}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    // alignItems: "center",
-                    color: "inherit",
-                  }}
-                >
-                  <img src={pngType} alt="Icon" width="24" height="24" />
-                  &nbsp; &nbsp;
-                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", width: "11rem" }}>
-                    <MDTypography
-                      variant="inherit"
-                      fontWeight="medium"
-                      fontSize="100%"
-                      align="left"
-                      color="text"
-                      noWrap
-                    >
-                      {docName}
-                    </MDTypography>
-                  </span>
-                </div>
-              </Button>
-            </Grid>
-            <Grid item xs={3} md={3} lg={3}>
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                fontSize="70%"
-                align="left"
-                color="text"
-                noWrap
-              >
-                {changeSize(docSize)}
-              </MDTypography>
-            </Grid>
-            <Grid item xs={3} md={3} lg={3}>
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                fontSize="70%"
-                align="left"
-                color="text"
-                noWrap
-              >
-                {changeDate(docDate)}
-              </MDTypography>
-            </Grid>
-
-            <StyledMenu
-              id="demo-customized-menu"
-              MenuListProps={{
-                "aria-labelledby": "demo-customized-button",
+          <MDBox key={item.id}>
+            <Button
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                // justifyContent: "space-between",
+                // alignItems: "center",
+                // color: "inherit",
               }}
-              anchorEl={anchorEl}
-              open={open}
-              value={iiidd}
-              onClose={handleClose}
+              onClick={(e) => handleShowMenu(e, item.id)}
             >
-              <MenuItem onClick={() => handleView(iiidd)} disableRipple>
-                <SlideshowIcon />
-                View
-              </MenuItem>
-              <MenuItem onClick={() => handleOpen(iiidd)} disableRipple>
-                <ChangeCircleOutlinedIcon />
-                Change Access Level
-              </MenuItem>
-              <Divider sx={{ my: 0.5 }} />
-              <MenuItem onClick={() => handleDownload(iiidd)} disableRipple>
-                <DownloadIcon />
-                Download
-              </MenuItem>
-              <MenuItem onClick={() => handleDelete(iiidd)} disableRipple>
-                <DeleteForever />
-                Delete
-              </MenuItem>
-            </StyledMenu>
-          </Grid>
+              <Grid container spacing={1}>
+                <Grid item xs={6} md={6} lg={6}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      // justifyContent: "space-between",
+                      // alignItems: "center",
+                      color: "inherit",
+                    }}
+                  >
+                    <img src={pngType} alt="Icon" width="24" height="24" />
+                    &nbsp; &nbsp;
+                    <span style={{ overflow: "hidden", textOverflow: "ellipsis", width: "11rem" }}>
+                      <MDTypography
+                        variant="inherit"
+                        fontWeight="medium"
+                        fontSize="100%"
+                        align="left"
+                        color="text"
+                        noWrap
+                      >
+                        {docName}
+                      </MDTypography>
+                    </span>
+                  </div>
+                </Grid>
+                <Grid item xs={3} md={3} lg={3}>
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    fontSize="100%"
+                    align="left"
+                    color="text"
+                    noWrap
+                  >
+                    {changeSize(docSize)}
+                  </MDTypography>
+                </Grid>
+                <Grid item xs={3} md={3} lg={3}>
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    fontSize="100%"
+                    align="left"
+                    color="text"
+                    noWrap
+                  >
+                    {changeDate(docDate)}
+                  </MDTypography>
+                </Grid>
+
+                <StyledMenu
+                  id="demo-customized-menu"
+                  MenuListProps={{
+                    "aria-labelledby": "demo-customized-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  value={iiidd}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={() => handleView(iiidd)} disableRipple>
+                    <SlideshowIcon />
+                    View
+                  </MenuItem>
+                  <MenuItem onClick={() => handleOpen(iiidd)} disableRipple>
+                    <ShareIcon />
+                    Share
+                  </MenuItem>
+                  <Divider sx={{ my: 0.5 }} />
+                  <MenuItem onClick={() => handleDownload(iiidd)} disableRipple>
+                    <DownloadIcon />
+                    Download
+                  </MenuItem>
+                  <MenuItem onClick={() => handleDelete(iiidd)} disableRipple>
+                    <DeleteForever />
+                    Delete
+                  </MenuItem>
+                </StyledMenu>
+              </Grid>
+            </Button>
+          </MDBox>
         );
       })}
       &nbsp;
@@ -753,8 +731,8 @@ function ContentView({ items, groups, level }) {
         <Card sx={style} style={cardBorder}>
           <MDBox>
             <MDTypography id="modal-modal-title" variant="h6" component="h2">
-              Change Access Level
-            </MDTypography>
+              Share With Group
+            </MDTypography>{" "}
             <MDBox mt={2}>
               <MDTypography
                 variant="button"
@@ -763,56 +741,26 @@ function ContentView({ items, groups, level }) {
                 align="right"
                 color="text"
               >
-                Access Level <i>(optional)</i>
+                Group <i>(optional)</i>
               </MDTypography>
               <Form.Select
-                value={accessLevelx || ""}
-                onChange={(e) => setAccessLevel(e.target.value)}
+                value={groupidx || ""}
+                onChange={(e) => setGroupIdx(e.target.value)}
                 aria-label="Default select example"
               >
-                <option value="">Select Access Level</option>
-                <option value="0">Personal</option>
-                <option value="1">Group</option>
-                <option value="2">Organisation</option>
+                <option value="">Select Group</option>
+                {groups.map((api) => (
+                  <option key={api.group.id} value={api.group.id}>
+                    {api.group.name}
+                  </option>
+                ))}
               </Form.Select>
               <br />
             </MDBox>
-            <p id="imageVal" style={{ color: "red", fontSize: 13 }}>
-              <i> </i>
-            </p>
-            {accessLevelx === "1" && (
-              <MDBox mt={0}>
-                <MDTypography
-                  variant="button"
-                  fontWeight="regular"
-                  fontSize="80%"
-                  align="right"
-                  color="text"
-                >
-                  Group
-                </MDTypography>
-                <Form.Select
-                  value={groupidx || ""}
-                  onChange={(e) => setGroupIdx(e.target.value)}
-                  aria-label="Default select example"
-                >
-                  <option value="">Select Group</option>
-                  {groups.map((api) => (
-                    <option key={api.group.id} value={api.group.id}>
-                      {api.group.name}
-                    </option>
-                  ))}
-                </Form.Select>
-                <br />
-              </MDBox>
-            )}
-            <p id="groupVal" style={{ color: "red", fontSize: 13 }}>
-              <i> </i>
-            </p>
             <MDBox mt={0} mb={1}>
               <MDButton
                 variant="gradient"
-                onClick={() => checkUDoc()}
+                onClick={() => handleShare(documentIDx)}
                 color="info"
                 width="50%"
                 align="left"

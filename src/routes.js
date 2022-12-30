@@ -67,6 +67,7 @@ import UserProfile from "layouts/userProfile";
 import CompanyProfile from "layouts/companiesProfile";
 import ViewUser from "layouts/userManagement/viewUser";
 import MyonBoarding from "layouts/myonboarding";
+import MyoffBoarding from "layouts/myoffboarding";
 import Groupview from "layouts/groupview";
 import ForgotPass from "layouts/authentication/forgot-password";
 import ComForgotPass from "layouts/authentication/complete-forgotPassword";
@@ -228,6 +229,7 @@ import UpdateBusinessTravel from "layouts/businessTravel/update";
 import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
 import MarkAsCompleted from "layouts/businessTravel/mark-as-completed";
 import ViewBusiness from "layouts/businessTravel/view";
+import AttachDocument from "layouts/businessTravel/attachdocument";
 import ForwardApproval from "layouts/businessTravel/forwardforapproval";
 import TimeSheetManual from "layouts/timesheet";
 import UpdateTimesheet from "layouts/timesheet/update-Timesheet";
@@ -238,6 +240,9 @@ import TimeOffRequestsDashboard from "layouts/timeoffrequest-dashboard";
 import VideoChat from "layouts/videoChat";
 import OnboardingSession from "layouts/onboardingCompany/sessions";
 import AssignedOnboarding from "layouts/assignedOnboarding";
+import OffboardingSession from "layouts/offboardingCompany/sessions";
+import MultiSessionOffboarding from "layouts/offboardingCompany/sessions/multisession";
+import AssignedOffboarding from "layouts/assignedOffboarding";
 import GenerateProductionReport from "layouts/products/reportProduction/generateProductionReport";
 import OtherInflowType from "layouts/otherInflowType";
 import OtherInflow from "layouts/otherInflow";
@@ -260,6 +265,7 @@ import InsuranceUpdate from "layouts/insurance/update";
 import InsuranceView from "layouts/insurance/view";
 import InsuranceContribution from "layouts/insurance/contribution";
 import InsuranceDamage from "layouts/insurance/damage";
+import UpdateInsuranceDamage from "layouts/insurance/damage/data/update";
 import AssetTypes from "layouts/asset-Types";
 import UpdateAssetTypes from "layouts/asset-Types/update";
 import Assets from "layouts/assets";
@@ -267,8 +273,14 @@ import UpdateAssets from "layouts/assets/update";
 import CompanyAssets from "layouts/company-Assets";
 import CustomerAssets from "layouts/customer-Assets";
 import AssetAttachDocument from "layouts/assets/attachDocuments";
+import Coupons from "layouts/coupons";
+import AppointmentOffboardingSession from "layouts/assignedOffboarding/appointmentSession";
+
+import AppraisalHistory from "layouts/appraisal/appraisalHistory";
 import OnboardingCompany from "./layouts/onboardingCompany";
+import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
+import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/update";
 
 const routes = [
   {
@@ -482,6 +494,14 @@ const routes = [
     icon: <Icon fontSize="small">rate_review</Icon>,
     route: "/Appraisals",
     component: <Appraisal />,
+  },
+  {
+    type: "collapse",
+    name: "Appraisal History",
+    key: "appraisalHistory",
+    icon: <Icon fontSize="small">rate_review</Icon>,
+    route: "/Appraisal-History",
+    component: <AppraisalHistory />,
   },
   {
     name: "View Appraisal",
@@ -713,6 +733,14 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-travel/view",
     component: <ViewBusiness />,
+  },
+  {
+    // type: "collapse",
+    name: "Attach Document",
+    key: "attachdocument",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/business-travel/attachdocument",
+    component: <AttachDocument />,
   },
   {
     // type: "collapse",
@@ -1045,6 +1073,13 @@ const routes = [
     component: <InsuranceDamage />,
   },
   {
+    name: "Insurance Damage Update",
+    key: "insuranceDamageUpdate",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/insurance/damage/update",
+    component: <UpdateInsuranceDamage />,
+  },
+  {
     type: "collapse",
     name: "Insurance Types",
     key: "insuranceType",
@@ -1231,6 +1266,66 @@ const routes = [
     key: "updateOnboardingSession",
     route: "/onboarding/sessions/update",
     component: <UpdateOnboardingSession />,
+  },
+  {
+    type: "divider",
+    name: "",
+    key: "divdq1",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Offboarding",
+    key: "titdq2",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "My Offboarding",
+    key: "MyOffboarding",
+    icon: <Icon fontSize="small">logout</Icon>,
+    route: "/my-offboarding",
+    component: <MyoffBoarding />,
+  },
+  {
+    type: "collapse",
+    name: "Company Offboarding",
+    key: "offboardingCompany",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/company-offboarding",
+    component: <OffboardingCompany />,
+  },
+  {
+    type: "collapse",
+    name: "Assigned Offboarding",
+    key: "assignedOffboarding",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/assigned-offboarding",
+    component: <AssignedOffboarding />,
+  },
+  {
+    name: "Offboarding Sessions",
+    key: "offboardingSession",
+    route: "/offboarding/sessions",
+    component: <OffboardingSession />,
+  },
+  {
+    name: "Offboarding Session",
+    key: "offboardingMultiSession",
+    route: "/offboarding/multi-sessions",
+    component: <MultiSessionOffboarding />,
+  },
+  {
+    name: "Appointment Offboarding Sessions",
+    key: "appointmentOffboardingSessions",
+    route: "/offboarding-sessions/appointment",
+    component: <AppointmentOffboardingSession />,
+  },
+  {
+    name: "Update Offboarding Session",
+    key: "updateOffboardingSession",
+    route: "/offboarding/sessions/update",
+    component: <UpdateOffboardingSession />,
   },
   {
     type: "divider",
@@ -1734,6 +1829,14 @@ const routes = [
     icon: <Icon fontSize="small">point_of_sale</Icon>,
     route: "/sales/filterSales",
     component: <FilterSales />,
+  },
+  {
+    type: "collapse",
+    name: "Coupons",
+    key: "coupons",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/coupons",
+    component: <Coupons />,
   },
   {
     type: "divider",

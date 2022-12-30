@@ -1,5 +1,3 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
 import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -44,7 +42,7 @@ import RollingGif from "assets/images/Rolling.gif";
 import ClearIcon from "@mui/icons-material/Clear";
 import Styles from "styles";
 
-function AssetAttachDocument() {
+function BusinessTravelAttachDocument() {
   const [files, setFiles] = useState("");
   const [open, setOpenn] = React.useState(false);
   const [opened, setOpened] = useState(false);
@@ -52,6 +50,7 @@ function AssetAttachDocument() {
   // const [docs, setDocs] = useState([]);
   const [imageUrl, setImageUrl] = useState(RollingGif);
   // const [showFrame, setShowFrame] = useState(false);
+  const [allResult, setAllResult] = useState("");
 
   const [viewDoc, setViewDoc] = React.useState(false);
 
@@ -148,20 +147,24 @@ function AssetAttachDocument() {
     // }
   };
 
-  useEffect(() => {
+  console.log(imageUrl);
+
+  const handleGet = () => {
+    setOpened(true);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get("id");
-    // const personalIds = data11.personalID;
+
     const headers = miHeaders;
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/assets/getByIds/${id}`, { headers })
+
+    fetch(`${process.env.REACT_APP_SHASHA_URL}/businessTravels/getByIds/${id}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
         return res.json();
       })
       .then((result) => {
+        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -175,42 +178,111 @@ function AssetAttachDocument() {
           window.location.reload();
         }
         console.log(result);
-        if (result !== "") {
-          // const dannyff = result[0].attachedDocs;
-          //   console.log(dannyff);
-          //   console.log(result);
-          if (isMounted) {
+        if (result.length !== 0) {
+          setAllResult(result);
+          if (result !== "") {
             if (result[0].attachedDocs !== null) {
               setItems(result[0].attachedDocs);
-              //       // setShowFrame(true);
-              //       console.log(result);
-              //       console.log(null);
-              //       console.log(result[0].attachedDocs);
             }
           }
         }
       });
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      handleGet();
+    }
     return () => {
       isMounted = false;
     };
   }, []);
-  console.log(imageUrl);
 
   const handleClick = (e, imgId) => {
+    // handleOnPurposeKeys(e);
+    // handleOnAddressKeys();
+    // handleOnCityKeys();
+    // handleOnExtraKeys();
+    // handleOnAExpensesKeys();
+    // handleOnExpensesKeys();
+    // handleOnActualDay();
+    // handleOnRequestKeys();
     // if (enabled) {
+    setOpened(true);
     e.preventDefault();
-    console.log(imgId);
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const idx = urlParams.get("id");
-    const headers = miHeaders;
-    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/assets/addDocument/${idx}/${imgId}`, {
-      headers,
-    })
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    const personalIDs = data11.personalID;
+    const raw = JSON.stringify({
+      id: allResult[0].id,
+      orgID: orgIDs,
+      createdBy: personalIDs,
+      startTime: allResult[0].startTime,
+      noOfDaysRequested: allResult[0].noOfDaysRequested,
+      noOfDaysApproved: allResult[0].noOfDaysApproved,
+      employees: allResult[0].employees,
+      location: {
+        address: allResult[0].location.address,
+        city: allResult[0].location.city,
+        state: allResult[0].location.state,
+        country: allResult[0].location.country,
+      },
+      expectedExpenses: allResult[0].expectedExpenses,
+      actualExpenses: allResult[0].actualExpenses,
+      actualDaysSpent: allResult[0].actualDaysSpent,
+      purpose: allResult[0].purpose,
+      extraInformation: allResult[0].extraInformation,
+      approverID: allResult[0].approverID,
+      deleteFlag: allResult[0].deleteFlag,
+      status: allResult[0].status,
+      approvalStatus: allResult[0].approvalStatus,
+      approveTime: allResult[0].approveTime,
+      createdTime: allResult[0].createdTime,
+      attachedDocs: [imgId],
+
+      // {
+      //   "createdTime": 0,
+      //   "noOfDaysRequested": 0,
+      //   "noOfDaysApproved": 0,
+      //   "location": {
+      //     "address": "string",
+      //     "city": "string",
+      //     "state": "string",
+      //     "country": "string"
+      //   },
+      //   "expectedExpenses": 0,
+      //   "actualExpenses": 0,
+      //   "actualDaysSpent": 0,
+      //   "status": 0,
+      //   "purpose": "string",
+      //   "extraInformation": "string",
+      //   "attachedDocs": [
+      //     "string"
+      //   ],
+      //   "approverID": 0,
+      //   "approveTime": 0,
+      //   "approvalStatus": 0,
+      //   "deleteFlag": 0
+      // }
+    });
+    console.log(raw);
+    const requestOptions = {
+      method: "POST",
+      headers: miHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(`${process.env.REACT_APP_SHASHA_URL}/businessTravels/update`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
-        return res.json();
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
+        return JSON.parse(result);
       })
       .then((result) => {
         if (result.message === "Expired Access") {
@@ -225,7 +297,6 @@ function AssetAttachDocument() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         setOpened(false);
         MySwal.fire({
           title: result.status,
@@ -275,7 +346,7 @@ function AssetAttachDocument() {
         // console.log(imgKey);
 
         const dateQ = new Date().getTime();
-        const cbtKey = `AssetDocs${1 * 2 + 3 + dateQ}`;
+        const cbtKey = `BusinessTravelDocs${1 * 2 + 3 + dateQ}`;
         console.log(cbtKey);
 
         // const formData = new FormData();
@@ -404,50 +475,91 @@ function AssetAttachDocument() {
       if (resultd.isConfirmed) {
         handleClose();
         setOpened(true);
-
-        const requestOptionsd = {
+        const requestOptions = {
           method: "DELETE",
           headers: miHeaders,
         };
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const idx = urlParams.get("id");
-
+        const data11 = JSON.parse(localStorage.getItem("user1"));
+        const orgIDs = data11.orgID;
+        const mOrgID = orgIDs;
+        // console.log(filteredItems);
+        // const docKey = filteredItems[0].attachedDocs;
         fetch(
-          `${process.env.REACT_APP_JOHANNESBURG_URL}/assets/removeDocument/${idx}/${value}`,
-          requestOptionsd
+          `${process.env.REACT_APP_EKOATLANTIC_URL}/media/delete/${mOrgID}/${value}`,
+          requestOptions
         )
           .then(async (res) => {
             const aToken = res.headers.get("token-1");
             localStorage.setItem("rexxdex", aToken);
-            return res.json();
+            const result = await res.text();
+            if (result === null || result === undefined || result === "") {
+              return {};
+            }
+            return JSON.parse(result);
           })
-          .then((resxx) => {
-            if (resxx.message === "Expired Access") {
-              navigate("/authentication/sign-in");
-            }
-            if (resxx.message === "Token Does Not Exist") {
-              navigate("/authentication/sign-in");
-            }
-            if (resxx.message === "Unauthorized Access") {
+          .then((resx) => {
+            console.log(resx);
+            if (resx.message === "Unauthorized Access") {
               navigate("/authentication/forbiddenPage");
             }
-            setOpened(false);
-            MySwal.fire({
-              title: resxx.status,
-              type: "success",
-              text: resxx.message,
-            }).then(() => {
-              window.location.reload();
-            });
+            console.log(`STATUS - ${resx.status} - - - - - - MESSAGE - ${resx.message}`);
+
+            if (resx.status !== "SUCCESS") {
+              setOpened(false);
+              MySwal.fire({
+                title: "DELETE_UNSUCCESSFUL",
+                type: "error",
+                text: "Document Delete Was Unsuccessful",
+              });
+            } else {
+              const requestOptionsd = {
+                method: "DELETE",
+                headers: miHeaders,
+              };
+              const queryString = window.location.search;
+              const urlParams = new URLSearchParams(queryString);
+              const id = urlParams.get("id");
+
+              fetch(
+                `${process.env.REACT_APP_SHASHA_URL}/businessTravels/removeDocument/${id}/${value}`,
+                requestOptionsd
+              )
+                .then(async (res) => {
+                  const aToken = res.headers.get("token-1");
+                  localStorage.setItem("rexxdex", aToken);
+                  return res.json();
+                })
+                .then((resxx) => {
+                  if (resxx.message === "Expired Access") {
+                    navigate("/authentication/sign-in");
+                  }
+                  if (resxx.message === "Token Does Not Exist") {
+                    navigate("/authentication/sign-in");
+                  }
+                  if (resxx.message === "Unauthorized Access") {
+                    navigate("/authentication/forbiddenPage");
+                  }
+                  setOpened(false);
+                  MySwal.fire({
+                    title: resxx.status,
+                    type: "success",
+                    text: resxx.message,
+                  }).then(() => {
+                    window.location.reload();
+                  });
+                })
+                .catch((error) => {
+                  setOpened(false);
+                  MySwal.fire({
+                    title: error.status,
+                    type: "error",
+                    text: error.message,
+                  });
+                });
+            }
           })
           .catch((error) => {
-            setOpened(false);
-            MySwal.fire({
-              title: error.status,
-              type: "error",
-              text: error.message,
-            });
+            console.log(`STATUS - ${error.status} - - - - - - MESSAGE - ${error.message}`);
           });
       }
     });
@@ -736,78 +848,76 @@ function AssetAttachDocument() {
               //  const docName = api.name;
               console.log(api);
               console.log(index);
-              if (api !== null) {
-                const docType = api.type;
-                //  const docSize = api.size;
-                //  const docDate = api.createdTime;
-                let pngType;
-                if (
-                  docType === "image/png" ||
-                  docType === "image/jpg" ||
-                  docType === "image/jpeg" ||
-                  docType === "image/gif"
-                ) {
-                  pngType = ImagePng;
-                } else if (docType === "application/msword") {
-                  pngType = WordPng;
-                } else if (
-                  docType ===
-                  "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                ) {
-                  pngType = PowerPointPng;
-                } else if (docType === "application/pdf") {
-                  pngType = PdfPng;
-                } else if (
-                  docType === "text/csv" ||
-                  docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                ) {
-                  pngType = ExcelPng;
-                } else {
-                  pngType = DocPng;
-                }
-                return (
-                  <>
-                    {api !== null ? (
-                      <Grid key={api} item xs={12} md={6} lg={3}>
-                        <Card style={{ backgroundColor: "#EB5353" }}>
-                          <Button
-                            id="demo-customized-button"
-                            aria-controls="demo-customized-menu"
-                            aria-haspopup="true"
-                            aria-expanded="true"
-                            disableElevation
-                            sx={{ color: "inherit" }}
-                            // onClick={() => handleView(api.id, index)}
-                          >
-                            <CardContent>
-                              <img src={pngType} alt="Icon" width="78" height="78" />
-                            </CardContent>
-                          </Button>
-                          <CardActions>
-                            <Button
-                              onClick={() => handleDelete(api, index)}
-                              style={{ color: "white" }}
-                              startIcon={<DeleteIcon />}
-                            >
-                              Remove
-                            </Button>
-                            <Button
-                              onClick={() => handleDownload(api, index)}
-                              style={{ color: "white" }}
-                              startIcon={<DownloadIcon />}
-                            >
-                              Download
-                            </Button>
-                          </CardActions>
-                        </Card>{" "}
-                        &nbsp; &nbsp;{" "}
-                      </Grid>
-                    ) : (
-                      <MDBox />
-                    )}
-                  </>
-                );
+              const docType = api.type;
+              //  const docSize = api.size;
+              //  const docDate = api.createdTime;
+              let pngType;
+              if (
+                docType === "image/png" ||
+                docType === "image/jpg" ||
+                docType === "image/jpeg" ||
+                docType === "image/gif"
+              ) {
+                pngType = ImagePng;
+              } else if (docType === "application/msword") {
+                pngType = WordPng;
+              } else if (
+                docType ===
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+              ) {
+                pngType = PowerPointPng;
+              } else if (docType === "application/pdf") {
+                pngType = PdfPng;
+              } else if (
+                docType === "text/csv" ||
+                docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              ) {
+                pngType = ExcelPng;
+              } else {
+                pngType = DocPng;
               }
+              return (
+                <>
+                  {api !== null ? (
+                    <Grid key={api} item xs={12} md={6} lg={3}>
+                      <Card style={{ backgroundColor: "#EB5353" }}>
+                        <Button
+                          id="demo-customized-button"
+                          aria-controls="demo-customized-menu"
+                          aria-haspopup="true"
+                          aria-expanded="true"
+                          disableElevation
+                          sx={{ color: "inherit" }}
+                          // onClick={() => handleView(api.id, index)}
+                        >
+                          <CardContent>
+                            <img src={pngType} alt="Icon" width="78" height="78" />
+                          </CardContent>
+                        </Button>
+                        <CardActions>
+                          <Button
+                            onClick={() => handleDelete(api, index)}
+                            style={{ color: "white" }}
+                            startIcon={<DeleteIcon />}
+                          >
+                            Remove
+                          </Button>
+                          <Button
+                            onClick={() => handleDownload(api, index)}
+                            style={{ color: "white" }}
+                            startIcon={<DownloadIcon />}
+                          >
+                            Download
+                          </Button>
+                        </CardActions>
+                      </Card>{" "}
+                      &nbsp; &nbsp;{" "}
+                    </Grid>
+                  ) : (
+                    <MDBox />
+                  )}
+                </>
+              );
             })}
           </Grid>
         </Box>
@@ -849,4 +959,4 @@ function AssetAttachDocument() {
     </DashboardLayout>
   );
 }
-export default AssetAttachDocument;
+export default BusinessTravelAttachDocument;

@@ -602,6 +602,11 @@ export default function BusinessData() {
                 <Dropdown.Item onClick={() => navigate(`/business-travel/update?id=${value}`)}>
                   View/Update
                 </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => navigate(`/business-travel/attachdocument?id=${value}`)}
+                >
+                  Attach Document
+                </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleapprove(value)}>Approve</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisapprove(value)}>Disapprove</Dropdown.Item>
