@@ -18,6 +18,7 @@ import MDBox from "components/MDBox";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Styles from "styles";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import clockIn from "./clockIn.png";
 // import MDButton from "components/MDButton";
@@ -524,12 +525,12 @@ export default function TimeSheetAuto() {
                     <MDBox pt={1} pb={1} px={2}>
                       <MDBox
                         variant="gradient"
-                        bgColor="info"
+                        // bgColor="info"
                         borderRadius="lg"
-                        coloredShadow="info"
+                        style={{ backgroundColor: "#f96d02" }}
                         mx={2}
                         mt={-3}
-                        p={1}
+                        p={2}
                         mb={1}
                         textAlign="center"
                       >
@@ -538,31 +539,25 @@ export default function TimeSheetAuto() {
                         </MDTypography>
                       </MDBox>
                       <MDBox
-                        variant="gradient"
-                        bgColor="error"
-                        borderRadius="lg"
-                        coloredShadow="success"
-                        mx={3}
-                        mt={1}
-                        p={1}
-                        mb={3}
-                        textAlign="center"
+                        mt={2}
+                        mb={2}
+                        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                       >
-                        <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+                        <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
                           {" "}
                         </MDTypography>
                         <MDTypography
                           variant="gradient"
                           fontSize="60%"
-                          color="white"
+                          color="error"
                           id="startTime"
                         >
                           {" "}
                         </MDTypography>
-                        <MDTypography variant="gradient" fontSize="60%" color="white" id="project1">
+                        <MDTypography variant="gradient" fontSize="60%" color="error" id="project1">
                           {" "}
                         </MDTypography>
-                        <MDTypography variant="gradient" fontSize="60%" color="white" id="task1">
+                        <MDTypography variant="gradient" fontSize="60%" color="error" id="task1">
                           {" "}
                         </MDTypography>
                       </MDBox>
@@ -637,7 +632,7 @@ export default function TimeSheetAuto() {
                           variant="contained"
                           onClick={handleValidate}
                           endIcon={<AccessTimeIcon color="white" />}
-                          style={{ color: "white" }}
+                          style={Styles.buttonSx}
                         >
                           Clock In
                         </Button>
