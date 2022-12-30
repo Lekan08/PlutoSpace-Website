@@ -44,6 +44,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import TimeSheetAuto from "layouts/timesheet/timeSheetAuto";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -145,6 +146,7 @@ export default function App() {
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
           />
+          <TimeSheetAuto />
           <Configurator />
           {configsButton}
         </>
