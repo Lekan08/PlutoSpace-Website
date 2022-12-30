@@ -391,11 +391,6 @@ function supply() {
       align: "left",
     },
     {
-      Header: "Paying Amount",
-      accessor: "payingAmount",
-      align: "left",
-    },
-    {
       Header: "Supplying Branch Name",
       accessor: "supplyingBranchName",
       align: "left",
