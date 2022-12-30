@@ -44,11 +44,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
-<<<<<<< HEAD
-import TimeSheetAuto from "layouts/timeSheet/timeSheetAuto";
-=======
 // import TimeSheetAuto from "layouts/timesheet/timeSheetAuto";
->>>>>>> 1b05d953fc7dc7c3308f248842b1a544bc0cb571
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
