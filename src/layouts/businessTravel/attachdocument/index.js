@@ -147,8 +147,6 @@ function BusinessTravelAttachDocument() {
     // }
   };
 
-  console.log(imageUrl);
-
   const handleGet = () => {
     setOpened(true);
     const queryString = window.location.search;
@@ -177,7 +175,6 @@ function BusinessTravelAttachDocument() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (result.length !== 0) {
           setAllResult(result);
           if (result !== "") {
@@ -267,7 +264,6 @@ function BusinessTravelAttachDocument() {
       //   "deleteFlag": 0
       // }
     });
-    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: miHeaders,
@@ -347,7 +343,6 @@ function BusinessTravelAttachDocument() {
 
         const dateQ = new Date().getTime();
         const cbtKey = `BusinessTravelDocs${1 * 2 + 3 + dateQ}`;
-        console.log(cbtKey);
 
         // const formData = new FormData();
         formData.append("file", files[0]);
@@ -356,7 +351,6 @@ function BusinessTravelAttachDocument() {
         formData.append("type", files[0].type);
 
         const raw = formData;
-        console.log(raw);
 
         const requestOptions = {
           method: "POST",
@@ -385,7 +379,6 @@ function BusinessTravelAttachDocument() {
               navigate("/authentication/forbiddenPage");
               window.location.reload();
             }
-            console.log(result);
             if (result.data === null) {
               MySwal.fire({
                 title: "INVALID_IMAGE",
@@ -394,7 +387,6 @@ function BusinessTravelAttachDocument() {
               });
             } else {
               handleClick(e, result.data.key);
-              console.log(result.data.key);
             }
             // const im = result.data.name;
             // const headers = miHeaders;
@@ -444,7 +436,6 @@ function BusinessTravelAttachDocument() {
       }
     } else {
       handleClick(e);
-      console.log("console");
     }
   };
 
@@ -846,8 +837,6 @@ function BusinessTravelAttachDocument() {
           <Grid container spacing={2}>
             {items.map((api, index) => {
               //  const docName = api.name;
-              console.log(api);
-              console.log(index);
               const docType = api.type;
               //  const docSize = api.size;
               //  const docDate = api.createdTime;
