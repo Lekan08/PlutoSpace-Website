@@ -53,6 +53,7 @@ import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
+import Styles from "styles";
 import { useNavigate } from "react-router-dom";
 import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
@@ -741,7 +742,8 @@ function TimeSheetManual() {
                 <MDButton
                   variant="gradient"
                   onClick={handleValidate}
-                  color="info"
+                  // color="info"
+                  style={Styles.buttonSx}
                   width="50%"
                   align="left"
                 >
