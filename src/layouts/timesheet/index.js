@@ -53,7 +53,6 @@ import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
-import Styles from "styles";
 import { useNavigate } from "react-router-dom";
 import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
@@ -605,9 +604,9 @@ function TimeSheetManual() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            // bgColor="info"
+            bgColor="info"
             borderRadius="lg"
-            style={{ backgroundColor: "#f96d02" }}
+            coloredShadow="info"
             mx={2}
             mt={-3}
             p={2}
@@ -619,23 +618,29 @@ function TimeSheetManual() {
             </MDTypography>
           </MDBox>
           <MDBox
-            mt={2}
-            mb={2}
-            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            variant="gradient"
+            bgColor="error"
+            borderRadius="lg"
+            coloredShadow="success"
+            mx={3}
+            mt={1}
+            p={1}
+            mb={3}
+            textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
+            <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="startTime">
+            <MDTypography variant="gradient" fontSize="60%" color="white" id="startTime">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="endTime">
+            <MDTypography variant="gradient" fontSize="60%" color="white" id="endTime">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="project">
+            <MDTypography variant="gradient" fontSize="60%" color="white" id="project">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="task">
+            <MDTypography variant="gradient" fontSize="60%" color="white" id="task">
               {" "}
             </MDTypography>
           </MDBox>
@@ -742,8 +747,7 @@ function TimeSheetManual() {
                 <MDButton
                   variant="gradient"
                   onClick={handleValidate}
-                  // color="info"
-                  style={Styles.buttonSx}
+                  color="info"
                   width="50%"
                   align="left"
                 >
