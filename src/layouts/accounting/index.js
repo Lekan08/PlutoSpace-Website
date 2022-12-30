@@ -317,7 +317,7 @@ function Accounting() {
           if (result.length !== 0) {
             let URL = result[0].displayURI;
             if (result[0].displayURI === null) {
-              URL = "https://www.flaticon.com/free-icons/audit";
+              URL = "https://i.ibb.co/5FG72RG/defaulto.png";
             }
             const raw = JSON.stringify({
               company: {

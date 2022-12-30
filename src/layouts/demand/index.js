@@ -317,7 +317,7 @@ function Demand() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
-    const idx = data11.id;
+    const idx = data11.personalID;
 
     const raw = JSON.stringify({
       title: titlex,
