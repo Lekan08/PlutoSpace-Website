@@ -179,6 +179,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
     right: false,
   });
 
+  // <div
+  //   // eslint-disable-next-line react/no-danger
+  //   dangerouslySetInnerHTML={{
+  //     __html: items.notification,
+  //   }}
+  // />;
+
   // const handleClick = (e) => {
   //   e.preventDefault();
   //   const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -270,9 +277,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
         if (result) {
           if (result.length !== 0) {
             setItems((item) => [...item, result]);
-            console.log(result, (item) => [...item]);
-            console.log((item) => [item]);
-            console.log(result);
+            // console.log(result, (item) => [...item]);
+            // console.log((item) => [item]);
+            // console.log(result);
             // setMainItems(result);
           }
         }
@@ -378,10 +385,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
           {/* eslint-disable-next-line arrow-body-style */}
           {items.map((item) => {
             const data = item;
-            console.log(items[0]);
-            console.log(items);
-            console.log(item.groupName);
+            // console.log(items[0]);
+            // console.log(items);
+            // console.log(item.groupName);
             console.log(data);
+            // console.log(item[0].msg);
 
             return (
               <MDBox
@@ -396,7 +404,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
               >
                 <MDBox
                   style={{
-                    width: "90%",
+                    width: "100%",
                   }}
                 >
                   <MDBox
@@ -407,17 +415,25 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     }}
                     key={item[0].id}
                   >
-                    <MDTypography variant="h6" fontWeight="medium" color="text" mt={1} mr={1}>
+                    <div
+                      style={{ fontSize: "14px" }}
+                      // eslint-disable-next-line react/no-danger
+                      dangerouslySetInnerHTML={{
+                        __html: item[0].msg,
+                      }}
+                    />
+                    {/* <MDTypography variant="h6" fontWeight="medium" color="text" mt={1} mr={1}>
                       {item[0].msg}
-                    </MDTypography>
+                    </MDTypography> */}
                     <MDTypography variant="h6" fontWeight="regular" color="text" mt={1}>
                       {item[0].question}
                     </MDTypography>
                   </MDBox>
                   <MDTypography variant="h6" fontWeight="medium" color="text" mt={1}>
-                    {new Date(data.createdTime).toLocaleString()}
+                    {/* {new Date(data.createdTime).toLocaleString()} */}
                   </MDTypography>
                 </MDBox>
+
                 <IconButton
                   onClick={() => handleDisable(item[0].id)}
                   size="large"

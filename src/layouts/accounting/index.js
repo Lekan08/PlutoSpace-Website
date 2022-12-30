@@ -20,8 +20,8 @@ import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { Container } from "react-bootstrap";
 import DataTable from "examples/Tables/DataTable";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
+// import jsPDF from "jspdf";
+// import "jspdf-autotable";
 import Typography from "@mui/material/Typography";
 
 import { useNavigate } from "react-router-dom";
@@ -83,7 +83,7 @@ function Accounting() {
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalBalance, setTotalBalance] = useState(0);
   const [typexxx, setTypexx] = useState("");
-  const [orgIDDet, setOrgIDDet] = useState("");
+  // const [orgIDDet, setOrgIDDet] = useState("");
   const [totalBalanceValue, setTotalBalanceValue] = useState(0);
   const [noTransactionsMade, setNoTransactionsMade] = useState(false);
   const navigate = useNavigate();
@@ -115,146 +115,146 @@ function Accounting() {
   };
 
   // Document Upload
-  const handlePDFUpload = (e, files) => {
-    console.log(files);
-    if (files !== "" && files !== 0) {
-      if (files === undefined) {
-        MySwal.fire({
-          title: "INVALID_INPUT",
-          type: "error",
-          text: "Please input a file",
-          // })  //.then(() => {
-          // handleOpen();
-        });
-      } else {
-        setOpened(true);
-        e.preventDefault();
-        // Headers for upload image
-        const GenToken = localStorage.getItem("rexxdex1");
-        const apiiToken = localStorage.getItem("rexxdex");
+  // const handlePDFUpload = (e, files) => {
+  //   console.log(files);
+  //   if (files !== "" && files !== 0) {
+  //     if (files === undefined) {
+  //       MySwal.fire({
+  //         title: "INVALID_INPUT",
+  //         type: "error",
+  //         text: "Please input a file",
+  //         // })  //.then(() => {
+  //         // handleOpen();
+  //       });
+  //     } else {
+  //       setOpened(true);
+  //       e.preventDefault();
+  //       // Headers for upload image
+  //       const GenToken = localStorage.getItem("rexxdex1");
+  //       const apiiToken = localStorage.getItem("rexxdex");
 
-        if (apiiToken !== "null" && apiiToken !== null) {
-          localStorage.setItem("rexxdex1", apiiToken);
-        }
-        const iiHeaders = new Headers();
-        iiHeaders.append("Token-1", GenToken);
+  //       if (apiiToken !== "null" && apiiToken !== null) {
+  //         localStorage.setItem("rexxdex1", apiiToken);
+  //       }
+  //       const iiHeaders = new Headers();
+  //       iiHeaders.append("Token-1", GenToken);
 
-        const data11 = JSON.parse(localStorage.getItem("user1"));
-        // const personalIDs = data11.id;
-        const orgIdx = data11.orgID;
-        // const imgKey = `PROF_PIC_EMP-${personalIDs}`;
-        // console.log(imgKey);
+  //       const data11 = JSON.parse(localStorage.getItem("user1"));
+  //       // const personalIDs = data11.id;
+  //       const orgIdx = data11.orgID;
+  //       // const imgKey = `PROF_PIC_EMP-${personalIDs}`;
+  //       // console.log(imgKey);
 
-        const dateQ = new Date().getTime();
-        const accountKey = `accountDoc${1 * 2 + 3 + dateQ}`;
-        console.log(accountKey);
-        console.log(files);
-        const formDataxx = new FormData();
-        formDataxx.append("file", files[0]);
-        formDataxx.append("orgID", orgIdx);
-        formDataxx.append("key", accountKey);
-        formDataxx.append("type", files[0].type);
+  //       const dateQ = new Date().getTime();
+  //       const accountKey = `accountDoc${1 * 2 + 3 + dateQ}`;
+  //       console.log(accountKey);
+  //       console.log(files);
+  //       const formDataxx = new FormData();
+  //       formDataxx.append("file", files[0]);
+  //       formDataxx.append("orgID", orgIdx);
+  //       formDataxx.append("key", accountKey);
+  //       formDataxx.append("type", files[0].type);
 
-        const raw = formDataxx;
-        console.log(raw);
+  //       const raw = formDataxx;
+  //       console.log(raw);
 
-        const requestOptions = {
-          method: "POST",
-          headers: iiHeaders,
-          body: raw,
-          redirect: "follow",
-        };
+  //       const requestOptions = {
+  //         method: "POST",
+  //         headers: iiHeaders,
+  //         body: raw,
+  //         redirect: "follow",
+  //       };
 
-        fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
-          .then(async (res) => {
-            const aToken = res.headers.get("token-1");
-            localStorage.setItem("rexxdex", aToken);
-            return res.json();
-          })
-          .then((result) => {
-            setOpened(false);
-            if (result.message === "Expired Access") {
-              navigate("/authentication/sign-in");
-              window.location.reload();
-            }
-            if (result.message === "Token Does Not Exist") {
-              navigate("/authentication/sign-in");
-              window.location.reload();
-            }
-            if (result.message === "Unauthorized Access") {
-              navigate("/authentication/forbiddenPage");
-              window.location.reload();
-            }
-            console.log(result);
-            if (result.status === "SUCCESS") {
-              const orgIDs = data11.orgID;
-              const createdByx = data11.personalID;
+  //       fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
+  //         .then(async (res) => {
+  //           const aToken = res.headers.get("token-1");
+  //           localStorage.setItem("rexxdex", aToken);
+  //           return res.json();
+  //         })
+  //         .then((result) => {
+  //           setOpened(false);
+  //           if (result.message === "Expired Access") {
+  //             navigate("/authentication/sign-in");
+  //             window.location.reload();
+  //           }
+  //           if (result.message === "Token Does Not Exist") {
+  //             navigate("/authentication/sign-in");
+  //             window.location.reload();
+  //           }
+  //           if (result.message === "Unauthorized Access") {
+  //             navigate("/authentication/forbiddenPage");
+  //             window.location.reload();
+  //           }
+  //           console.log(result);
+  //           if (result.status === "SUCCESS") {
+  //             const orgIDs = data11.orgID;
+  //             const createdByx = data11.personalID;
 
-              const rawAccount = JSON.stringify({
-                orgID: orgIDs,
-                createdBy: createdByx,
-                closingBalance: totalBalance,
-                type: typexxx,
-                documentKey: accountKey,
-              });
-              console.log(rawAccount);
-              const requestOptionsXS = {
-                method: "POST",
-                headers: myHeaders,
-                body: rawAccount,
-                redirect: "follow",
-              };
+  //             const rawAccount = JSON.stringify({
+  //               orgID: orgIDs,
+  //               createdBy: createdByx,
+  //               closingBalance: totalBalance,
+  //               type: typexxx,
+  //               documentKey: accountKey,
+  //             });
+  //             console.log(rawAccount);
+  //             const requestOptionsXS = {
+  //               method: "POST",
+  //               headers: myHeaders,
+  //               body: rawAccount,
+  //               redirect: "follow",
+  //             };
 
-              setOpened(true);
-              fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/add`, requestOptionsXS)
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  return res.json();
-                })
-                .then((resultxp) => {
-                  console.log(resultxp);
-                  setOpened(false);
-                  if (resultxp.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultxp.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultxp.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                    window.location.reload();
-                  }
-                  MySwal.fire({
-                    title: resultxp.status,
-                    type: "success",
-                    text: resultxp.message,
-                  }).then(() => {
-                    // window.location.reload();
-                  });
-                  console.log(resultxp);
-                })
-                .catch((error) => {
-                  setOpened(false);
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
-            }
-            // .then(() => {
-            //   if (result.status !== "SUCCESS") {
-            //     handleOpen();
-            //   }
-            //   console.log("SUCCESS");
-            // });
-          });
-      }
-    }
-  };
+  //             setOpened(true);
+  //             fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/add`, requestOptionsXS)
+  //               .then(async (res) => {
+  //                 const aToken = res.headers.get("token-1");
+  //                 localStorage.setItem("rexxdex", aToken);
+  //                 return res.json();
+  //               })
+  //               .then((resultxp) => {
+  //                 console.log(resultxp);
+  //                 setOpened(false);
+  //                 if (resultxp.message === "Expired Access") {
+  //                   navigate("/authentication/sign-in");
+  //                   window.location.reload();
+  //                 }
+  //                 if (resultxp.message === "Token Does Not Exist") {
+  //                   navigate("/authentication/sign-in");
+  //                   window.location.reload();
+  //                 }
+  //                 if (resultxp.message === "Unauthorized Access") {
+  //                   navigate("/authentication/forbiddenPage");
+  //                   window.location.reload();
+  //                 }
+  //                 MySwal.fire({
+  //                   title: resultxp.status,
+  //                   type: "success",
+  //                   text: resultxp.message,
+  //                 }).then(() => {
+  //                   // window.location.reload();
+  //                 });
+  //                 console.log(resultxp);
+  //               })
+  //               .catch((error) => {
+  //                 setOpened(false);
+  //                 MySwal.fire({
+  //                   title: error.status,
+  //                   type: "error",
+  //                   text: error.message,
+  //                 });
+  //               });
+  //           }
+  //           // .then(() => {
+  //           //   if (result.status !== "SUCCESS") {
+  //           //     handleOpen();
+  //           //   }
+  //           //   console.log("SUCCESS");
+  //           // });
+  //         });
+  //     }
+  //   }
+  // };
 
   //  Method to change date from timestamp
   const changeDate = (timestamp) => {
@@ -263,44 +263,227 @@ function Accounting() {
     return retDate;
   };
 
+  // Method for date
+  const changeDatePDF = (timestamp) => {
+    const date = new Date(timestamp);
+    const analyzedDate = ` ${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+    return analyzedDate;
+  };
   // To handle pdf download
   const downloadPdf = (e) => {
-    // eslint-disable-next-line new-cap
-    const doc = new jsPDF();
-    doc.text("Accounting Details", 20, 10);
-    doc.autoTable({
-      theme: "grid",
-      columns: [
-        {
-          header: "Crreated Time",
-          dataKey: "changeDate(createdTime)",
-        },
-        {
-          header: "Particulars",
-          dataKey: "particulars",
-        },
-        { header: "Source", dataKey: "source" },
-        {
-          header: "Category",
-          dataKey: "category",
-        },
-        {
-          header: "Total Amount (NGN)",
-          dataKey: "totalAmount",
-        },
-      ],
-      body: runAccData,
-    });
-    // doc.text(`Total Income = NGN${totalIncome.toLocaleString(undefined)}`, 10, 5);
-    // doc.text(`Total Expenses = NGN${totalExpenses.toLocaleString(undefined)}`, 10, 5);
-    // doc.text(`Total Balance = NGN${totalBalance.toLocaleString(undefined)}`, 10, 5);
-    console.log(orgIDDet);
-    const accountingDocuments = "./uploads/";
-    const dateNow = new Date().getTime();
-    const fileName = doc.save(`ACCT-${dateNow}-${orgIDDet}.pdf`);
-    const filePath = `${accountingDocuments}${fileName}`;
-    console.log(filePath);
-    handlePDFUpload(e, doc);
+    const itemszx = runAccData.map((val) => ({
+      createdTime: changeDatePDF(val.createdTime),
+      source: val.source,
+      particulars: val.particulars,
+      category: val.category,
+      totalAmount: val.totalAmount,
+    }));
+    console.log(itemszx);
+
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+    let isMounted = true;
+    e.preventDefault();
+    setOpened(true);
+    fetch(`${process.env.REACT_APP_KUBU_URL}/company/get/${orgIDs}`, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
+        return JSON.parse(result);
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          console.log(result);
+          if (result.length !== 0) {
+            let URL = result[0].displayURI;
+            if (result[0].displayURI === null) {
+              URL = "https://i.ibb.co/5FG72RG/defaulto.png";
+            }
+            const raw = JSON.stringify({
+              company: {
+                id: result[0].id,
+                name: result[0].name,
+                street: result[0].street,
+                city: result[0].city,
+                state: result[0].state,
+                country: result[0].country,
+                pno: result[0].pno,
+                email: result[0].email,
+                profilePic: URL,
+              },
+              balanceBroughtForward: totalBalanceValue.toLocaleString(undefined),
+              balanceBroughtForwardTime: changeDatePDF(new Date().getTime()),
+              availableBalance: totalBalance.toLocaleString(undefined),
+              availableBalanceTime: changeDatePDF(new Date().getTime()),
+              items: itemszx,
+            });
+            console.log(raw);
+            const requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: raw,
+              redirect: "follow",
+            };
+
+            fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/generate`, requestOptions)
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                return res.json();
+              })
+              .then((resultAccGenerate) => {
+                setOpened(false);
+                if (resultAccGenerate.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultAccGenerate.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultAccGenerate.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+                console.log(resultAccGenerate);
+                if (resultAccGenerate.status === "SUCCESS") {
+                  const createdByx = data11.personalID;
+
+                  const rawAccount = JSON.stringify({
+                    orgID: orgIDs,
+                    createdBy: createdByx,
+                    closingBalance: totalBalance,
+                    type: typexxx,
+                    documentKey: resultAccGenerate,
+                  });
+                  console.log(rawAccount);
+                  const requestOptionsXS = {
+                    method: "POST",
+                    headers: myHeaders,
+                    body: rawAccount,
+                    redirect: "follow",
+                  };
+
+                  setOpened(true);
+                  fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/add`, requestOptionsXS)
+                    .then(async (res) => {
+                      const aToken = res.headers.get("token-1");
+                      localStorage.setItem("rexxdex", aToken);
+                      return res.json();
+                    })
+                    .then((resultxp) => {
+                      console.log(resultxp);
+                      setOpened(false);
+                      if (resultxp.message === "Expired Access") {
+                        navigate("/authentication/sign-in");
+                        window.location.reload();
+                      }
+                      if (resultxp.message === "Token Does Not Exist") {
+                        navigate("/authentication/sign-in");
+                        window.location.reload();
+                      }
+                      if (resultxp.message === "Unauthorized Access") {
+                        navigate("/authentication/forbiddenPage");
+                        window.location.reload();
+                      }
+                      MySwal.fire({
+                        title: resultxp.status,
+                        type: "success",
+                        text: resultxp.message,
+                      }).then(() => {
+                        // window.location.reload();
+                      });
+                      console.log(resultxp);
+                    })
+                    .catch((error) => {
+                      setOpened(false);
+                      MySwal.fire({
+                        title: error.status,
+                        type: "error",
+                        text: error.message,
+                      });
+                    });
+                }
+                console.log(resultAccGenerate);
+                MySwal.fire({
+                  title: resultAccGenerate.status,
+                  type: "success",
+                  text: resultAccGenerate.message,
+                }).then(() => {
+                  window.location.reload();
+                });
+              })
+              .catch((error) => {
+                MySwal.fire({
+                  title: error.status,
+                  type: "error",
+                  text: error.message,
+                });
+              });
+          }
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+
+    // // eslint-disable-next-line new-cap, no-unreachable
+    // const doc = new jsPDF();
+    // doc.text("Accounting Details", 20, 10);
+    // doc.autoTable({
+    //   theme: "grid",
+    //   columns: [
+    //     {
+    //       header: "Crreated Time",
+    //       dataKey: "changeDate(createdTime)",
+    //     },
+    //     {
+    //       header: "Particulars",
+    //       dataKey: "particulars",
+    //     },
+    //     { header: "Source", dataKey: "source" },
+    //     {
+    //       header: "Category",
+    //       dataKey: "category",
+    //     },
+    //     {
+    //       header: "Total Amount (NGN)",
+    //       dataKey: "totalAmount",
+    //     },
+    //   ],
+    //   body: runAccData,
+    // });
+    // // doc.text(`Total Income = NGN${totalIncome.toLocaleString(undefined)}`, 10, 5);
+    // // doc.text(`Total Expenses = NGN${totalExpenses.toLocaleString(undefined)}`, 10, 5);
+    // // doc.text(`Total Balance = NGN${totalBalance.toLocaleString(undefined)}`, 10, 5);
+    // console.log(orgIDDet);
+    // const accountingDocuments = "./uploads/";
+    // const dateNow = new Date().getTime();
+    // const fileName = doc.save(`ACCT-${dateNow}-${orgIDDet}.pdf`);
+    // const filePath = `${accountingDocuments}${fileName}`;
+    // console.log(filePath);
+    // handlePDFUpload(e, doc);
   };
 
   // const columns = [
@@ -433,7 +616,7 @@ function Accounting() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
-    setOrgIDDet(orgIDs);
+    // setOrgIDDet(orgIDs);
     let isMounted = true;
     setOpened(true);
     fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/getLast/${orgIDs}/${typex}`, { headers })
