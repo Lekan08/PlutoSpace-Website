@@ -142,7 +142,7 @@ import Tax from "layouts/tax";
 import TaxRemittance from "layouts/tax-Remittance-Personal";
 import TaxRemittanceOrg from "layouts/tax-Remittance-Organisation";
 import RecruitmentGrading from "layouts/recruitmentGrading";
-import RecruitmentUpdate from "layouts/recruitmentGrading/updateRecruitment";
+import RecruitmentUpdate from "layouts/recruitmentGrading/updateRecruitmentGrading";
 import TestQuestion from "layouts/testQuestions/index";
 import Updatetest from "layouts/testQuestions/updatetest";
 import SingleCorporate from "layouts/singleCorporate/index";
@@ -1711,7 +1711,7 @@ const routes = [
     name: "Update Recruitment Grading",
     key: "updaterecrutmentgrading",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/recruitment-Grading/update-Recruitment",
+    route: "/recruitment-Grading/update-Recruitment-Grading",
     component: <RecruitmentUpdate />,
   },
   {

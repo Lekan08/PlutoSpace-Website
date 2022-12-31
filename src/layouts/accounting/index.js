@@ -276,7 +276,7 @@ function Accounting() {
       source: val.source,
       particulars: val.particulars,
       category: val.category,
-      totalAmount: val.totalAmount,
+      totalAmount: val.totalAmount.toLocaleString(undefined),
     }));
     console.log(itemszx);
 
@@ -345,7 +345,7 @@ function Accounting() {
               redirect: "follow",
             };
 
-            fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/generate`, requestOptions)
+            fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/accounting/generate`, requestOptions)
               .then(async (res) => {
                 const aToken = res.headers.get("token-1");
                 localStorage.setItem("rexxdex", aToken);
@@ -424,7 +424,6 @@ function Accounting() {
                       });
                     });
                 }
-                console.log(resultAccGenerate);
                 MySwal.fire({
                   title: resultAccGenerate.status,
                   type: "success",
