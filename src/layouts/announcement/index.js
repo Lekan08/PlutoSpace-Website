@@ -39,6 +39,7 @@ function Announcement() {
 
   useEffect(() => {
     const headers = miHeaders;
+    // doskimana
 
     const data11 = JSON.parse(localStorage.getItem("user1"));
 

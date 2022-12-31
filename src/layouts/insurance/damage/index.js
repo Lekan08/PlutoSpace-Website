@@ -157,7 +157,8 @@ function InsuranceDamage() {
     if (handleOnDamageAmountKeys(damageAmountx)) {
       setOpened(true);
       e.preventDefault();
-
+      setDamageAmount("0");
+      setOwnerx("");
       // Calculating Damage Contribution
       const companyContributionPercent = insurances[0].plan.damageCompanyContribution / 100;
       const companyContribution = companyContributionPercent * damageAmountx;
@@ -274,7 +275,18 @@ function InsuranceDamage() {
   };
 
   const handleUpdateInsuranceDamage = (value) => {
-    navigate(`/insurance/damage/update?id=${value}`);
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const personalIds = data11.personalID;
+    const [filteredItems] = items.filter((item) => item.id === value);
+    if (filteredItems.approvedBy === personalIds || filteredItems.createdBy === personalIds) {
+      navigate(`/insurance/damage/update?id=${value}`);
+    } else {
+      MySwal.fire({
+        title: "ERROR",
+        type: "success",
+        text: "You're not in charge of this decision",
+      });
+    }
   };
   // Method to handle disable
   const handleDisable = (value) => {

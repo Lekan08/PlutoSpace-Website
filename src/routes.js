@@ -274,6 +274,7 @@ import CompanyAssets from "layouts/company-Assets";
 import CustomerAssets from "layouts/customer-Assets";
 import AssetAttachDocument from "layouts/assets/attachDocuments";
 import Coupons from "layouts/coupons";
+import UpdateCoupons from "layouts/coupons/update";
 import AppointmentOffboardingSession from "layouts/assignedOffboarding/appointmentSession";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
@@ -1837,6 +1838,13 @@ const routes = [
     icon: <Icon fontSize="small">point_of_sale</Icon>,
     route: "/coupons",
     component: <Coupons />,
+  },
+  {
+    name: "UpdateCoupons",
+    key: "updatecoupons",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/coupons/update",
+    component: <UpdateCoupons />,
   },
   {
     type: "divider",

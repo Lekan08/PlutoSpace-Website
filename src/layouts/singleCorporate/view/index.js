@@ -1886,74 +1886,74 @@ function ViewSingleCorporate() {
       <Grid container spacing={0.5}>
         <Grid item xs={6}>
           {" "}
-          <Paper sx={styleT} variant="outlined" square>
-            <MDBox sx={{ maxHeight: 399 }}>
-              {/* <div
+          <Paper sx={styleDST} variant="outlined" square>
+            <MDBox sx={{ maxHeight: 195 }}>
+              <div
                 className="scrollbar scrollbar-primary mt-2 mx-auto"
                 style={scrollContainerStyle}
-              > */}
-              <MDBox mb={1.5}>
-                <MDBox
-                  variant="gradient"
-                  bgColor="info"
-                  borderRadius="lg"
-                  coloredShadow="success"
-                  mt={0}
-                  mx={2}
-                  p={1}
-                  mb={2}
-                  textAlign="left"
-                >
-                  <MDTypography
-                    variant="h4"
-                    fontWeight="medium"
-                    color="white"
-                    textAlign="center"
-                    mt={1}
+              >
+                <MDBox mb={1.5}>
+                  <MDBox
+                    variant="gradient"
+                    bgColor="info"
+                    borderRadius="lg"
+                    coloredShadow="success"
+                    mt={0}
+                    mx={2}
+                    p={1}
+                    mb={2}
+                    textAlign="left"
                   >
-                    Assets
-                  </MDTypography>
+                    <MDTypography
+                      variant="h4"
+                      fontWeight="medium"
+                      color="white"
+                      textAlign="center"
+                      mt={1}
+                    >
+                      Assets
+                    </MDTypography>
+                  </MDBox>
+                  <Container>
+                    <div className="row">
+                      <MDBox>
+                        {assetsx.map((item) => (
+                          // <Link to={`/Tickets/Chats?id=${item.id}`}>
+                          <Grid item xs={12} md={12} lg={12} key={item.id}>
+                            <Card sx={{ maxWidth: 345 }}>
+                              <CardContent>
+                                <MDTypography
+                                  variant="h6"
+                                  color="text"
+                                  fontSize="75%"
+                                  textAlign="left"
+                                  mt={1}
+                                >
+                                  Item - {item.item}
+                                </MDTypography>
+                                <MDTypography
+                                  variant="h6"
+                                  color="text"
+                                  fontSize="75%"
+                                  textAlign="left"
+                                  mt={1}
+                                >
+                                  Item Worth - {item.itemWorth}
+                                </MDTypography>
+                              </CardContent>
+                            </Card>
+                            &nbsp;
+                          </Grid>
+                          // </Link>
+                        ))}
+                      </MDBox>
+                    </div>
+                  </Container>
                 </MDBox>
-                <Container>
-                  <div className="row">
-                    <MDBox>
-                      {assetsx.map((item) => (
-                        // <Link to={`/Tickets/Chats?id=${item.id}`}>
-                        <Grid item xs={12} md={12} lg={12} key={item.id}>
-                          <Card sx={{ maxWidth: 345 }}>
-                            <CardContent>
-                              <MDTypography
-                                variant="h6"
-                                color="text"
-                                fontSize="75%"
-                                textAlign="left"
-                                mt={1}
-                              >
-                                Item - {item.item}
-                              </MDTypography>
-                              <MDTypography
-                                variant="h6"
-                                color="text"
-                                fontSize="75%"
-                                textAlign="left"
-                                mt={1}
-                              >
-                                Item Worth - {item.itemWorth}
-                              </MDTypography>
-                            </CardContent>
-                          </Card>
-                          &nbsp;
-                        </Grid>
-                        // </Link>
-                      ))}
-                    </MDBox>
-                  </div>
-                </Container>
-              </MDBox>
-              {/* </div> */}
+              </div>
             </MDBox>
-          </Paper>{" "}
-        </Grid>{" "}
+          </Paper>
+        </Grid>
       </Grid>
 
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>

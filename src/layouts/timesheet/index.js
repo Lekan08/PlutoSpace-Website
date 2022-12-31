@@ -501,16 +501,10 @@ function TimeSheetManual() {
   };
 
   //  Method to change date from timestamp
-  // eslint-disable-next-line consistent-return
   const changeDate = (timestamp) => {
-    if (timestamp === 0) {
-      return "";
-    }
-    if (timestamp > 0) {
-      const date = new Date(timestamp);
-      const retDate = date.toDateString();
-      return retDate;
-    }
+    const date = new Date(timestamp);
+    const retDate = date.toDateString();
+    return retDate;
   };
   // Method to change status
   // eslint-disable-next-line consistent-return

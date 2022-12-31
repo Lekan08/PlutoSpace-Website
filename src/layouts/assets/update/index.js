@@ -61,7 +61,7 @@ function UpdateAssets() {
 
   const [checkedItem, setCheckedItem] = useState("");
   const [checkedItemWorth, setCheckedItemWorth] = useState("");
-  // const [checkedManufacturer, setCheckedManufacturer] = useState("");
+  const [checkedAssigned, setCheckedAssigned] = useState("");
   //   const [checkedMaximum, setCheckedMaximum] = useState("");
   const [opened, setOpened] = useState(false);
   const { allPHeaders: myHeaders } = PHeaders();
@@ -217,6 +217,17 @@ function UpdateAssets() {
       document.getElementById("itemWorth").innerHTML = "Rate is required<br>";
     }
   };
+  const handleOnAssignedKeys = (value) => {
+    setAssignedTo(value);
+    console.log(value);
+    const Validate = "--Assigned To--";
+    if (value.toString().match(Validate)) {
+      setCheckedAssigned(false);
+    }
+    if (!value.toString().match(Validate)) {
+      setCheckedAssigned(true);
+    }
+  };
   // const handleOnManfacturerKeys = (value) => {
   //   const letters = /^[a-zA-Z ]+$/;
   //   if (!value.match(letters)) {
@@ -333,6 +344,7 @@ function UpdateAssets() {
           setNewword(result[0].components);
           handleOnItemWorthKeys(result[0].itemWorth);
           handleOnItemKeys(result[0].item);
+          handleOnAssignedKeys(result[0].assignedTo);
           // handleOnManfacturerKeys(result[0].manufacturer);
           //   handleOnMaximumKeys(result[0].maximumLifeCycle);
         }
@@ -408,6 +420,7 @@ function UpdateAssets() {
     }, 1);
   };
 
+  // eslint-disable-next-line consistent-return
   const handleClick = (e) => {
     setOpened(true);
     e.preventDefault();
@@ -494,7 +507,10 @@ function UpdateAssets() {
   const ALPHA_NUMERIC_DASH_REGEX = /^[a-zA-Z]+$/;
 
   const handleValidate = (e) => {
-    if (checkedItem && checkedItemWorth === true) {
+    console.log(checkedItem);
+    console.log(checkedItemWorth);
+    console.log(checkedAssigned);
+    if (checkedItem && checkedItemWorth && checkedAssigned === true) {
       handleClick(e);
     }
   };
@@ -806,7 +822,7 @@ function UpdateAssets() {
                         value={assignedTox}
                         aria-label="Default select example"
                         name="branchID"
-                        onChange={(e) => setAssignedTo(e.target.value)}
+                        onChange={(e) => handleOnAssignedKeys(e.target.value)}
                       >
                         <option>--Assigned To--</option>
                         {user.map((apis) => (
