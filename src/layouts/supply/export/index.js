@@ -77,7 +77,7 @@ function Export() {
         align: "left",
       },
       {
-        Header: "ApproveBy",
+        Header: "Decision Made By",
         accessor: "approvedByName",
         align: "left",
       },

@@ -381,13 +381,8 @@ function supply() {
       align: "left",
     },
     {
-      Header: "Approve By",
+      Header: "Decision Made By",
       accessor: "approvedByName",
-      align: "left",
-    },
-    {
-      Header: "Paying Amount",
-      accessor: "payingAmount",
       align: "left",
     },
     {

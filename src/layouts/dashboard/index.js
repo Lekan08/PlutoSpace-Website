@@ -1048,7 +1048,7 @@ function Dashboard() {
                 color="success"
                 icon="schedule"
                 title="Daily Countdown To Pay Day"
-                count={remPayDay}
+                count={remPayDay > 0 ? remPayDay : 0}
               />
             </MDBox>
           </Grid>

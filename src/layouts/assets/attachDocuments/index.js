@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -172,17 +174,18 @@ function AssetAttachDocument() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log(result);
         if (result !== "") {
-          const dannyff = result[0].attachedDocs;
-          console.log(dannyff);
-          console.log(result);
+          // const dannyff = result[0].attachedDocs;
+          //   console.log(dannyff);
+          //   console.log(result);
           if (isMounted) {
-            setItems(result);
-            if (result[0].attachedDocs !== dannyff) {
-              // setShowFrame(true);
-              console.log(result);
-              console.log(null);
-              console.log(result[0].attachedDocs);
+            if (result[0].attachedDocs !== null) {
+              setItems(result[0].attachedDocs);
+              //       // setShowFrame(true);
+              //       console.log(result);
+              //       console.log(null);
+              //       console.log(result[0].attachedDocs);
             }
           }
         }
@@ -222,6 +225,7 @@ function AssetAttachDocument() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log(result);
         setOpened(false);
         MySwal.fire({
           title: result.status,
@@ -271,7 +275,7 @@ function AssetAttachDocument() {
         // console.log(imgKey);
 
         const dateQ = new Date().getTime();
-        const cbtKey = `QuesImg${1 * 2 + 3 + dateQ}`;
+        const cbtKey = `AssetDocs${1 * 2 + 3 + dateQ}`;
         console.log(cbtKey);
 
         // const formData = new FormData();
@@ -311,44 +315,54 @@ function AssetAttachDocument() {
               window.location.reload();
             }
             console.log(result);
-            const im = result.data.name;
-            const headers = miHeaders;
-            fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${im}`, {
-              headers,
-            })
-              .then(async (res) => {
-                const aToken = res.headers.get("token-1");
-                localStorage.setItem("rexxdex", aToken);
-                return res.json();
-              })
-              .then((resultx) => {
-                if (resultx.message === "Expired Access") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (resultx.message === "Token Does Not Exist") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (resultx.message === "Unauthorized Access") {
-                  navigate("/authentication/forbiddenPage");
-                  window.location.reload();
-                }
-
-                // if (isMounted) {
-                console.log(`link [${resultx[0]}]`);
-                if (resultx.length === 0) {
-                  MySwal.fire({
-                    title: "INVALID_IMAGE",
-                    type: "error",
-                    text: "There is no image present",
-                  });
-                } else {
-                  handleClick(e, result.data.id);
-                  console.log(result.data.id);
-                }
-                // }
+            if (result.data === null) {
+              MySwal.fire({
+                title: "INVALID_IMAGE",
+                type: "error",
+                text: "There is no image present",
               });
+            } else {
+              handleClick(e, result.data.key);
+              console.log(result.data.key);
+            }
+            // const im = result.data.name;
+            // const headers = miHeaders;
+            // fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${im}`, {
+            //   headers,
+            // })
+            //   .then(async (res) => {
+            //     const aToken = res.headers.get("token-1");
+            //     localStorage.setItem("rexxdex", aToken);
+            //     return res.json();
+            //   })
+            //   .then((resultx) => {
+            //     if (resultx.message === "Expired Access") {
+            //       navigate("/authentication/sign-in");
+            //       window.location.reload();
+            //     }
+            //     if (resultx.message === "Token Does Not Exist") {
+            //       navigate("/authentication/sign-in");
+            //       window.location.reload();
+            //     }
+            //     if (resultx.message === "Unauthorized Access") {
+            //       navigate("/authentication/forbiddenPage");
+            //       window.location.reload();
+            //     }
+
+            //     // if (isMounted) {
+            //     console.log(`link [${resultx[0]}]`);
+            //     if (resultx.length === 0) {
+            //       MySwal.fire({
+            //         title: "INVALID_IMAGE",
+            //         type: "error",
+            //         text: "There is no image present",
+            //       });
+            //     } else {
+            //       handleClick(e, result.data.id);
+            //       console.log(result.data.id);
+            //     }
+            //     // }
+            //   });
             // .then(() => {
             //   if (result.status !== "SUCCESS") {
             //     handleOpen();
@@ -373,11 +387,13 @@ function AssetAttachDocument() {
   };
 
   const handleDelete = (value, index) => {
+    console.log(value);
+    console.log(index);
     handleClose();
-    const filteredItems = items.filter((item) => item.id === value);
-    console.log(filteredItems);
+    // const filteredItems = items.filter((item) => item.id === value);
+    // console.log(filteredItems);
     MySwal.fire({
-      title: `Are you sure you want to permanently delete ${filteredItems[0].name}?`,
+      title: `Are you sure you want to permanently delete?`,
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
@@ -388,108 +404,71 @@ function AssetAttachDocument() {
       if (resultd.isConfirmed) {
         handleClose();
         setOpened(true);
-        const requestOptions = {
+
+        const requestOptionsd = {
           method: "DELETE",
           headers: miHeaders,
         };
-        const data11 = JSON.parse(localStorage.getItem("user1"));
-        const orgIDs = data11.orgID;
-        const mOrgID = orgIDs;
-        console.log(filteredItems);
-        const docKey = filteredItems[0].attachedDocs;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const idx = urlParams.get("id");
+
         fetch(
-          `${process.env.REACT_APP_EKOATLANTIC_URL}/media/delete/${mOrgID}/${docKey}`,
-          requestOptions
+          `${process.env.REACT_APP_JOHANNESBURG_URL}/assets/removeDocument/${idx}/${value}`,
+          requestOptionsd
         )
           .then(async (res) => {
             const aToken = res.headers.get("token-1");
             localStorage.setItem("rexxdex", aToken);
-            const result = await res.text();
-            if (result === null || result === undefined || result === "") {
-              return {};
-            }
-            return JSON.parse(result);
+            return res.json();
           })
-          .then((resx) => {
-            console.log(resx);
-            if (resx.message === "Unauthorized Access") {
+          .then((resxx) => {
+            if (resxx.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+            }
+            if (resxx.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+            }
+            if (resxx.message === "Unauthorized Access") {
               navigate("/authentication/forbiddenPage");
             }
-            console.log(`STATUS - ${resx.status} - - - - - - MESSAGE - ${resx.message}`);
-
-            if (resx.status !== "SUCCESS") {
-              setOpened(false);
-              MySwal.fire({
-                title: "DELETE_UNSUCCESSFUL",
-                type: "error",
-                text: "Document Delete Was Unsuccessful",
-              });
-            } else {
-              const requestOptionsd = {
-                method: "DELETE",
-                headers: miHeaders,
-              };
-
-              fetch(
-                `${process.env.REACT_APP_SHASHA_URL}/businessTravels/removeDocument/${index}/${value}`,
-                requestOptionsd
-              )
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  return res.json();
-                })
-                .then((resxx) => {
-                  if (resxx.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                  }
-                  setOpened(false);
-                  MySwal.fire({
-                    title: resxx.status,
-                    type: "success",
-                    text: resxx.message,
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                })
-                .catch((error) => {
-                  setOpened(false);
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
-            }
+            setOpened(false);
+            MySwal.fire({
+              title: resxx.status,
+              type: "success",
+              text: resxx.message,
+            }).then(() => {
+              window.location.reload();
+            });
           })
           .catch((error) => {
-            console.log(`STATUS - ${error.status} - - - - - - MESSAGE - ${error.message}`);
+            setOpened(false);
+            MySwal.fire({
+              title: error.status,
+              type: "error",
+              text: error.message,
+            });
           });
       }
     });
   };
 
   const handleDownload = (value, index) => {
-    const filteredItems = items.filter((item) => item.id === value);
-    console.log(filteredItems);
-    const docKey = filteredItems[0].attachedDocs[index];
-    console.log(filteredItems[0].attachedDocs);
+    // const filteredItems = items.filter((item) => item.id === value);
+    // console.log(filteredItems);
+    // const docKey = filteredItems[0].attachedDocs[index];
+    // console.log(filteredItems[0].attachedDocs);
     console.log(value);
-    console.log(filteredItems);
-    console.log(docKey);
+    console.log(index);
+    // console.log(filteredItems);
+    // console.log(docKey);
     handleClose();
     setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
     const headers = miHeaders;
-    fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${docKey}`, {
+    fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${value}`, {
       headers,
     })
       .then(async (res) => {
@@ -558,131 +537,131 @@ function AssetAttachDocument() {
       });
   };
 
-  const handleView = (value, index) => {
-    const filteredItems = items.filter((item) => item.id === value);
-    console.log(items);
-    console.log(value);
-    console.log(filteredItems);
-    const docKey = filteredItems[0].attachedDocs[index];
-    // const docKey = "DOC-1664892565964-ORG-62bb21f6266f37394be3a183";
-    handleClose();
-    setOpened(true);
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+  // const handleView = (value, index) => {
+  //   const filteredItems = items.filter((item) => item.id === value);
+  //   console.log(items);
+  //   console.log(value);
+  //   console.log(filteredItems);
+  //   const docKey = filteredItems[0].attachedDocs[index];
+  //   // const docKey = "DOC-1664892565964-ORG-62bb21f6266f37394be3a183";
+  //   handleClose();
+  //   setOpened(true);
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
-    const headers = miHeaders;
-    fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${docKey}`, {
-      headers,
-    })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        const result = await res.text();
-        if (result === null || result === undefined || result === "") {
-          return {};
-        }
-        return JSON.parse(result);
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (result.name) {
-          fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.name}`, {
-            headers,
-          })
-            .then(async (res) => {
-              const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              const resultres = await res.text();
-              if (resultres === null || resultres === undefined || resultres === "") {
-                return {};
-              }
-              return JSON.parse(resultres);
-            })
-            .then((resultxx) => {
-              setOpened(false);
-              if (resultxx.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultxx.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultxx.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-                window.location.reload();
-              }
-              if (resultxx.length > 0) {
-                console.log(resultxx[0]);
-                const docType = filteredItems[0].type;
-                const docUrl = resultxx[0];
-                const mdocsUrlStart = "https://view.officeapps.live.com/op/embed.aspx?src=";
-                const mdocsUrlEnd = "";
-                if (
-                  docType === "image/png" ||
-                  docType === "image/jpg" ||
-                  docType === "image/jpeg" ||
-                  docType === "image/gif" ||
-                  docType === "text/plain"
-                ) {
-                  setImageUrl(`${docUrl}`);
-                  setViewDoc(true);
-                } else if (docType === "application/msword") {
-                  setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
-                  setViewDoc(true);
-                } else if (
-                  docType ===
-                  "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                ) {
-                  setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
-                  setViewDoc(true);
-                } else if (docType === "application/pdf") {
-                  console.log("rtyukjhgvcx");
-                  setImageUrl(`${docUrl}`);
-                  setViewDoc(true);
-                } else if (
-                  docType === "text/csv" ||
-                  docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                ) {
-                  setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
-                  setViewDoc(true);
-                } else {
-                  console.log("it entered");
-                  setViewDoc(false);
-                  MySwal.fire({
-                    title: "INVALID_ACTION",
-                    type: "error",
-                    text: "Sorry this document can't be previewed, try downloading the document.",
-                  });
-                }
-              } else {
-                MySwal.fire({
-                  title: "DOCUMENT_NON_EXIST",
-                  type: "error",
-                  text: "This document does not exist",
-                });
-              }
-            });
-        } else {
-          MySwal.fire({
-            title: "DOCUMENT_NON_EXIST",
-            type: "error",
-            text: "This document does not exist",
-          });
-        }
-      });
-  };
+  //   const orgIDs = data11.orgID;
+  //   const headers = miHeaders;
+  //   fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${docKey}`, {
+  //     headers,
+  //   })
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       const result = await res.text();
+  //       if (result === null || result === undefined || result === "") {
+  //         return {};
+  //       }
+  //       return JSON.parse(result);
+  //     })
+  //     .then((result) => {
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
+  //       if (result.name) {
+  //         fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.name}`, {
+  //           headers,
+  //         })
+  //           .then(async (res) => {
+  //             const aToken = res.headers.get("token-1");
+  //             localStorage.setItem("rexxdex", aToken);
+  //             const resultres = await res.text();
+  //             if (resultres === null || resultres === undefined || resultres === "") {
+  //               return {};
+  //             }
+  //             return JSON.parse(resultres);
+  //           })
+  //           .then((resultxx) => {
+  //             setOpened(false);
+  //             if (resultxx.message === "Expired Access") {
+  //               navigate("/authentication/sign-in");
+  //               window.location.reload();
+  //             }
+  //             if (resultxx.message === "Token Does Not Exist") {
+  //               navigate("/authentication/sign-in");
+  //               window.location.reload();
+  //             }
+  //             if (resultxx.message === "Unauthorized Access") {
+  //               navigate("/authentication/forbiddenPage");
+  //               window.location.reload();
+  //             }
+  //             if (resultxx.length > 0) {
+  //               console.log(resultxx[0]);
+  //               const docType = filteredItems[0].type;
+  //               const docUrl = resultxx[0];
+  //               const mdocsUrlStart = "https://view.officeapps.live.com/op/embed.aspx?src=";
+  //               const mdocsUrlEnd = "";
+  //               if (
+  //                 docType === "image/png" ||
+  //                 docType === "image/jpg" ||
+  //                 docType === "image/jpeg" ||
+  //                 docType === "image/gif" ||
+  //                 docType === "text/plain"
+  //               ) {
+  //                 setImageUrl(`${docUrl}`);
+  //                 setViewDoc(true);
+  //               } else if (docType === "application/msword") {
+  //                 setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
+  //                 setViewDoc(true);
+  //               } else if (
+  //                 docType ===
+  //                 "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+  //               ) {
+  //                 setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
+  //                 setViewDoc(true);
+  //               } else if (docType === "application/pdf") {
+  //                 console.log("rtyukjhgvcx");
+  //                 setImageUrl(`${docUrl}`);
+  //                 setViewDoc(true);
+  //               } else if (
+  //                 docType === "text/csv" ||
+  //                 docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+  //               ) {
+  //                 setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
+  //                 setViewDoc(true);
+  //               } else {
+  //                 console.log("it entered");
+  //                 setViewDoc(false);
+  //                 MySwal.fire({
+  //                   title: "INVALID_ACTION",
+  //                   type: "error",
+  //                   text: "Sorry this document can't be previewed, try downloading the document.",
+  //                 });
+  //               }
+  //             } else {
+  //               MySwal.fire({
+  //                 title: "DOCUMENT_NON_EXIST",
+  //                 type: "error",
+  //                 text: "This document does not exist",
+  //               });
+  //             }
+  //           });
+  //       } else {
+  //         MySwal.fire({
+  //           title: "DOCUMENT_NON_EXIST",
+  //           type: "error",
+  //           text: "This document does not exist",
+  //         });
+  //       }
+  //     });
+  // };
 
   return (
     <DashboardLayout>
@@ -755,76 +734,80 @@ function AssetAttachDocument() {
           <Grid container spacing={2}>
             {items.map((api, index) => {
               //  const docName = api.name;
-              const docType = api.type;
-              //  const docSize = api.size;
-              //  const docDate = api.createdTime;
-              let pngType;
-              if (
-                docType === "image/png" ||
-                docType === "image/jpg" ||
-                docType === "image/jpeg" ||
-                docType === "image/gif"
-              ) {
-                pngType = ImagePng;
-              } else if (docType === "application/msword") {
-                pngType = WordPng;
-              } else if (
-                docType ===
-                "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-              ) {
-                pngType = PowerPointPng;
-              } else if (docType === "application/pdf") {
-                pngType = PdfPng;
-              } else if (
-                docType === "text/csv" ||
-                docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-              ) {
-                pngType = ExcelPng;
-              } else {
-                pngType = DocPng;
+              console.log(api);
+              console.log(index);
+              if (api !== null) {
+                const docType = api.type;
+                //  const docSize = api.size;
+                //  const docDate = api.createdTime;
+                let pngType;
+                if (
+                  docType === "image/png" ||
+                  docType === "image/jpg" ||
+                  docType === "image/jpeg" ||
+                  docType === "image/gif"
+                ) {
+                  pngType = ImagePng;
+                } else if (docType === "application/msword") {
+                  pngType = WordPng;
+                } else if (
+                  docType ===
+                  "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                ) {
+                  pngType = PowerPointPng;
+                } else if (docType === "application/pdf") {
+                  pngType = PdfPng;
+                } else if (
+                  docType === "text/csv" ||
+                  docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                ) {
+                  pngType = ExcelPng;
+                } else {
+                  pngType = DocPng;
+                }
+                return (
+                  <>
+                    {api !== null ? (
+                      <Grid key={api} item xs={12} md={6} lg={3}>
+                        <Card style={{ backgroundColor: "#EB5353" }}>
+                          <Button
+                            id="demo-customized-button"
+                            aria-controls="demo-customized-menu"
+                            aria-haspopup="true"
+                            aria-expanded="true"
+                            disableElevation
+                            sx={{ color: "inherit" }}
+                            // onClick={() => handleView(api.id, index)}
+                          >
+                            <CardContent>
+                              <img src={pngType} alt="Icon" width="78" height="78" />
+                            </CardContent>
+                          </Button>
+                          <CardActions>
+                            <Button
+                              onClick={() => handleDelete(api, index)}
+                              style={{ color: "white" }}
+                              startIcon={<DeleteIcon />}
+                            >
+                              Remove
+                            </Button>
+                            <Button
+                              onClick={() => handleDownload(api, index)}
+                              style={{ color: "white" }}
+                              startIcon={<DownloadIcon />}
+                            >
+                              Download
+                            </Button>
+                          </CardActions>
+                        </Card>{" "}
+                        &nbsp; &nbsp;{" "}
+                      </Grid>
+                    ) : (
+                      <MDBox />
+                    )}
+                  </>
+                );
               }
-              return (
-                <>
-                  {api.attachedDocs !== null ? (
-                    <Grid key={api.id} item xs={12} md={6} lg={3}>
-                      <Card style={{ backgroundColor: "#EB5353" }}>
-                        <Button
-                          id="demo-customized-button"
-                          aria-controls="demo-customized-menu"
-                          aria-haspopup="true"
-                          aria-expanded="true"
-                          disableElevation
-                          sx={{ color: "inherit" }}
-                          onClick={() => handleView(api.id, index)}
-                        >
-                          <CardContent>
-                            <img src={pngType} alt="Icon" width="78" height="78" />
-                          </CardContent>
-                        </Button>
-                        <CardActions>
-                          <Button
-                            onClick={() => handleDelete(api.id, index)}
-                            style={{ color: "white" }}
-                            startIcon={<DeleteIcon />}
-                          >
-                            Remove
-                          </Button>
-                          <Button
-                            onClick={() => handleDownload(api.id, index)}
-                            style={{ color: "white" }}
-                            startIcon={<DownloadIcon />}
-                          >
-                            Download
-                          </Button>
-                        </CardActions>
-                      </Card>{" "}
-                      &nbsp; &nbsp;{" "}
-                    </Grid>
-                  ) : (
-                    <MDBox />
-                  )}
-                </>
-              );
             })}
           </Grid>
         </Box>

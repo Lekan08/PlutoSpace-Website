@@ -78,6 +78,8 @@ function Sales() {
   const [cashierx, setCashier] = useState([]);
   const [checkedEmail, setCheckedEmail] = useState("");
   const [checkedPortfolio, setCheckedPortfolio] = useState("");
+  const [servicex, setService] = useState([]);
+  const [showClients, setShowClients] = useState(false);
   const onBeforeGetContentResolve = useRef();
   <style type="text/css" media="print">
     {"\
@@ -346,7 +348,87 @@ function Sales() {
     }
   };
 
+  // eslint-disable-next-line consistent-return
+  const handleChangeProdServ = (value) => {
+    const chnageToString = value.toString();
+    if (chnageToString === "1") {
+      setShowClients(true);
+    } else if (chnageToString === "2") {
+      setShowClients(false);
+    }
+    if (chnageToString === "1") {
+      setOpened(true);
+      const headers = miHeaders;
+      let isMounted = true;
+      const data11 = JSON.parse(localStorage.getItem("user1"));
+      const orgIDs = data11.orgID;
+
+      fetch(`${process.env.REACT_APP_LOUGA_URL}/products/gets/${orgIDs}`, { headers })
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          setOpened(false);
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          console.log(result);
+          if (isMounted) {
+            setProduct(result);
+          }
+        });
+      return () => {
+        isMounted = false;
+      };
+    }
+    if (chnageToString === "2") {
+      const headers = miHeaders;
+      const data11 = JSON.parse(localStorage.getItem("user1"));
+      const orgIDs = data11.orgID;
+      fetch(`${process.env.REACT_APP_LOUGA_URL}/companyServices/gets/${orgIDs}`, { headers })
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          setOpened(false);
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          console.log(result);
+          setService(result);
+        });
+    }
+    if (chnageToString === "3") {
+      setProduct([]);
+      setService([]);
+    }
+  };
+
   const handleFormChange = (event, index) => {
+    console.log(event.target.value, "event");
+    console.log(index, "index");
     const data = [...counter];
     data[index][event.target.name] = event.target.value;
     if (event.target.name === "pricePerUnit") {
@@ -376,6 +458,9 @@ function Sales() {
     } else if (event.target.name === "quantity") {
       data[index].totalAmount =
         parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10);
+    } else if (event.target.name === "salesID") {
+      handleChangeProdServ(event.target.value);
+      console.log("testing");
     }
     setCounter(data);
   };
@@ -400,39 +485,39 @@ function Sales() {
     setCounter(data);
   };
 
-  useEffect(() => {
-    const headers = miHeaders;
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+  // useEffect(() => {
+  //   const headers = miHeaders;
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/products/gets/${orgIDs}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          setProduct(result);
-        }
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  //   const orgIDs = data11.orgID;
+  //   let isMounted = true;
+  //   fetch(`${process.env.REACT_APP_LOUGA_URL}/products/gets/${orgIDs}`, { headers })
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
+  //       if (isMounted) {
+  //         setProduct(result);
+  //       }
+  //     });
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, []);
   const Payment = eval(
     Number(cashPaymentx) + Number(cardPaymentx) + Number(transferPaymentx) - Number(subTotalAmountx)
   );
@@ -626,6 +711,41 @@ function Sales() {
       handleClick(e);
     }
   };
+
+  // useEffect(() => {
+  //   const headers = miHeaders;
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
+
+  //   const orgIDs = data11.orgID;
+  //   let isMounted = true;
+  //   fetch(`${process.env.REACT_APP_LOUGA_URL}/companyServices/gets/${orgIDs}`, { headers })
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
+  //       console.log(result);
+  //       if (isMounted) {
+  //         set(result);
+  //       }
+  //     });
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, []);
 
   return (
     <DashboardLayout>
@@ -877,21 +997,39 @@ function Sales() {
                     {/* <input onChange={(e) => setName(e.target.value)} value={namex || ""} type="text" /> */}
                   </div>
                   <div className="col-sm-1">
-                    <MDBox>
-                      <Form.Select
-                        value={form.product}
-                        aria-label="Default select example"
-                        name="product"
-                        onChange={(event) => handleFormChange(event, index)}
-                      >
-                        <option>Product</option>
-                        {productx.map((apis) => (
-                          <option key={apis.id} value={apis.name}>
-                            {apis.name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </MDBox>
+                    {showClients ? (
+                      <MDBox>
+                        <Form.Select
+                          value={form.product}
+                          aria-label="Default select example"
+                          name="product"
+                          onChange={(event) => handleFormChange(event, index)}
+                        >
+                          <option>Product</option>
+                          {productx.map((apis) => (
+                            <option key={apis.id} value={apis.name}>
+                              {apis.name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </MDBox>
+                    ) : (
+                      <MDBox>
+                        <Form.Select
+                          value={form.product}
+                          aria-label="Default select example"
+                          name="product"
+                          onChange={(event) => handleFormChange(event, index)}
+                        >
+                          <option>Company Services</option>
+                          {servicex.map((apis) => (
+                            <option key={apis.id} value={apis.name}>
+                              {apis.name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </MDBox>
+                    )}
                   </div>
                   <div className="col-sm-2">
                     <MDBox>

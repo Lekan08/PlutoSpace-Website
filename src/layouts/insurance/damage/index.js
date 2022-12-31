@@ -51,8 +51,6 @@ function InsuranceDamage() {
   const [user, setUser] = useState([]);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [checkDamageAmount, setCheckDamageAmount] = useState(true);
   const [ownerx, setOwnerx] = useState("");
   const [ownerx2, setOwnerx2] = useState("");
   const [opened, setOpened] = useState(false);
@@ -94,7 +92,6 @@ function InsuranceDamage() {
         }
         if (isMounted) {
           setInsurances(result);
-          console.log(result);
         }
       });
     return () => {
@@ -142,20 +139,14 @@ function InsuranceDamage() {
     const number = /^[0-9.]+$/;
     const value = String(valuee);
     if (!value.match(number)) {
-      setCheckDamageAmount(false);
-      // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "Damage Amount - input only numbers<br>";
       return false;
     }
     if (value.match(number) && valuee !== "0") {
-      setCheckDamageAmount(true);
-      // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "";
       return true;
     }
     if (value === "0") {
-      setCheckDamageAmount(false);
-      // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "Damage Amount is required<br>";
       return false;
     }
@@ -166,7 +157,8 @@ function InsuranceDamage() {
     if (handleOnDamageAmountKeys(damageAmountx)) {
       setOpened(true);
       e.preventDefault();
-
+      setDamageAmount("0");
+      setOwnerx("");
       // Calculating Damage Contribution
       const companyContributionPercent = insurances[0].plan.damageCompanyContribution / 100;
       const companyContribution = companyContributionPercent * damageAmountx;
@@ -191,7 +183,6 @@ function InsuranceDamage() {
         body: raw,
         redirect: "follow",
       };
-      console.log(raw);
       fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/add`, requestOptions)
         .then(async (res) => {
           const aToken = res.headers.get("token-1");
@@ -230,9 +221,7 @@ function InsuranceDamage() {
 
   const handleValidate = (e) => {
     handleOnDamageAmountKeys(damageAmountx);
-    // if (checkDamageAmount === true) {
     handleClick(e);
-    // }
   };
   // eslint-disable-next-line consistent-return
   const handleGets = () => {
@@ -277,7 +266,6 @@ function InsuranceDamage() {
             setItems(result);
             setGets(true);
             setOpened(false);
-            console.log(result);
           }
         });
       return () => {
@@ -287,9 +275,18 @@ function InsuranceDamage() {
   };
 
   const handleUpdateInsuranceDamage = (value) => {
-    const filteredItems = items.filter((item) => item.id === value);
-    console.log(filteredItems);
-    navigate(`/insurance/damage/update?id=${value}`);
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const personalIds = data11.personalID;
+    const [filteredItems] = items.filter((item) => item.id === value);
+    if (filteredItems.approvedBy === personalIds || filteredItems.createdBy === personalIds) {
+      navigate(`/insurance/damage/update?id=${value}`);
+    } else {
+      MySwal.fire({
+        title: "ERROR",
+        type: "success",
+        text: "You're not in charge of this decision",
+      });
+    }
   };
   // Method to handle disable
   const handleDisable = (value) => {
@@ -380,7 +377,6 @@ function InsuranceDamage() {
       body: raw,
       redirect: "follow",
     };
-    console.log(raw);
     fetch(
       `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/approveOrDecline`,
       requestOptions
@@ -430,7 +426,6 @@ function InsuranceDamage() {
     setIDX(value);
     if (filteredItems.approvedBy === personalIds) {
       handleOpen2();
-      console.log("aiitings");
     } else {
       MySwal.fire({
         title: "ERROR",
@@ -448,7 +443,6 @@ function InsuranceDamage() {
       body: raw,
       redirect: "follow",
     };
-    console.log(IDX);
     fetch(
       `${process.env.REACT_APP_JOHANNESBURG_URL}/insuranceDamageRequest/forward/${IDX}/${ownerx2}`,
       requestOptions
