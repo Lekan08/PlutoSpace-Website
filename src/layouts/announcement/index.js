@@ -36,9 +36,10 @@ function Announcement() {
 
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
-// ghhhhh
+
   useEffect(() => {
     const headers = miHeaders;
+    // doskimana
 
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
