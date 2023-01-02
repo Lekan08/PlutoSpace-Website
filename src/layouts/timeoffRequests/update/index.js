@@ -42,18 +42,12 @@ function TimeoffRequestUpdate() {
   const [user, setUser] = useState([]);
 
   // Method to fetch all timeofftype
-  // Method to fetch all timeofftype
   useEffect(() => {
     const headers = miHeaders;
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
-    // const ids = JSON.parse([id]);
-
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    // const ids = data11.id;
     let isMounted = true;
     fetch(`${process.env.REACT_APP_NSUTANA_URL}/employeetimeofftransaction/getByIds/${ids}`, {
       headers,
@@ -177,7 +171,6 @@ function TimeoffRequestUpdate() {
 
   const handleUpdate = () => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
-    // const ids = data11.id;
     const personalIds = data11.id;
     const orgIDs = data11.orgID;
 
@@ -248,7 +241,6 @@ function TimeoffRequestUpdate() {
           return res.json();
         })
         .then((result) => {
-          // setOpened(false);
           if (result.message === "Expired Access") {
             navigate("/authentication/sign-in");
             window.location.reload();
@@ -270,7 +262,6 @@ function TimeoffRequestUpdate() {
           });
         })
         .catch((error) => {
-          // setOpened(false);
           MySwal.fire({
             title: error.status,
             type: "error",
@@ -528,7 +519,6 @@ function TimeoffRequestUpdate() {
                   <MDButton
                     variant="gradient"
                     onClick={(e) => handleOnPurposeKeys(e)}
-                    // disabled={!enabled}
                     color="info"
                     width="50%"
                     align="center"

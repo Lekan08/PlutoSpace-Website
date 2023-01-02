@@ -38,7 +38,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import SlideshowIcon from "@mui/icons-material/Slideshow";
 import DownloadIcon from "@mui/icons-material/Download";
-import ShareIcon from "@mui/icons-material/Share";
+import ChangeCircleOutlinedIcon from "@mui/icons-material/ChangeCircleOutlined";
 import { DeleteForever } from "@mui/icons-material";
 import ClearIcon from "@mui/icons-material/Clear";
 
@@ -124,16 +124,18 @@ const style = {
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 4,
-  borderRadius: 10,
+  p: 10,
+  borderRadius: 5,
   overflow: "scroll",
+  // overflowY: "auto",
   height: "auto",
-  maxHeight: "50vh",
+  maxHeight: "70vh",
   display: "block",
 
   "&::-webkit-scrollbar": {
     width: "6px",
     height: "2px",
+    display: "none",
   },
   "&::-webkit-scrollbar-track": {
     boxShadow: "inset 0 0 1px rgba(0,0,0,0.00)",
@@ -144,14 +146,26 @@ const style = {
     webkitBoxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.1)",
   },
 };
-
 const cardBorder = {
   // borderTopLeftRadius: 20,
   // borderBottomLeftRadius: 20,
 };
 
-function IconView({ items, groups }) {
+function IconView({ items, groups, level }) {
   const [iiidd, setIIIDD] = useState("");
+  console.log(level);
+  const [accessLevelx, setAccessLevel] = useState("");
+
+  React.useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      setAccessLevel(`${level}`);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [level]);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -185,7 +199,11 @@ function IconView({ items, groups }) {
   const [viewDoc, setViewDoc] = React.useState(false);
   const handleOpen = (value) => {
     setDocumentIDx(value);
+    setAnchorEl(null);
     setOpenn(true);
+  };
+  const handleCloseG = () => {
+    setOpenn(false);
   };
   const handleClosee = () => {
     setOpenn(false);
@@ -305,7 +323,7 @@ function IconView({ items, groups }) {
       }
     });
   };
-
+  // sup
   const handleView = (value) => {
     const filteredItems = items.filter((item) => item.id === value);
     console.log(value);
@@ -445,7 +463,7 @@ function IconView({ items, groups }) {
       orgID: orgIDs,
       empID: filteredItems[0].empID,
       key: filteredItems[0].key,
-      accessLevel: filteredItems[0].accessLevel,
+      accessLevel: parseInt(accessLevelx, 10),
       groupID: groupidx,
       type: filteredItems[0].type,
       size: filteredItems[0].size,
@@ -498,6 +516,22 @@ function IconView({ items, groups }) {
           handleOpen();
         });
       });
+  };
+
+  const checkUDoc = () => {
+    if (accessLevelx !== "") {
+      if (accessLevelx === "1") {
+        if (groupidx === "") {
+          // eslint-disable-next-line no-unused-expressions
+          document.getElementById("groupVal").innerHTML = "please choose a group<br>";
+          return;
+        }
+      }
+      handleShare(documentIDx);
+    } else {
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("imageVal").innerHTML = "choose an access level<br>";
+    }
   };
 
   const handleDownload = (value) => {
@@ -699,8 +733,8 @@ function IconView({ items, groups }) {
                     View
                   </MenuItem>
                   <MenuItem onClick={() => handleOpen(iiidd)} disableRipple>
-                    <ShareIcon />
-                    Share
+                    <ChangeCircleOutlinedIcon />
+                    Change Access Level
                   </MenuItem>
                   <Divider sx={{ my: 0.5 }} />
                   <MenuItem onClick={() => handleDownload(iiidd)} disableRipple>
@@ -722,8 +756,8 @@ function IconView({ items, groups }) {
         <Card sx={style} style={cardBorder}>
           <MDBox>
             <MDTypography id="modal-modal-title" variant="h6" component="h2">
-              Share With Group
-            </MDTypography>{" "}
+              Change Access Level
+            </MDTypography>
             <MDBox mt={2}>
               <MDTypography
                 variant="button"
@@ -732,26 +766,56 @@ function IconView({ items, groups }) {
                 align="right"
                 color="text"
               >
-                Group <i>(optional)</i>
+                Access Level <i>(optional)</i>
               </MDTypography>
               <Form.Select
-                value={groupidx || ""}
-                onChange={(e) => setGroupIdx(e.target.value)}
+                value={accessLevelx || ""}
+                onChange={(e) => setAccessLevel(e.target.value)}
                 aria-label="Default select example"
               >
-                <option value="">Select Group</option>
-                {groups.map((api) => (
-                  <option key={api.group.id} value={api.group.id}>
-                    {api.group.name}
-                  </option>
-                ))}
+                <option value="">Select Access Level</option>
+                <option value="0">Personal</option>
+                <option value="1">Group</option>
+                <option value="2">Organisation</option>
               </Form.Select>
               <br />
             </MDBox>
+            <p id="imageVal" style={{ color: "red", fontSize: 13 }}>
+              <i> </i>
+            </p>
+            {accessLevelx === "1" && (
+              <MDBox mt={0}>
+                <MDTypography
+                  variant="button"
+                  fontWeight="regular"
+                  fontSize="80%"
+                  align="right"
+                  color="text"
+                >
+                  Group
+                </MDTypography>
+                <Form.Select
+                  value={groupidx || ""}
+                  onChange={(e) => setGroupIdx(e.target.value)}
+                  aria-label="Default select example"
+                >
+                  <option value="">Select Group</option>
+                  {groups.map((api) => (
+                    <option key={api.group.id} value={api.group.id}>
+                      {api.group.name}
+                    </option>
+                  ))}
+                </Form.Select>
+                <br />
+              </MDBox>
+            )}
+            <p id="groupVal" style={{ color: "red", fontSize: 13 }}>
+              <i> </i>
+            </p>
             <MDBox mt={0} mb={1}>
               <MDButton
                 variant="gradient"
-                onClick={() => handleShare(documentIDx)}
+                onClick={() => checkUDoc()}
                 color="info"
                 width="50%"
                 align="left"
@@ -761,7 +825,7 @@ function IconView({ items, groups }) {
               &nbsp;
               <MDButton
                 variant="gradient"
-                onClick={handleClosee}
+                onClick={handleCloseG}
                 color="error"
                 width="50%"
                 align="center"
@@ -771,10 +835,9 @@ function IconView({ items, groups }) {
             </MDBox>
           </MDBox>
         </Card>
-      </Backdrop>{" "}
+      </Backdrop>
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={viewDoc}>
         <Card sx={viewDocStyle}>
-          {" "}
           <MDBox>
             <IconButton
               size="large"

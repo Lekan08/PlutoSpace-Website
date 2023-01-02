@@ -18,9 +18,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import DataTable from "examples/Tables/DataTable";
 import OtherInflowtable from "./data/table";
-
 // zinoleesky wrote this part of d code called otherinflow
-// total is task + amountt
 
 function OtherInflowType() {
   const MySwal = withReactContent(Swal);
@@ -34,7 +32,6 @@ function OtherInflowType() {
 
   const [opened, setOpened] = useState(false);
   const [checkedName, setCheckedName] = useState("");
-  //   const [CheckedPurpose, setCheckedPurpose] = useState("");
 
   const handleOnNameKeys = (value) => {
     const letters = /^[a-zA-Z ]+$/;
@@ -53,25 +50,6 @@ function OtherInflowType() {
       document.getElementById("name").innerHTML = "Name is required<br>";
     }
   };
-
-  //   const handleOnPurposeKeys = (value) => {
-  //     const letters = /^[a-zA-Z0-9 ]+$/;
-  //     if (!value.match(letters)) {
-  //       setCheckedPurpose(false);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("purpose").innerHTML =
-  //         "Purpose - input only capital and small letters<br>";
-  //     }
-  //     if (value.match(letters)) {
-  //       setCheckedPurpose(true);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("purpose").innerHTML = "";
-  //     }
-  //     if (value.length === 0) {
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("[urpose]").innerHTML = "Purpose is required<br>";
-  //     }
-  //   };
 
   const handleClick = (e) => {
     setOpened(true);
@@ -193,36 +171,10 @@ function OtherInflowType() {
                 </div>
               </Container>
             </MDBox>
-            {/* <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      Branch
-                    </MDTypography>
-                    <MDBox textAlign="right">
-                      <Form.Select
-                        value={branx || ""}
-                        aria-label="Default select example"
-                        onChange={setBranx}
-                      >
-                        <option>--Select Branch--</option>
-                        {branId.map((apis) => (
-                          <option key={apis.id} value={apis.id}>
-                            {apis.name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </MDBox>
-                  </div>
-                </div>
-              </Container>
-            </MDBox> */}
             <MDBox mt={4} mb={1}>
               <MDButton
                 variant="gradient"
                 onClick={handleValidate}
-                // color="info"
                 width="50%"
                 align="left"
                 style={Styles.buttonSx}

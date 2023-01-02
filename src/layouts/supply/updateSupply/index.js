@@ -11,7 +11,6 @@ import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
 import GHeaders from "getHeader";
 import PHeaders from "postHeader";
-// import DatePicker from "react-datepicker";
 import MDButton from "components/MDButton";
 
 function SupplyUpdate() {
@@ -31,22 +30,10 @@ function SupplyUpdate() {
   const [enabled, setEnabled] = useState("");
   const [titlex, setTitle] = useState("");
   const [quantityx, setQuantity] = useState("");
-  // const [clientNamex, setClientName] = useState("");
-  //   const [clientTypex, setClientType] = useState("");
-  //   const [supplyingBranchNamex, setSupplyingBranchName] = useState("");
-  // const [statusTYpex, setStatusType] = useState("");
-  //   const [createdx, setCreatedx] = useState("");
-  // const [ppQuantityx, setPPQuantity] = useState("");
   const [supplybranx, setSupplybran] = useState([]);
   const [supplyingBranchName, setSupplyingBranchName] = useState("");
   const [vatAmountx, setVatAmount] = useState("");
   const [bonusAmountx, setBonusAmount] = useState("");
-  // const [individual, setIndividual] = useState("");
-  // const [individualx, setIndividualx] = useState("");
-  // const [corporate, setCorporate] = useState("");
-  // const [indiCorpo, setIndiCorpo] = useState([]);
-  // const [totalx, setTotal] = useState("");
-  // const [createdx, setCreatedx] = useState("");
   const [supplyingBranchIDx, setSupplyingBranchID] = useState("");
 
   const [showClients, setShowClients] = useState(false);
@@ -58,12 +45,8 @@ function SupplyUpdate() {
   const [productIDx, setProductID] = useState("");
   const [pricePQ, setpricePQ] = useState("");
 
-  console.log(pricePQ);
-
   const [opened, setOpened] = useState(false);
   console.log(opened);
-
-  // const [user, setUser] = useState([]);
 
   useEffect(() => {
     const headers = miHeaders;
@@ -71,7 +54,6 @@ function SupplyUpdate() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
-    // const clientID = data11.id;
     let isMounted = true;
     fetch(`${process.env.REACT_APP_KUBU_URL}/branch/gets/${orgIDs}`, {
       headers,
@@ -100,7 +82,6 @@ function SupplyUpdate() {
           } else {
             setSupplybran(result);
           }
-          // setSupplybran(result);
         }
       });
     return () => {
@@ -114,7 +95,6 @@ function SupplyUpdate() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
-    // const clientID = data11.id;
     let isMounted = true;
     fetch(`${process.env.REACT_APP_LOUGA_URL}/products/gets/${orgIDs}`, {
       headers,
@@ -139,7 +119,6 @@ function SupplyUpdate() {
         }
         if (isMounted) {
           setProduct(result);
-          console.log(result);
         }
       });
     return () => {
@@ -155,7 +134,6 @@ function SupplyUpdate() {
 
   const handleChangeClient = (value) => {
     const callClientType = value.toString();
-    // setClientTypex(callClientType);
     setUClientTypex(callClientType);
     let clientTyppe = "";
     if (callClientType === "1") {
@@ -198,19 +176,12 @@ function SupplyUpdate() {
       });
   };
 
-  // Method to fetch all timeofftype
-  // Method to fetch all timeofftype
   useEffect(() => {
     const headers = miHeaders;
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
-    // const ids = JSON.parse([id]);
-
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    // const ids = data11.id;
     let isMounted = true;
     fetch(`${process.env.REACT_APP_LOUGA_URL}/supply/getByIds/${ids}`, {
       headers,
@@ -233,7 +204,6 @@ function SupplyUpdate() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
           // eslint-disable-next-line eqeqeq
           if (result.length != 0) {
@@ -241,7 +211,6 @@ function SupplyUpdate() {
             setTitle(result[0].title);
             setQuantity(result[0].quantity);
             setpricePQ(result[0].pricePerQuantity);
-            // setIndividual(result[0].clientType);
             setUClientTypex(result[0].clientType);
             setUClientIDx(result[0].clientID);
             setSupplyingBranchName(result[0].supplyingBranchID);
@@ -249,15 +218,7 @@ function SupplyUpdate() {
             setVatAmount(result[0].vatAmount);
             setBonusAmount(result[0].bonusAmount);
             setProductID(result[0].productID);
-            // setCreatedx(result[0].clientName);
             setSupplyingBranchID(result[0].supplyingBranchID);
-            // setDeletex(result[0].deleteFlag);
-            // productName
-            // productID
-            // setApprovex(result[0].approverID);
-            // setAdminx(result[0].adminID);
-            // setReasonx(result[0].reasonForDisapproval);
-            // setStatusx(result[0].status);
           } else {
             setIdx(null);
           }
@@ -267,144 +228,6 @@ function SupplyUpdate() {
       isMounted = false;
     };
   }, []);
-
-  // const trying = (e) => {
-  //   // const statusTYpexx = e.target.value;
-  //   setStatusType(e.target.value);
-  //   const ifstate = e.target.value;
-  //   if (ifstate === "1") {
-  //     setIndiCorpo(individualx);
-  //   } else if (ifstate === "2") {
-  //     setIndiCorpo(corporate);
-  //   }
-  // };
-
-  // const tryxx = () => {
-
-  // }
-
-  // eslint-disable-next-line consistent-return
-  // const handleOnClient = () => {
-  //   setIndiCorpo(individualx);
-  //   setIndiCorpo(corporate);
-  //   if (individualx === 1) {
-  //     return "Individual";
-  //   }
-  //   if (individualx === 2) {
-  //     return "Corporate";
-  //   }
-  // };
-
-  //   useEffect(() => {
-  //     const headers = miHeaders;
-
-  //     const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //     const orgIDs = data11.orgID;
-  //     let isMounted = true;
-  //     fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
-  //       .then(async (res) => {
-  //         const aToken = res.headers.get("token-1");
-  //         localStorage.setItem("rexxdex", aToken);
-  //         return res.json();
-  //       })
-  //       .then((result) => {
-  //         if (result.message === "Expired Access") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Token Does Not Exist") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Unauthorized Access") {
-  //           navigate("/authentication/forbiddenPage");
-  //           window.location.reload();
-  //         }
-  //         if (isMounted) {
-  //           setUser(result);
-  //         }
-  //       });
-  //     return () => {
-  //       isMounted = false;
-  //     };
-  //   }, []);
-
-  // useEffect(() => {
-  //   const headers = miHeaders;
-
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   const orgIDs = data11.orgID;
-  //   // const clientID = data11.id;
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_LOUGA_URL}/individual/gets/${orgIDs}`, {
-  //     headers,
-  //   })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       if (isMounted) {
-  //         setIndividualx(result);
-  //         console.log(result);
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   const headers = miHeaders;
-
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   const orgIDs = data11.orgID;
-  //   // const clientID = data11.id;
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_LOUGA_URL}/corporate/gets/${orgIDs}`, {
-  //     headers,
-  //   })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       if (isMounted) {
-  //         setCorporate(result);
-  //         console.log(result);
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, []);
 
   const handleOnTitleKeys = () => {
     const letter = /^[a-zA-Z ]+$/;
@@ -504,49 +327,8 @@ function SupplyUpdate() {
     setEnabled(checkedBonusAmount === true);
   };
 
-  //   useEffect(() => {
-
-  //     const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //     const orgIDs = data11.orgID;
-  //     const headers = miHeaders;
-  //     let isMounted = true;
-  //     fetch(`${process.env.REACT_APP_NSUTANA_URL}/employeetimeoffsetup/getAll/${orgIDs}`, {
-  //       headers,
-  //     })
-  //       .then(async (res) => {
-  //         const aToken = res.headers.get("token-1");
-  //         localStorage.setItem("rexxdex", aToken);
-  //         return res.json();
-  //       })
-  //       .then((result) => {
-  //         if (result.message === "Expired Access") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Token Does Not Exist") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Unauthorized Access") {
-  //           navigate("/authentication/forbiddenPage");
-  //           window.location.reload();
-  //         }
-  //         if (isMounted) {
-  //           setEmpSetup(result);
-  //         }
-  //       });
-  //     return () => {
-  //       isMounted = false;
-  //     };
-  //   }, []);
-
-  // eslint-disable-next-line no-eval
-  // const istot = totalx;
-
   // eslint-disable-next-line no-eval
   const ans = eval(quantityx * pricePQ);
-  // setTotal(ans);
   // eslint-disable-next-line no-eval
   const payAmountx = eval(vatAmountx + ans - bonusAmountx);
 
@@ -577,24 +359,6 @@ function SupplyUpdate() {
         bonusAmount: bonusAmountx,
         createdBy: idxx,
         productID: productIDx,
-
-        //         clientID": "string",
-        //   "clientType": 0,
-        //   "supplyingBranchID": "string",
-        //   "quantity": 0,
-        //   "pricePerQuantity": 0,
-        //   "totalAmount": 0,
-        //   "vatAmount": 0,
-        //   "payingAmount": 0,
-        //   "bonusAmount": 0,
-        //   "createdBy": 0,
-        //   "createdTime": 0,
-        //   "status": 0,
-        //   "approvedBy": 0,
-        //   "approvedTime": 0,
-        //   "terminatedBy": 0,
-        //   "terminatedTime": 0,
-        //   "demandID": "string"
       });
       const requestOptions = {
         method: "POST",
@@ -632,7 +396,6 @@ function SupplyUpdate() {
           });
         })
         .catch((error) => {
-          // setOpened(false);
           MySwal.fire({
             title: error.status,
             type: "error",
@@ -885,7 +648,6 @@ function SupplyUpdate() {
                           <MDInput
                             type="text"
                             value={ans || ""}
-                            // onChange={(e) => setTotal(e.target.value)}
                             label="Total Amount (NGN)"
                             variant="standard"
                             fullWidth
@@ -916,8 +678,6 @@ function SupplyUpdate() {
                           <MDInput
                             type="text"
                             value={payAmountx || ""}
-                            // onKeyUp={handleOnVatAmountKeys}
-                            // onChange={(e) => setVatAmount(e.target.value)}
                             label="Paying Amount (NGN)"
                             variant="standard"
                             fullWidth

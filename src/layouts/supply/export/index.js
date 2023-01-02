@@ -1,38 +1,25 @@
 import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
-// import MDInput from "components/MDInput";
-// import MDTypography from "components/MDTypography";
-// import MDButton from "components/MDButton";
-// import Card from "@mui/material/Card";
 import { Dropdown } from "react-bootstrap";
 import Icon from "@mui/material/Icon";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Footer from "examples/Footer";
 import DataTable from "examples/Tables/DataTable";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-// import Swal from "sweetalert2";
-// import withReactContent from "sweetalert2-react-content";
-// import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-// imports for modal
-// import Modal from "@mui/material/Modal";
 
 function Export() {
-  // const MySwal = withReactContent(Swal);
-
   const [items, setItems] = useState([]);
 
   const [opened, setOpened] = useState(false);
 
-  // const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
   const navigate = useNavigate();
@@ -77,10 +64,6 @@ function Export() {
     };
   }, []);
 
-  const handleResolveTicket = () => {
-    navigate(``);
-  };
-
   {
     const pColumns = [
       {
@@ -94,7 +77,7 @@ function Export() {
         align: "left",
       },
       {
-        Header: "ApproveBy",
+        Header: "Decision Made By",
         accessor: "approvedByName",
         align: "left",
       },
@@ -104,8 +87,8 @@ function Export() {
         align: "left",
       },
       {
-        Header: "Paying Amount",
-        accessor: "payingAmount",
+        Header: "Client Type",
+        accessor: "clientType",
         align: "left",
       },
       {
@@ -138,7 +121,7 @@ function Export() {
 
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => navigate("/Tickets/Chats")}>view</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleResolveTicket(value)}>Resolve</Dropdown.Item>
+                <Dropdown.Item onClick={() => value} />
               </Dropdown.Menu>
             </Dropdown>
           </div>

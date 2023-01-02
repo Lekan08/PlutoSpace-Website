@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
-// import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
@@ -9,16 +8,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-// import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-// import Backdrop from "@mui/material/Backdrop";
-// import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate, Link } from "react-router-dom";
-// import CardContent from "@mui/material/CardContent";
-// ZINOLEESKY
 
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -38,14 +32,8 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import MixedChart from "examples/Charts/MixedChart";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-// import Button from "@mui/material/Button";
-// import edit from "./edit/index";
-// import Divider from "@mui/material/Divider";
-// import CardActions from "@mui/material/CardActions";
-// import Button from "@mui/material/Button";
-// import { green } from "@mui/material/colors";
-// import AccountCircle from "@mui/icons-material/AccountCircle";
 import Paper from "@mui/material/Paper";
+// ZINOLEESKY
 
 function ViewSingleIndividual() {
   const MySwal = withReactContent(Swal);
@@ -70,11 +58,6 @@ function ViewSingleIndividual() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // const [openn, setOpenn] = React.useState(false);
-  // const handleOpenn = () => setOpenn(true);
-  // const handleClosee = () => setOpenn(false);
-  // END OF MODAL
-
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
   const [titlex, setTitlex] = useState("");
@@ -86,14 +69,11 @@ function ViewSingleIndividual() {
   const [UTitle, setUTitle] = useState("");
   const [UMessage, setUMessage] = useState("");
   const [UTime, setUTime] = useState("");
-  // const [showCard, setShowCard] = useState(false);
   const [UOpened, setUOpened] = useState(false);
-  // const [supplyTitle, setSupplyTitle] = useState("");
-  // const [supplyPayingAmount, setSupplyPayingAmount] = useState("");
-  // const [supplyDateCreated, setSupplyDateCreated] = useState("");
   const [supply, setSupply] = useState([]);
   const [demand, setDemand] = useState([]);
   const [ticket, setTicket] = useState([]);
+  const [assetsx, setAssets] = useState([]);
 
   const [supplyNo, setSupplyNo] = useState("");
   const [demandNo, setDemandNo] = useState("");
@@ -103,30 +83,7 @@ function ViewSingleIndividual() {
   const [ctitlex, setCTitlex] = useState("");
   const [namex, setName] = useState("");
   const [lastEngagementTime, setLastEngagementTime] = useState("");
-  // const [lnamex, setLnamex] = useState("");
-  // const [onamex, setOnamex] = useState("");
-
-  // const handleUClose = () => {
-  //   setUOpened(false);
-  //   showCard(false);
-  // };
   const [product, setProduct] = useState([]);
-  // const [productSupplyRequest, setProductSupplyRequest] = useState([]);
-  // const { allGHeaders: miHeaders } = GHeaders();
-  // console.log(setProductSupplyRequest);
-
-  // eslint-disable-next-line no-unused-vars
-  const [day, setDay] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [month, setMonth] = useState("");
-  // eslint-disable-next-line no-unused-vars
-  const [year, setYear] = useState("");
-  // const [createdByx, setCreatedBy] = useState("");
-  // const [accountOwnerIDx, setAccountOwnerID] = useState("");
-  // const [checkedState, setCheckedState] = useState("");
-  // const [checkedCountry, setCheckedCountry] = useState("");
-
-  // const [user, setUser] = useState([]);
 
   const [enabled, setEnabled] = useState("");
   const { allPHeaders: myHeaders } = PHeaders();
@@ -168,44 +125,7 @@ function ViewSingleIndividual() {
     }
     setEnabled(checkedTitle === true && checkedMessage === true);
   };
-  // const handleOnStateKeys = () => {
-  //   const letters = /^[a-zA-Z ]+$/;
-  //   if (!cityx.match(letters)) {
-  //     setCheckedState(false);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("state").innerHTML =
-  //       "State - input only capital and small letters<br>";
-  //   }
-  //   if (cityx.match(letters)) {
-  //     setCheckedState(true);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("state").innerHTML = "";
-  //   }
-  //   // if (cityx.length === 0) {
-  //   //   // eslint-disable-next-line no-unused-expressions
-  //   //   document.getElementById("city").innerHTML = "Name is required<br>";
-  //   // }
-  //   setEnabled(checkedState === true);
-  // };
-  // const handleOnCountryKeys = () => {
-  //   const letters = /^[a-zA-Z ]+$/;
-  //   if (!countryx.match(letters)) {
-  //     setCheckedCountry(false);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("country").innerHTML =
-  //       "State - input only capital and small letters<br>";
-  //   }
-  //   if (countryx.match(letters)) {
-  //     setCheckedCountry(true);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("country").innerHTML = "";
-  //   }
-  //   // if (cityx.length === 0) {
-  //   //   // eslint-disable-next-line no-unused-expressions
-  //   //   document.getElementById("city").innerHTML = "Name is required<br>";
-  //   // }
-  //   setEnabled(checkedCountry === true);
-  // };
+
   const handleUpdateView = (e) => {
     setOpened(true);
     e.preventDefault();
@@ -225,7 +145,6 @@ function ViewSingleIndividual() {
       createdBy: personalIDs,
       createdTime: UTime,
     });
-    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -321,8 +240,6 @@ function ViewSingleIndividual() {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
           }
-
-          // handleOnTitleKeys(false);
           MySwal.fire({
             title: result.status,
             type: "success",
@@ -332,7 +249,6 @@ function ViewSingleIndividual() {
           });
         })
         .catch((error) => {
-          // handleOnTitleKeys(false)
           MySwal.fire({
             title: error.status,
             type: "error",
@@ -394,12 +310,6 @@ function ViewSingleIndividual() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
-    // const ids = JSON.parse([id]);
-
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    // const ids = data11.id;
-
     let isMounted = true;
     setOpened(true);
     fetch(`${process.env.REACT_APP_LOUGA_URL}/individual/getByIds/${ids}`, {
@@ -411,7 +321,6 @@ function ViewSingleIndividual() {
         return res.json();
       })
       .then((result) => {
-        console.log(result);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -424,13 +333,10 @@ function ViewSingleIndividual() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
           // eslint-disable-next-line eqeqeq
           if (result.length != 0) {
             setName(result[0].fname);
-            // setLnamex(result[0].lname);
-            // setOnamex(result[0].oname);
             setCTitlex(result[0].title);
             setOpened(false);
           }
@@ -454,42 +360,8 @@ function ViewSingleIndividual() {
 
     const clientTypes = 1;
     const date = new Date();
-    // const endTime = new Date(date.getFullYear(), date.getMonth(), 1);
-    // const endTime = new Date(date.getFullYear(), date.getMonth() + 1, 0).getTime();
-    // const endTime = new Date(date.getFullYear(), date.getMonth() + 0);
-    // const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    // const endTime = new Date().toISOString().slice(0, 10).getTime();
     const endTime = new Date().getTime();
     const startTime = new Date(date.getFullYear(), date.getMonth() - 1, 1).getTime();
-    // const endTime = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    // const endTime = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`.getTime();
-    // const endTime = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`.getTime();
-    // console.log(startTime);
-    // console.log(endTime);
-    // const dateString = String.valueOf(startTime);
-    // // const tired = String(dateString).substring(4, 11) + String(dateString).substring(30).toString();
-
-    // const dateStringx = String.valueOf(endTime);
-    // const tiredx =
-    //   String(dateStringx).substring(4, 11) + String(dateStringx).substring(30).toString();
-
-    // const dateString = "Wed Jun 1 00:00:00 GMT 2022";
-    // const dateObj = new Date(dateString);
-
-    // const startTime = dateObj.toDateString();
-    // const dateStringx = "Sun Jun 26 00:00:00 GMT 2022";
-    // const dateObjx = new Date(dateStringx);
-
-    // const endTime = dateObjx.toDateString();
-
-    // 1654038000000
-    // index.js:631 1656198000000
-
-    console.log(startTime);
-    console.log(endTime);
-
-    // console.log(dateObj.toDateString());
-    // outputs Mon May 25 2020
 
     let isMounted = true;
     fetch(
@@ -515,14 +387,12 @@ function ViewSingleIndividual() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
           if (result.length !== 0) {
             setSupply(result);
             setSupplyNo(result.length);
           } else {
             setSupplyNo(0);
           }
-          console.log(result);
         }
       });
     return () => {
@@ -532,9 +402,6 @@ function ViewSingleIndividual() {
 
   useEffect(() => {
     const headers = miHeaders;
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
-    // const orgIDs = data11.orgID;
-
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
@@ -542,9 +409,6 @@ function ViewSingleIndividual() {
     const clientIDs = ids;
 
     const clientTypes = 1;
-    // const date = new Date();
-    // const endTime = new Date().getTime();
-    // const startTime = new Date(date.getFullYear(), date.getMonth() - 1, 1).getTime();
     let isMounted = true;
     fetch(`${process.env.REACT_APP_LOUGA_URL}/demands/getForClient/${clientIDs}/${clientTypes}`, {
       headers,
@@ -568,8 +432,6 @@ function ViewSingleIndividual() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
-          // setSupply(result);
           if (result.length === 0) {
             setDemand([]);
             setDemandNo(0);
@@ -577,10 +439,6 @@ function ViewSingleIndividual() {
             setDemand(result);
             setDemandNo(result.length);
           }
-          // if (result.length > 0) {
-          //   setSupply(result);
-          // }
-          console.log(result);
         }
       });
     return () => {
@@ -592,17 +450,6 @@ function ViewSingleIndividual() {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-
-    // const queryString = window.location.search;
-    // const urlParams = new URLSearchParams(queryString);
-    // const ids = urlParams.get("id");
-
-    // const clientIDs = ids;
-
-    // const clientTypes = 1;
-    // const date = new Date();
-    // const endTime = new Date().getTime();
-    // const startTime = new Date(date.getFullYear(), date.getMonth() - 1, 1).getTime();
     let isMounted = true;
     fetch(`${process.env.REACT_APP_LOUGA_URL}/supply/getQuantityConversionRate/${orgIDs}`, {
       headers,
@@ -626,14 +473,11 @@ function ViewSingleIndividual() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
           if (result.length === 0) {
             setDemandSupplyNo(0);
           } else {
             setDemandSupplyNo(result.length);
           }
-
-          console.log(result);
         }
       });
     return () => {
@@ -641,84 +485,16 @@ function ViewSingleIndividual() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const headers = miHeaders;
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   const orgIDs = data11.orgID;
-  //   const clientID = data11.personalID;
-  //   const clientType = 1;
-  //   const date = new Date();
-  //   const startTime = new Date(date.getFullYear(), date.getMonth(), 1).getTime();
-  //   const endTime = new Date(date.getFullYear(), date.getMonth() + 1, 0).getTime();
-  //   // const startTime = 0;
-  //   // const endTime = 0;
-  //   let isMounted = true;
-  //   fetch(
-  //     `${process.env.REACT_APP_LOUGA_URL}/tickets/getFiltered`,
-  //     {
-  //       headers,
-  //     }
-  //   )
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       if (isMounted) {
-  //         console.log(result);
-  //         setSupply(result);
-  //         // if (result.length < 0) {
-  //         //   console.log("Empty");
-  //         // }
-  //         // if (result.length > 0) {
-  //         //   setSupplyTitle(result[0].title);
-  //         //   // setSupplyPayingAmount(result[0].payingAmount);
-  //         //   // setSupplyDateCreated(result[0].dateCreated);
-  //         //   setSupply(result);
-  //         // }
-  //         console.log(result);
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // }, []);
   const handleView = (filteredData) => {
-    console.log(filteredData);
     setUID(filteredData.id);
     setUTitle(filteredData.title);
     setUMessage(filteredData.message);
     setUTime(filteredData.createdTime);
 
-    // console.log(showCard);
-    // handleOpenn();
-    // setShowCard(true);
     setUOpened(true);
-    // console.log(showCard);
   };
 
-  // const handleLink = () => {
-  //   const queryString = window.location.search;
-  //   const urlParams = new URLSearchParams(queryString);
-  //   const ids = urlParams.get("id");
-  //   navigate(`/supply/viewSupply?id=${ids}`);
-  // };
-
   useEffect(() => {
-    // const headers = myHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
 
@@ -727,22 +503,11 @@ function ViewSingleIndividual() {
     const ids = urlParams.get("id");
 
     const clientIDs = ids;
-    // const isAssignedx = data11.personalID;
 
     const clientTypes = 1;
     const date = new Date(1654902000000);
     const endTimex = new Date().getTime();
     const startTimex = new Date(date.getFullYear(), date.getMonth() - 1, 1).getTime();
-
-    // {
-    //   "orgID": "orgIDs",//
-    //   "startTime": 0,//
-    //   "endTime": 0,//
-    //   "clientType": 0,//
-    //   "clientID": "string",//
-    //   "isAssigned": "string",
-    //   "agentID": "string"
-    // }
 
     const raw = JSON.stringify({
       orgID: orgIDs,
@@ -750,8 +515,6 @@ function ViewSingleIndividual() {
       endTime: endTimex,
       clientType: clientTypes,
       clientID: clientIDs,
-      // isAssigned: isAssignedx,
-      // agentID: clientIDs,
     });
     const requestOptions = {
       method: "POST",
@@ -781,7 +544,6 @@ function ViewSingleIndividual() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
           // setSupply(result);
           if (result.length !== 0) {
             setTicket(result);
@@ -800,7 +562,6 @@ function ViewSingleIndividual() {
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
   };
-  // <------------------------------------------------>
   useEffect(() => {
     const headers = miHeaders;
 
@@ -844,10 +605,6 @@ function ViewSingleIndividual() {
     const clientID = ids;
 
     const clientType = 1;
-    console.log(date);
-    console.log(startTime);
-    console.log(endTime);
-    // console.log(productSupplyRequest);
     let isMounted = true;
     fetch(
       `${process.env.REACT_APP_LOUGA_URL}/supply/getClientsPreference/${orgIDs}/${clientID}/${clientType}?startTime=${startTime}&endTime=${endTime} `,
@@ -874,11 +631,8 @@ function ViewSingleIndividual() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
           setProduct(result);
-
-          console.log(result);
         }
       });
     return () => {
@@ -886,37 +640,37 @@ function ViewSingleIndividual() {
     };
   }, []);
 
-  const changeDateandTime = (timestamp) => {
-    const date = new Date(timestamp);
-    const retDate = date.toDateString();
-    let hour = "0";
-    let minutes = "0";
-    let seconds = "0";
+  // const changeDateandTime = (timestamp) => {
+  //   const date = new Date(timestamp);
+  //   const retDate = date.toDateString();
+  //   let hour = "0";
+  //   let minutes = "0";
+  //   let seconds = "0";
 
-    if (date.getHours() < 10) {
-      hour += date.getHours();
-    } else {
-      hour = date.getHours();
-    }
+  //   if (date.getHours() < 10) {
+  //     hour += date.getHours();
+  //   } else {
+  //     hour = date.getHours();
+  //   }
 
-    if (date.getMinutes() < 10) {
-      minutes += date.getMinutes();
-    } else {
-      minutes = date.getMinutes();
-    }
+  //   if (date.getMinutes() < 10) {
+  //     minutes += date.getMinutes();
+  //   } else {
+  //     minutes = date.getMinutes();
+  //   }
 
-    if (date.getSeconds() < 10) {
-      seconds += date.getSeconds();
-    } else {
-      seconds = date.getSeconds();
-    }
-    let newDate = `${retDate} ${hour}:${minutes}:${seconds} AM`;
-    if (hour > "12") {
-      const nHour = parseInt(hour, 10) - 12;
-      newDate = `${retDate} ${nHour}:${minutes}:${seconds} PM`;
-    }
-    return newDate;
-  };
+  //   if (date.getSeconds() < 10) {
+  //     seconds += date.getSeconds();
+  //   } else {
+  //     seconds = date.getSeconds();
+  //   }
+  //   let newDate = `${retDate} ${hour}:${minutes}:${seconds} AM`;
+  //   if (hour > "12") {
+  //     const nHour = parseInt(hour, 10) - 12;
+  //     newDate = `${retDate} ${nHour}:${minutes}:${seconds} PM`;
+  //   }
+  //   return newDate;
+  // };
 
   useEffect(() => {
     const headers = miHeaders;
@@ -928,7 +682,6 @@ function ViewSingleIndividual() {
     const clientID = ids;
 
     const clientType = 1;
-    // console.log(productSupplyRequest);
     let isMounted = true;
     fetch(
       `${process.env.REACT_APP_LOUGA_URL}/supply/getLastClientEngagement/${orgIDs}/${clientType}/${clientID} `,
@@ -955,26 +708,17 @@ function ViewSingleIndividual() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
-          setLastEngagementTime(changeDateandTime(result));
+          console.log(result);
+          const date = new Date(result);
+          const numOfDays = date.getDate();
+          setLastEngagementTime(numOfDays);
         }
       });
     return () => {
       isMounted = false;
     };
   }, []);
-
-  // const styleSx = {
-  //   height: 150,
-  //   maxHeight: "100%",
-  //   position: "absolute",
-  //   top: "50%",
-  //   left: "50%",
-  //   transform: "translate(-50%, -50%)",
-  //   p: 4,
-  //   display: "block",
-  // };
 
   const styleSxx = {
     display: "flex",
@@ -997,6 +741,51 @@ function ViewSingleIndividual() {
     height: 195,
     maxHeight: "100%",
   };
+
+  useEffect(() => {
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const ids = urlParams.get("id");
+    const clientID = ids;
+
+    const clientType = 1;
+    let isMounted = true;
+    fetch(
+      `${process.env.REACT_APP_JOHANNESBURG_URL}/assets/getForClient/${orgIDs}/${clientType}/${clientID} `,
+      {
+        headers,
+      }
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          setAssets(result);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <DashboardLayout>
@@ -1193,7 +982,7 @@ function ViewSingleIndividual() {
                         textAlign="center"
                         mt={1}
                       >
-                        {lastEngagementTime}
+                        {lastEngagementTime} day(s) ago.
                       </MDTypography>
                     </MDBox>
                   </Paper>
@@ -1246,7 +1035,7 @@ function ViewSingleIndividual() {
                                             textAlign="left"
                                             mt={1}
                                           >
-                                            {`${index + 1}.`} Client&apos;s Name - {item.clientName}
+                                            {`${index + 1}.`} Agent&apos;s Name - {item.agentName}
                                           </MDTypography>
                                           <MDTypography
                                             variant="h6"
@@ -1395,25 +1184,6 @@ function ViewSingleIndividual() {
                                     <Grid item xs={12} md={12} lg={12} key={item.id}>
                                       <Card>
                                         <CardContent>
-                                          {/* <MDTypography
-                                        variant="h5"
-                                        fontWeight="medium"
-                                        fontSize="120%"
-                                        color="info"
-                                        textAlign="left"
-                                        mt={1}
-                                      >
-                                        {item.title}
-                                      </MDTypography> */}
-                                          {/* <MDTypography
-                                    variant="h6"
-                                    color="text"
-                                    fontSize="75%"
-                                    textAlign="left"
-                                    mt={1}
-                                  >
-                                    You have been selected for this Appraisal
-                                  </MDTypography> */}
                                           <MDTypography
                                             variant="h6"
                                             color="text"
@@ -1442,18 +1212,6 @@ function ViewSingleIndividual() {
                                             Date Created - {changeDate(item.createdTime)}
                                           </MDTypography>
                                         </CardContent>
-                                        {/* <CardActions>
-                                  <div align="right">
-                                    <MDButton
-                                      variant="gradient"
-                                      color="info"
-                                      onClick={() => handleAppraise(item.id)}
-                                      width="50%"
-                                    >
-                                      Appraise
-                                    </MDButton>
-                                  </div>
-                                </CardActions> */}
                                       </Card>
                                       &nbsp;
                                     </Grid>
@@ -1481,7 +1239,6 @@ function ViewSingleIndividual() {
             </Grid>
             <Grid item xs={4}>
               <Card style={{ height: 545, maxHeight: 545, backgroundColor: "#B2C8DF" }}>
-                {/* <Card sx={{ width: "absolute" }}> */}
                 <MDTypography variant="h4" fontWeight="medium" color="text" mt={1}>
                   <MDBox mt={4} mb={1} ml={12}>
                     <MDButton
@@ -1551,13 +1308,11 @@ function ViewSingleIndividual() {
                 </div>
               </Card>
               &nbsp; &nbsp;
-              {/* </Card> */}
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Card>
                   <div>
-                    {/* <Card sx={{ maxHeight: 350 }}> */}
                     <MDBox>
                       <Grid item xs={12} md={12} lg={12}>
                         <MDBox>
@@ -1571,24 +1326,18 @@ function ViewSingleIndividual() {
                               {product.length > 0 && (
                                 <MixedChart
                                   inkBarStyle={{ backgroundColor: "blue" }}
-                                  // title="Ticket's Chart"
                                   description="ALL PRODUCT/PACKAGE SUPPLY REQUEST"
                                   chart={{
                                     labels: [
                                       `${product[0].product.name}`,
                                       `${product[1].product.name}`,
-                                      // `${product[2].product.name}`,
                                     ],
                                     datasets: [
                                       {
                                         chartType: "Bar Chart",
                                         label: "TOTAL REQUEST",
                                         color: "success",
-                                        data: [
-                                          product[0].totalRequests,
-                                          product[1].totalRequests,
-                                          // product[2].totalRequests,
-                                        ],
+                                        data: [product[0].totalRequests, product[1].totalRequests],
                                       },
                                     ],
                                   }}
@@ -1599,72 +1348,10 @@ function ViewSingleIndividual() {
                         </MDBox>
                       </Grid>
                     </MDBox>
-                    {/* </Card> */}
                   </div>
                 </Card>
                 &nbsp;
               </Grid>
-            </Grid>
-            <Grid>
-              {/* <Card>
-                &nbsp;
-                <div
-                  className="scrollbar scrollbar-primary mt-2 mx-auto"
-                  style={scrollContainerStyle}
-                >
-                  <Container>
-                    <div className="row">
-                      {supply.map((item) => (
-                        <Grid item xs={12} md={12} lg={12} key={item.id}>
-                          <Card sx={{ maxWidth: 345 }}>
-                            <CardContent>
-                              {/* <MDTypography
-                      variant="h5"
-                      fontWeight="medium"
-                      fontSize="120%"
-                      color="info"
-                      textAlign="left"
-                      mt={1}
-                    >
-                      {item.personal.fname} &nbsp; {item.personal.lname}
-                    </MDTypography> 
-
-                              <MDTypography
-                                variant="h6"
-                                color="text"
-                                fontSize="75%"
-                                textAlign="left"
-                                mt={1}
-                              >
-                                Title - {item.title}
-                              </MDTypography>
-                              <MDTypography
-                                variant="h6"
-                                color="text"
-                                fontSize="75%"
-                                textAlign="left"
-                                mt={0}
-                              >
-                                Paying Amount - {item.payingAmount}
-                              </MDTypography>
-                              <MDTypography
-                                variant="h6"
-                                color="text"
-                                fontSize="75%"
-                                textAlign="left"
-                                mt={0}
-                              >
-                                Date Created - {item.dateCreated}
-                              </MDTypography>
-                            </CardContent>
-                          </Card>
-                          &nbsp;
-                        </Grid>
-                      ))}
-                    </div>
-                  </Container>
-                </div>
-              </Card> */}
             </Grid>
           </Grid>
         </Box>
@@ -1761,77 +1448,6 @@ function ViewSingleIndividual() {
           </Box>
         </Modal>
       </div>
-      {/* <div>
-        <Grid item xs={6} md={3} lg={4}>
-          <Card sx={{ maxHeight: 350 }}>
-            <div className="scrollbar scrollbar-primary mt-2 mx-auto" style={scrollContainerStyle}>
-              <MDBox mb={1.5}>
-                <MDBox
-                  variant="gradient"
-                  bgColor="info"
-                  borderRadius="lg"
-                  coloredShadow="success"
-                  mt={2}
-                  mx={0}
-                  p={1}
-                  mb={3}
-                  textAlign="left"
-                >
-                  <MDTypography
-                    variant="h4"
-                    fontWeight="medium"
-                    color="white"
-                    textAlign="center"
-                    mt={1}
-                  >
-                    {/* {supplyTitle} 
-                  </MDTypography>
-                </MDBox>
-                <Container>
-                  <div className="row">
-                    {supply.map((api) => (
-                      <Grid container spacing={0} key={api.id}>
-                        <Grid item xs={12} md={12} lg={12}>
-                          <MDBox mb={2}>
-                            <Link to="/supply/viewSupply">
-                              <Card style={{ backgroundColor: "#318CE7" }}>
-                                <CardContent>
-                                  <MDTypography
-                                    variant="h4"
-                                    fontWeight="medium"
-                                    color="white"
-                                    textAlign="left"
-                                    mt={1}
-                                  >
-                                    {api.payingAmount}
-                                  </MDTypography>
-                                  <div
-                                    style={{
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                      width: "10rem",
-                                      color: "#f5f5f5",
-                                      whiteSpace: "nowrap",
-                                      fontSize: "80%",
-                                    }}
-                                  >
-                                    <p>{api.dateCreated}</p>
-                                  </div>
-                                </CardContent>
-                              </Card>{" "}
-                            </Link>
-                          </MDBox>
-                        </Grid>
-                      </Grid>
-                    ))}
-                  </div>
-                </Container>
-              </MDBox>
-            </div>
-          </Card>
-        </Grid>
-      </div> */}
-
       <div>
         <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={UOpened}>
           <Card sx={style} style={cardBorder}>
@@ -1883,7 +1499,6 @@ function ViewSingleIndividual() {
                   autoComplete="off"
                   value={UTitle || ""}
                   onChange={(e) => setUTitle(e.target.value)}
-                  // onKeyUp={handleOnUTitleKeys}
                   label="Title"
                   variant="standard"
                 />
@@ -1894,7 +1509,6 @@ function ViewSingleIndividual() {
                 style={{ width: 300 }}
                 value={UMessage || ""}
                 onChange={(e) => setUMessage(e.target.value)}
-                // onKeyUp={handleOnUMessageKeys}
               />
               <MDBox mt={4} mb={1}>
                 <MDButton
@@ -1923,103 +1537,79 @@ function ViewSingleIndividual() {
           </Card>
         </Backdrop>
       </div>
-      <div>
-        {/* <Modal
-          open={openn}
-          onClose={handleClosee}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <MDBox
-              variant="gradient"
-              bgColor="info"
-              borderRadius="lg"
-              coloredShadow="info"
-              mx={2}
-              mt={-3}
-              p={2}
-              mb={1}
-              textAlign="center"
-            >
-              <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
-                Update Feed
-              </MDTypography>
-            </MDBox>
-            <MDBox
-              variant="gradient"
-              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-              borderRadius="lg"
-              coloredShadow="success"
-              mx={3}
-              mt={1}
-              p={1}
-              mb={1}
-              textAlign="center"
-            >
-              <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
-                {" "}
-              </MDTypography>
-              <MDTypography variant="gradient" fontSize="60%" color="error" id="message">
-                {" "}
-              </MDTypography>
-            </MDBox>
-
-            <Typography sx={{ mt: 2 }}>
-              <Box
-                component="form"
-                sx={{
-                  "& > :not(style)": { m: 1, width: "25ch" },
-                }}
-                noValidate
+      <MDBox my={1} />
+      <Grid container spacing={0.5}>
+        <Grid item xs={6}>
+          {" "}
+          <Paper sx={styleDST} variant="outlined" square>
+            <MDBox sx={{ maxHeight: 195 }}>
+              <div
+                className="scrollbar scrollbar-primary mt-2 mx-auto"
+                style={scrollContainerStyle}
               >
-                {" "}
-                <TextField
-                  id="standard-basic"
-                  autoComplete="off"
-                  value={UTitle || ""}
-                  onChange={(e) => setUTitle(e.target.value)}
-                  // onKeyUp={handleOnUTitleKeys}
-                  label="Title"
-                  variant="standard"
-                />
-              </Box>
-              <TextareaAutosize
-                aria-label="empty textarea"
-                placeholder="Details"
-                style={{ width: 300 }}
-                value={UMessage || ""}
-                onChange={(e) => setUMessage(e.target.value)}
-                // onKeyUp={handleOnUMessageKeys}
-              />
-              <MDBox mt={4} mb={1}>
-                <MDButton
-                  ml={1}
-                  variant="gradient"
-                  onClick={handleUpdateView}
-                  color="info"
-                  width="50%"
-                  align="left"
-                >
-                  Edit
-                </MDButton>
-                &nbsp; &nbsp;
-                <MDButton
-                  pl={10}
-                  variant="gradient"
-                  onClick={handleClosee}
-                  color="error"
-                  width="50%"
-                  align="right"
-                >
-                  cancel
-                </MDButton>
-              </MDBox>
-            </Typography>
-          </Box>
-        </Modal> */}
-      </div>
-
+                <MDBox mb={1.5}>
+                  <MDBox
+                    variant="gradient"
+                    bgColor="info"
+                    borderRadius="lg"
+                    coloredShadow="success"
+                    mt={0}
+                    mx={2}
+                    p={1}
+                    mb={2}
+                    textAlign="left"
+                  >
+                    <MDTypography
+                      variant="h4"
+                      fontWeight="medium"
+                      color="white"
+                      textAlign="center"
+                      mt={1}
+                    >
+                      Assets
+                    </MDTypography>
+                  </MDBox>
+                  <Container>
+                    <div className="row">
+                      <MDBox>
+                        {assetsx.map((item) => (
+                          // <Link to={`/Tickets/Chats?id=${item.id}`}>
+                          <Grid item xs={12} md={12} lg={12} key={item.id}>
+                            <Card sx={{ maxWidth: 345 }}>
+                              <CardContent>
+                                <MDTypography
+                                  variant="h6"
+                                  color="text"
+                                  fontSize="75%"
+                                  textAlign="left"
+                                  mt={1}
+                                >
+                                  Item - {item.item}
+                                </MDTypography>
+                                <MDTypography
+                                  variant="h6"
+                                  color="text"
+                                  fontSize="75%"
+                                  textAlign="left"
+                                  mt={1}
+                                >
+                                  Item Worth - {item.itemWorth}
+                                </MDTypography>
+                              </CardContent>
+                            </Card>
+                            &nbsp;
+                          </Grid>
+                          // </Link>
+                        ))}
+                      </MDBox>
+                    </div>
+                  </Container>
+                </MDBox>
+              </div>
+            </MDBox>
+          </Paper>
+        </Grid>
+      </Grid>
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />
       </Backdrop>

@@ -56,6 +56,7 @@ import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
 import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
+import Styles from "styles";
 // import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import DataTable from "examples/Tables/DataTable";
@@ -79,6 +80,7 @@ function TimeSheetManual() {
   const [checkedProject, setCheckedProject] = useState(false);
   const [checkedTask, setCheckedTask] = useState(false);
   const [checkedStartTime, setCheckedStartTime] = useState(false);
+  const [checkedEndTime, setCheckedEndTime] = useState(false);
 
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
@@ -89,6 +91,7 @@ function TimeSheetManual() {
     console.log(valuex);
     console.log("working");
     if (!valuex) {
+      setCheckedProject(false);
       console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("project").innerHTML = "Select Project you're working on <br>";
@@ -102,9 +105,11 @@ function TimeSheetManual() {
   };
 
   const handleOnTaskSelect = (valuex) => {
+    setTaskIDx(valuex);
     console.log(valuex);
     console.log("working");
     if (!valuex) {
+      setCheckedTask(false);
       console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("task").innerHTML = "Select Task you're working on <br>";
@@ -121,6 +126,7 @@ function TimeSheetManual() {
     console.log(valuex);
     const sTime = new Date(valuex).getTime();
     if (!sTime) {
+      setCheckedStartTime(false);
       console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("startTime").innerHTML = "Select a Start Time <br>";
@@ -130,6 +136,23 @@ function TimeSheetManual() {
       setCheckedStartTime(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("startTime").innerHTML = " ";
+    }
+  };
+
+  const handleTimexx = (valuex) => {
+    console.log(valuex);
+    const sTime = new Date(valuex).getTime();
+    if (!sTime) {
+      setCheckedEndTime(false);
+      console.log("auhfcgeafig");
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("endTime").innerHTML = "Select an End Time <br>";
+    }
+    if (sTime) {
+      console.log("working2222222");
+      setCheckedEndTime(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("endTime").innerHTML = " ";
     }
   };
 
@@ -143,6 +166,7 @@ function TimeSheetManual() {
     const currTime = new Date().getTime();
     console.log(startTimex);
     console.log(endTimexxx);
+    console.log(taskIDx);
 
     e.preventDefault();
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -268,56 +292,67 @@ function TimeSheetManual() {
     };
   }, []);
 
+  // eslint-disable-next-line consistent-return
   const handleTask = (value) => {
+    handleOnTaskSelect();
     setProjectIDx(value);
-    console.log(value);
+    console.log(value !== "");
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/gets/${orgIDs}/${value}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        const result = await res.text();
-        if (result === null || result === undefined || result === "") {
-          return {};
-        }
-        return JSON.parse(result);
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          if (result.length !== 0) {
-            console.log(result);
-            setTaskList(result);
+    if (value === "") {
+      setTaskList([]);
+    } else {
+      fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/gets/${orgIDs}/${value}`, { headers })
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          const result = await res.text();
+          if (result === null || result === undefined || result === "") {
+            return {};
           }
-        }
-      });
+          return JSON.parse(result);
+        })
+        .then((result) => {
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          if (isMounted) {
+            if (result.length !== 0) {
+              console.log(result);
+              setTaskList(result);
+            } else {
+              setTaskList([]);
+              setTaskIDx("");
+            }
+          }
+        });
 
-    // Method to handle diable
+      // Method to handle diable
 
-    return () => {
-      isMounted = false;
-    };
+      return () => {
+        isMounted = false;
+      };
+    }
   };
 
   // eslint-disable-next-line consistent-return
   const handleSubTask = (taskID) => {
-    handleOnTaskSelect(taskID);
-    if (taskID !== "") {
-      setProjectIDx(taskID);
+    setTaskIDx(taskID);
+    // handleOnTaskSelect(taskID);
+    if (taskID === "") {
+      setSubTaskList([]);
+    } else {
       const headers = miHeaders;
       const data11 = JSON.parse(localStorage.getItem("user1"));
       const orgIDs = data11.orgID;
@@ -349,6 +384,9 @@ function TimeSheetManual() {
             if (result.length !== 0) {
               console.log(result);
               setSubTaskList(result);
+            } else {
+              setSubTaskList([]);
+              setSubTaskIDx("");
             }
           }
         });
@@ -453,10 +491,11 @@ function TimeSheetManual() {
   };
   const handleValidate = (e) => {
     handleTime(startTimexx);
+    handleTimexx(endTimex);
     handleOnProjectSelect(projectIDx);
     handleOnTaskSelect(taskIDx);
     // console.log(checkedWorkflow);
-    if (checkedProject && checkedStartTime && checkedTask === true) {
+    if (checkedProject && checkedStartTime && checkedEndTime && checkedTask === true) {
       handleClick(e);
     }
   };
@@ -485,6 +524,21 @@ function TimeSheetManual() {
 
   const pColumns = [
     {
+      Header: "Project ",
+      accessor: "projectTitle",
+      align: "left",
+    },
+    {
+      Header: "Task ",
+      accessor: "taskTitle",
+      align: "left",
+    },
+    {
+      Header: "Sub-Task ",
+      accessor: "subTaskTitle",
+      align: "left",
+    },
+    {
       Header: "Comment ",
       accessor: "comment",
       align: "left",
@@ -501,12 +555,11 @@ function TimeSheetManual() {
       Cell: ({ cell: { value } }) => changeDate(value),
       align: "left",
     },
-    // {
-    //   Header: "Status",
-    //   accessor: "status",
-    //   Cell: ({ cell: { value } }) => changeStatus(value),
-    //   align: "left",
-    // },
+    {
+      Header: "Duration",
+      accessor: "duration",
+      align: "left",
+    },
     {
       Header: "Actions",
       accessor: "id",
@@ -525,7 +578,7 @@ function TimeSheetManual() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigate(`/project/update-Project?id=${value}`)}>
+              <Dropdown.Item onClick={() => navigate(`/timesheet/update-Timesheet?id=${value}`)}>
                 Update
               </Dropdown.Item>
 
@@ -546,9 +599,9 @@ function TimeSheetManual() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={{ backgroundColor: "#f96d02" }}
             mx={2}
             mt={-3}
             p={2}
@@ -556,24 +609,21 @@ function TimeSheetManual() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Time Sheet
+              Timesheet
             </MDTypography>
           </MDBox>
           <MDBox
-            variant="gradient"
+            mt={2}
+            mb={2}
             sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-            borderRadius="lg"
-            coloredShadow="success"
-            mx={3}
-            mt={1}
-            p={1}
-            mb={3}
-            textAlign="center"
           >
             <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
               {" "}
             </MDTypography>
             <MDTypography variant="gradient" fontSize="60%" color="error" id="startTime">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="endTime">
               {" "}
             </MDTypography>
             <MDTypography variant="gradient" fontSize="60%" color="error" id="project">
@@ -606,13 +656,14 @@ function TimeSheetManual() {
                   <div className="col-sm-5">
                     <TextField
                       id="datetime-local"
-                      label="End Time"
+                      label="End Time *"
                       type="datetime-local"
                       InputLabelProps={{
                         shrink: true,
                       }}
                       value={endTimex}
                       onChange={(e) => setEndTimex(e.target.value)}
+                      onInput={(e) => handleTimexx(e.target.value)}
                     />
                   </div>
                 </div>
@@ -639,7 +690,7 @@ function TimeSheetManual() {
                       onChange={(e) => handleTask(e.target.value)}
                       onInput={(e) => handleOnProjectSelect(e.target.value)}
                     >
-                      <option>--Select Project *--</option>
+                      <option value="">--Select Project *--</option>
                       {projectList.map((item) => (
                         <option key={item.id} value={item.id}>
                           {item.name}
@@ -650,10 +701,10 @@ function TimeSheetManual() {
                   <div className="col-sm-6">
                     <Form.Select
                       aria-label="Default select example"
-                      onInput={(e) => setTaskIDx(e.target.value)}
+                      onInput={(e) => handleOnTaskSelect(e.target.value)}
                       onChange={(e) => handleSubTask(e.target.value)}
                     >
-                      <option>--Select Task *--</option>
+                      <option value="">--Select Task *--</option>
                       {taskList.map((item) => (
                         <option key={item.id} value={item.id}>
                           {item.title}
@@ -669,7 +720,7 @@ function TimeSheetManual() {
                       aria-label="Default select example"
                       onChange={(e) => setSubTaskIDx(e.target.value)}
                     >
-                      <option>--Select Subtask--</option>
+                      <option value="">--Select Subtask--</option>
                       {subTaskList.map((item) => (
                         <option key={item.id} value={item.id}>
                           {item.name}
@@ -685,7 +736,8 @@ function TimeSheetManual() {
                 <MDButton
                   variant="gradient"
                   onClick={handleValidate}
-                  color="info"
+                  // color="info"
+                  style={Styles.buttonSx}
                   width="50%"
                   align="left"
                 >

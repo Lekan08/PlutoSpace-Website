@@ -145,7 +145,7 @@ export default function BusinessData() {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
           }
-          console.log(result);
+          console.log("result");
           if (isMounted) {
             setItems(result);
           }
@@ -170,7 +170,7 @@ export default function BusinessData() {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
           }
-          console.log(resultx);
+          console.log("resultx");
           if (isMounted) {
             setItems(resultx);
           }
@@ -601,6 +601,11 @@ export default function BusinessData() {
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => navigate(`/business-travel/update?id=${value}`)}>
                   View/Update
+                </Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => navigate(`/business-travel/attachdocument?id=${value}`)}
+                >
+                  Attach Document
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleapprove(value)}>Approve</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item>

@@ -109,7 +109,6 @@ function Csv() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
           setCorporateID(result);
         }
       });
@@ -118,7 +117,6 @@ function Csv() {
     };
   }, []);
   const changeHandler = (event) => {
-    // Passing file data (event.target.files[0]) to parse using Papa.parse
     Papa.parse(event.target.files[0], {
       header: true,
       skipEmptyLines: true,
@@ -128,7 +126,6 @@ function Csv() {
         const personalIDs = data11.personalID;
         const dutyx = Number(duty);
         const obj = results.data;
-        console.log(obj);
         const objx = obj.map(
           ({
             fname,
@@ -180,26 +177,6 @@ function Csv() {
             };
           }
         );
-        console.log(objx);
-        // const obj = mapped.map((element) => ({
-        //   ...element,
-        //   orgID: `${orgIDs}`,
-        //   corporateID: corp,
-        //   accountOwnerID: personalIDs,
-        //   createdBy: dutyx,
-        // }));
-        // function convertIntObj(objx) {
-        //   const res = [];
-        //   for (const key in objx) {
-        //     res[key] = {};
-        //     for (const prop in objx[key]) {
-        //       const parsed = parseInt(objx[key][prop], 10);
-        //       // eslint-disable-next-line no-restricted-globals
-        //       res[key][prop] = isNaN(parsed) ? objx[key][prop] : parsed;
-        //     }
-        //   }
-        //   return res;
-        // }
 
         objx.forEach((element) => {
           element.orgID = orgIDs;
@@ -265,42 +242,22 @@ function Csv() {
             };
           }
         );
-        console.log(objx);
         const why = JSON.stringify(objc);
-        console.log(why);
         setFile(why);
-        // const wow = JSON.stringify(resultx);
-        // console.log(wow);
-
-        // console.log("Object result", result);
-
-        // const x = results.data;
-        // const y = x.forEach((element) => {
-        //   // eslint-disable-next-line no-param-reassign
-        //   element.b = "qux";
-        // });
-        // console.log(y);
-        // const p = JSON.stringify(results.data);
-        // console.log(p);
       },
     });
   };
   const handleChanges = (selectedOption) => {
-    // this.setState({ selectedOption });
     setCorp(selectedOption.value);
-    console.log(corp);
-    console.log(`Option selected:`, selectedOption);
   };
   const handleUpload = () => {
     const raw = file;
-    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
       body: raw,
       redirect: "follow",
     };
-    console.log(raw);
     fetch(`${process.env.REACT_APP_LOUGA_URL}/individual/add`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");

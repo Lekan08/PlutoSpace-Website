@@ -6,13 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function TimeOffRequestJourney() {
   const [items, setItems] = useState([]);
 
-  // const [newEvent, setNewEvent] = useState({ title: "", time: "" });
-
-  // const { columns: pColumns, rows: pRows } = ForwardTimeOffRequests();
-
   const navigate = useNavigate();
 
-  // const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
   const queryString = window.location.search;
@@ -65,7 +60,6 @@ export default function TimeOffRequestJourney() {
   return {
     columns: [
       { Header: "Current Holder Name", accessor: "currentHolderName", align: "left" },
-      // { Header: "Created Time", accessor: "createdTime", align: "left" },
       {
         Header: "Created Time",
         accessor: "createdTime",

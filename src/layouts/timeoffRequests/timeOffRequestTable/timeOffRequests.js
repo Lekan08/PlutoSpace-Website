@@ -22,8 +22,6 @@ export default function TimeOffRequestData() {
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
-  // timeofftypedetails
-  // Method to handle diable
   const handleUpdate = (
     idx,
     empSetupIdx,
@@ -82,7 +80,6 @@ export default function TimeOffRequestData() {
         reasonForDisapproval: reasonx,
         status: statusx,
       });
-      console.log(raw);
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -130,29 +127,6 @@ export default function TimeOffRequestData() {
     }
   };
 
-  // const getCurrentDate = () => new Date().getTime();
-
-  // const changeUpdateDate = (timestamp) => {
-  //   const date = new Date(timestamp);
-  //   let month = "0";
-  //   if (date.getMonth() + 1 < 10) {
-  //     const mymonth = date.getMonth() + 1;
-  //     month += mymonth;
-  //   } else {
-  //     const mymonth = date.getMonth() + 1;
-  //     month = mymonth;
-  //   }
-  //   let day = "0";
-  //   if (date.getDate() < 10) {
-  //     day += date.getDate();
-  //   } else {
-  //     day = date.getDate();
-  //   }
-  //   const retDate = `${date.getFullYear()}-${month}-${day}`;
-  //   return retDate;
-  // };
-
-  // Method to filter departments
   const handleShow = (filteredData, value) => {
     let empSetupIdx = "";
     let empIDx = "";
@@ -426,12 +400,6 @@ export default function TimeOffRequestData() {
   };
 
   const handleUpdateLeave = (idx, daysCompletedx) => {
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
-    // const orgIDs = data11.orgID;
-    // const personalIds = data11.personalID;
-    console.log(daysCompletedx);
-    console.log(idx);
-    console.log(items[0].noOfDaysApproved);
     const app = items[0].noOfDaysApproved;
 
     if (daysCompletedx <= app) {
@@ -486,10 +454,7 @@ export default function TimeOffRequestData() {
   };
 
   const handleLeave = (filteredData, value) => {
-    console.log(value);
-    console.log(filteredData);
     let completedDaysx = "";
-    // Avoid filter for empty string
     if (!value) {
       completedDaysx = "";
     } else {
@@ -519,96 +484,9 @@ export default function TimeOffRequestData() {
     });
   };
 
-  // const handleApprove = () => {
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-  //   // const ids = data11.id;
-  //   const personalIds = data11.id;
-  //   const orgIDs = data11.orgID;
-
-  //   const raw = JSON.stringify({
-  //     id: idx,
-  //     orgID: orgIDs,
-  //     empID: personalIds,
-  //     empSetupID: empSetupIdx,
-  //     noOfDaysRequested: daysx,
-  //     noOfDaysApproved: daysapprovex,
-  //     startDate: startx,
-  //     endDate: endx,
-  //     resumptionDate: resumex,
-  //     dutyRelieverID: dutyrelieverx,
-  //     createdDate: createdx,
-  //     purpose: purposex,
-  //     deleteFlag: deletex,
-  //     approverID: approvex,
-  //     adminID: adminx,
-  //     reasonForDisapproval: reasonx,
-  //   });
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: "follow",
-  //   };
-
-  //   fetch(`${process.env.REACT_APP_NSUTANA_URL}/employeetimeofftransaction/update`, requestOptions)
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       // setOpened(false);
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       MySwal.fire({
-  //         title: result.status,
-  //         type: "success",
-  //         text: result.message,
-  //       }).then(() => {
-  //         window.location.reload();
-  //       });
-  //     })
-  //     .catch((error) => {
-  //       // setOpened(false);
-  //       MySwal.fire({
-  //         title: error.status,
-  //         type: "error",
-  //         text: error.message,
-  //       });
-  //     });
-  // };
-
-  // const eTOTId = {};
-  // const raw2 = JSON.stringify({
-  //   employeeTimeOffTransactionID: eTOTId.data.id,
-  // });
-  // console.log(raw2);
-  // const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  // const => employeeTimeOffTransactionID;
-
-  // let eTOTId = employeeTimeOffTransactionID;
-
-  // const handleJourney = (eTOTId) => {
-  //   navigate(`/timeoffRequests/timeOffRequestJourney?id=${eTOTId}`);
-  // };
-
   const handleDisapprove = (value) => {
     navigate(`/timeoff-Requests/disapprove?id=${value}`);
   };
-  // const handleLeave = (value) => {
-  //   navigate(`/timeoff-Requests/leaverecall?id=${value}`);
-  // };
 
   // Return table
   return {
@@ -681,9 +559,6 @@ export default function TimeOffRequestData() {
                 >
                   Time Off Request Journey
                 </Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => navigate(`/timeoffRequests/view?id=${value}`)}>
-                  View
-                </Dropdown.Item> */}
                 <Dropdown.Item
                   onClick={() =>
                     navigate(`/time-off-Requests/forward-Time-Off-Requests?id=${value}`)

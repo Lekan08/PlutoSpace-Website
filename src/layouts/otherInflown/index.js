@@ -44,6 +44,8 @@ function OtherInflow() {
 
   const [checkedAmount, setCheckedAmount] = useState("");
   const [checkedTaxAmount, setCheckedTaxAmount] = useState("");
+  const [checkedPaticular, setCheckedPaticular] = useState("");
+
   const [startAmountx, setStartAmount] = useState("");
   const [endTimex, setEndTime] = useState("");
   const [endAmountx, setEndAmount] = useState("");
@@ -119,6 +121,16 @@ function OtherInflow() {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("taxamount").innerHTML = "Tax Amount is required<br>";
     }
+  };
+  const handleOnPortfolioKeys = () => {
+    if (particularz.length === 0) {
+      setCheckedPaticular(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("portfolio").innerHTML = "A text is required<br>";
+    } else {
+      setCheckedPaticular(true);
+    }
+    // setEnabled(checkedPortfolio === true);
   };
 
   const handleClick = (e) => {
@@ -252,7 +264,7 @@ function OtherInflow() {
   };
 
   const handleValidate = (e) => {
-    if (checkedAmount && checkedTaxAmount === true) {
+    if (checkedAmount && checkedTaxAmount && checkedPaticular === true) {
       handleClick(e);
     }
   };
@@ -283,6 +295,9 @@ function OtherInflow() {
               {" "}
             </MDTypography>
             <MDTypography variant="gradient" fontSize="60%" color="error" id="taxamount">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="portfolio">
               {" "}
             </MDTypography>
           </MDBox>
@@ -361,7 +376,7 @@ function OtherInflow() {
                       <Form.Control
                         as="textarea"
                         value={particularz || ""}
-                        // onKeyUp={handleOnPortfolioKeys}
+                        onKeyUp={handleOnPortfolioKeys}
                         onChange={(e) => setParticular(e.target.value)}
                         rows={2}
                       />

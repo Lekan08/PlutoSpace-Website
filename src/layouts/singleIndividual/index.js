@@ -4,7 +4,6 @@ import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import MDButton from "components/MDButton";
-// import Card from "@mui/material/Card";
 import Paper from "@mui/material/Paper";
 import Select from "react-select";
 import { Container, Form } from "react-bootstrap";
@@ -74,8 +73,6 @@ function SingleIndividual() {
   options.unshift({ value: "", label: "None" });
   const [corp, setCorp] = useState("");
   const [occupationx, setOccupationx] = useState("");
-  // const [createdByx, setCreatedBy] = useState("");
-  // const [accountOwnerIDx, setAccountOwnerID] = useState("");
   const [duty, setDutyRelieverx] = useState("");
   const [user, setUser] = useState([]);
   const [allStates, setAllStates] = useState([]);
@@ -84,8 +81,6 @@ function SingleIndividual() {
 
   const [checkedName, setCheckedName] = useState("");
   const [checkedCity, setCheckedCity] = useState("");
-  // const [checkedState, setCheckedState] = useState("");
-  // const [checkedCountry, setCheckedCountry] = useState("");
   const [checkedPortfolio, setCheckedPortfolio] = useState("");
 
   const [enabled, setEnabled] = useState("");
@@ -123,50 +118,8 @@ function SingleIndividual() {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("city").innerHTML = "";
     }
-    // if (cityx.length === 0) {
-    //   // eslint-disable-next-line no-unused-expressions
-    //   document.getElementById("city").innerHTML = "Name is required<br>";
-    // }
     setEnabled(checkedCity === true);
   };
-  // const handleOnStateKeys = () => {
-  //   const letters = /^[a-zA-Z ]+$/;
-  //   if (!cityx.match(letters)) {
-  //     setCheckedState(false);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("state").innerHTML =
-  //       "State - input only capital and small letters<br>";
-  //   }
-  //   if (cityx.match(letters)) {
-  //     setCheckedState(true);
-  //     // eslint-disable-next-line no-unused-expressions
-  //     document.getElementById("state").innerHTML = "";
-  //   }
-  //   // if (cityx.length === 0) {
-  //   // eslint-disable-next-line no-unused-expressions
-  //   document.getElementById("city").innerHTML = "Name is required<br>";
-  // }
-  //   setEnabled(checkedState === true);
-  // // };
-  // // const handleOnCountryKeys = () => {
-  // //   const letters = /^[a-zA-Z ]+$/;
-  // //   if (!countryx.match(letters)) {
-  // //     setCheckedCountry(false);
-  // //     // eslint-disable-next-line no-unused-expressions
-  // //     document.getElementById("country").innerHTML =
-  // //       "State - input only capital and small letters<br>";
-  // //   }
-  // //   if (countryx.match(letters)) {
-  // //     setCheckedCountry(true);
-  // //     // eslint-disable-next-line no-unused-expressions
-  // //     document.getElementById("country").innerHTML = "";
-  // //   }
-  // //   // if (cityx.length === 0) {
-  // //   //   // eslint-disable-next-line no-unused-expressions
-  // //   //   document.getElementById("city").innerHTML = "Name is required<br>";
-  // //   // }
-  // //   setEnabled(checkedCountry === true);
-  // // };
   const handleOnEmailKeys = () => {
     const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
     if (!emailx.match(letters)) {
@@ -309,7 +262,6 @@ function SingleIndividual() {
       yearx = 0;
     }
     console.log(enabled);
-    console.log(`${dayx}, ${monthx}, ${yearx}`);
     if (namex.length > 1) {
       setOpened(true);
       e.preventDefault();
@@ -395,9 +347,7 @@ function SingleIndividual() {
     }
   };
   const handleChanges = (selectedOption) => {
-    // this.setState({ selectedOption });
     setCorp(selectedOption.value);
-    console.log(`Option selected:`, selectedOption);
   };
   const handleOnChangeRCCountry = (e) => {
     const filteredItems = AlCountry.filter((item) => item.name === e.target.value);
@@ -915,27 +865,6 @@ function SingleIndividual() {
             </Paper>
           </Accordion.Body>
         </Accordion.Item>
-
-        {/* <Accordion.Item eventKey="2">
-          <Accordion.Header>Add Multiple Individual Clients (CSV files only)</Accordion.Header>
-          <Accordion.Body>
-            <Paper elevation={3}>
-              <MDBox textAlign="center">
-                <MDTypography
-                  variant="h3"
-                  fontWeight="bold"
-                  fontSize="80%"
-                  textAlign="center"
-                  color="text"
-                >
-                  <u>Before Proceeding Read carefully:</u>
-                  <Csv /> 
-                  Nawa
-                </MDTypography>
-              </MDBox>
-            </Paper>
-          </Accordion.Body>
-        </Accordion.Item> */}
       </Accordion>
       <Csv />
       <MDBox pt={3}>

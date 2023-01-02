@@ -399,9 +399,9 @@ export default function CBTTable() {
     navigate(`/cbt/question/?id=${value}`);
   }; */
   }
-  // const handleAssignCbtTestquestion = (value) => {
-  //   navigate(`/cbt/assignCbtTestQuestion/?id=${value}`);
-  // };
+  const handleViewResult = (value) => {
+    navigate(`/cbt/view-Results/?id=${value}`);
+  };
 
   const handleQuestion = (value) => {
     navigate(`/cbt/add-questions/?id=${value}`);
@@ -488,9 +488,9 @@ export default function CBTTable() {
                 <Dropdown.Item onClick={() => handleStatus(value, 1)}>Open</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleStatus(value, 2)}>Close</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item>
-                {/* <Dropdown.Item onClick={() => handleAssignCbtTestquestion(value)}>
-                  Assign Cbt Test Question
-                </Dropdown.Item> */}
+                <Dropdown.Item onClick={() => handleViewResult(value)}>
+                  View CBT Result
+                </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleAssignCbtTestToJobPost(value)}>
                   Assign Cbt Test To Job Post Applicants
                 </Dropdown.Item>

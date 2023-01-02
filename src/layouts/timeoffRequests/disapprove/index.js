@@ -23,7 +23,6 @@ function Disapprove() {
   const [empSetupIdx, setEmpSetupIdx] = useState("");
   const [empIDx, setEmpIDx] = useState("");
   const [daysx, setDaysx] = useState("");
-  // const [daysapprovex, setDaysapprovex] = useState("");
   const [startx, setStartx] = useState("");
   const [endx, setEndx] = useState("");
   const [resumex, setResumex] = useState("");
@@ -36,11 +35,8 @@ function Disapprove() {
   const [reasonx, setReasonx] = useState("");
   const [dbreasonx, setDBReasonx] = useState("");
 
-  // const [disapprove, setDisapprove] = useState("");
-
   const handleDisApprove = () => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
-    // const ids = data11.id;
     const personalIds = data11.personalID;
     const orgIDs = data11.orgID;
 
@@ -86,7 +82,6 @@ function Disapprove() {
         body: raw,
         redirect: "follow",
       };
-      console.log(raw);
 
       fetch(
         `${process.env.REACT_APP_NSUTANA_URL}/employeetimeofftransaction/update`,
@@ -120,7 +115,6 @@ function Disapprove() {
           });
         })
         .catch((error) => {
-          // setOpened(false);
           MySwal.fire({
             title: error.status,
             type: "error",
@@ -136,11 +130,6 @@ function Disapprove() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
-    // const ids = JSON.parse([id]);
-
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    // const ids = data11.id;
     let isMounted = true;
     fetch(`${process.env.REACT_APP_NSUTANA_URL}/employeetimeofftransaction/getByIds/${ids}`, {
       headers,
@@ -163,7 +152,6 @@ function Disapprove() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (isMounted) {
           // eslint-disable-next-line eqeqeq
           if (result.length != 0) {
@@ -171,7 +159,6 @@ function Disapprove() {
             setEmpSetupIdx(result[0].empSetupID);
             setEmpIDx(result[0].empID);
             setDaysx(result[0].noOfDaysRequested);
-            // setDaysapprovex(result[0].noOfDaysApproved);
             setStartx(result[0].startDate);
             setEndx(result[0].endDate);
             setResumex(result[0].resumptionDate);
@@ -210,19 +197,6 @@ function Disapprove() {
                 <Form.Control as="textarea" rows={3} />
               </Form.Group>
             </Form>
-            {/* <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="disapprove"
-                id="disapprove"
-                //  onChange={handleOnChange}
-              />
-              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control }
-              <label className="form-check-label" htmlFor="disapprove">
-                Disapprove
-              </label>
-            </div> */}
             <div className="col-sm-6">
               <MDBox mt={4} mb={1}>
                 <MDButton

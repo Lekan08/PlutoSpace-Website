@@ -7,8 +7,7 @@ import withReactContent from "sweetalert2-react-content";
 import GHeaders from "getHeader";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
-// import Styles from "styles";
-// big zz wrote abegg
+// big zz dey write abegg
 
 export default function OtherInflowtable() {
   const { allGHeaders: miHeaders } = GHeaders();

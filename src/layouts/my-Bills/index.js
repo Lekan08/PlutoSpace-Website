@@ -40,9 +40,9 @@ function MyBills() {
   const [assignedTox, setAssignTo] = useState("");
   const [purposex, setPurposex] = useState("");
   const [files, setFiles] = useState("");
+  const [billID, setBillID] = useState("");
   const [open, setOpen] = useState(false);
   const handleCloseModal = () => setOpen(false);
-  const handleOpenModal = () => setOpen(true);
 
   const [checkedTaxAmountx, setCheckedTaxAmount] = useState(false);
   const [checkedPaidAmountx, setCheckedPaidAmount] = useState(false);
@@ -74,8 +74,6 @@ function MyBills() {
     }
   };
 
-  //   const formData = new FormData();
-  console.log(assignedTox);
   const handlePurpose = (valuex) => {
     console.log(valuex);
     console.log("working");
@@ -144,9 +142,7 @@ function MyBills() {
   };
 
   // eslint-disable-next-line consistent-return
-  const handleClick = (e, docType) => {
-    console.log(docType);
-
+  const handleClick = (e) => {
     e.preventDefault();
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
@@ -162,7 +158,6 @@ function MyBills() {
       paidAmount: paidAmountx,
       purpose: purposex,
       extraInformation: extraInfox,
-      attachedDocs: [docType],
     });
     console.log(raw);
     const requestOptions = {
@@ -245,19 +240,16 @@ function MyBills() {
         // console.log(imgKey);
 
         const dateQ = new Date().getTime();
-        const billsKey = `QuesImg${1 * 2 + 3 + dateQ}`;
+        const billsKey = `billsDoc${1 * 2 + 3 + dateQ}`;
         console.log(billsKey);
         console.log(files);
+        const formDataxx = new FormData();
+        formDataxx.append("file", files[0]);
+        formDataxx.append("orgID", orgIdx);
+        formDataxx.append("key", billsKey);
+        formDataxx.append("type", files[0].type);
 
-        const formDatax = new FormData();
-        formDatax.append("file", files[0]);
-        formDatax.append("orgID", orgIdx);
-        formDatax.append("key", billsKey);
-        formDatax.append("type", files[0].type);
-        console.log(formDatax.append("type", files[0].type));
-        console.log(formDatax.append);
-
-        const raw = formDatax;
+        const raw = formDataxx;
         console.log(raw);
 
         const requestOptions = {
@@ -274,7 +266,7 @@ function MyBills() {
             return res.json();
           })
           .then((result) => {
-            // setOpened(false);
+            setOpened(false);
             if (result.message === "Expired Access") {
               navigate("/authentication/sign-in");
               window.location.reload();
@@ -288,43 +280,56 @@ function MyBills() {
               window.location.reload();
             }
             console.log(result);
-            const im = result.data.name;
-            const headers = miHeaders;
-            fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${im}`, {
-              headers,
-            })
-              .then(async (res) => {
-                const aToken = res.headers.get("token-1");
-                localStorage.setItem("rexxdex", aToken);
-                return res.json();
-              })
-              .then((resultx) => {
-                if (resultx.message === "Expired Access") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (resultx.message === "Token Does Not Exist") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (resultx.message === "Unauthorized Access") {
-                  navigate("/authentication/forbiddenPage");
-                  window.location.reload();
-                }
+            if (result.status === "SUCCESS") {
+              console.log(billID);
 
-                // if (isMounted) {
-                console.log(`link [${resultx[0]}]`);
-                if (resultx.length === 0) {
+              const requestOptionsS = {
+                method: "GET",
+                headers: miHeaders,
+              };
+
+              fetch(
+                `${process.env.REACT_APP_LOUGA_URL}/bills/addDocument/${billID}/${billsKey}`,
+                requestOptionsS
+              )
+                .then(async (res) => {
+                  const aToken = res.headers.get("token-1");
+                  localStorage.setItem("rexxdex", aToken);
+                  return res.json();
+                })
+                .then((resultr) => {
+                  setOpened(false);
+                  if (resultr.message === "Expired Access") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (resultr.message === "Token Does Not Exist") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (resultr.message === "Unauthorized Access") {
+                    navigate("/authentication/forbiddenPage");
+                    window.location.reload();
+                  }
+                  handleCloseModal();
                   MySwal.fire({
-                    title: "INVALID_IMAGE",
-                    type: "error",
-                    text: "There is no image present",
+                    title: resultr.status,
+                    type: "success",
+                    text: resultr.message,
+                  }).then(() => {
+                    window.location.reload();
                   });
-                } else {
-                  handleClick(e, resultx[0]);
-                }
-                // }
-              });
+                  console.log(resultr);
+                })
+                .catch((error) => {
+                  setOpened(false);
+                  MySwal.fire({
+                    title: error.status,
+                    type: "error",
+                    text: error.message,
+                  });
+                });
+            }
             // .then(() => {
             //   if (result.status !== "SUCCESS") {
             //     handleOpen();
@@ -333,8 +338,26 @@ function MyBills() {
             // });
           });
       }
+    }
+  };
+
+  const handleOpenModal = (id) => {
+    const checkDataAttached = dataTablex.filter((data) => data.id === id);
+    console.log(id);
+    if (checkDataAttached[0].attachedDocs !== null) {
+      if (checkDataAttached[0].attachedDocs.length === 0) {
+        setBillID(id);
+        setOpen(true);
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Sorry...",
+          text: " Document Already Attached",
+        });
+      }
     } else {
-      handleClick(e);
+      setBillID(id);
+      setOpen(true);
     }
   };
 
@@ -466,6 +489,76 @@ function MyBills() {
       }
     });
   };
+  const handledeleteBillDoc = (id) => {
+    const filterFirstedd = dataTablex.filter((data) => data.id === id);
+    console.log(filterFirstedd);
+    const checkDoc = filterFirstedd[0].attachedDocs;
+    console.log(checkDoc);
+    if (checkDoc !== null) {
+      if (checkDoc.length === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No Document Attached to this Bill",
+        });
+      } else {
+        const documentID = filterFirstedd[0].attachedDocs[0];
+        console.log(documentID);
+        MySwal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed === true) {
+            const requestOptions = {
+              method: "DELETE",
+              headers: miHeaders,
+            };
+            fetch(
+              `${process.env.REACT_APP_LOUGA_URL}/bills/removeDocument/${id}/${documentID}`,
+              requestOptions
+            )
+              .then((res) => res.json())
+              .then((resx) => {
+                if (resx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                }
+                if (resx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                }
+                if (resx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                }
+                MySwal.fire({
+                  title: resx.status,
+                  type: "success",
+                  text: resx.message,
+                }).then(() => {
+                  window.location.reload();
+                });
+              })
+              .catch((error) => {
+                MySwal.fire({
+                  title: error.status,
+                  type: "error",
+                  text: error.message,
+                });
+              });
+          }
+        });
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No Document Attached to this Bill",
+      });
+    }
+  };
   const handleValidate = (e) => {
     handleAmount(amountx);
     handleTaxAmount(taxAmountx);
@@ -480,7 +573,7 @@ function MyBills() {
       checkAssignx &&
       checkedPaidAmountx === true
     ) {
-      handleImageUpload(e);
+      handleClick(e);
     }
   };
 
@@ -506,6 +599,87 @@ function MyBills() {
     return retDate;
   };
 
+  // eslint-disable-next-line consistent-return
+  const openInNewTab = (id) => {
+    let docKey = "";
+    const checkDataAttached = dataTablex.filter((data) => data.id === id);
+    console.log(id);
+    if (checkDataAttached[0].attachedDocs !== null) {
+      if (checkDataAttached[0].attachedDocs.length === 0) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "No Document Attached to this Bill",
+        });
+      } else {
+        // eslint-disable-next-line prefer-destructuring
+        docKey = checkDataAttached[0].attachedDocs[0];
+        console.log(docKey);
+        const data11 = JSON.parse(localStorage.getItem("user1"));
+
+        const orgIDs = data11.orgID;
+        const headers = miHeaders;
+        fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${docKey}`, {
+          headers,
+        })
+          .then(async (res) => {
+            const aToken = res.headers.get("token-1");
+            localStorage.setItem("rexxdex", aToken);
+            return res.json();
+          })
+          .then((result) => {
+            setOpened(false);
+            if (result.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (result.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (result.message === "Unauthorized Access") {
+              navigate("/authentication/forbiddenPage");
+              window.location.reload();
+            }
+            console.log(result.name);
+            fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.name}`, {
+              headers,
+            })
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                return res.json();
+              })
+              .then((resultx) => {
+                if (resultx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+
+                // if (isMounted) {
+                console.log(`link [${resultx[0]}]`);
+                const url = resultx[0];
+                window.open(url, "_blank", "noopener,noreferrer");
+              });
+          });
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No Document Attached to this Bill",
+      });
+    }
+  };
+
   // MODAL STYLE
   const modalStyle = {
     position: "absolute",
@@ -519,7 +693,7 @@ function MyBills() {
     boxShadow: 24,
     p: 4,
     overflow: "auto",
-    height: "80%",
+    height: "50%",
     display: "flex",
     "&::-webkit-scrollbar": {
       width: 20,
@@ -556,11 +730,11 @@ function MyBills() {
       accessor: "taxAmount",
       align: "left",
     },
-    // {
-    //   Header: "Attached Document",
-    //   accessor: "attachedDocs",
-    //   align: "left",
-    // },
+    {
+      Header: "Paid Amount",
+      accessor: "paidAmount",
+      align: "left",
+    },
     {
       Header: "Created By",
       accessor: "createdByName",
@@ -572,7 +746,7 @@ function MyBills() {
       align: "left",
     },
     {
-      Header: "Approver Name",
+      Header: "Decision Made By",
       accessor: "approverName",
       align: "left",
     },
@@ -609,9 +783,15 @@ function MyBills() {
               <Dropdown.Item onClick={() => navigate(`/my-Bills/update-My-Bills?id=${value}`)}>
                 Update
               </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleOpenModal()}>Attach Document</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleOpenModal(value)}>Attach Document</Dropdown.Item>
+              <Dropdown.Item onClick={() => handledeleteBillDoc(value)}>
+                Delete Attached Document
+              </Dropdown.Item>
+              <Dropdown.Item onClick={() => openInNewTab(value)}>
+                View Attached Document
+              </Dropdown.Item>
 
-              <Dropdown.Item onClick={() => handledeleteq(value)}>Delete</Dropdown.Item>
+              <Dropdown.Item onClick={() => handledeleteq(value)}>Delete Bill</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -665,7 +845,7 @@ function MyBills() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-5">
+                  <div className="col-sm-6">
                     <TextField
                       id="filled-number"
                       value={amountx || ""}
@@ -680,10 +860,8 @@ function MyBills() {
                       required
                     />
                   </div>
-                  <div className="col-sm-2">
-                    <></>
-                  </div>
-                  <div className="col-sm-5">
+
+                  <div className="col-sm-6">
                     <TextField
                       id="filled-number"
                       value={taxAmountx || ""}
@@ -701,7 +879,7 @@ function MyBills() {
                 </div>
                 &nbsp; &nbsp;
                 <div className="row">
-                  <div className="col-sm-5">
+                  <div className="col-sm-6">
                     <TextField
                       id="filled-read-only-input"
                       label="Total Amount (NGN)"
@@ -714,10 +892,8 @@ function MyBills() {
                       }}
                     />
                   </div>
-                  <div className="col-sm-2">
-                    <></>
-                  </div>
-                  <div className="col-sm-5">
+
+                  <div className="col-sm-6">
                     <TextField
                       id="filled-number"
                       value={paidAmountx || ""}
@@ -782,13 +958,6 @@ function MyBills() {
                       ))}
                     </Form.Select>
                   </div>
-                  <div className="col-sm-6">
-                    {/* <input type="file" ref={ref} /> */}
-                    <MDInput type="file" files={files} onChange={(e) => setFiles(e.target.files)} />
-                    <p id="imageVal" style={{ color: "red", fontSize: 13 }}>
-                      <i> </i>
-                    </p>
-                  </div>
                 </div>
               </Container>
             </MDBox>
@@ -838,15 +1007,60 @@ function MyBills() {
                     color: "red",
                     float: "right",
                     position: "absolute",
-                    left: 490,
+                    left: 500,
                     right: 0,
                     top: 0,
                     bottom: 0,
                     cursor: "pointer",
                   }}
                 />
-
-                <></>
+                <MDBox pt={1} pb={1} px={2}>
+                  <MDBox
+                    variant="gradient"
+                    // bgColor="info"
+                    borderRadius="lg"
+                    style={{ backgroundColor: "#f96d02" }}
+                    mx={2}
+                    mt={-3}
+                    p={2}
+                    mb={1}
+                    textAlign="center"
+                  >
+                    <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                      Upload Document
+                    </MDTypography>
+                  </MDBox>
+                  <MDBox
+                    mt={2}
+                    mb={2}
+                    sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+                  >
+                    <MDTypography variant="gradient" fontSize="60%" color="white" id="document">
+                      {" "}
+                    </MDTypography>
+                  </MDBox>
+                </MDBox>
+                <div className="col-sm-6">
+                  {/* <input type="file" ref={ref} /> */}
+                  <MDInput type="file" files={files} onChange={(e) => setFiles(e.target.files)} />
+                  <p id="imageVal" style={{ color: "red", fontSize: 13 }}>
+                    <i> </i>
+                  </p>
+                </div>
+                <MDBox mt={4} mb={1}>
+                  <MDBox mt={4} mb={1}>
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleImageUpload}
+                      //   color="info"
+                      style={Styles.buttonSx}
+                      width="50%"
+                      align="left"
+                    >
+                      Save
+                    </MDButton>
+                  </MDBox>
+                </MDBox>
               </Grid>
             </Grid>
           </Box>
