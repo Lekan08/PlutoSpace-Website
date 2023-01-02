@@ -101,6 +101,9 @@ function TicketSettings() {
   const [twitAccessTokenSecret, setTwitAccessTokenSecret] = useState("");
   const [twitBearerToken, setTwitBearerToken] = useState("");
 
+  const [agents, setAgents] = useState([]);
+  const [agentIDx, setAgentIDx] = useState("");
+
   //   const [startTimex, setStartTime] = useState("");
   //   const [endTimex, setEndTime] = useState("");
 
@@ -237,6 +240,51 @@ function TicketSettings() {
       //   fetches the table data
       handleGets();
     }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    setOpened(true);
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+
+    let isMounted = true;
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          console.log(result);
+          if (result.status !== 500) {
+            if (result.length !== 0) {
+              setAgents(result);
+            }
+          }
+        }
+      });
     return () => {
       isMounted = false;
     };
@@ -779,11 +827,14 @@ function TicketSettings() {
               WhatApp, Email)
               <br />
               Please Fill Correctly Which means you would like to receive Tickets
+              <br /> Default New Account Owner - select a user who would be the default account
+              owner for new clients created automatically
               <br />
               Twitter - Please Fill in the Username of the twitter Account you wish to receive
               tickets from and if you add a twitter account please fill the other twitter fields
               <br /> WhatsApp - Please Fill in the Phone Number Of the WhatsApp Account you wish to
-              receive tickets from
+              receive tickets from. the number should start with the respective country code e.g
+              nigeria(+234) - 2349092054414, numbers starting with 0 would not receive messages
               <br /> Email - Please Fill in the Emails you wish to receive tickets from
               <br /> Set the Minimun and Maximum Tickets Per Agents
               <br /> Set the Average Resolution Time and Average Response time for the Tickets(They
@@ -793,6 +844,34 @@ function TicketSettings() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
+                <div className="row">
+                  <div className="col-sm-6">
+                    <MDBox mt={0}>
+                      <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        fontSize="80%"
+                        align="left"
+                        color="text"
+                      >
+                        Default Account Owner
+                      </MDTypography>
+                      <Form.Select
+                        value={agentIDx}
+                        onChange={(e) => setAgentIDx(e.target.value)}
+                        aria-label="Default select example"
+                      >
+                        <option value="">--Select Agent--</option>
+                        {agents.map((api) => (
+                          <option key={api.personal.id} value={api.personal.id}>
+                            {api.personal.fname} {api.personal.lname}
+                          </option>
+                        ))}
+                      </Form.Select>
+                      <br />
+                    </MDBox>
+                  </div>
+                </div>
                 <div className="row">
                   <div className="col-sm-6">
                     <MDBox>

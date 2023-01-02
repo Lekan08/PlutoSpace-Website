@@ -434,7 +434,6 @@ function AppraisalHistory() {
 
   const handleChangeTab = (event, newValue) => {
     console.log(newValue);
-    setValuex(newValue);
     if (newValue === 0) {
       //   handleGets();
     } else if (newValue === 1) {
@@ -443,11 +442,14 @@ function AppraisalHistory() {
           title: "NO_RESULT",
           type: "error",
           text: "There is no result present for any appraisal",
-        }).then(() => {
-          setValuex(0);
         });
+        return;
+        // }).then(() => {
+        //   setValuex(0);
+        // });
       }
     }
+    setValuex(newValue);
   };
 
   // Function to search table
