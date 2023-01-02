@@ -299,7 +299,6 @@ function Accounting() {
         return JSON.parse(result);
       })
       .then((result) => {
-        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -352,7 +351,6 @@ function Accounting() {
                 return res.json();
               })
               .then((resultAccGenerate) => {
-                setOpened(false);
                 if (resultAccGenerate.message === "Expired Access") {
                   navigate("/authentication/sign-in");
                   window.location.reload();
@@ -367,6 +365,7 @@ function Accounting() {
                 }
                 console.log(resultAccGenerate);
                 if (resultAccGenerate.status === "SUCCESS") {
+                  console.log(resultAccGenerate.data.id);
                   const createdByx = data11.personalID;
 
                   const rawAccount = JSON.stringify({
@@ -374,7 +373,7 @@ function Accounting() {
                     createdBy: createdByx,
                     closingBalance: totalBalance,
                     type: typexxx,
-                    documentKey: resultAccGenerate,
+                    documentKey: resultAccGenerate.data.key,
                   });
                   console.log(rawAccount);
                   const requestOptionsXS = {
@@ -406,6 +405,50 @@ function Accounting() {
                         navigate("/authentication/forbiddenPage");
                         window.location.reload();
                       }
+                      if (resultxp.status === "SUCCESS") {
+                        fetch(
+                          `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultAccGenerate.data.name}`,
+                          {
+                            headers,
+                          }
+                        )
+                          .then(async (res) => {
+                            const aToken = res.headers.get("token-1");
+                            localStorage.setItem("rexxdex", aToken);
+                            return res.json();
+                          })
+                          .then((resultx) => {
+                            if (resultx.message === "Expired Access") {
+                              navigate("/authentication/sign-in");
+                              window.location.reload();
+                            }
+                            if (resultx.message === "Token Does Not Exist") {
+                              navigate("/authentication/sign-in");
+                              window.location.reload();
+                            }
+                            if (resultx.message === "Unauthorized Access") {
+                              navigate("/authentication/forbiddenPage");
+                              window.location.reload();
+                            }
+
+                            // if (isMounted) {
+                            console.log(`link [${resultx[0]}]`);
+                            const url = resultx[0];
+                            if (url !== "") {
+                              const objectURL = url;
+                              console.log(objectURL);
+
+                              // (C2) TO "FORCE DOWNLOAD"
+                              const anchor = document.createElement("a");
+                              anchor.href = objectURL;
+                              anchor.download = resultAccGenerate.data.name;
+                              anchor.click();
+
+                              // (C3) CLEAN UP
+                              window.URL.revokeObjectURL(objectURL);
+                            }
+                          });
+                      }
                       MySwal.fire({
                         title: resultxp.status,
                         type: "success",
@@ -424,13 +467,6 @@ function Accounting() {
                       });
                     });
                 }
-                MySwal.fire({
-                  title: resultAccGenerate.status,
-                  type: "success",
-                  text: resultAccGenerate.message,
-                }).then(() => {
-                  window.location.reload();
-                });
               })
               .catch((error) => {
                 MySwal.fire({
