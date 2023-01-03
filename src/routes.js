@@ -178,7 +178,7 @@ import ProductsBranch from "layouts/products/products-Branch";
 import ViewSupply from "layouts/supply/viewSupply";
 // import AssignCbtQuestion from "layouts/cbt/assignCbtTestQuestion";
 import DemandUpdate from "layouts/demand/update-Demand";
-import ConvertDemandToSupply from "layouts/demand/convertDemandToSupply";
+import ConvertDemandToSupply from "layouts/demand/convert-Demand-To-Supply";
 import ViewDemand from "layouts/demand/view-Demand";
 import Pipeline from "layouts/pipeline";
 import AddStage from "layouts/workFlow/add-Stage";
@@ -231,8 +231,8 @@ import MarkAsCompleted from "layouts/businessTravel/mark-as-completed";
 import ViewBusiness from "layouts/businessTravel/view";
 import AttachDocument from "layouts/businessTravel/attachdocument";
 import ForwardApproval from "layouts/businessTravel/forwardforapproval";
-import TimeSheetManual from "layouts/timeSheet";
-import UpdateTimesheet from "layouts/timeSheet/update-Timesheet";
+import TimeSheetManual from "layouts/timesheet";
+import UpdateTimesheet from "layouts/timesheet/update-Timesheet";
 import TimeOffRequestsDashboard from "layouts/timeoffrequest-dashboard";
 // import FunctionalComponent from "layouts/businesstravel-dashboard/exportpdf";
 // import Html from "layouts/businesstravel-dashboard/exporthtml";
@@ -991,7 +991,7 @@ const routes = [
     name: "Convert Demand To Supply",
     key: "ConvertDemandToSupply",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/demand/convertDemandToSupply",
+    route: "/demand/convert-Demand-To-Supply",
     component: <ConvertDemandToSupply />,
   },
   {

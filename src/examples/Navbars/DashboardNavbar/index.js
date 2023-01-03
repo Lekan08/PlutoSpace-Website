@@ -273,7 +273,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
+        // console.log(result);
         if (result) {
           if (result.length !== 0) {
             setItems((item) => [...item, result]);
