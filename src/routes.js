@@ -178,7 +178,7 @@ import ProductsBranch from "layouts/products/products-Branch";
 import ViewSupply from "layouts/supply/viewSupply";
 // import AssignCbtQuestion from "layouts/cbt/assignCbtTestQuestion";
 import DemandUpdate from "layouts/demand/update-Demand";
-import ConvertDemandToSupply from "layouts/demand/convertDemandToSupply";
+import ConvertDemandToSupply from "layouts/demand/convert-Demand-To-Supply";
 import ViewDemand from "layouts/demand/view-Demand";
 import Pipeline from "layouts/pipeline";
 import AddStage from "layouts/workFlow/add-Stage";
@@ -1001,7 +1001,7 @@ const routes = [
     name: "Convert Demand To Supply",
     key: "ConvertDemandToSupply",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/demand/convertDemandToSupply",
+    route: "/demand/convert-Demand-To-Supply",
     component: <ConvertDemandToSupply />,
   },
   {

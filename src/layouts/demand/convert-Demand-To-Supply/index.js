@@ -329,7 +329,7 @@ function ConvertDemandToSupply() {
 
   const handleClick = (e) => {
     handleOnTitleKeys();
-    handleOnQuantityKeys();
+    // handleOnQuantityKeys();
     // handleOnPPQuantityKeys();
     // handleOnBonusAmountKeys();
     if (enabled) {
@@ -1233,7 +1233,7 @@ function ConvertDemandToSupply() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add Supply
+              Convert Demand To Supply
             </MDTypography>
           </MDBox>
           <MDBox
@@ -1275,7 +1275,7 @@ function ConvertDemandToSupply() {
                       type="text"
                       label="Title *"
                       value={titlex || ""}
-                      // onKeyUp={handleOnTitleKeys}
+                      onKeyUp={handleOnTitleKeys}
                       onChange={(e) => setTitle(e.target.value)}
                       variant="standard"
                       fullWidth
@@ -1286,7 +1286,7 @@ function ConvertDemandToSupply() {
                     <MDInput
                       type="text"
                       value={quantityx || ""}
-                      // onKeyUp={handleOnQuantityKeys}
+                      onKeyUp={handleOnQuantityKeys}
                       onChange={(e) => setQuantity(e.target.value)}
                       label="Quantity *"
                       variant="standard"
@@ -1583,7 +1583,7 @@ function ConvertDemandToSupply() {
                 width="50%"
                 align="left"
               >
-                Save
+                Convert
               </MDButton>
             </MDBox>
           </MDBox>

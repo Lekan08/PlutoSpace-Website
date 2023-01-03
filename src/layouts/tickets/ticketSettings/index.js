@@ -208,6 +208,7 @@ function TicketSettings() {
           };
           setEmailAccounts(nemailAccount);
           setMiniTPAs(result.minimumTicketPerAgent);
+          setAgentIDx(result.defaultNewAccountOwner);
           setMaxiTPAs(result.maximumTicketPerAgent);
           setAverageResoluTime(changeRTime(result.averageResolutionTime));
           setAverageRespoTime(changeRTime(result.averageResponseTime));
@@ -341,6 +342,7 @@ function TicketSettings() {
       twitterAccessToken: twitAccessToken,
       twitterAccessTokenSecret: twitAccessTokenSecret,
       twitterBearerToken: twitBearerToken,
+      defaultNewAccountOwner: agentIDx,
     });
     const requestOptions = {
       method: "POST",
@@ -441,6 +443,7 @@ function TicketSettings() {
       twitterAccessToken: twitAccessToken,
       twitterAccessTokenSecret: twitAccessTokenSecret,
       twitterBearerToken: twitBearerToken,
+      defaultNewAccountOwner: agentIDx,
     });
     // console.log(raw);
     const requestOptions = {
