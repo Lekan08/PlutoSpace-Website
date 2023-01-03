@@ -9,11 +9,14 @@ import { useNavigate } from "react-router-dom";
 import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
 import Footer from "examples/Footer";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 import DataTable from "examples/Tables/DataTable";
 import accountingLoader from "./accountingLoader.gif";
 
 function AccountHistory() {
   const { allGHeaders: miHeaders } = GHeaders();
+  const MySwal = withReactContent(Swal);
 
   const [accountDetails, setAccountDetails] = useState([]);
   const [opened, setOpened] = useState(false);
@@ -53,7 +56,6 @@ function AccountHistory() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
           if (result.length !== 0) {
             console.log(result);
             setAccountDetails(result);
@@ -67,7 +69,75 @@ function AccountHistory() {
   }, []);
 
   const handlePDF = (value) => {
-    console.log(value);
+    const checkDocAttached = accountDetails.filter((data) => data.id === value);
+    console.log(checkDocAttached);
+    console.log(checkDocAttached[0].documentKey);
+    if (checkDocAttached[0].documentKey !== "") {
+      const data11 = JSON.parse(localStorage.getItem("user1"));
+
+      const orgIDs = data11.orgID;
+      const headers = miHeaders;
+      fetch(
+        `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${checkDocAttached[0].documentKey}`,
+        {
+          headers,
+        }
+      )
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          setOpened(false);
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          console.log(result.name);
+          fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.name}`, {
+            headers,
+          })
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultx) => {
+              if (resultx.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultx.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultx.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+
+              // if (isMounted) {
+              console.log(`link [${resultx[0]}]`);
+              const url = resultx[0];
+              window.open(url, "_blank", "noopener,noreferrer");
+            });
+        });
+    } else {
+      MySwal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No Document Attached to this Account",
+      });
+    }
   };
 
   // Method to change type
@@ -177,7 +247,7 @@ function AccountHistory() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => handlePDF(value)}>Download As PDF</Dropdown.Item>
+              <Dropdown.Item onClick={() => handlePDF(value)}>Download PDF</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
