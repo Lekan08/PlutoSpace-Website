@@ -59,6 +59,7 @@ function Assets() {
 
   const [checkedItem, setCheckedItem] = useState("");
   const [checkedItemWorth, setCheckedItemWorth] = useState("");
+  const [checkedAssigned, setCheckedAssigned] = useState("");
   // const [checkedManufacturer, setCheckedManufacturer] = useState("");
   const [opened, setOpened] = useState(false);
 
@@ -92,6 +93,16 @@ function Assets() {
     if (value.length === 0) {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("itemWorth").innerHTML = "Rate is required<br>";
+    }
+  };
+  const handleOnAssignedKeys = (value) => {
+    setAssignedTo(value);
+    const Validate = "--Assigned To--";
+    if (value.match(Validate)) {
+      setCheckedAssigned(false);
+    }
+    if (!value.match(Validate)) {
+      setCheckedAssigned(true);
     }
   };
   // const handleOnManfacturerKeys = (value) => {
@@ -367,7 +378,7 @@ function Assets() {
   };
 
   const handleValidate = (e) => {
-    if (checkedItem && checkedItemWorth === true) {
+    if (checkedItem && checkedItemWorth && checkedAssigned === true) {
       handleClick(e);
     }
   };
@@ -697,7 +708,7 @@ function Assets() {
                               value={assignedTox}
                               aria-label="Default select example"
                               name="branchID"
-                              onChange={(e) => setAssignedTo(e.target.value)}
+                              onChange={(e) => handleOnAssignedKeys(e.target.value)}
                             >
                               <option>--Assigned To--</option>
                               {user.map((apis) => (

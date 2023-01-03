@@ -142,7 +142,7 @@ import Tax from "layouts/tax";
 import TaxRemittance from "layouts/tax-Remittance-Personal";
 import TaxRemittanceOrg from "layouts/tax-Remittance-Organisation";
 import RecruitmentGrading from "layouts/recruitmentGrading";
-import RecruitmentUpdate from "layouts/recruitmentGrading/updateRecruitment";
+import RecruitmentUpdate from "layouts/recruitmentGrading/updateRecruitmentGrading";
 import TestQuestion from "layouts/testQuestions/index";
 import Updatetest from "layouts/testQuestions/updatetest";
 import SingleCorporate from "layouts/singleCorporate/index";
@@ -274,6 +274,7 @@ import CompanyAssets from "layouts/company-Assets";
 import CustomerAssets from "layouts/customer-Assets";
 import AssetAttachDocument from "layouts/assets/attachDocuments";
 import Coupons from "layouts/coupons";
+import UpdateCoupons from "layouts/coupons/update";
 import AppointmentOffboardingSession from "layouts/assignedOffboarding/appointmentSession";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
@@ -1711,7 +1712,7 @@ const routes = [
     name: "Update Recruitment Grading",
     key: "updaterecrutmentgrading",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/recruitment-Grading/update-Recruitment",
+    route: "/recruitment-Grading/update-Recruitment-Grading",
     component: <RecruitmentUpdate />,
   },
   {
@@ -1837,6 +1838,13 @@ const routes = [
     icon: <Icon fontSize="small">point_of_sale</Icon>,
     route: "/coupons",
     component: <Coupons />,
+  },
+  {
+    name: "UpdateCoupons",
+    key: "updatecoupons",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/coupons/update",
+    component: <UpdateCoupons />,
   },
   {
     type: "divider",
