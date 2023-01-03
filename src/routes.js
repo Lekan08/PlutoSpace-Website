@@ -213,6 +213,7 @@ import ViewCalendar from "layouts/myAccessor/viewCalendar";
 import CLientLevel from "layouts/clientLevel";
 import WelcomeCbt from "layouts/cbt/instruction";
 import TakeCBT from "layouts/cbt/takeCbt";
+import Reports from "layouts/reports";
 import DeclineReportProduction from "layouts/products/reportProduction/declineReportProduction/";
 import TicketClientSettings from "layouts/tickets/ticketClientSettings";
 
@@ -404,6 +405,14 @@ const routes = [
     icon: <Icon fontSize="small">supervised_user_circle</Icon>,
     route: "/user-Management",
     component: <UserManagement />,
+  },
+  {
+    type: "collapse",
+    name: "Reports",
+    key: "reports",
+    icon: <Icon fontSize="small">supervised_user_circle</Icon>,
+    route: "/reports",
+    component: <Reports />,
   },
   {
     type: "divider",
