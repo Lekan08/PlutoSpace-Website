@@ -35,7 +35,7 @@ import Box from "@mui/material/Box";
 // import HtmlTable from "./htmlTable";
 import AccountHistory from "./accountHistory";
 import accountingLoader from "./accountingLoader.gif";
-import NoTransaction from "./NoTransaction.png";
+import NoTransaction from "./transactionNotMade.png";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -1262,8 +1262,21 @@ function Accounting() {
           ) : (
             <>
               {noTransactionsMade === true && (
-                <div>
-                  <img src={NoTransaction} alt="No Transaction" />
+                <div style={{ textAlign: "center" }}>
+                  <MDTypography
+                    textAlign="center"
+                    variant="h4"
+                    fontWeight="medium"
+                    color="error"
+                    mt={1}
+                  >
+                    NO TRANSACTION MADE YET
+                  </MDTypography>
+                  <img
+                    src={NoTransaction}
+                    alt="No Transaction"
+                    style={{ height: "400px", width: "400px" }}
+                  />
                 </div>
               )}
             </>
