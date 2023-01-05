@@ -142,7 +142,7 @@ import Tax from "layouts/tax";
 import TaxRemittance from "layouts/tax-Remittance-Personal";
 import TaxRemittanceOrg from "layouts/tax-Remittance-Organisation";
 import RecruitmentGrading from "layouts/recruitmentGrading";
-import RecruitmentUpdate from "layouts/recruitmentGrading/updateRecruitment";
+import RecruitmentUpdate from "layouts/recruitmentGrading/updateRecruitmentGrading";
 import TestQuestion from "layouts/testQuestions/index";
 import Updatetest from "layouts/testQuestions/updatetest";
 import SingleCorporate from "layouts/singleCorporate/index";
@@ -178,7 +178,7 @@ import ProductsBranch from "layouts/products/products-Branch";
 import ViewSupply from "layouts/supply/viewSupply";
 // import AssignCbtQuestion from "layouts/cbt/assignCbtTestQuestion";
 import DemandUpdate from "layouts/demand/update-Demand";
-import ConvertDemandToSupply from "layouts/demand/convertDemandToSupply";
+import ConvertDemandToSupply from "layouts/demand/convert-Demand-To-Supply";
 import ViewDemand from "layouts/demand/view-Demand";
 import Pipeline from "layouts/pipeline";
 import AddStage from "layouts/workFlow/add-Stage";
@@ -213,6 +213,7 @@ import ViewCalendar from "layouts/myAccessor/viewCalendar";
 import CLientLevel from "layouts/clientLevel";
 import WelcomeCbt from "layouts/cbt/instruction";
 import TakeCBT from "layouts/cbt/takeCbt";
+import Reports from "layouts/reports";
 import DeclineReportProduction from "layouts/products/reportProduction/declineReportProduction/";
 import TicketClientSettings from "layouts/tickets/ticketClientSettings";
 
@@ -404,6 +405,14 @@ const routes = [
     icon: <Icon fontSize="small">supervised_user_circle</Icon>,
     route: "/user-Management",
     component: <UserManagement />,
+  },
+  {
+    type: "collapse",
+    name: "Reports",
+    key: "reports",
+    icon: <Icon fontSize="small">supervised_user_circle</Icon>,
+    route: "/reports",
+    component: <Reports />,
   },
   {
     type: "divider",
@@ -992,7 +1001,7 @@ const routes = [
     name: "Convert Demand To Supply",
     key: "ConvertDemandToSupply",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/demand/convertDemandToSupply",
+    route: "/demand/convert-Demand-To-Supply",
     component: <ConvertDemandToSupply />,
   },
   {
@@ -1712,7 +1721,7 @@ const routes = [
     name: "Update Recruitment Grading",
     key: "updaterecrutmentgrading",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/recruitment-Grading/update-Recruitment",
+    route: "/recruitment-Grading/update-Recruitment-Grading",
     component: <RecruitmentUpdate />,
   },
   {

@@ -507,11 +507,11 @@ function Project() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
+              <Dropdown.Item onClick={() => navigate(`/project/view-Project?id=${value}`)}>
+                View Project
+              </Dropdown.Item>
               <Dropdown.Item onClick={() => navigate(`/project/update-Project?id=${value}`)}>
                 Update
-              </Dropdown.Item>
-              <Dropdown.Item onClick={() => navigate(`/project/view-Project?id=${value}`)}>
-                View
               </Dropdown.Item>
               <Dropdown.Item onClick={() => handledeleteq(value)}>Delete</Dropdown.Item>
               {/* <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item> */}
