@@ -36,6 +36,7 @@ function AssetTypes() {
   const [checkedName, setCheckedName] = useState("");
   const [checkedNumber, setCheckedNumber] = useState("");
   const [checkedMaximum, setCheckedMaximum] = useState("");
+  const [checkedTypes, setCheckedTypes] = useState("");
   const [opened, setOpened] = useState(false);
   const { allPHeaders: myHeaders } = PHeaders();
 
@@ -88,6 +89,16 @@ function AssetTypes() {
     if (value.length === 0) {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("maximum").innerHTML = "Maximum Life Cycle is required<br>";
+    }
+  };
+  const handleOnTypeKeys = (value) => {
+    setType(value);
+    const Validate = "--Type *--";
+    if (value.match(Validate)) {
+      setCheckedTypes(false);
+    }
+    if (!value.match(Validate)) {
+      setCheckedTypes(true);
     }
   };
 
@@ -154,7 +165,7 @@ function AssetTypes() {
   };
 
   const handleValidate = (e) => {
-    if (checkedName && checkedNumber && checkedMaximum === true) {
+    if (checkedName && checkedNumber && checkedMaximum && checkedTypes === true) {
       handleClick(e);
     }
   };
@@ -207,7 +218,7 @@ function AssetTypes() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Name"
+                      label="Name *"
                       value={namex || ""}
                       onKeyUp={(e) => handleOnNameKeys(e.target.value)}
                       onChange={(e) => setName(e.target.value)}
@@ -237,9 +248,9 @@ function AssetTypes() {
                         value={typex || ""}
                         aria-label="Default select example"
                         name="salesID"
-                        onChange={(e) => setType(e.target.value)}
+                        onChange={(e) => handleOnTypeKeys(e.target.value)}
                       >
-                        <option value="">Type</option>
+                        <option value="">--Type *--</option>
                         <option value="1">Depreciating</option>
                         <option value="2">Appreciating</option>
                       </Form.Select>
@@ -247,8 +258,8 @@ function AssetTypes() {
                   </div>
                   <div className="col-sm-6">
                     <MDInput
-                      type="text"
-                      label="Rate %"
+                      type="number"
+                      label="Rate % *"
                       value={ratex || ""}
                       onKeyUp={(e) => handleOnRateKeys(e.target.value)}
                       onChange={(e) => setRate(e.target.value)}
@@ -265,7 +276,7 @@ function AssetTypes() {
                   <div className="col-sm-6">
                     <MDInput
                       type="number"
-                      label="Maximum Life Cycle"
+                      label="Maximum Life Cycle *"
                       value={maximumLifeCyclex || ""}
                       onKeyUp={(e) => handleOnMaximumKeys(e.target.value)}
                       onChange={(e) => setMaximumLifeCycle(e.target.value)}

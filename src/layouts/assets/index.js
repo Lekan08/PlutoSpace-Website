@@ -60,7 +60,7 @@ function Assets() {
   const [checkedItem, setCheckedItem] = useState("");
   const [checkedItemWorth, setCheckedItemWorth] = useState("");
   const [checkedAssigned, setCheckedAssigned] = useState("");
-  // const [checkedManufacturer, setCheckedManufacturer] = useState("");
+  const [checkedAssetsTypes, setCheckedAssetsTypes] = useState("");
   const [opened, setOpened] = useState(false);
 
   const { allGHeaders: miHeaders } = GHeaders();
@@ -103,6 +103,16 @@ function Assets() {
     }
     if (!value.match(Validate)) {
       setCheckedAssigned(true);
+    }
+  };
+  const handleOnAssetTypeKeys = (value) => {
+    setAssetTypeID(value);
+    const Validate = "--Assets Types *--";
+    if (value.match(Validate)) {
+      setCheckedAssetsTypes(false);
+    }
+    if (!value.match(Validate)) {
+      setCheckedAssetsTypes(true);
     }
   };
   // const handleOnManfacturerKeys = (value) => {
@@ -378,7 +388,7 @@ function Assets() {
   };
 
   const handleValidate = (e) => {
-    if (checkedItem && checkedItemWorth && checkedAssigned === true) {
+    if (checkedItem && checkedItemWorth && checkedAssigned && checkedAssetsTypes === true) {
       handleClick(e);
     }
   };
@@ -411,7 +421,7 @@ function Assets() {
       <DashboardNavbar />
       <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="1">
-          <Accordion.Header>Add Single Individual Client</Accordion.Header>
+          <Accordion.Header>Add Asset</Accordion.Header>
           <Accordion.Body>
             <Paper elevation={3}>
               <br />
@@ -481,10 +491,10 @@ function Assets() {
                           <MDBox textAlign="right">
                             <Form.Select
                               value={assetTypeIDx}
-                              onChange={(e) => setAssetTypeID(e.target.value)}
+                              onChange={(e) => handleOnAssetTypeKeys(e.target.value)}
                               aria-label="Default select example"
                             >
-                              <option value="">--Assets Types--</option>
+                              <option value="">--Assets Types *--</option>
                               {itemsx.map((api) => (
                                 <option key={api.id} value={api.id}>
                                   {api.name}
@@ -615,7 +625,7 @@ function Assets() {
                               <TextField
                                 id="filled-number"
                                 value={serialNox}
-                                label="Serial Number *"
+                                label="Serial Number"
                                 placeholder="Serial Number"
                                 type="number"
                                 size="small"
@@ -710,7 +720,7 @@ function Assets() {
                               name="branchID"
                               onChange={(e) => handleOnAssignedKeys(e.target.value)}
                             >
-                              <option>--Assigned To--</option>
+                              <option>--Assigned To *--</option>
                               {user.map((apis) => (
                                 <option key={apis.personal.id} value={apis.personal.id}>
                                   {apis.personal.fname} {apis.personal.lname}
