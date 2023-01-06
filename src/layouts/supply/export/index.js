@@ -77,13 +77,8 @@ function Export() {
         align: "left",
       },
       {
-        Header: "Decision Made By",
-        accessor: "approvedByName",
-        align: "left",
-      },
-      {
-        Header: "Paying Amount",
-        accessor: "payingAmount",
+        Header: "Client Name",
+        accessor: "clientName",
         align: "left",
       },
       {
@@ -97,8 +92,8 @@ function Export() {
         align: "left",
       },
       {
-        Header: "Client Name",
-        accessor: "clientName",
+        Header: "Decision Made By",
+        accessor: "approvedByName",
         align: "left",
       },
 

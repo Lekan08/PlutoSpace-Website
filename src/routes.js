@@ -95,11 +95,11 @@ import SalaryPayment from "layouts/salaryPayment";
 import Bonusdeduction from "layouts/bonusdeduction";
 import MyBills from "layouts/my-Bills";
 import Accounting from "layouts/accounting";
-import MySubscription from "layouts/my-Subscription";
+import MySubscription from "layouts/subscription";
 import GeneralBills from "layouts/general-Bill";
 import GeneralSubscription from "layouts/general-Subscription";
 import UpdateMyBills from "layouts/my-Bills/update-My-Bills/index";
-import UpdateMySubscription from "layouts/my-Subscription/update-My-Subscription/index";
+import UpdateMySubscription from "layouts/subscription/update-Subscription/index";
 import CloneBonusDeduction from "layouts/bonusdeduction/clone";
 import UpdateBonusOrDeduction from "layouts/bonusdeduction/update";
 import GroupNotifications from "layouts/group-notifications";
@@ -178,7 +178,7 @@ import ProductsBranch from "layouts/products/products-Branch";
 import ViewSupply from "layouts/supply/viewSupply";
 // import AssignCbtQuestion from "layouts/cbt/assignCbtTestQuestion";
 import DemandUpdate from "layouts/demand/update-Demand";
-import ConvertDemandToSupply from "layouts/demand/convertDemandToSupply";
+import ConvertDemandToSupply from "layouts/demand/convert-Demand-To-Supply";
 import ViewDemand from "layouts/demand/view-Demand";
 import Pipeline from "layouts/pipeline";
 import AddStage from "layouts/workFlow/add-Stage";
@@ -213,6 +213,7 @@ import ViewCalendar from "layouts/myAccessor/viewCalendar";
 import CLientLevel from "layouts/clientLevel";
 import WelcomeCbt from "layouts/cbt/instruction";
 import TakeCBT from "layouts/cbt/takeCbt";
+import Reports from "layouts/reports";
 import DeclineReportProduction from "layouts/products/reportProduction/declineReportProduction/";
 import TicketClientSettings from "layouts/tickets/ticketClientSettings";
 
@@ -404,6 +405,14 @@ const routes = [
     icon: <Icon fontSize="small">supervised_user_circle</Icon>,
     route: "/user-Management",
     component: <UserManagement />,
+  },
+  {
+    type: "collapse",
+    name: "Reports",
+    key: "reports",
+    icon: <Icon fontSize="small">supervised_user_circle</Icon>,
+    route: "/reports",
+    component: <Reports />,
   },
   {
     type: "divider",
@@ -697,7 +706,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Business Travel Dashboard",
+    name: "Dashboard",
     key: "businesstravelupdate",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-Travel-Dashboard",
@@ -992,7 +1001,7 @@ const routes = [
     name: "Convert Demand To Supply",
     key: "ConvertDemandToSupply",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/demand/convertDemandToSupply",
+    route: "/demand/convert-Demand-To-Supply",
     component: <ConvertDemandToSupply />,
   },
   {
@@ -1117,7 +1126,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Time-Off Dashboard",
+    name: "Dashboard",
     key: "timeOffRequestdashboard",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/time-off-Request-Dashboard",
@@ -1860,15 +1869,15 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Subscriptions",
-    key: "mySubscription",
+    name: "Subscription",
+    key: "subscription",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/my-Subscription",
+    route: "/subscription",
     component: <MySubscription />,
   },
   {
     type: "collapse",
-    name: "General Subscriptions",
+    name: "General Subscription",
     key: "generalSubscription",
     icon: <Icon fontSize="small">today</Icon>,
     route: "/general-Subscription",
@@ -1878,7 +1887,7 @@ const routes = [
     name: "Update Subscription",
     key: "updateMySubscription",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/my-Subscription/update-My-Subscription",
+    route: "/subscription/update-Subscription",
     component: <UpdateMySubscription />,
   },
   {
@@ -1932,7 +1941,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Dashboard",
+    name: "Dashboard",
     key: "ticketDashboard",
     icon: <Icon fontSize="small">book_online</Icon>,
     route: "/ticket-Dashboard",
