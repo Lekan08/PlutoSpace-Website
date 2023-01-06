@@ -706,7 +706,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Business Travel Dashboard",
+    name: "Dashboard",
     key: "businesstravelupdate",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-Travel-Dashboard",
@@ -1126,7 +1126,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Time-Off Dashboard",
+    name: "Dashboard",
     key: "timeOffRequestdashboard",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/time-off-Request-Dashboard",
@@ -1941,7 +1941,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Dashboard",
+    name: "Dashboard",
     key: "ticketDashboard",
     icon: <Icon fontSize="small">book_online</Icon>,
     route: "/ticket-Dashboard",
