@@ -21,6 +21,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import example from "./example.PNG";
 import "../Force.css";
+// import { number } from "prop-types";
 
 function Csv() {
   const { allPHeaders: myHeaders } = PHeaders();
@@ -130,12 +131,17 @@ function Csv() {
             console.log(description);
             console.log(pricePerQuantity);
             // console.log(createdBy);
+            const changeToNumber = (number) => {
+              const newNumber = number.replace(",", "");
+              const nnn = parseInt(newNumber, 10);
+              return nnn;
+            };
             return {
               name,
               description,
               // pricePerQuantity,
               // eslint-disable-next-line no-dupe-keys
-              pricePerQuantity: `${Number(pricePerQuantity)}`,
+              pricePerQuantity: changeToNumber(pricePerQuantity),
               // createdBy,
               // ? `${Number(pricePerQuantity)}`
               // : "invalid",
@@ -179,6 +185,9 @@ function Csv() {
             orgID,
             // eslint-disable-next-line arrow-body-style
           }) => {
+            console.log(name);
+            console.log(description);
+            console.log(pricePerQuantity);
             return {
               name,
               // createdTime,
