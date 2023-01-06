@@ -29,6 +29,7 @@ import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import Styles from "styles";
 
 function TicketClientSettings() {
   const MySwal = withReactContent(Swal);
@@ -714,7 +715,8 @@ function TicketClientSettings() {
         <MDBox pt={4} pb={3} px={5}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            //   bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -859,14 +861,15 @@ function TicketClientSettings() {
             <MDBox pt={4} pb={3} px={3}>
               <MDBox
                 variant="gradient"
-                bgColor="info"
+                //   bgColor="info"
+                style={Styles.boxSx}
                 borderRadius="lg"
-                coloredShadow="success"
-                mx={1}
-                mt={2}
+                coloredShadow="info"
+                mx={2}
+                mt={-3}
                 p={2}
                 mb={1}
-                textAlign="left"
+                textAlign="center"
               >
                 <MDTypography
                   variant="h4"
