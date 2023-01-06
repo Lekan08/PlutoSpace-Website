@@ -95,11 +95,11 @@ import SalaryPayment from "layouts/salaryPayment";
 import Bonusdeduction from "layouts/bonusdeduction";
 import MyBills from "layouts/my-Bills";
 import Accounting from "layouts/accounting";
-import MySubscription from "layouts/my-Subscription";
+import MySubscription from "layouts/subscription";
 import GeneralBills from "layouts/general-Bill";
 import GeneralSubscription from "layouts/general-Subscription";
 import UpdateMyBills from "layouts/my-Bills/update-My-Bills/index";
-import UpdateMySubscription from "layouts/my-Subscription/update-My-Subscription/index";
+import UpdateMySubscription from "layouts/subscription/update-Subscription/index";
 import CloneBonusDeduction from "layouts/bonusdeduction/clone";
 import UpdateBonusOrDeduction from "layouts/bonusdeduction/update";
 import GroupNotifications from "layouts/group-notifications";
@@ -706,7 +706,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Business Travel Dashboard",
+    name: "Dashboard",
     key: "businesstravelupdate",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-Travel-Dashboard",
@@ -1126,7 +1126,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Time-Off Dashboard",
+    name: "Dashboard",
     key: "timeOffRequestdashboard",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/time-off-Request-Dashboard",
@@ -1869,15 +1869,15 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Subscriptions",
-    key: "mySubscription",
+    name: "Subscription",
+    key: "subscription",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/my-Subscription",
+    route: "/subscription",
     component: <MySubscription />,
   },
   {
     type: "collapse",
-    name: "General Subscriptions",
+    name: "General Subscription",
     key: "generalSubscription",
     icon: <Icon fontSize="small">today</Icon>,
     route: "/general-Subscription",
@@ -1887,7 +1887,7 @@ const routes = [
     name: "Update Subscription",
     key: "updateMySubscription",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/my-Subscription/update-My-Subscription",
+    route: "/subscription/update-Subscription",
     component: <UpdateMySubscription />,
   },
   {
@@ -1941,7 +1941,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Dashboard",
+    name: "Dashboard",
     key: "ticketDashboard",
     icon: <Icon fontSize="small">book_online</Icon>,
     route: "/ticket-Dashboard",
