@@ -286,12 +286,6 @@ export default function SupplyTable() {
       { Header: "Supplying Branch Name", accessor: "supplyingBranchName", align: "left" },
       { Header: "Decision Made By", accessor: "approvedByName", align: "left" },
       {
-        Header: "Date Created",
-        accessor: "createdTime",
-        Cell: ({ cell: { value } }) => changeDate(value),
-        align: "left",
-      },
-      {
         Header: "Status",
         accessor: "status",
 
@@ -301,6 +295,12 @@ export default function SupplyTable() {
             {changeStatusCol(value)}
           </span>
         ),
+      },
+      {
+        Header: "Date Created",
+        accessor: "createdTime",
+        Cell: ({ cell: { value } }) => changeDate(value),
+        align: "left",
       },
       {
         Header: "actions",
