@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
-import { Container, Form } from "react-bootstrap";
+import { Container, Form, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MDTypography from "components/MDTypography";
 import Backdrop from "@mui/material/Backdrop";
@@ -15,32 +15,27 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
 import TextField from "@mui/material/TextField";
+import DataTable from "examples/Tables/DataTable";
 import Styles from "styles";
 
-function UpdateMySubscription() {
+function MySubscription() {
   const { allGHeaders: miHeaders } = GHeaders();
   const MySwal = withReactContent(Swal);
 
-  const [typex, setTypex] = useState("");
+  const [dataTablex, setDataTable] = useState([]);
+  const [typex, setType] = useState("");
   const [paidAmountx, setPaidAmountx] = useState("");
   //   const [totalAmountx, setTotalAmountx] = useState("");
   const [taxAmountx, setTaxAmountx] = useState("");
   const [amountx, setAmountx] = useState("");
-  const [userInfox, setUserInfo] = useState([]);
-  const [billsx, setBillsx] = useState([]);
   const [assignedTox, setAssignTo] = useState("");
-  const [createdTimeee, setCreatedTime] = useState("");
-  const [approverIDDDD, setApproverID] = useState("");
-  const [approveTimexx, setApproveTime] = useState("");
-  const [approvalStatusxx, setApprovalStatus] = useState("");
-  const [deleteFlagxx, setDeleteFlag] = useState("");
-  const [pricePerUnitx, setPricePerUnitx] = useState("");
-  const [frequencyx, setFrequencyx] = useState("");
-
   const [particularsx, setParticularsx] = useState("");
-  const [idx, setId] = useState("");
+  const [pricePerUnitx, setPricePerUnit] = useState("");
+  const [frequencyx, setFrequency] = useState("");
+  const [userInfox, setUserInfo] = useState([]);
 
   const [checkedTaxAmountx, setCheckedTaxAmount] = useState(false);
   const [checkedPaidAmountx, setCheckedPaidAmount] = useState(false);
@@ -58,85 +53,68 @@ function UpdateMySubscription() {
   const { allPHeaders: myHeaders } = PHeaders();
 
   const handleonAssign = (valuex) => {
+    setAssignTo(valuex);
     console.log(valuex);
+    console.log("working");
     if (!valuex) {
       setCheckedAssign(false);
+      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("assign").innerHTML = "Assign bill to user <br>";
+      document.getElementById("assign").innerHTML = "Assign Subscription to user <br>";
     }
     if (valuex) {
+      console.log("working2222222");
       setCheckedAssign(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("assign").innerHTML = " ";
     }
   };
-  const handleFrequencyTime = (valuex) => {
+
+  const handleParticulars = (valuex) => {
     console.log(valuex);
     console.log("working");
     if (!valuex) {
-      setCheckedFrequencyTime(false);
+      setCheckedParticular(false);
+      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("frequency").innerHTML = "Subscription Period is required <br>";
+      document.getElementById("particulars").innerHTML = "Particulars is required <br>";
     }
     if (valuex) {
-      setCheckedFrequencyTime(true);
+      console.log("working2222222");
+      setCheckedParticular(true);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("frequency").innerHTML = " ";
+      document.getElementById("particulars").innerHTML = " ";
     }
   };
-  const handlePricePerUnit = (valuex) => {
-    console.log(valuex);
-    if (!valuex) {
-      setCheckedPricePerUnit(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("pricePerUnit").innerHTML = "Price per period is required <br>";
-    }
-    if (valuex) {
-      setCheckedPricePerUnit(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("pricePerUnit").innerHTML = " ";
-    }
-  };
-
   const handleType = (valuex) => {
-    setTypex(valuex);
+    setType(valuex);
     console.log(valuex);
+    console.log("working");
     if (!valuex) {
       setCheckedType(false);
+      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("type").innerHTML = "Subscription Type is required <br>";
     }
     if (valuex) {
+      console.log("working2222222");
       setCheckedType(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("type").innerHTML = " ";
     }
   };
 
-  //   const formData = new FormData();
-
-  const handleParticulars = (valuex) => {
-    console.log(valuex);
-    if (!valuex) {
-      setCheckedParticular(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("particulars").innerHTML = "Particulars is required <br>";
-    }
-    if (valuex) {
-      setCheckedParticular(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("particulars").innerHTML = " ";
-    }
-  };
-
   const handleTaxAmount = (valuex) => {
     console.log(valuex);
+    console.log("working");
     if (!valuex) {
       setCheckedTaxAmount(false);
+      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("taxAmount").innerHTML = "Tax Amount is required <br>";
     }
     if (valuex) {
+      console.log("working2222222");
       setCheckedTaxAmount(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("taxAmount").innerHTML = " ";
@@ -145,15 +123,51 @@ function UpdateMySubscription() {
 
   const handlePaidAmountx = (valuex) => {
     console.log(valuex);
+    console.log("working");
     if (!valuex) {
       setCheckedPaidAmount(false);
+      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("paidAmount").innerHTML = "Paid Amount is required <br>";
     }
     if (valuex) {
+      console.log("working2222222");
       setCheckedPaidAmount(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("paidAmount").innerHTML = " ";
+    }
+  };
+
+  const handleFrequencyTime = (valuex) => {
+    console.log(valuex);
+    console.log("working");
+    if (!valuex) {
+      setCheckedFrequencyTime(false);
+      console.log("auhfcgeafig");
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("frequency").innerHTML = "Subscription Period is required <br>";
+    }
+    if (valuex) {
+      console.log("working2222222");
+      setCheckedFrequencyTime(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("frequency").innerHTML = " ";
+    }
+  };
+  const handlePricePerUnit = (valuex) => {
+    console.log(valuex);
+    console.log("working");
+    if (!valuex) {
+      setCheckedPricePerUnit(false);
+      console.log("auhfcgeafig");
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("pricePerUnit").innerHTML = "Price per period is required <br>";
+    }
+    if (valuex) {
+      console.log("working2222222");
+      setCheckedPricePerUnit(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("pricePerUnit").innerHTML = " ";
     }
   };
 
@@ -161,15 +175,53 @@ function UpdateMySubscription() {
     console.log(valuex);
     if (!valuex) {
       setCheckedAmountx(false);
+      console.log("auhfcgeafig");
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "Amount is required";
     }
     if (valuex) {
+      console.log("working2222222");
       setCheckedAmountx(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = " ";
     }
   };
+
+  useEffect(() => {
+    setOpened(true);
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+    let isMounted = true;
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          console.log(result);
+          setUserInfo(result);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // eslint-disable-next-line consistent-return
   const handleClick = (e) => {
@@ -179,11 +231,9 @@ function UpdateMySubscription() {
     const orgIDs = data11.orgID;
     const currentlyLogegdIn = data11.personalID;
     const raw = JSON.stringify({
-      id: idx,
       orgID: orgIDs,
       empID: assignedTox,
       createdBy: currentlyLogegdIn,
-      createdTime: createdTimeee,
       amount: amountx,
       taxAmount: taxAmountx,
       totalAmount: totalAmountx,
@@ -192,13 +242,7 @@ function UpdateMySubscription() {
       type: typex,
       frequency: frequencyx,
       pricePerUnit: pricePerUnitx,
-      bills: billsx,
-      approverID: approverIDDDD,
-      approveTime: approveTimexx,
-      deleteFlag: deleteFlagxx,
-      approvalStatus: approvalStatusxx,
     });
-
     console.log(raw);
     const requestOptions = {
       method: "POST",
@@ -209,7 +253,7 @@ function UpdateMySubscription() {
     console.log(requestOptions);
 
     setOpened(true);
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/update`, requestOptions)
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/add`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -250,69 +294,12 @@ function UpdateMySubscription() {
   };
 
   useEffect(() => {
-    setOpened(true);
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
+    const empID = data11.personalID;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          console.log(result);
-          setUserInfo(result);
-        }
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    handleAmount(amountx);
-    handleTaxAmount(taxAmountx);
-    handlePaidAmountx(paidAmountx);
-    handleParticulars(particularsx);
-    handleType(typex);
-    handleFrequencyTime(frequencyx);
-    handlePricePerUnit(pricePerUnitx);
-    handleonAssign(assignedTox);
-  }, [
-    paidAmountx,
-    amountx,
-    taxAmountx,
-    pricePerUnitx,
-    particularsx,
-    frequencyx,
-    typex,
-    pricePerUnitx,
-    assignedTox,
-  ]);
-
-  useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const ids = urlParams.get("id");
-    const headers = miHeaders;
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/getByIds/${ids}`, {
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/getForEmp/${orgIDs}/${empID}`, {
       headers,
     })
       .then(async (res) => {
@@ -341,22 +328,7 @@ function UpdateMySubscription() {
           console.log(result);
           if (result.length !== 0) {
             console.log(result);
-            setTaxAmountx(result[0].taxAmount);
-            setId(result[0].id);
-            setAmountx(result[0].amount);
-            setPaidAmountx(result[0].paidAmount);
-            setParticularsx(result[0].particulars);
-            setTypex(result[0].type);
-            setAssignTo(result[0].empID);
-            console.log(result[0].empID);
-            setCreatedTime(result[0].createdTime);
-            setApproverID(result[0].approverID);
-            setApproveTime(result[0].approveTime);
-            setApprovalStatus(result[0].approvalStatus);
-            setDeleteFlag(result[0].deleteFlag);
-            setBillsx(result[0].bills);
-            setFrequencyx(result[0].frequency);
-            setPricePerUnitx(result[0].pricePerUnit);
+            setDataTable(result);
           }
         }
       });
@@ -366,15 +338,65 @@ function UpdateMySubscription() {
     };
   }, []);
 
+  // method handledeleteq
+
+  const handledeleteq = (id) => {
+    console.log(id);
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed === true) {
+        const requestOptions = {
+          method: "DELETE",
+          headers: miHeaders,
+        };
+        fetch(`${process.env.REACT_APP_LOUGA_URL}/subscriptions/delete/${id}`, requestOptions)
+          .then((res) => res.json())
+          .then((resx) => {
+            if (resx.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+            }
+            if (resx.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+            }
+            if (resx.message === "Unauthorized Access") {
+              navigate("/authentication/forbiddenPage");
+            }
+            MySwal.fire({
+              title: resx.status,
+              type: "success",
+              text: resx.message,
+            }).then(() => {
+              window.location.reload();
+            });
+          })
+          .catch((error) => {
+            MySwal.fire({
+              title: error.status,
+              type: "error",
+              text: error.message,
+            });
+          });
+      }
+    });
+  };
+
   const handleValidate = (e) => {
-    console.log(checkedTaxAmountx);
-    console.log(checkedAmountx);
-    console.log(checkParticulars);
-    console.log(checkAssignx);
-    console.log(checkCheckedType);
-    console.log(checkCheckedPricePerUnit);
-    console.log(checkCheckedFrequencyTime);
-    console.log(checkedPaidAmountx);
+    handleAmount(amountx);
+    handleTaxAmount(taxAmountx);
+    handlePaidAmountx(paidAmountx);
+    handleonAssign(assignedTox);
+    handleParticulars(particularsx);
+    handleType(typex);
+    handleFrequencyTime(typex);
+    handlePricePerUnit(pricePerUnitx);
+    // console.log(checkedWorkflow);
     if (
       checkedTaxAmountx &&
       checkedAmountx &&
@@ -388,6 +410,126 @@ function UpdateMySubscription() {
       handleClick(e);
     }
   };
+
+  // Method to change status
+  // eslint-disable-next-line consistent-return
+  const status = (statusx) => {
+    const num = Number(statusx);
+    if (num === 0) {
+      return "UNDECIDED";
+    }
+    if (num === 1) {
+      return "APPROVED";
+    }
+    if (num === 2) {
+      return "DECLINED";
+    }
+  };
+
+  //  Method to change date from timestamp
+  const changeDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const retDate = date.toDateString();
+    return retDate;
+  };
+
+  // Table for Data
+
+  const pColumns = [
+    {
+      Header: "Particulars ",
+      accessor: "particulars",
+      align: "left",
+    },
+    {
+      Header: "Type",
+      accessor: "type",
+      align: "left",
+    },
+    {
+      Header: "Subscription Period",
+      accessor: "frequency",
+      align: "left",
+    },
+    {
+      Header: "Price Per Period",
+      accessor: "pricePerUnit",
+      align: "left",
+    },
+    {
+      Header: "Amount",
+      accessor: "amount",
+      align: "left",
+    },
+    {
+      Header: "Tax Amount",
+      accessor: "taxAmount",
+      align: "left",
+    },
+    {
+      Header: "Paid Amount",
+      accessor: "paidAmount",
+      align: "left",
+    },
+    {
+      Header: "Created By",
+      accessor: "createdByName",
+      align: "left",
+    },
+    {
+      Header: "Assigned To",
+      accessor: "empName",
+      align: "left",
+    },
+    {
+      Header: "Decision Made By",
+      accessor: "approverName",
+      align: "left",
+    },
+    {
+      Header: "Approver Status",
+      accessor: "approvalStatus",
+      Cell: ({ cell: { value } }) => status(value),
+      align: "left",
+    },
+    {
+      Header: "Created Time",
+      accessor: "createdTime",
+      Cell: ({ cell: { value } }) => changeDate(value),
+      align: "left",
+    },
+    {
+      Header: "Actions",
+      accessor: "id",
+      // eslint-disable-next-line react/prop-types
+      Cell: ({ cell: { value } }) => (
+        <div
+          style={{
+            width: "100%",
+            backgroundColor: "#f96d02",
+            borderRadius: "2px",
+          }}
+        >
+          <Dropdown>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+              <Icon sx={{ fontWeight: "light" }}>settings</Icon>
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item
+                onClick={() => navigate(`/subscription/update-Subscription?id=${value}`)}
+              >
+                Update
+              </Dropdown.Item>
+
+              <Dropdown.Item onClick={() => handledeleteq(value)}>Delete</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      ),
+      align: "left",
+    },
+  ];
 
   return (
     <DashboardLayout>
@@ -406,7 +548,7 @@ function UpdateMySubscription() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Update Subscription
+              Subscription
             </MDTypography>
           </MDBox>
           <MDBox
@@ -552,7 +694,7 @@ function UpdateMySubscription() {
                       label="Subscription Period "
                       placeholder="Subscription Period "
                       type="number"
-                      onChange={(e) => setFrequencyx(e.target.value)}
+                      onChange={(e) => setFrequency(e.target.value)}
                       onKeyUp={(e) => handleFrequencyTime(e.target.value)}
                       sx={{
                         width: 300,
@@ -570,7 +712,7 @@ function UpdateMySubscription() {
                       label="Price per Period (NGN) "
                       placeholder="Amount to be paid for each period "
                       type="number"
-                      onChange={(e) => setPricePerUnitx(e.target.value)}
+                      onChange={(e) => setPricePerUnit(e.target.value)}
                       onKeyUp={(e) => handlePricePerUnit(e.target.value)}
                       sx={{
                         width: 250,
@@ -580,9 +722,9 @@ function UpdateMySubscription() {
                   </div>
                   <div className="col-sm-6">
                     <Form.Select
-                      value={assignedTox || " "}
+                      value={assignedTox}
                       aria-label="Default select example"
-                      onChange={(e) => setAssignTo(e.target.value)}
+                      //   onChange={(e) => setAssignTo(e.target.value)}
                       onInput={(e) => handleonAssign(e.target.value)}
                     >
                       <option value="">--Assign to--</option>
@@ -606,14 +748,28 @@ function UpdateMySubscription() {
                   width="50%"
                   align="left"
                 >
-                  Update
+                  Save
                 </MDButton>
               </MDBox>
             </MDBox>
           </MDBox>
         </MDBox>
       </Card>
-
+      <MDBox pt={3}>
+        <DataTable
+          table={{ columns: pColumns, rows: dataTablex }}
+          isSorted
+          entriesPerPage
+          showTotalEntries
+          noEndBorder
+          canSearch
+        />
+      </MDBox>
+      <div>
+        <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
+          <CircularProgress color="info" />
+        </Backdrop>
+      </div>
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />
@@ -622,4 +778,4 @@ function UpdateMySubscription() {
   );
 }
 
-export default UpdateMySubscription;
+export default MySubscription;
