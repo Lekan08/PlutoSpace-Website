@@ -386,7 +386,8 @@ function Cover() {
           <MDBox component="form" role="form">
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -844,7 +845,8 @@ function Cover() {
                   component={Link}
                   to="/authentication/sign-in"
                   variant="button"
-                  color="info"
+                  // color="info"
+                  style={Styles.textSx}
                   fontWeight="medium"
                   textGradient
                 >
