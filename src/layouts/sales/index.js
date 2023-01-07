@@ -1269,10 +1269,10 @@ function Sales() {
                         fontWeight="medium"
                         style={Styles.textSx}
                       >
-                        Cash Payment:
+                        {/* Cash Payment: */}
                       </MDTypography>
                       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Cash Payment: </label>
+                      <label htmlFor="filled-number"> Cash Payment (NGN): </label>
                       <TextField
                         id="filled-number"
                         value={cashPaymentx}
@@ -1295,10 +1295,10 @@ function Sales() {
                         fontWeight="medium"
                         style={Styles.textSx}
                       >
-                        Transfer Payment:
+                        {/* Transfer Payment: */}
                       </MDTypography>
                       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Transfer Payment: </label>
+                      <label htmlFor="filled-number"> Transfer Payment (NGN): </label>
                       <TextField
                         id="filled-number"
                         value={transferPaymentx}
@@ -1320,11 +1320,11 @@ function Sales() {
                       fontWeight="medium"
                       style={Styles.textSx}
                     >
-                      Card Payment:
+                      {/* Card Payment: */}
                     </MDTypography>
                     <FormControl fullWidth>
                       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Card Payment: </label>
+                      <label htmlFor="filled-number"> Card Payment (NGN): </label>
                       <TextField
                         id="filled-number"
                         value={cardPaymentx}
@@ -1333,8 +1333,23 @@ function Sales() {
                         type="number"
                         onChange={(e) => setCardPayment(e.target.value)}
                       />
+                      <div>
+                        <MonnifyConsumer {...monNey} className="btn">
+                          {({ initializePayment }) => (
+                            // eslint-disable-next-line react/button-has-type
+                            <MDButton
+                              variant="gradient"
+                              onClick={() => initializePayment()}
+                              color="info"
+                              width="50%"
+                            >
+                              Pay using card
+                            </MDButton>
+                          )}
+                        </MonnifyConsumer>
+                      </div>
                     </FormControl>
-                    <MDBox mt={4} mb={1}>
+                    {/* <MDBox mt={4} mb={1}>
                       <div>
                         <MonnifyConsumer {...monNey} className="btn">
                           {({ initializePayment }) => (
@@ -1350,7 +1365,7 @@ function Sales() {
                           )}
                         </MonnifyConsumer>
                       </div>
-                    </MDBox>
+                    </MDBox> */}
                   </Box>
                 </div>
               </div>
@@ -1368,8 +1383,8 @@ function Sales() {
                       <TextField
                         id="filled-number"
                         value={Payment}
-                        label="Balance "
-                        placeholder="Balance"
+                        label="Balance (NGN)"
+                        placeholder="Balance (NGN)"
                         type="number"
                         name="balance"
                         InputProps={{

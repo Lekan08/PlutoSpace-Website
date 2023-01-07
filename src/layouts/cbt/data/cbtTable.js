@@ -314,7 +314,7 @@ export default function CBTTable() {
     }
 
     MySwal.fire({
-      title: "Dead For CBT",
+      title: "Deadline For CBT",
       html: `<div text-align="left"><b>Time:</b> <input type="datetime-local" id="time" value="${cbttime}" class="form-control">`,
       confirmButtonText: "Save",
       showCancelButton: true,
@@ -412,7 +412,7 @@ export default function CBTTable() {
   };
 
   const handleAssignCbtTestToJobPost = (value) => {
-    navigate(`/cbt/assignCbtTestToJobPostApplicant/?id=${value}`);
+    navigate(`/cbt/assignCBTToJobPost/?id=${value}`);
   };
 
   const toMinutes = (durationx) => {
@@ -492,7 +492,7 @@ export default function CBTTable() {
                   View CBT Result
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleAssignCbtTestToJobPost(value)}>
-                  Assign Cbt Test To Job Post Applicants
+                  Assign CBT To Job Post
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleAddAnswer(value)}>
                   Take Cbt Question

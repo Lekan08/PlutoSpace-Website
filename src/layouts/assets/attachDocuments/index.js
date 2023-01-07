@@ -110,9 +110,9 @@ function AssetAttachDocument() {
     p: 4,
     borderRadius: 0,
     overflow: "scroll",
-    height: "90%",
-    width: "90%",
-    maxHeight: "90vh",
+    height: "50%",
+    width: "50%",
+    maxHeight: "40vh",
     display: "block",
 
     "&::-webkit-scrollbar": {
@@ -537,131 +537,134 @@ function AssetAttachDocument() {
       });
   };
 
-  // const handleView = (value, index) => {
-  //   const filteredItems = items.filter((item) => item.id === value);
-  //   console.log(items);
-  //   console.log(value);
-  //   console.log(filteredItems);
-  //   const docKey = filteredItems[0].attachedDocs[index];
-  //   // const docKey = "DOC-1664892565964-ORG-62bb21f6266f37394be3a183";
-  //   handleClose();
-  //   setOpened(true);
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
+  const handleView = (value, index) => {
+    const filteredItems = items.filter((item) => item.id === value);
+    console.log(items);
+    console.log(value);
+    console.log(index);
+    console.log(filteredItems);
+    // const docKey = "DOC-1664892565964-ORG-62bb21f6266f37394be3a183";
+    handleClose();
+    setOpened(true);
+    const data11 = JSON.parse(localStorage.getItem("user1"));
 
-  //   const orgIDs = data11.orgID;
-  //   const headers = miHeaders;
-  //   fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${docKey}`, {
-  //     headers,
-  //   })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       const result = await res.text();
-  //       if (result === null || result === undefined || result === "") {
-  //         return {};
-  //       }
-  //       return JSON.parse(result);
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       if (result.name) {
-  //         fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.name}`, {
-  //           headers,
-  //         })
-  //           .then(async (res) => {
-  //             const aToken = res.headers.get("token-1");
-  //             localStorage.setItem("rexxdex", aToken);
-  //             const resultres = await res.text();
-  //             if (resultres === null || resultres === undefined || resultres === "") {
-  //               return {};
-  //             }
-  //             return JSON.parse(resultres);
-  //           })
-  //           .then((resultxx) => {
-  //             setOpened(false);
-  //             if (resultxx.message === "Expired Access") {
-  //               navigate("/authentication/sign-in");
-  //               window.location.reload();
-  //             }
-  //             if (resultxx.message === "Token Does Not Exist") {
-  //               navigate("/authentication/sign-in");
-  //               window.location.reload();
-  //             }
-  //             if (resultxx.message === "Unauthorized Access") {
-  //               navigate("/authentication/forbiddenPage");
-  //               window.location.reload();
-  //             }
-  //             if (resultxx.length > 0) {
-  //               console.log(resultxx[0]);
-  //               const docType = filteredItems[0].type;
-  //               const docUrl = resultxx[0];
-  //               const mdocsUrlStart = "https://view.officeapps.live.com/op/embed.aspx?src=";
-  //               const mdocsUrlEnd = "";
-  //               if (
-  //                 docType === "image/png" ||
-  //                 docType === "image/jpg" ||
-  //                 docType === "image/jpeg" ||
-  //                 docType === "image/gif" ||
-  //                 docType === "text/plain"
-  //               ) {
-  //                 setImageUrl(`${docUrl}`);
-  //                 setViewDoc(true);
-  //               } else if (docType === "application/msword") {
-  //                 setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
-  //                 setViewDoc(true);
-  //               } else if (
-  //                 docType ===
-  //                 "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-  //               ) {
-  //                 setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
-  //                 setViewDoc(true);
-  //               } else if (docType === "application/pdf") {
-  //                 console.log("rtyukjhgvcx");
-  //                 setImageUrl(`${docUrl}`);
-  //                 setViewDoc(true);
-  //               } else if (
-  //                 docType === "text/csv" ||
-  //                 docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  //               ) {
-  //                 setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
-  //                 setViewDoc(true);
-  //               } else {
-  //                 console.log("it entered");
-  //                 setViewDoc(false);
-  //                 MySwal.fire({
-  //                   title: "INVALID_ACTION",
-  //                   type: "error",
-  //                   text: "Sorry this document can't be previewed, try downloading the document.",
-  //                 });
-  //               }
-  //             } else {
-  //               MySwal.fire({
-  //                 title: "DOCUMENT_NON_EXIST",
-  //                 type: "error",
-  //                 text: "This document does not exist",
-  //               });
-  //             }
-  //           });
-  //       } else {
-  //         MySwal.fire({
-  //           title: "DOCUMENT_NON_EXIST",
-  //           type: "error",
-  //           text: "This document does not exist",
-  //         });
-  //       }
-  //     });
-  // };
+    const orgIDs = data11.orgID;
+    const headers = miHeaders;
+    fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${value}`, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
+        return JSON.parse(result);
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(result);
+        const TYPE = result.type;
+        if (result.name) {
+          fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.name}`, {
+            headers,
+          })
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              const resultres = await res.text();
+              if (resultres === null || resultres === undefined || resultres === "") {
+                return {};
+              }
+              return JSON.parse(resultres);
+            })
+            .then((resultxx) => {
+              setOpened(false);
+              if (resultxx.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultxx.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultxx.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              console.log(resultxx);
+              if (resultxx.length > 0) {
+                console.log(resultxx[0]);
+                const docType = TYPE;
+                const docUrl = resultxx[0];
+                const mdocsUrlStart = "https://view.officeapps.live.com/op/embed.aspx?src=";
+                const mdocsUrlEnd = "";
+                if (
+                  docType === "image/png" ||
+                  docType === "image/jpg" ||
+                  docType === "image/jpeg" ||
+                  docType === "image/gif" ||
+                  docType === "text/plain"
+                ) {
+                  setImageUrl(`${docUrl}`);
+                  setViewDoc(true);
+                } else if (docType === "application/msword") {
+                  setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
+                  setViewDoc(true);
+                } else if (
+                  docType ===
+                  "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                ) {
+                  setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
+                  setViewDoc(true);
+                } else if (docType === "application/pdf") {
+                  console.log("rtyukjhgvcx");
+                  setImageUrl(`${docUrl}`);
+                  setViewDoc(true);
+                } else if (
+                  docType === "text/csv" ||
+                  docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                ) {
+                  setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
+                  setViewDoc(true);
+                } else {
+                  console.log("it entered");
+                  setViewDoc(false);
+                  MySwal.fire({
+                    title: "INVALID_ACTION",
+                    type: "error",
+                    text: "Sorry this document can't be previewed, try downloading the document.",
+                  });
+                }
+              } else {
+                MySwal.fire({
+                  title: "DOCUMENT_NON_EXIST",
+                  type: "error",
+                  text: "This document does not exist",
+                });
+              }
+            });
+        } else {
+          MySwal.fire({
+            title: "DOCUMENT_NON_EXIST",
+            type: "error",
+            text: "This document does not exist",
+          });
+        }
+      });
+  };
 
   return (
     <DashboardLayout>
@@ -777,7 +780,7 @@ function AssetAttachDocument() {
                             aria-expanded="true"
                             disableElevation
                             sx={{ color: "inherit" }}
-                            // onClick={() => handleView(api.id, index)}
+                            onClick={() => handleView(api, index)}
                           >
                             <CardContent>
                               <img src={pngType} alt="Icon" width="78" height="78" />

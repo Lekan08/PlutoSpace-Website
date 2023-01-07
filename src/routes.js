@@ -251,7 +251,7 @@ import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
 import LeadsWorkflow from "layouts/leadsWorkflow";
-import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
+import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
 import SalesPayment from "layouts/sales/salesPayment";
 import FilterSales from "layouts/sales/filterSales";
@@ -1582,8 +1582,8 @@ const routes = [
     name: "AssignCbtTestToJobPost",
     key: "assigncbttesttojobpost",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/cbt/assignCbtTestToJobPostApplicant/",
-    component: <AssignCbtTestToJobPost />,
+    route: "/cbt/assignCBTToJobPost/",
+    component: <AssignCbtToJobPost />,
   },
   {
     name: "ViewCbtResult",
