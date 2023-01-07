@@ -211,6 +211,7 @@ function TicketSettings() {
           };
           // setEmailAccounts(nemailAccount);
           setEmailValue(result.emailAccounts[0]);
+          setEmailPasswordx(result.emailPassword);
           setMiniTPAs(result.minimumTicketPerAgent);
           setAgentIDx(result.defaultNewAccountOwner);
           setMaxiTPAs(result.maximumTicketPerAgent);
@@ -846,7 +847,7 @@ function TicketSettings() {
               <br /> WhatsApp - Please Fill in the Phone Number Of the WhatsApp Account you wish to
               receive tickets from. the number should start with the respective country code e.g
               nigeria(+234) - 2349092054414, numbers starting with 0 would not receive messages
-              <br /> Email - Please Fill in the Emails you wish to receive tickets from
+              <br /> Email - Please Fill in the Email you wish to receive tickets from
               <br /> Set the Minimun and Maximum Tickets Per Agents
               <br /> Set the Average Resolution Time and Average Response time for the Tickets(They
               are in minutes and seconds)
