@@ -41,6 +41,7 @@ import withReactContent from "sweetalert2-react-content";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import AllCountriesAndStates from "countries-states-master/countries";
+import Styles from "styles";
 
 function CompanyReg() {
   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
@@ -311,7 +312,8 @@ function CompanyReg() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
+          style={Styles.boxSx}
           borderRadius="lg"
           coloredShadow="success"
           mx={2}
@@ -413,7 +415,8 @@ function CompanyReg() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
