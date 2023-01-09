@@ -30,6 +30,7 @@ import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
+import Styles from "styles";
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
@@ -65,7 +66,8 @@ function TicketSettings() {
 
   const [twitterAccountsx, setTwitterAccounts] = React.useState([]);
   const [whatsappAccountsx, setWhatsappAccounts] = React.useState([]);
-  const [emailAccountsx, setEmailAccounts] = React.useState([]);
+  // const [emailAccountsx, setEmailAccounts] = React.useState([]);
+  const [emailPasswordx, setEmailPasswordx] = React.useState("");
 
   const handleTwitDelete = (chipToDelete) => () => {
     setTwitterAccounts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
@@ -74,13 +76,13 @@ function TicketSettings() {
   const handleWhatsDelete = (chipToDelete) => () => {
     setWhatsappAccounts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
 
-    setEmailAccounts((list) => [...list, chipToDelete]);
+    // setEmailAccounts((list) => [...list, chipToDelete]);
   };
 
-  const handleEmailDelete = (chipToDelete) => () => {
-    setEmailAccounts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-    setWhatsappAccounts((list) => [...list, chipToDelete]);
-  };
+  // const handleEmailDelete = (chipToDelete) => () => {
+  //   setEmailAccounts((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  //   setWhatsappAccounts((list) => [...list, chipToDelete]);
+  // };
 
   const [idx, setId] = useState("");
   const [twitValue, setTwitValue] = useState("");
@@ -171,15 +173,16 @@ function TicketSettings() {
           });
           setWhatsappAccounts(nwhatsappAccount);
 
-          const nemailAccount = [];
-          // eslint-disable-next-line array-callback-return
-          result.emailAccounts.map((item) => {
-            const chipData = {
-              key: nemailAccount.length + 1,
-              label: item,
-            };
-            nemailAccount.push(chipData);
-          });
+          // const nemailAccount = [];
+          // // eslint-disable-next-line array-callback-return
+          // result.emailAccounts.map((item) => {
+          //   const chipData = {
+          //     key: nemailAccount.length + 1,
+          //     label: item,
+          //   };
+          //   nemailAccount.push(chipData);
+          // });
+
           // Method to change date to timestamp
           // eslint-disable-next-line consistent-return
           const changeRTime = (timestamp) => {
@@ -206,7 +209,9 @@ function TicketSettings() {
               return retDate;
             }
           };
-          setEmailAccounts(nemailAccount);
+          // setEmailAccounts(nemailAccount);
+          setEmailValue(result.emailAccounts[0]);
+          setEmailPasswordx(result.emailPassword);
           setMiniTPAs(result.minimumTicketPerAgent);
           setAgentIDx(result.defaultNewAccountOwner);
           setMaxiTPAs(result.maximumTicketPerAgent);
@@ -312,12 +317,12 @@ function TicketSettings() {
       nwhatsappAccount.push(fdy);
     });
 
-    const nemailAccount = [];
-    // eslint-disable-next-line array-callback-return
-    emailAccountsx.map((item) => {
-      const fdy = item.label;
-      nemailAccount.push(fdy);
-    });
+    // const nemailAccount = [];
+    // // eslint-disable-next-line array-callback-return
+    // emailAccountsx.map((item) => {
+    //   const fdy = item.label;
+    //   nemailAccount.push(fdy);
+    // });
 
     // Method to change date to timestamp
     // eslint-disable-next-line consistent-return
@@ -331,7 +336,7 @@ function TicketSettings() {
     const raw = JSON.stringify({
       orgID: orgIDs,
       twitterAccounts: ntwitterAccount,
-      emailAccounts: nemailAccount,
+      emailAccounts: [emailValue],
       whatsappAccounts: nwhatsappAccount,
       minimumTicketPerAgent: parseInt(miniTPAs, 10),
       maximumTicketPerAgent: parseInt(maxiTPAs, 10),
@@ -343,6 +348,7 @@ function TicketSettings() {
       twitterAccessTokenSecret: twitAccessTokenSecret,
       twitterBearerToken: twitBearerToken,
       defaultNewAccountOwner: agentIDx,
+      emailPassword: emailPasswordx,
     });
     const requestOptions = {
       method: "POST",
@@ -413,12 +419,13 @@ function TicketSettings() {
       nwhatsappAccount.push(fdy);
     });
 
-    const nemailAccount = [];
-    // eslint-disable-next-line array-callback-return
-    emailAccountsx.map((item) => {
-      const fdy = item.label;
-      nemailAccount.push(fdy);
-    });
+    // const nemailAccount = [];
+    // // eslint-disable-next-line array-callback-return
+    // emailAccountsx.map((item) => {
+    //   const fdy = item.label;
+    //   nemailAccount.push(fdy);
+    // });
+
     // Method to change date to timestamp
     // eslint-disable-next-line consistent-return
     const changeRTime = (timestamp) => {
@@ -432,7 +439,7 @@ function TicketSettings() {
     const raw = JSON.stringify({
       orgID: orgIDs,
       twitterAccounts: ntwitterAccount,
-      emailAccounts: nemailAccount,
+      emailAccounts: [emailValue],
       whatsappAccounts: nwhatsappAccount,
       minimumTicketPerAgent: parseInt(miniTPAs, 10),
       maximumTicketPerAgent: parseInt(maxiTPAs, 10),
@@ -444,6 +451,7 @@ function TicketSettings() {
       twitterAccessTokenSecret: twitAccessTokenSecret,
       twitterBearerToken: twitBearerToken,
       defaultNewAccountOwner: agentIDx,
+      emailPassword: emailPasswordx,
     });
     // console.log(raw);
     const requestOptions = {
@@ -566,16 +574,16 @@ function TicketSettings() {
         setWhatsValue("");
       }
     }
-    if (num === 3) {
-      if (emailValue !== "") {
-        const chipData = {
-          key: emailAccountsx.length + 1,
-          label: emailValue,
-        };
-        setEmailAccounts((list) => [chipData, ...list]);
-        setEmailValue("");
-      }
-    }
+    // if (num === 3) {
+    //   if (emailValue !== "") {
+    //     const chipData = {
+    //       key: emailAccountsx.length + 1,
+    //       label: emailValue,
+    //     };
+    //     setEmailAccounts((list) => [chipData, ...list]);
+    //     setEmailValue("");
+    //   }
+    // }
   };
 
   const handleKeyDown = (e, num) => {
@@ -786,7 +794,8 @@ function TicketSettings() {
         <MDBox pt={4} pb={3} px={5}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            //   bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -838,7 +847,7 @@ function TicketSettings() {
               <br /> WhatsApp - Please Fill in the Phone Number Of the WhatsApp Account you wish to
               receive tickets from. the number should start with the respective country code e.g
               nigeria(+234) - 2349092054414, numbers starting with 0 would not receive messages
-              <br /> Email - Please Fill in the Emails you wish to receive tickets from
+              <br /> Email - Please Fill in the Email you wish to receive tickets from
               <br /> Set the Minimun and Maximum Tickets Per Agents
               <br /> Set the Average Resolution Time and Average Response time for the Tickets(They
               are in minutes and seconds)
@@ -949,7 +958,7 @@ function TicketSettings() {
                 </div>
               </Container>
             </MDBox>
-            <MDBox mb={2}>
+            {/* <MDBox mb={2}>
               <Container>
                 <div className="row">
                   <div className="col-sm-6">
@@ -983,6 +992,36 @@ function TicketSettings() {
                         </ListItem>
                       ))}
                     </Paper>
+                  </div>
+                </div>
+              </Container>
+            </MDBox> */}
+            <MDBox mb={2}>
+              <Container>
+                <div className="row">
+                  <div className="col-sm-6">
+                    <MDBox>
+                      <MDInput
+                        type="text"
+                        label="Email Account(Email) *"
+                        value={emailValue || ""}
+                        onChange={(e) => setEmailValue(e.target.value)}
+                        variant="standard"
+                        style={{ width: "100%" }}
+                      />
+                    </MDBox>
+                  </div>
+                  <div className="col-sm-6">
+                    <MDBox>
+                      <MDInput
+                        type="text"
+                        label="Email Password *"
+                        value={emailPasswordx || ""}
+                        onChange={(e) => setEmailPasswordx(e.target.value)}
+                        variant="standard"
+                        style={{ width: "100%" }}
+                      />
+                    </MDBox>
                   </div>
                 </div>
               </Container>

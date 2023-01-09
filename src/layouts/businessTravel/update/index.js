@@ -605,7 +605,7 @@ function UpdateBusinessTravel() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Update Business Travels
+              Update Business Travel
             </MDTypography>
           </MDBox>
           <MDBox

@@ -386,7 +386,7 @@ function BusinessTravel() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Business Travels
+              Business Travel
             </MDTypography>
           </MDBox>
           <MDBox

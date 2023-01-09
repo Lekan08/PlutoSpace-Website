@@ -251,7 +251,7 @@ import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
 import LeadsWorkflow from "layouts/leadsWorkflow";
-import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
+import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
 import SalesPayment from "layouts/sales/salesPayment";
 import FilterSales from "layouts/sales/filterSales";
@@ -277,6 +277,8 @@ import AssetAttachDocument from "layouts/assets/attachDocuments";
 import Coupons from "layouts/coupons";
 import UpdateCoupons from "layouts/coupons/update";
 import AppointmentOffboardingSession from "layouts/assignedOffboarding/appointmentSession";
+import TreasuryType from "layouts/treasuryType";
+import UpdateTreasuryType from "layouts/treasuryType/update";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
 import OnboardingCompany from "./layouts/onboardingCompany";
@@ -1232,6 +1234,33 @@ const routes = [
   {
     type: "divider",
     name: "",
+    key: "divZzz123",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Treasury Type",
+    key: "zino112",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Treasury Type",
+    key: "treasuryType",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury-Type",
+    component: <TreasuryType />,
+  },
+  {
+    name: "Update Treasury Type",
+    key: "updatetreasuryType",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury-Type/update",
+    component: <UpdateTreasuryType />,
+  },
+  {
+    type: "divider",
+    name: "",
     key: "divd1",
     route: "",
   },
@@ -1582,8 +1611,8 @@ const routes = [
     name: "AssignCbtTestToJobPost",
     key: "assigncbttesttojobpost",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/cbt/assignCbtTestToJobPostApplicant/",
-    component: <AssignCbtTestToJobPost />,
+    route: "/cbt/assignCBTToJobPost/",
+    component: <AssignCbtToJobPost />,
   },
   {
     name: "ViewCbtResult",

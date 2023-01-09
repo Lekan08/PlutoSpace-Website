@@ -41,6 +41,7 @@ import withReactContent from "sweetalert2-react-content";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import AllCountriesAndStates from "countries-states-master/countries";
+import Styles from "styles";
 
 function CompanyReg() {
   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
@@ -209,64 +210,86 @@ function CompanyReg() {
     fetch(`${process.env.REACT_APP_KUBU_URL}/company/add`, requestOptions)
       .then((res) => res.json())
       .then((result) => {
-        const raw1 = JSON.stringify({
-          orgID: result.data.id,
-          personalID: user.id,
-          email: localStorage.getItem("email1"),
-        });
-        const requestOptions1 = {
-          method: "POST",
-          headers: myHeaders,
-          body: raw1,
-          redirect: "follow",
-        };
-        fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/add`, requestOptions1)
-          .then((res) => res.json())
-          .then((resultx) => {
-            console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
-            localStorage.setItem("company", JSON.stringify(resultx.data));
-            const raw2 = JSON.stringify({
-              orgID: result.data.id,
-              empID: user.id,
-              username: user.email,
-              password: localStorage.getItem("pass1"),
-            });
-            const requestOptions2 = {
-              method: "POST",
-              headers: myHeaders,
-              body: raw2,
-              redirect: "follow",
-            };
-            fetch(`${process.env.REACT_APP_ZAVE_URL}/login/add`, requestOptions2)
-              .then((res) => res.json())
-              .then((resultLog) => {
-                console.log(
-                  `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
-                );
-                const raw4 = JSON.stringify({
+        if (result.status === "SUCCESS") {
+          const raw1 = JSON.stringify({
+            orgID: result.data.id,
+            personalID: user.id,
+            email: localStorage.getItem("email1"),
+          });
+          const requestOptions1 = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw1,
+            redirect: "follow",
+          };
+          fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/add`, requestOptions1)
+            .then((res) => res.json())
+            .then((resultx) => {
+              if (resultx.status !== "SUCCESS") {
+                fetch(`${process.env.REACT_APP_KUBU_URL}/company/delete/${result.data.id}`, {
+                  headers: myHeaders,
+                })
+                  .then((res) => res.json())
+                  .then((delResult) => {
+                    console.log(
+                      `STATUS - ${delResult.status} - - - - - - MESSAGE - ${delResult.message}`
+                    );
+                  })
+                  .then(() => {
+                    setOpened(false);
+                    MySwal.fire({
+                      title: "ERROR IN CREATING COMPANY ACCOUNT",
+                      type: "error",
+                      text: "Please create the acount again",
+                    });
+                  });
+              } else {
+                console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
+                localStorage.setItem("company", JSON.stringify(resultx.data));
+                const raw2 = JSON.stringify({
                   orgID: result.data.id,
-                  paidAmount: configPrice,
-                  bonusAmount: 0,
-                  totalAmount: configPrice,
+                  empID: user.id,
+                  username: user.email,
+                  password: localStorage.getItem("pass1"),
                 });
-                const requestOptions4 = {
+                const requestOptions2 = {
                   method: "POST",
                   headers: myHeaders,
-                  body: raw4,
+                  body: raw2,
                   redirect: "follow",
                 };
-                fetch(
-                  `${process.env.REACT_APP_EKOATLANTIC_URL}/paymentHistory/add`,
-                  requestOptions4
-                )
+                fetch(`${process.env.REACT_APP_ZAVE_URL}/login/add`, requestOptions2)
                   .then((res) => res.json())
-                  .then((resultPH) => {
+                  .then((resultLog) => {
                     console.log(
-                      `STATUS - ${resultPH.status} - - - - - - MESSAGE - ${resultPH.message}`
+                      `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
                     );
+                    const raw4 = JSON.stringify({
+                      orgID: result.data.id,
+                      paidAmount: configPrice,
+                      bonusAmount: 0,
+                      totalAmount: configPrice,
+                    });
+                    const requestOptions4 = {
+                      method: "POST",
+                      headers: myHeaders,
+                      body: raw4,
+                      redirect: "follow",
+                    };
+                    fetch(
+                      `${process.env.REACT_APP_EKOATLANTIC_URL}/paymentHistory/add`,
+                      requestOptions4
+                    )
+                      .then((res) => res.json())
+                      .then((resultPH) => {
+                        console.log(
+                          `STATUS - ${resultPH.status} - - - - - - MESSAGE - ${resultPH.message}`
+                        );
+                      });
                   });
-              });
-          });
+              }
+            });
+        }
         setOpened(false);
         MySwal.fire({
           title: result.status,
@@ -311,7 +334,8 @@ function CompanyReg() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
+          style={Styles.boxSx}
           borderRadius="lg"
           coloredShadow="success"
           mx={2}
@@ -331,7 +355,8 @@ function CompanyReg() {
           <MDBox component="form" role="form">
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -413,7 +438,8 @@ function CompanyReg() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -542,7 +568,13 @@ function CompanyReg() {
               </MDTypography>
             </MDBox> */}
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" fullWidth>
+              <MDButton
+                variant="gradient"
+                onClick={handleValidate}
+                // color="info"
+                style={Styles.buttonSx}
+                fullWidth
+              >
                 Register
               </MDButton>
             </MDBox>
@@ -553,7 +585,8 @@ function CompanyReg() {
                   component={Link}
                   to="/authentication/sign-in"
                   variant="button"
-                  color="info"
+                  // color="info"
+                  style={Styles.textSx}
                   fontWeight="medium"
                   textGradient
                 >
