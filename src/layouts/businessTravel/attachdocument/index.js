@@ -466,92 +466,92 @@ function BusinessTravelAttachDocument() {
       if (resultd.isConfirmed) {
         handleClose();
         setOpened(true);
-        const requestOptions = {
+        // const requestOptions = {
+        //   method: "DELETE",
+        //   headers: miHeaders,
+        // };
+        // const data11 = JSON.parse(localStorage.getItem("user1"));
+        // const orgIDs = data11.orgID;
+        // const mOrgID = orgIDs;
+        // // console.log(filteredItems);
+        // // const docKey = filteredItems[0].attachedDocs;
+        // fetch(
+        //   `${process.env.REACT_APP_EKOATLANTIC_URL}/media/delete/${mOrgID}/${value}`,
+        //   requestOptions
+        // )
+        //   .then(async (res) => {
+        //     const aToken = res.headers.get("token-1");
+        //     localStorage.setItem("rexxdex", aToken);
+        //     const result = await res.text();
+        //     if (result === null || result === undefined || result === "") {
+        //       return {};
+        //     }
+        //     return JSON.parse(result);
+        //   })
+        //   .then((resx) => {
+        //     console.log(resx);
+        //     if (resx.message === "Unauthorized Access") {
+        //       navigate("/authentication/forbiddenPage");
+        //     }
+        //     console.log(`STATUS - ${resx.status} - - - - - - MESSAGE - ${resx.message}`);
+
+        //     if (resx.status !== "SUCCESS") {
+        //       setOpened(false);
+        //       MySwal.fire({
+        //         title: "DELETE_UNSUCCESSFUL",
+        //         type: "error",
+        //         text: "Document Delete Was Unsuccessful",
+        //       });
+        //     } else {
+        const requestOptionsd = {
           method: "DELETE",
           headers: miHeaders,
         };
-        const data11 = JSON.parse(localStorage.getItem("user1"));
-        const orgIDs = data11.orgID;
-        const mOrgID = orgIDs;
-        // console.log(filteredItems);
-        // const docKey = filteredItems[0].attachedDocs;
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get("id");
+
         fetch(
-          `${process.env.REACT_APP_EKOATLANTIC_URL}/media/delete/${mOrgID}/${value}`,
-          requestOptions
+          `${process.env.REACT_APP_SHASHA_URL}/businessTravels/removeDocument/${id}/${value}`,
+          requestOptionsd
         )
           .then(async (res) => {
             const aToken = res.headers.get("token-1");
             localStorage.setItem("rexxdex", aToken);
-            const result = await res.text();
-            if (result === null || result === undefined || result === "") {
-              return {};
-            }
-            return JSON.parse(result);
+            return res.json();
           })
-          .then((resx) => {
-            console.log(resx);
-            if (resx.message === "Unauthorized Access") {
+          .then((resxx) => {
+            if (resxx.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+            }
+            if (resxx.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+            }
+            if (resxx.message === "Unauthorized Access") {
               navigate("/authentication/forbiddenPage");
             }
-            console.log(`STATUS - ${resx.status} - - - - - - MESSAGE - ${resx.message}`);
-
-            if (resx.status !== "SUCCESS") {
-              setOpened(false);
-              MySwal.fire({
-                title: "DELETE_UNSUCCESSFUL",
-                type: "error",
-                text: "Document Delete Was Unsuccessful",
-              });
-            } else {
-              const requestOptionsd = {
-                method: "DELETE",
-                headers: miHeaders,
-              };
-              const queryString = window.location.search;
-              const urlParams = new URLSearchParams(queryString);
-              const id = urlParams.get("id");
-
-              fetch(
-                `${process.env.REACT_APP_SHASHA_URL}/businessTravels/removeDocument/${id}/${value}`,
-                requestOptionsd
-              )
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  return res.json();
-                })
-                .then((resxx) => {
-                  if (resxx.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                  }
-                  setOpened(false);
-                  MySwal.fire({
-                    title: resxx.status,
-                    type: "success",
-                    text: resxx.message,
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                })
-                .catch((error) => {
-                  setOpened(false);
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
-            }
+            setOpened(false);
+            MySwal.fire({
+              title: resxx.status,
+              type: "success",
+              text: resxx.message,
+            }).then(() => {
+              window.location.reload();
+            });
           })
           .catch((error) => {
-            console.log(`STATUS - ${error.status} - - - - - - MESSAGE - ${error.message}`);
+            setOpened(false);
+            MySwal.fire({
+              title: error.status,
+              type: "error",
+              text: error.message,
+            });
           });
+        // }
+        // })
+        // .catch((error) => {
+        //   console.log(`STATUS - ${error.status} - - - - - - MESSAGE - ${error.message}`);
+        // });
       }
     });
   };
