@@ -603,6 +603,66 @@ function Sales() {
           if (result.status === "SUCCESS") {
             handlePrint();
           }
+          // if (result.status === "SUCCESS") {
+          //   const allResult = result.data;
+          //   const raw2 = JSON.stringify({
+          //     orgID: orgIDs,
+          //     type: allResult.type,
+          //     requestID: allResult.salesID,
+          //     balance: allResult.balance,
+          //     createdBy: allResult.createdBy,
+          //     clientID: allResult.clientID,
+          //     originalAmount: allResult.originalAmount,
+          //   });
+          //   const requestOptions2 = {
+          //     method: "POST",
+          //     headers: myHeaders,
+          //     body: raw2,
+          //     redirect: "follow",
+          //   };
+          //   fetch(`${process.env.REACT_APP_LOUGA_URL}/creditFacility/add`, requestOptions2)
+          //     .then(async (res) => {
+          //       const aToken = res.headers.get("token-1");
+          //       localStorage.setItem("rexxdex", aToken);
+          //       const resultx = await res.text();
+          //       if (resultx === null || resultx === undefined || resultx === "") {
+          //         return {};
+          //       }
+          //       return JSON.parse(resultx);
+          //     })
+          //     .then((resultx) => {
+          //       if (resultx.message === "Expired Access") {
+          //         navigate("/authentication/sign-in");
+          //         window.location.reload();
+          //       }
+          //       if (resultx.message === "Token Does Not Exist") {
+          //         navigate("/authentication/sign-in");
+          //         window.location.reload();
+          //       }
+          //       if (resultx.message === "Unauthorized Access") {
+          //         navigate("/authentication/forbiddenPage");
+          //         window.location.reload();
+          //       }
+          //       console.log(resultx);
+          //       setOpened(false);
+          //       MySwal.fire({
+          //         title: resultx.status,
+          //         type: "success",
+          //         text: resultx.message,
+          //       }).then(() => {
+          //         window.location.reload();
+          //       });
+          //     })
+          //     .catch((error) => {
+          //       setOpened(false);
+          //       MySwal.fire({
+          //         title: error.status,
+          //         type: "error",
+          //         text: error.message,
+          //       });
+          //     });
+          // }
+          console.log(result);
           setOpened(false);
           MySwal.fire({
             title: result.status,
