@@ -62,6 +62,7 @@ function UpdateAssets() {
   const [checkedItem, setCheckedItem] = useState("");
   const [checkedItemWorth, setCheckedItemWorth] = useState("");
   const [checkedAssigned, setCheckedAssigned] = useState("");
+  const [checkedAssetsTypes, setCheckedAssetsTypes] = useState("");
   //   const [checkedMaximum, setCheckedMaximum] = useState("");
   const [opened, setOpened] = useState(false);
   const { allPHeaders: myHeaders } = PHeaders();
@@ -219,13 +220,22 @@ function UpdateAssets() {
   };
   const handleOnAssignedKeys = (value) => {
     setAssignedTo(value);
-    console.log(value);
     const Validate = "--Assigned To--";
     if (value.toString().match(Validate)) {
       setCheckedAssigned(false);
     }
     if (!value.toString().match(Validate)) {
       setCheckedAssigned(true);
+    }
+  };
+  const handleOnAssetTypeKeys = (value) => {
+    setAssetTypeID(value);
+    const Validate = "--Assets Types--";
+    if (value.match(Validate)) {
+      setCheckedAssetsTypes(false);
+    }
+    if (!value.match(Validate)) {
+      setCheckedAssetsTypes(true);
     }
   };
   // const handleOnManfacturerKeys = (value) => {
@@ -315,7 +325,6 @@ function UpdateAssets() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (result.length !== 0) {
           setId(result[0].id);
           setItem(result[0].item);
@@ -345,7 +354,7 @@ function UpdateAssets() {
           handleOnItemWorthKeys(result[0].itemWorth);
           handleOnItemKeys(result[0].item);
           handleOnAssignedKeys(result[0].assignedTo);
-          // handleOnManfacturerKeys(result[0].manufacturer);
+          handleOnAssetTypeKeys(result[0].assetTypeID);
           //   handleOnMaximumKeys(result[0].maximumLifeCycle);
         }
       });
@@ -507,10 +516,7 @@ function UpdateAssets() {
   const ALPHA_NUMERIC_DASH_REGEX = /^[a-zA-Z]+$/;
 
   const handleValidate = (e) => {
-    console.log(checkedItem);
-    console.log(checkedItemWorth);
-    console.log(checkedAssigned);
-    if (checkedItem && checkedItemWorth && checkedAssigned === true) {
+    if (checkedItem && checkedItemWorth && checkedAssigned && checkedAssetsTypes === true) {
       handleClick(e);
     }
   };
@@ -585,7 +591,7 @@ function UpdateAssets() {
                     <MDBox textAlign="right">
                       <Form.Select
                         value={assetTypeIDx}
-                        onChange={(e) => setAssetTypeID(e.target.value)}
+                        onChange={(e) => handleOnAssetTypeKeys(e.target.value)}
                         aria-label="Default select example"
                       >
                         <option value="">--Assets Types--</option>
@@ -730,7 +736,7 @@ function UpdateAssets() {
                         <TextField
                           id="filled-number"
                           value={serialNox}
-                          label="Serial Number *"
+                          label="Serial Number"
                           placeholder="Serial Number"
                           type="number"
                           size="small"
@@ -824,7 +830,7 @@ function UpdateAssets() {
                         name="branchID"
                         onChange={(e) => handleOnAssignedKeys(e.target.value)}
                       >
-                        <option>--Assigned To--</option>
+                        <option>--Assigned *--</option>
                         {user.map((apis) => (
                           <option key={apis.personal.id} value={apis.personal.id}>
                             {apis.personal.fname} {apis.personal.lname}

@@ -24,6 +24,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 // imports for modal
 import Modal from "@mui/material/Modal";
+import Styles from "styles";
 
 function Tickets() {
   const MySwal = withReactContent(Swal);
@@ -804,7 +805,8 @@ function Tickets() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            //   bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -975,6 +977,7 @@ function Tickets() {
                       >
                         <option>---Select Channel---</option>
                         <option value="Web">Web</option>
+                        <option value="Email">Email</option>
                         <option value="Whatsapp">Whatsapp</option>
                         <option value="Instagram">Instagram</option>
                         <option value="Twitter">Twitter</option>
@@ -1020,14 +1023,15 @@ function Tickets() {
             <MDBox pt={4} pb={3} px={3}>
               <MDBox
                 variant="gradient"
-                bgColor="info"
+                //   bgColor="info"
+                style={Styles.boxSx}
                 borderRadius="lg"
-                coloredShadow="success"
-                mx={1}
-                mt={2}
+                coloredShadow="info"
+                mx={2}
+                mt={-3}
                 p={2}
                 mb={1}
-                textAlign="left"
+                textAlign="center"
               >
                 <MDTypography
                   variant="h4"
@@ -1197,6 +1201,7 @@ function Tickets() {
                           >
                             <option>---Select Channel---</option>
                             <option value="Web">Web</option>
+                            <option value="Email">Email</option>
                             <option value="Whatsapp">Whatsapp</option>
                             <option value="Instagram">Instagram</option>
                             <option value="Twitter">Twitter</option>
@@ -1246,14 +1251,15 @@ function Tickets() {
             <MDBox pt={4} pb={3} px={7}>
               <MDBox
                 variant="gradient"
-                bgColor="info"
+                //   bgColor="info"
+                style={Styles.boxSx}
                 borderRadius="lg"
-                coloredShadow="success"
-                mx={1}
-                mt={2}
+                coloredShadow="info"
+                mx={2}
+                mt={-3}
                 p={2}
                 mb={1}
-                textAlign="left"
+                textAlign="center"
               >
                 <MDTypography
                   variant="h4"

@@ -1,125 +1,72 @@
-/* eslint-disable no-lone-blocks */
 import React, { useState, useEffect } from "react";
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
-import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
 import { Container, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
+import MDTypography from "components/MDTypography";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
-import { useNavigate } from "react-router-dom";
 import Styles from "styles";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Footer from "examples/Footer";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+// zinoleesky wrote this part of d code called treasuryTpe
 
-function UpdateAssetTypes() {
+function UpdateTreasuryType() {
   const MySwal = withReactContent(Swal);
+  const { allGHeaders: miHeaders } = GHeaders();
+  const { allPHeaders: myHeaders } = PHeaders();
+  const [items, setItems] = useState("");
 
   const navigate = useNavigate();
 
   const [namex, setName] = useState("");
   const [descripx, setDescrip] = useState("");
-  const [typex, setType] = useState("");
-  const [ratex, setRate] = useState("");
-  const [maximumLifeCyclex, setMaximumLifeCycle] = useState("");
-  const [createdTimex, setCreatedTime] = useState("");
-  const [idx, setId] = useState("");
-  const [deletex, setDeleteFlag] = useState("");
+  const [timesx, setTimes] = useState("");
+  const [recurringTypex, setRecurringType] = useState("");
+  const [showRecurringType, setShowRecurringType] = useState(false);
 
-  const [checkedName, setCheckedName] = useState("");
-  const [checkedNumber, setCheckedNumber] = useState("");
-  const [checkedMaximum, setCheckedMaximum] = useState("");
-  const [checkedTypes, setCheckedTypes] = useState("");
   const [opened, setOpened] = useState(false);
-  const { allPHeaders: myHeaders } = PHeaders();
-  const { allGHeaders: miHeaders } = GHeaders();
+  const [checkedName, setCheckedName] = useState("");
 
   const handleOnNameKeys = (value) => {
     const letters = /^[a-zA-Z ]+$/;
-    if (!value.toString().match(letters)) {
+    if (!value.match(letters)) {
       setCheckedName(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "Name - input only capital and small letters<br>";
     }
-    if (value.toString().match(letters)) {
+    if (value.match(letters)) {
       setCheckedName(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "";
     }
-    if (value.toString().length === 0) {
+    if (value.length === 0) {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "Name is required<br>";
     }
   };
-  const handleOnRateKeys = (value) => {
-    const numbers = /^[0-9 ]+$/;
-    if (!value.toString().match(numbers)) {
-      setCheckedNumber(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("rate").innerHTML = "Rate - input only numbers<br>";
-    }
-    if (value.toString().match(numbers)) {
-      setCheckedNumber(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("rate").innerHTML = "";
-    }
-    if (value.toString().length === 0) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("rate").innerHTML = "Rate is required<br>";
-    }
-  };
-  const handleOnMaximumKeys = (value) => {
-    const numbers = /^[0-9 ]+$/;
-    if (!value.toString().match(numbers)) {
-      setCheckedMaximum(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("maximum").innerHTML = "Maximum Life Cycle - input only numbers<br>";
-    }
-    if (value.toString().match(numbers)) {
-      setCheckedMaximum(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("maximum").innerHTML = "";
-    }
-    if (value.toString().length === 0) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("maximum").innerHTML = "Maximum Life Cycle is required<br>";
-    }
-  };
-  const handleOnTypeKeys = (value) => {
-    setType(value);
-    const Validate = "--Type *--";
-    if (value.match(Validate)) {
-      setCheckedTypes(false);
-    }
-    if (!value.match(Validate)) {
-      setCheckedTypes(true);
-    }
-  };
 
-  const handleGet = () => {
-    setOpened(true);
+  useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get("id");
-
+    const ids = urlParams.get("id");
     const headers = miHeaders;
-
-    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/assetTypes/getByIds/${id}`, { headers })
+    let isMounted = true;
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/treasuryTypes/getByIds/${ids}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
         return res.json();
       })
       .then((result) => {
-        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -132,30 +79,15 @@ function UpdateAssetTypes() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
-        if (result.length !== 0) {
-          setId(result[0].id);
+        if (isMounted) {
+          setItems(result);
           setName(result[0].name);
           setDescrip(result[0].descrip);
-          setType(result[0].type);
-          setRate(result[0].rate);
-          setMaximumLifeCycle(result[0].maximumLifeCycle);
-          setCreatedTime(result[0].createdTime);
-          setDeleteFlag(result[0].deleteFlag);
-
-          handleOnRateKeys(result[0].rate);
+          setTimes(result[0].times);
+          setRecurringType(result[0].recurringType);
           handleOnNameKeys(result[0].name);
-          handleOnMaximumKeys(result[0].maximumLifeCycle);
-          handleOnTypeKeys(result[0].type);
         }
       });
-  };
-
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      handleGet();
-    }
     return () => {
       isMounted = false;
     };
@@ -168,15 +100,14 @@ function UpdateAssetTypes() {
 
     const orgIDs = data11.orgID;
     const raw = JSON.stringify({
-      id: idx,
+      id: items[0].id,
       orgID: orgIDs,
       name: namex,
       descrip: descripx,
-      type: typex,
-      rate: ratex,
-      maximumLifeCycle: maximumLifeCyclex,
-      createdTime: createdTimex,
-      deleteFlag: deletex,
+      times: timesx,
+      recurringType: recurringTypex,
+      createdTime: items[0].createdTime,
+      deleteFlag: items[0].deleteFlag,
     });
     const requestOptions = {
       method: "POST",
@@ -184,7 +115,7 @@ function UpdateAssetTypes() {
       body: raw,
       redirect: "follow",
     };
-    fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/assetTypes/update`, requestOptions)
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/treasuryTypes/update`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -226,8 +157,19 @@ function UpdateAssetTypes() {
       });
   };
 
+  const handleChangeTimes = (value) => {
+    const callClientType = value.toString();
+    setTimes(callClientType);
+    if (callClientType === "0") {
+      setShowRecurringType(false);
+    } else if (callClientType === "1") {
+      setShowRecurringType(true);
+    }
+    setOpened(false);
+  };
+
   const handleValidate = (e) => {
-    if (checkedName && checkedNumber && checkedMaximum && checkedTypes === true) {
+    if (checkedName === true) {
       handleClick(e);
     }
   };
@@ -239,6 +181,7 @@ function UpdateAssetTypes() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
+            // bgColor="info"
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -249,27 +192,11 @@ function UpdateAssetTypes() {
             style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Update Asset Types
+              Update Treasury Type
             </MDTypography>
           </MDBox>
-          <MDBox
-            variant="gradient"
-            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-            borderRadius="lg"
-            coloredShadow="success"
-            mx={3}
-            mt={1}
-            p={1}
-            mb={1}
-            textAlign="center"
-          >
+          <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
-              {" "}
-            </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="rate">
-              {" "}
-            </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="maximum">
               {" "}
             </MDTypography>
           </MDBox>
@@ -280,9 +207,10 @@ function UpdateAssetTypes() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Name"
+                      label="Name *"
                       value={namex || ""}
                       onKeyUp={(e) => handleOnNameKeys(e.target.value)}
+                      className="form-control"
                       onChange={(e) => setName(e.target.value)}
                       variant="standard"
                       fullWidth
@@ -291,9 +219,9 @@ function UpdateAssetTypes() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Description"
                       value={descripx || ""}
                       onChange={(e) => setDescrip(e.target.value)}
+                      label="Description"
                       variant="standard"
                       fullWidth
                     />
@@ -301,51 +229,68 @@ function UpdateAssetTypes() {
                 </div>
               </Container>
             </MDBox>
-            <MDBox mb={2}>
+            <MDBox>
               <Container>
                 <div className="row">
                   <div className="col-sm-6">
+                    <MDTypography
+                      variant="p"
+                      textAlign="center"
+                      fontWeight="regular"
+                      color="secondary"
+                      fontSize="90%"
+                    >
+                      No Of Times *
+                    </MDTypography>
                     <MDBox>
                       <Form.Select
-                        value={typex || ""}
                         aria-label="Default select example"
-                        name="salesID"
-                        onChange={(e) => handleOnTypeKeys(e.target.value)}
+                        value={timesx}
+                        // textAlign="center"
+                        onChange={(e) => handleChangeTimes(e.target.value)}
                       >
-                        <option value="">--Type *--</option>
-                        <option value="1">Depreciating</option>
-                        <option value="2">Appreciating</option>
+                        <option>--No Of Times--</option>
+                        <option value="0">One-Time</option>
+                        <option value="1">Recurring</option>
                       </Form.Select>
                     </MDBox>
                   </div>
                   <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      label="Rate % *"
-                      value={ratex || ""}
-                      onKeyUp={(e) => handleOnRateKeys(e.target.value)}
-                      onChange={(e) => setRate(e.target.value)}
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDInput
-                      type="number"
-                      label="Maximum Life Cycle *"
-                      value={maximumLifeCyclex || ""}
-                      onKeyUp={(e) => handleOnMaximumKeys(e.target.value)}
-                      onChange={(e) => setMaximumLifeCycle(e.target.value)}
-                      variant="standard"
-                      placeholder="Numbers in Month"
-                      fullWidth
-                    />
+                    <MDBox mt={0}>
+                      <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        fontSize="80%"
+                        align="left"
+                        color="text"
+                      >
+                        Reurring Type *
+                      </MDTypography>{" "}
+                      {showRecurringType ? (
+                        <Form.Select
+                          //   value={recurringTypex}
+                          //   onChange={(e) => setRecurringType(e.target.value)}
+                          aria-label="Default select example"
+                        >
+                          {/* <option>--No Of Times--</option>
+                          <option value="0">One-Time</option>
+                          <option value="1">Recurring</option> */}
+                        </Form.Select>
+                      ) : (
+                        <Form.Select
+                          value={recurringTypex}
+                          onChange={(e) => setRecurringType(e.target.value)}
+                          aria-label="Default select example"
+                        >
+                          <option>--Recurring Type--</option>
+                          <option value="Daily">Daily</option>
+                          <option value="Weekly">Weekly</option>
+                          <option value="Monthly">Monthly</option>
+                          <option value="Yearly">Yearly</option>
+                        </Form.Select>
+                      )}
+                      <br />
+                    </MDBox>
                   </div>
                 </div>
               </Container>
@@ -354,8 +299,9 @@ function UpdateAssetTypes() {
               <MDButton
                 variant="gradient"
                 onClick={handleValidate}
-                style={Styles.buttonSx}
                 width="50%"
+                align="left"
+                style={Styles.buttonSx}
               >
                 Update
               </MDButton>
@@ -370,5 +316,4 @@ function UpdateAssetTypes() {
     </DashboardLayout>
   );
 }
-
-export default UpdateAssetTypes;
+export default UpdateTreasuryType;
