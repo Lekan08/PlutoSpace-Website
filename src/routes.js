@@ -279,6 +279,10 @@ import UpdateCoupons from "layouts/coupons/update";
 import AppointmentOffboardingSession from "layouts/assignedOffboarding/appointmentSession";
 import TreasuryType from "layouts/treasuryType";
 import UpdateTreasuryType from "layouts/treasuryType/update";
+import Treasury from "layouts/treasury";
+import TreasuryContribution from "layouts/treasury/treasuryContribution";
+import UpdateTreasuryContribution from "layouts/treasury/treasuryContribution/update";
+import TreasuryDebtors from "layouts/treasury/treasuryGetDebtors";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
 import OnboardingCompany from "./layouts/onboardingCompany";
@@ -1257,6 +1261,36 @@ const routes = [
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury-Type/update",
     component: <UpdateTreasuryType />,
+  },
+  {
+    type: "collapse",
+    name: "Treasury",
+    key: "treasury",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury",
+    component: <Treasury />,
+  },
+  {
+    name: "Treasury Contribution",
+    key: "treasuryContribution",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/treasury-Contribution",
+    component: <TreasuryContribution />,
+  },
+  {
+    name: "Update Treasury Contribution",
+    key: "UpdatetreasuryContribution",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/treasury-Contribution/update",
+    component: <UpdateTreasuryContribution />,
+  },
+  {
+    type: "collapse",
+    name: "Treasury Debtors",
+    key: "treasuryGetDebtors",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/treasury-Get-Debtors",
+    component: <TreasuryDebtors />,
   },
   {
     type: "divider",
