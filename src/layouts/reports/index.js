@@ -640,6 +640,394 @@ function Reports() {
     };
   };
 
+  const handleFinancial = (e) => {
+    // Zino part Do not associate ur self by touching anything.
+    setOpened(true);
+    e.preventDefault();
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+    const startTime = new Date(startTimex).getTime();
+    const endTime = new Date(endTimex).getTime();
+    let isMounted = true;
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    // const orgIDs = data11.orgID;
+    fetch(
+      `${process.env.REACT_APP_JOHANNESBURG_URL}/assets/getBetween/${orgIDs}?startTime=${startTime}&endTime=${endTime}`,
+      {
+        headers,
+      }
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        // setItems(result);
+        console.log(result);
+        const allMAP = result;
+        if (result !== "") {
+          const itemz = result.map((each) => ({
+            dateAcquired: each.createdTime,
+            name: each.item,
+            category: each.type.name,
+            currentValue: each.currentWorth,
+            worth: each.itemWorth,
+          }));
+          const zoom = result.map((item) => item.itemWorth);
+          console.log(itemz);
+          console.log(zoom);
+          // eslint-disable-next-line no-eval
+          console.log(eval(zoom.join("+")));
+          // eslint-disable-next-line no-eval
+          const viewTotal = eval(zoom.join("+"));
+          console.log(viewTotal);
+
+          // const headers = miHeaders;
+          // const data11 = JSON.parse(localStorage.getItem("user1"));
+          // const orgIDs = data11.orgID;
+          // let isMounted = true;
+          e.preventDefault();
+          setOpened(true);
+          fetch(`${process.env.REACT_APP_KUBU_URL}/company/get/${orgIDs}`, {
+            headers,
+          })
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultxp) => {
+              if (resultxp.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultxp.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultxp.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              if (isMounted) {
+                console.log(result);
+                console.log(resultxp);
+                if (result.length !== 0) {
+                  fetch(
+                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${orgIDs}`,
+                    {
+                      headers,
+                    }
+                  )
+                    .then(async (res) => {
+                      const aToken = res.headers.get("token-1");
+                      localStorage.setItem("rexxdex", aToken);
+                      return res.json();
+                    })
+                    .then((resultme) => {
+                      if (resultme.message === "Expired Access") {
+                        navigate("/authentication/sign-in");
+                        window.location.reload();
+                      }
+                      if (resultme.message === "Token Does Not Exist") {
+                        navigate("/authentication/sign-in");
+                        window.location.reload();
+                      }
+                      if (resultme.message === "Unauthorized Access") {
+                        navigate("/authentication/forbiddenPage");
+                        window.location.reload();
+                      }
+                      console.log(resultme.name);
+                      fetch(
+                        `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultme.name}`,
+                        {
+                          headers,
+                        }
+                      )
+                        .then(async (res) => {
+                          const aToken = res.headers.get("token-1");
+                          localStorage.setItem("rexxdex", aToken);
+                          return res.json();
+                        })
+                        .then((resultx) => {
+                          if (resultx.message === "Expired Access") {
+                            navigate("/authentication/sign-in");
+                            window.location.reload();
+                          }
+                          if (resultx.message === "Token Does Not Exist") {
+                            navigate("/authentication/sign-in");
+                            window.location.reload();
+                          }
+                          if (resultx.message === "Unauthorized Access") {
+                            navigate("/authentication/forbiddenPage");
+                            window.location.reload();
+                          }
+                          const urlx = resultx[0];
+                          window.open(urlx, "_blank", "noopener,noreferrer");
+
+                          console.log(`link [${resultx[0]}]`);
+                          // eslint-disable-next-line prefer-destructuring
+                          let URL = resultx[0];
+
+                          if (URL === "") {
+                            URL = "https://i.ibb.co/5FG72RG/defaulto.png";
+                            const raw = JSON.stringify({
+                              company: {
+                                id: resultxp[0].id,
+                                name: resultxp[0].name,
+                                street: resultxp[0].street,
+                                city: resultxp[0].city,
+                                state: resultxp[0].state,
+                                country: resultxp[0].country,
+                                pno: resultxp[0].pno,
+                                email: resultxp[0].email,
+                                profilePic: URL,
+                              },
+                              total: viewTotal,
+                              items: itemz,
+                            });
+                            const requestOptions = {
+                              method: "POST",
+                              headers: myHeaders,
+                              body: raw,
+                              redirect: "follow",
+                            };
+                            fetch(
+                              `${process.env.REACT_APP_JOHANNESBURG_URL}/assetTypes/add`,
+                              requestOptions
+                            )
+                              .then(async (res) => {
+                                const aToken = res.headers.get("token-1");
+                                localStorage.setItem("rexxdex", aToken);
+                                const resultxx = await res.text();
+                                if (
+                                  resultxx === null ||
+                                  resultxx === undefined ||
+                                  resultxx === ""
+                                ) {
+                                  return {};
+                                }
+                                return JSON.parse(resultx);
+                              })
+                              .then((resultxx) => {
+                                if (resultxx.message === "Expired Access") {
+                                  navigate("/authentication/sign-in");
+                                  window.location.reload();
+                                }
+                                if (resultxx.message === "Token Does Not Exist") {
+                                  navigate("/authentication/sign-in");
+                                  window.location.reload();
+                                }
+                                if (resultxx.message === "Unauthorized Access") {
+                                  navigate("/authentication/forbiddenPage");
+                                  window.location.reload();
+                                }
+                                if (resultxx.status === "SUCCESS") {
+                                  fetch(
+                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/asset-list`,
+                                    requestOptions
+                                  )
+                                    .then(async (res) => {
+                                      const aToken = res.headers.get("token-1");
+                                      localStorage.setItem("rexxdex", aToken);
+                                      return res.json();
+                                    })
+                                    .then((resultxme2) => {
+                                      if (resultxme2.message === "Expired Access") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Token Does Not Exist") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Unauthorized Access") {
+                                        navigate("/authentication/forbiddenPage");
+                                        window.location.reload();
+                                      }
+
+                                      // if (isMounted) {
+                                      console.log(`link [${resultxme2[0]}]`);
+                                      const url = resultxme2[0];
+                                      if (url !== "") {
+                                        const objectURL = url;
+                                        console.log(objectURL);
+
+                                        // (C2) TO "FORCE DOWNLOAD"
+                                        const anchor = document.createElement("a");
+                                        anchor.href = objectURL;
+                                        anchor.download = resultxx.data.name;
+                                        anchor.click();
+
+                                        // (C3) CLEAN UP
+                                        window.URL.revokeObjectURL(objectURL);
+                                      }
+                                    });
+                                }
+                                // setOpened(false);
+                                // MySwal.fire({
+                                //   title: result.status,
+                                //   type: "success",
+                                //   text: result.message,
+                                // }).then(() => {
+                                //   window.location.reload();
+                                // });
+                              })
+                              .catch((error) => {
+                                setOpened(false);
+                                MySwal.fire({
+                                  title: error.status,
+                                  type: "error",
+                                  text: error.message,
+                                });
+                              });
+                          } else {
+                            const raw = JSON.stringify({
+                              company: {
+                                id: resultxp[0].id,
+                                name: resultxp[0].name,
+                                street: resultxp[0].street,
+                                city: resultxp[0].city,
+                                state: resultxp[0].state,
+                                country: resultxp[0].country,
+                                pno: resultxp[0].pno,
+                                email: resultxp[0].email,
+                                profilePic: URL,
+                              },
+                              total: viewTotal,
+                              items: itemz,
+                            });
+                            console.log(viewTotal);
+                            console.log(raw);
+                            console.log(allMAP);
+                            const requestOptions = {
+                              method: "POST",
+                              headers: myHeaders,
+                              body: raw,
+                              redirect: "follow",
+                            };
+                            fetch(
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/asset-list`,
+                              requestOptions
+                            )
+                              .then(async (res) => {
+                                const aToken = res.headers.get("token-1");
+                                localStorage.setItem("rexxdex", aToken);
+                                return res.json();
+                              })
+                              .then((resultxxx) => {
+                                if (resultxxx.message === "Expired Access") {
+                                  navigate("/authentication/sign-in");
+                                  window.location.reload();
+                                }
+                                if (resultxxx.message === "Token Does Not Exist") {
+                                  navigate("/authentication/sign-in");
+                                  window.location.reload();
+                                }
+                                if (resultxxx.message === "Unauthorized Access") {
+                                  navigate("/authentication/forbiddenPage");
+                                  window.location.reload();
+                                }
+                                console.log(resultxxx);
+                                if (resultxxx.status === "SUCCESS") {
+                                  console.log(resultxxx.data.id);
+                                  fetch(
+                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultxxx.data.name}`,
+                                    {
+                                      headers,
+                                    }
+                                  )
+                                    .then(async (res) => {
+                                      const aToken = res.headers.get("token-1");
+                                      localStorage.setItem("rexxdex", aToken);
+                                      return res.json();
+                                    })
+                                    .then((resultxme2) => {
+                                      if (resultxme2.message === "Expired Access") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Token Does Not Exist") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Unauthorized Access") {
+                                        navigate("/authentication/forbiddenPage");
+                                        window.location.reload();
+                                      }
+                                      const urls = resultxme2[0];
+                                      window.open(urls, "_blank", "noopener,noreferrer");
+
+                                      // if (isMounted) {
+                                      console.log(`link [${resultxme2[0]}]`);
+                                      const url = resultxme2[0];
+                                      if (url !== "") {
+                                        const objectURL = url;
+                                        console.log(objectURL);
+
+                                        // (C2) TO "FORCE DOWNLOAD"
+                                        const anchor = document.createElement("a");
+                                        anchor.href = objectURL;
+                                        anchor.download = resultxxx.data.name;
+                                        anchor.click();
+
+                                        // (C3) CLEAN UP
+                                        window.URL.revokeObjectURL(objectURL);
+                                      }
+                                      MySwal.fire({
+                                        title: resultxp.status,
+                                        type: "success",
+                                        text: resultxp.message,
+                                      }).then(() => {
+                                        // window.location.reload();
+                                      });
+                                      console.log(resultxp);
+                                    })
+                                    .catch((error) => {
+                                      setOpened(false);
+                                      MySwal.fire({
+                                        title: error.status,
+                                        type: "error",
+                                        text: error.message,
+                                      });
+                                    });
+                                }
+                              })
+                              .catch((error) => {
+                                MySwal.fire({
+                                  title: error.status,
+                                  type: "error",
+                                  text: error.message,
+                                });
+                              });
+                          }
+                        });
+                    });
+                }
+              }
+            });
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  };
+
   const handleReport = (e) => {
     if (showButton === 1) {
       console.log("asset report");
@@ -659,6 +1047,7 @@ function Reports() {
       console.log("sales3 report");
     } else if (showButton === 7) {
       console.log("financial1 report");
+      handleFinancial(e);
     } else if (showButton === 8) {
       console.log("financial2 report");
     } else if (showButton === 9) {
@@ -841,6 +1230,7 @@ function Reports() {
                   maxHeight: "150px",
                   cursor: "pointer",
                 }}
+                onClick={() => handleOpenModal(7)}
               >
                 <CardContent>
                   <Typography
@@ -849,7 +1239,7 @@ function Reports() {
                     component="div"
                     style={{ color: "white", marginTop: "40px" }}
                   >
-                    Sales Reports
+                    Financial Reports
                   </Typography>
                 </CardContent>
               </Card>
@@ -1054,7 +1444,7 @@ function Reports() {
                     textAlign="center"
                   >
                     <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                      Select Timeframe
+                      Select Time frame
                     </MDTypography>
                   </MDBox>
                   <MDBox

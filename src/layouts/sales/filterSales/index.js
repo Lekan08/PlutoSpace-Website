@@ -16,6 +16,8 @@ import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import DataTable from "examples/Tables/DataTable";
 import Styles from "styles";
+import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
 // Big Zzzz new doins 👏👏😀
 // 😴😫☺😎😍🥱windows .
 // na the 🐐 of all time write dis code 😎
@@ -278,7 +280,7 @@ function FilterSales() {
               style={Styles.boxSx}
             >
               <MDTypography variant="h4" fontWeight="regular" color="white" mt={1}>
-                Filter All Sales
+                Filter Sales
               </MDTypography>
             </MDBox>
             <br />
@@ -286,61 +288,74 @@ function FilterSales() {
               <MDBox mb={0}>
                 <Container>
                   <div className="row">
-                    <div className="col-sm-4">
-                      <TextField
-                        id="datetime-local"
-                        label="Start Time *"
-                        type="datetime-local"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        value={startTimex}
-                        onChange={(e) => setStartTime(e.target.value)}
-                      />
+                    <div className="col-sm-6">
+                      <Box sx={{ minWidth: 100 }}>
+                        <FormControl fullWidth>
+                          <TextField
+                            label="Start Total Amount(NGN) *"
+                            type="number"
+                            value={startAmountx}
+                            onChange={(e) => setStartAmount(e.target.value)}
+                          />
+                        </FormControl>
+                      </Box>
                     </div>
                     <br />
-                    <div className="col-sm-2" />
-                    &nbsp; &nbsp;
-                    <div className="col-sm-4">
-                      <TextField
-                        id="datetime-local"
-                        label="End Time *"
-                        type="datetime-local"
-                        InputLabelProps={{
-                          shrink: true,
-                        }}
-                        value={endTimex}
-                        onChange={(e) => setEndTime(e.target.value)}
-                      />
+                    <div className="col-sm-6">
+                      <Box sx={{ minWidth: 100 }}>
+                        <FormControl fullWidth>
+                          <TextField
+                            label="End Total Amount(NGN) *"
+                            type="number"
+                            value={endAmountx}
+                            onChange={(e) => setEndAmount(e.target.value)}
+                          />
+                        </FormControl>
+                      </Box>
                     </div>
                   </div>
                 </Container>
               </MDBox>
               <br />
-              <MDBox mb={0}>
+              <MDBox>
                 <Container>
                   <div className="row">
                     <div className="col-sm-6">
-                      <TextField
-                        label="Start Total Amount *"
-                        type="number"
-                        value={startAmountx}
-                        onChange={(e) => setStartAmount(e.target.value)}
-                      />
+                      <Box sx={{ minWidth: 100 }}>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="datetime-local"
+                            label="Start Time *"
+                            type="datetime-local"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            value={startTimex}
+                            onChange={(e) => setStartTime(e.target.value)}
+                          />
+                        </FormControl>
+                      </Box>
                     </div>
                     <br />
                     <div className="col-sm-6">
-                      <TextField
-                        label="End Total Amount *"
-                        type="number"
-                        value={endAmountx}
-                        onChange={(e) => setEndAmount(e.target.value)}
-                      />
+                      <Box sx={{ minWidth: 100 }}>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="datetime-local"
+                            label="End Time *"
+                            type="datetime-local"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            value={endTimex}
+                            onChange={(e) => setEndTime(e.target.value)}
+                          />
+                        </FormControl>
+                      </Box>
                     </div>
                   </div>
                 </Container>
               </MDBox>
-              <br />
               <MDBox>
                 <Container>
                   <div className="row">

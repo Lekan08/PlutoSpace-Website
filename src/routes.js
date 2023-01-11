@@ -627,17 +627,17 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Assets",
+    name: "Asset",
     key: "assets",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets",
+    route: "/asset",
     component: <Assets />,
   },
   {
-    name: "Update Assets",
-    key: "updateassets",
+    name: "Update Asset",
+    key: "updateasset",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets/update",
+    route: "/asset/update",
     component: <UpdateAssets />,
   },
   {
@@ -649,18 +649,18 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Company Assets",
-    key: "companyassets",
+    name: "Company Asset",
+    key: "companyasset",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/company-Assets",
+    route: "/company-Asset",
     component: <CompanyAssets />,
   },
   {
     type: "collapse",
-    name: "Customer Assets",
+    name: "Customer Asset",
     key: "customerassets",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/customer-Assets",
+    route: "/customer-Asset",
     component: <CustomerAssets />,
   },
   {
@@ -1614,9 +1614,9 @@ const routes = [
   {
     type: "collapse",
     name: "CBT",
-    key: "cbt",
+    key: "CBT",
     icon: <Icon fontSize="small">dvr</Icon>,
-    route: "/cbt",
+    route: "/CBT",
     component: <CBT />,
   },
   // {
@@ -1900,7 +1900,7 @@ const routes = [
     name: "Filter Sales",
     key: "filtersales",
     icon: <Icon fontSize="small">point_of_sale</Icon>,
-    route: "/sales/filterSales",
+    route: "/sales/filter-Sales",
     component: <FilterSales />,
   },
   {
