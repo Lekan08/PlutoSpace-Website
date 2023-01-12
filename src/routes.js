@@ -230,7 +230,7 @@ import UpdateBusinessTravel from "layouts/businessTravel/update";
 import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
 import MarkAsCompleted from "layouts/businessTravel/mark-as-completed";
 import ViewBusiness from "layouts/businessTravel/view";
-import AttachDocument from "layouts/businessTravel/attachdocument";
+import AttachDocument from "layouts/businessTravel/attach-document";
 import ForwardApproval from "layouts/businessTravel/forwardforapproval";
 import TimeSheetManual from "layouts/timesheet";
 import UpdateTimesheet from "layouts/timesheet/update-Timesheet";
@@ -755,7 +755,7 @@ const routes = [
     name: "Attach Document",
     key: "attachdocument",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/business-travel/attachdocument",
+    route: "/business-travel/attach-document",
     component: <AttachDocument />,
   },
   {
