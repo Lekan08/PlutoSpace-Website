@@ -27,6 +27,7 @@ import FormControl from "@mui/material/FormControl";
 import ListItemText from "@mui/material/ListItemText";
 import Select from "@mui/material/Select";
 import Checkbox from "@mui/material/Checkbox";
+import NotAdmin from "./notAdmin.png";
 
 function GeneralBills() {
   const { allGHeaders: miHeaders } = GHeaders();
@@ -45,6 +46,7 @@ function GeneralBills() {
   const [startAmountx, setStartAmountx] = useState("");
   const [endAmountx, setEndAmountx] = useState("");
   const [userInfox, setUserInfo] = useState([]);
+  const [showPage, setShowPage] = useState(false);
   //   const [purposex, setPurposex] = useState("");
 
   //   const ITEM_HEIGHT = 48;
@@ -330,31 +332,51 @@ function GeneralBills() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          console.log(result);
-          setUserInfo(result);
-        }
+    console.log(data11.roleID);
+    if (
+      data11.roleID !== "0" &&
+      data11.roleID !== "" &&
+      data11.roleID !== "null" &&
+      data11.roleID !== null
+    ) {
+      MySwal.fire({
+        title: "NOT_AN_ADMIN!",
+        text: "Only Admin can Access this Page Content.",
+        imageUrl: `${NotAdmin}`,
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: "Custom image",
       });
+      setShowPage(true);
+      setOpened(false);
+      setUserInfo([]);
+    } else {
+      fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          setOpened(false);
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          if (isMounted) {
+            console.log(result);
+            setUserInfo(result);
+          }
+        });
+    }
     return () => {
       isMounted = false;
     };
@@ -488,231 +510,236 @@ function GeneralBills() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <Card>
-        <MDBox pt={4} pb={3} px={30}>
-          <MDBox
-            variant="gradient"
-            // bgColor="info"
-            borderRadius="lg"
-            style={{ backgroundColor: "#f96d02" }}
-            mx={2}
-            mt={-3}
-            p={2}
-            mb={1}
-            textAlign="center"
-          >
-            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              General Bills
-            </MDTypography>
-          </MDBox>
-          <MDBox
-            mt={2}
-            mb={2}
-            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-          >
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="startTime">
-              {" "}
-            </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="FETime">
-              {" "}
-            </MDTypography>
-          </MDBox>
-          <MDBox component="form" role="form">
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-5">
-                    <TextField
-                      id="datetime-local"
-                      label="Start Time *"
-                      type="datetime-local"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      value={startTimexx}
-                      onChange={(e) => setStartTime(e.target.value)}
-                      onInput={(e) => handleTime(e.target.value)}
-                    />
-                  </div>
-                  <div className="col-sm-2">
-                    <></>
-                  </div>
-                  <div className="col-sm-5">
-                    <TextField
-                      id="datetime-local"
-                      label="End Time *"
-                      type="datetime-local"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      value={endTimexx}
-                      onChange={(e) => setEndTimexx(e.target.value)}
-                      onInput={(e) => handleTimex(e.target.value)}
-                    />
-                  </div>
-                </div>
-                &nbsp; &nbsp;
-                <div className="row">
-                  <div className="col-sm-5">
-                    <TextField
-                      id="filled-number"
-                      value={startAmountx || ""}
-                      label="Start Amount (NGN) "
-                      placeholder="Amount "
-                      type="number"
-                      onChange={(e) => setStartAmountx(e.target.value)}
-                      //   onKeyUp={(e) => handleAmount(e.target.value)}
-                      sx={{
-                        width: 250,
-                      }}
-                    />
-                  </div>
-                  <div className="col-sm-2">
-                    <></>
-                  </div>
-                  <div className="col-sm-5">
-                    <TextField
-                      id="filled-number"
-                      value={endAmountx || ""}
-                      label="End Amount (NGN) "
-                      placeholder="Amount "
-                      type="number"
-                      onChange={(e) => setEndAmountx(e.target.value)}
-                      //   onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                      sx={{
-                        width: 250,
-                      }}
-                    />
-                  </div>
-                </div>
-                &nbsp; &nbsp;
-                <div className="row">
-                  <div className="col-sm-5">
-                    <FormControl sx={{ width: 250 }}>
-                      <InputLabel id="demo-multiple-checkbox-label">Assigned To</InputLabel>
-                      <Select
-                        style={{ height: "40px" }}
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
-                        multiple
-                        value={empIDsxT}
-                        onChange={handleChange}
-                        input={<OutlinedInput label="Assigned To" />}
-                        // eslint-disable-next-line no-shadow
-                        renderValue={(selected) =>
-                          selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
-                        }
-                        MenuProps={MenuProps}
-                      >
-                        {userInfox.map((variant) => (
-                          <MenuItem key={variant.personal.id} value={variant.personal}>
-                            <Checkbox
-                              checked={
-                                empIDsxT.findIndex((item) => item.id === variant.personal.id) >= 0
-                              }
-                            />
-                            <ListItemText
-                              primary={`${variant.personal.fname} ${variant.personal.lname}`}
-                            />
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                  <div className="col-sm-2">
-                    <></>
-                  </div>
-                  <div className="col-sm-5">
-                    <FormControl sx={{ width: 250 }}>
-                      <InputLabel id="demo-multiple-checkbox-label">Created By</InputLabel>
-                      <Select
-                        style={{ height: "40px" }}
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
-                        multiple
-                        value={createdBysxT}
-                        onChange={handleChangeCrea}
-                        input={<OutlinedInput label="Created By" />}
-                        // eslint-disable-next-line no-shadow
-                        renderValue={(selected) =>
-                          selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
-                        }
-                        MenuProps={MenuProps}
-                      >
-                        {userInfox.map((variant) => (
-                          <MenuItem key={variant.personal.id} value={variant.personal}>
-                            <Checkbox
-                              checked={
-                                createdBysxT.findIndex((item) => item.id === variant.personal.id) >=
-                                0
-                              }
-                            />
-                            <ListItemText
-                              primary={`${variant.personal.fname} ${variant.personal.lname}`}
-                            />
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                </div>
-                &nbsp; &nbsp;
-                <div className="row">
-                  <div className="col-sm-12" style={style}>
-                    <FormControl sx={{ width: 450 }}>
-                      <InputLabel id="demo-multiple-checkbox-label">Approved By</InputLabel>
-                      <Select
-                        style={{ height: "43px" }}
-                        labelId="demo-multiple-checkbox-label"
-                        id="demo-multiple-checkbox"
-                        multiple
-                        value={approvedBysxT}
-                        onChange={handleChangeCreaAppr}
-                        input={<OutlinedInput label="Approved By" />}
-                        // eslint-disable-next-line no-shadow
-                        renderValue={(selected) =>
-                          selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
-                        }
-                        MenuProps={MenuProps}
-                      >
-                        {userInfox.map((variant) => (
-                          <MenuItem key={variant.personal.id} value={variant.personal}>
-                            <Checkbox
-                              checked={
-                                approvedBysxT.findIndex(
-                                  (item) => item.id === variant.personal.id
-                                ) >= 0
-                              }
-                            />
-                            <ListItemText
-                              primary={`${variant.personal.fname} ${variant.personal.lname}`}
-                            />
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </div>
-                </div>
-                &nbsp; &nbsp;
-              </Container>
+      {showPage ? (
+        <></>
+      ) : (
+        <Card>
+          <MDBox pt={4} pb={3} px={30}>
+            <MDBox
+              variant="gradient"
+              // bgColor="info"
+              borderRadius="lg"
+              style={{ backgroundColor: "#f96d02" }}
+              mx={2}
+              mt={-3}
+              p={2}
+              mb={1}
+              textAlign="center"
+            >
+              <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                General Bills
+              </MDTypography>
             </MDBox>
-            <MDBox mt={4} mb={1}>
+            <MDBox
+              mt={2}
+              mb={2}
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            >
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="startTime">
+                {" "}
+              </MDTypography>
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="FETime">
+                {" "}
+              </MDTypography>
+            </MDBox>
+            <MDBox component="form" role="form">
+              <MDBox mb={2}>
+                <Container>
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <TextField
+                        id="datetime-local"
+                        label="Start Time *"
+                        type="datetime-local"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        value={startTimexx}
+                        onChange={(e) => setStartTime(e.target.value)}
+                        onInput={(e) => handleTime(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-sm-2">
+                      <></>
+                    </div>
+                    <div className="col-sm-5">
+                      <TextField
+                        id="datetime-local"
+                        label="End Time *"
+                        type="datetime-local"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
+                        value={endTimexx}
+                        onChange={(e) => setEndTimexx(e.target.value)}
+                        onInput={(e) => handleTimex(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  &nbsp; &nbsp;
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <TextField
+                        id="filled-number"
+                        value={startAmountx || ""}
+                        label="Start Amount (NGN) "
+                        placeholder="Amount "
+                        type="number"
+                        onChange={(e) => setStartAmountx(e.target.value)}
+                        //   onKeyUp={(e) => handleAmount(e.target.value)}
+                        sx={{
+                          width: 250,
+                        }}
+                      />
+                    </div>
+                    <div className="col-sm-2">
+                      <></>
+                    </div>
+                    <div className="col-sm-5">
+                      <TextField
+                        id="filled-number"
+                        value={endAmountx || ""}
+                        label="End Amount (NGN) "
+                        placeholder="Amount "
+                        type="number"
+                        onChange={(e) => setEndAmountx(e.target.value)}
+                        //   onKeyUp={(e) => handleTaxAmount(e.target.value)}
+                        sx={{
+                          width: 250,
+                        }}
+                      />
+                    </div>
+                  </div>
+                  &nbsp; &nbsp;
+                  <div className="row">
+                    <div className="col-sm-5">
+                      <FormControl sx={{ width: 250 }}>
+                        <InputLabel id="demo-multiple-checkbox-label">Assigned To</InputLabel>
+                        <Select
+                          style={{ height: "40px" }}
+                          labelId="demo-multiple-checkbox-label"
+                          id="demo-multiple-checkbox"
+                          multiple
+                          value={empIDsxT}
+                          onChange={handleChange}
+                          input={<OutlinedInput label="Assigned To" />}
+                          // eslint-disable-next-line no-shadow
+                          renderValue={(selected) =>
+                            selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
+                          }
+                          MenuProps={MenuProps}
+                        >
+                          {userInfox.map((variant) => (
+                            <MenuItem key={variant.personal.id} value={variant.personal}>
+                              <Checkbox
+                                checked={
+                                  empIDsxT.findIndex((item) => item.id === variant.personal.id) >= 0
+                                }
+                              />
+                              <ListItemText
+                                primary={`${variant.personal.fname} ${variant.personal.lname}`}
+                              />
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className="col-sm-2">
+                      <></>
+                    </div>
+                    <div className="col-sm-5">
+                      <FormControl sx={{ width: 250 }}>
+                        <InputLabel id="demo-multiple-checkbox-label">Created By</InputLabel>
+                        <Select
+                          style={{ height: "40px" }}
+                          labelId="demo-multiple-checkbox-label"
+                          id="demo-multiple-checkbox"
+                          multiple
+                          value={createdBysxT}
+                          onChange={handleChangeCrea}
+                          input={<OutlinedInput label="Created By" />}
+                          // eslint-disable-next-line no-shadow
+                          renderValue={(selected) =>
+                            selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
+                          }
+                          MenuProps={MenuProps}
+                        >
+                          {userInfox.map((variant) => (
+                            <MenuItem key={variant.personal.id} value={variant.personal}>
+                              <Checkbox
+                                checked={
+                                  createdBysxT.findIndex(
+                                    (item) => item.id === variant.personal.id
+                                  ) >= 0
+                                }
+                              />
+                              <ListItemText
+                                primary={`${variant.personal.fname} ${variant.personal.lname}`}
+                              />
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                  </div>
+                  &nbsp; &nbsp;
+                  <div className="row">
+                    <div className="col-sm-12" style={style}>
+                      <FormControl sx={{ width: 450 }}>
+                        <InputLabel id="demo-multiple-checkbox-label">Approved By</InputLabel>
+                        <Select
+                          style={{ height: "43px" }}
+                          labelId="demo-multiple-checkbox-label"
+                          id="demo-multiple-checkbox"
+                          multiple
+                          value={approvedBysxT}
+                          onChange={handleChangeCreaAppr}
+                          input={<OutlinedInput label="Approved By" />}
+                          // eslint-disable-next-line no-shadow
+                          renderValue={(selected) =>
+                            selected.map((x) => `${x.fname} ${x.lname}`).join(", ")
+                          }
+                          MenuProps={MenuProps}
+                        >
+                          {userInfox.map((variant) => (
+                            <MenuItem key={variant.personal.id} value={variant.personal}>
+                              <Checkbox
+                                checked={
+                                  approvedBysxT.findIndex(
+                                    (item) => item.id === variant.personal.id
+                                  ) >= 0
+                                }
+                              />
+                              <ListItemText
+                                primary={`${variant.personal.fname} ${variant.personal.lname}`}
+                              />
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </div>
+                  </div>
+                  &nbsp; &nbsp;
+                </Container>
+              </MDBox>
               <MDBox mt={4} mb={1}>
-                <MDButton
-                  variant="gradient"
-                  onClick={handleValidate}
-                  //   color="info"
-                  style={Styles.buttonSx}
-                  width="50%"
-                  align="left"
-                >
-                  Filter
-                </MDButton>
+                <MDBox mt={4} mb={1}>
+                  <MDButton
+                    variant="gradient"
+                    onClick={handleValidate}
+                    //   color="info"
+                    style={Styles.buttonSx}
+                    width="50%"
+                    align="left"
+                  >
+                    Filter
+                  </MDButton>
+                </MDBox>
               </MDBox>
             </MDBox>
           </MDBox>
-        </MDBox>
-      </Card>
+        </Card>
+      )}
       <MDBox pt={3}>
         <DataTable
           table={{ columns: pColumns, rows: dataTablex }}

@@ -438,7 +438,7 @@ function Assets() {
                   style={Styles.boxSx}
                 >
                   <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                    Assets
+                    Asset
                   </MDTypography>
                 </MDBox>
                 <MDBox

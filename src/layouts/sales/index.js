@@ -975,7 +975,7 @@ function Sales() {
           <Grid container spacing={2}>
             <Grid item xs={2}>
               <Item>
-                <b>saleType</b>
+                <b>Sales Type</b>
               </Item>
             </Grid>
             <Grid item xs={1}>
@@ -1268,8 +1268,8 @@ function Sales() {
                     <TextField
                       id="filled-number"
                       value={bonusAmountxx}
-                      label="Bonus Amount "
-                      placeholder="Bonus Amount "
+                      label="Bonus Amount(NGN) "
+                      placeholder="Bonus Amount(NGN) "
                       type="number"
                       onChange={(e) => setBonusAmount(e.target.value)}
                     />
@@ -1283,8 +1283,8 @@ function Sales() {
                     <TextField
                       id="filled-number"
                       value={subTotalAmountx}
-                      label="Total Amount "
-                      placeholder="Total Amount "
+                      label="Total Amount(NGN) "
+                      placeholder="Total Amount(NGN) "
                       type="number"
                       name="totalAmount"
                       InputProps={{

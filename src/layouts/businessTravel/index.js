@@ -56,7 +56,7 @@ function BusinessTravel() {
   const [checkedName, setCheckedName] = useState("");
   const [checkedAddress, setCheckedAddress] = useState("");
   const [checkedCity, setCheckedCity] = useState("");
-  const [checkedExtra, setCheckedExtra] = useState("");
+  // const [checkedExtra, setCheckedExtra] = useState("");
   const [checkedExpense, setCheckedExpense] = useState("");
   const [checkedAExpense, setCheckedAExpense] = useState("");
   const [checkedDaySpent, setCheckedDaySpent] = useState("");
@@ -127,24 +127,24 @@ function BusinessTravel() {
       document.getElementById("city").innerHTML = "City is required<br>";
     }
   };
-  const handleOnExtraKeys = (value) => {
-    const letters = /^[a-zA-Z ]+$/;
-    if (!value.match(letters)) {
-      setCheckedExtra(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("xtrainfo").innerHTML =
-        "ExtraInformation - input only capital and small letters<br>";
-    }
-    if (value.match(letters)) {
-      setCheckedExtra(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("xtrainfo").innerHTML = "";
-    }
-    if (value.length === 0) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("xtrainfo").innerHTML = "ExtraInformation is required<br>";
-    }
-  };
+  // const handleOnExtraKeys = (value) => {
+  //   const letters = /^[a-zA-Z ]+$/;
+  //   if (!value.match(letters)) {
+  //     setCheckedExtra(false);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("xtrainfo").innerHTML =
+  //       "ExtraInformation - input only capital and small letters<br>";
+  //   }
+  //   if (value.match(letters)) {
+  //     setCheckedExtra(true);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("xtrainfo").innerHTML = "";
+  //   }
+  //   if (value.length === 0) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("xtrainfo").innerHTML = "ExtraInformation is required<br>";
+  //   }
+  // };
   const handleOnExpensesKeys = (value) => {
     const letters = /^[0-9 ]+$/;
     if (!value.match(letters)) {
@@ -359,7 +359,7 @@ function BusinessTravel() {
       checkedName &&
       checkedAddress &&
       checkedAExpense &&
-      checkedExtra &&
+      // checkedExtra &&
       checkedDayRequest &&
       checkedDaySpent &&
       checkedCity &&
@@ -432,7 +432,7 @@ function BusinessTravel() {
                   <div className="col-sm-12">
                     <MDInput
                       type="text"
-                      label="Purpose"
+                      label="Purpose *"
                       value={purposex || ""}
                       onKeyUp={(e) => handleOnPurposeKeys(e.target.value)}
                       onChange={(e) => setPurpose(e.target.value)}
@@ -448,7 +448,7 @@ function BusinessTravel() {
                 <div className="row">
                   <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      Country
+                      Country *
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -467,7 +467,7 @@ function BusinessTravel() {
                   </div>
                   <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      State
+                      State *
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -493,7 +493,7 @@ function BusinessTravel() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Address"
+                      label="Address *"
                       value={addressx}
                       onKeyUp={(e) => handleOnAddressKeys(e.target.value)}
                       onChange={(e) => setAddress(e.target.value)}
@@ -504,7 +504,7 @@ function BusinessTravel() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="City"
+                      label="City *"
                       value={cityx || ""}
                       onKeyUp={(e) => handleOnCityKeys(e.target.value)}
                       onChange={(e) => setCity(e.target.value)}
@@ -522,9 +522,9 @@ function BusinessTravel() {
                     <MDInput
                       type="text"
                       value={extraInformationx}
-                      onKeyUp={(e) => handleOnExtraKeys(e.target.value)}
+                      // onKeyUp={(e) => handleOnExtraKeys(e.target.value)}
                       onChange={(e) => setExtraInformation(e.target.value)}
-                      label="Extra Information"
+                      label="Extra Information "
                       variant="standard"
                       fullWidth
                     />
@@ -541,7 +541,7 @@ function BusinessTravel() {
                       value={expectedExpensesx}
                       onKeyUp={(e) => handleOnExpensesKeys(e.target.value)}
                       onChange={(e) => setExpectedExpenses(e.target.value)}
-                      label="Expected Expenses"
+                      label="Expected Expenses *"
                       variant="standard"
                       fullWidth
                     />
@@ -552,7 +552,7 @@ function BusinessTravel() {
                       value={actualExpensesx}
                       onKeyUp={(e) => handleOnAExpensesKeys(e.target.value)}
                       onChange={(e) => setActualExpenses(e.target.value)}
-                      label="Actual Expenses"
+                      label="Actual Expenses *"
                       variant="standard"
                       fullWidth
                     />
@@ -569,7 +569,7 @@ function BusinessTravel() {
                       value={actualDaysSpentx}
                       onKeyUp={(e) => handleOnActualDay(e.target.value)}
                       onChange={(e) => setActualDaysSpent(e.target.value)}
-                      label="Actual Day Spent"
+                      label="Actual Day Spent *"
                       variant="standard"
                       fullWidth
                     />
@@ -580,7 +580,7 @@ function BusinessTravel() {
                       value={noOfDaysRequestedx || ""}
                       onKeyUp={(e) => handleOnRequestKeys(e.target.value)}
                       onChange={(e) => setNoOfDaysRequested(e.target.value)}
-                      label="No of Days Requested"
+                      label="No of Days Requested *"
                       variant="standard"
                       fullWidth
                     />
@@ -628,7 +628,7 @@ function BusinessTravel() {
                       onChange={(e) => setDuty(e.target.value)}
                       aria-label="Default select example"
                     >
-                      <option value="">Select Account Owner</option>
+                      <option value="">Select Approver</option>
                       {userx.map((api) => (
                         <option key={api.personal.id} value={api.personal.id}>
                           {api.personal.fname} {api.personal.lname}
