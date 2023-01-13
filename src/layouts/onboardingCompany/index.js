@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import MDBox from "components/MDBox";
 import Card from "@mui/material/Card";
 import MDTypography from "components/MDTypography";
 import { Container, Form, Row, Col } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import TextField from "@mui/material/TextField";
 import "react-datepicker/dist/react-datepicker.css";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -26,6 +28,7 @@ function OnboardingCompany() {
   const MySwal = withReactContent(Swal);
   const [opened, setOpened] = useState(false);
   const [onboardingx, setOnboardingx] = useState("");
+  const [scatter, setScatter] = useState([]);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const navigate = useNavigate();
@@ -61,8 +64,23 @@ function OnboardingCompany() {
           window.location.reload();
         }
         if (isMounted) {
-          setUserxx(result);
-          setOpened(false);
+          fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/gets/${orgIDs}`, { headers })
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultx) => {
+              const arr = [];
+              // eslint-disable-next-line no-plusplus
+              for (let i = 0; i < result.length; i++) {
+                if (!resultx.find((r) => r.empID === result[i].personal.id)) {
+                  arr.push(result[i]);
+                }
+              }
+              setUserxx(arr);
+              setOpened(false);
+            });
         }
       });
     return () => {
@@ -77,13 +95,17 @@ function OnboardingCompany() {
     const orgIDs = data11.orgID;
     const createdByx = data11.personalID;
     const CurTime = new Date().getTime();
-    const raw = JSON.stringify({
-      orgID: orgIDs,
-      empID: Number(onboardingx),
-      startTime: OpeningDate,
-      endTime: ClosingDate,
-      createdBy: Number(createdByx),
-    });
+
+    const filt = scatter
+      .filter((r) => r.ticked === true)
+      .map((r) => ({
+        orgID: orgIDs,
+        empID: r.empID,
+        startTime: r.startTime,
+        endTime: r.endTime,
+        createdBy: Number(createdByx),
+      }));
+    const raw = JSON.stringify(filt);
     console.log(raw);
     const requestOptions = {
       method: "POST",
@@ -92,26 +114,26 @@ function OnboardingCompany() {
       redirect: "follow",
     };
 
-    let check = 0;
-    if (OpeningDate < CurTime) {
-      check = 1;
-      MySwal.fire({
-        title: "Invalid Date",
-        type: "error",
-        text: "Please Enter A Date From The Future",
-      });
-    }
-    if (ClosingDate < OpeningDate) {
-      check = 1;
-      MySwal.fire({
-        title: "Invalid Ending Date",
-        type: "error",
-        text: "Please Enter A Date From The Future",
-      });
-    }
+    const check = 0;
+    // if (OpeningDate < CurTime) {
+    //   check = 1;
+    //   MySwal.fire({
+    //     title: "Invalid Date",
+    //     type: "error",
+    //     text: "Please Enter A Date From The Future",
+    //   });
+    // }
+    // if (ClosingDate < OpeningDate) {
+    //   check = 1;
+    //   MySwal.fire({
+    //     title: "Invalid Ending Date",
+    //     type: "error",
+    //     text: "Please Enter A Date From The Future",
+    //   });
+    // }
 
     if (check === 0) {
-      fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/add`, requestOptions)
+      fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/addMultiple`, requestOptions)
         .then(async (res) => {
           const aToken = res.headers.get("token-1");
           localStorage.setItem("rexxdex", aToken);
@@ -147,12 +169,24 @@ function OnboardingCompany() {
     }
   };
 
+  const organize = (e, val) => {
+    scatter[val] = { ...scatter[val], inde: val, endTime: new Date(e.target.value).getTime() };
+    setScatter(scatter);
+  };
+  const organize2 = (e, val, idx) => {
+    scatter[val] = { ...scatter[val], startTime: new Date(e.target.value).getTime(), empID: idx };
+    setScatter(scatter);
+  };
+  const organize3 = (e, val, ver) => {
+    scatter[val] = { ...scatter[val], ticked: ver };
+    setScatter(scatter);
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <br />
-      <MDBox mx={10}>
-        <Card style={{ width: "900px" }}>
+      <MDBox mx={1}>
+        <Card>
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
@@ -172,73 +206,85 @@ function OnboardingCompany() {
             <br />
             <MDBox>
               <Container>
-                <MDBox mx={20} textAlign="center">
-                  <MDTypography variant="button" fontWeight="regular" fontSize="80%" color="text">
-                    Onboarding User
-                  </MDTypography>
-                  <Form.Select
-                    value={onboardingx}
-                    onChange={(e) => setOnboardingx(e.target.value)}
-                    aria-label="Default select example"
-                  >
-                    <option value="">Select Onboarding User</option>
-                    {userxx.map((api) => (
-                      <option key={api.personal.id} value={api.personal.id}>
-                        {api.personal.fname} {api.personal.lname}
-                      </option>
-                    ))}
-                  </Form.Select>
+                <MDBox>
+                  {userxx.length > 0 && (
+                    <MDTypography variant="button" fontWeight="regular" fontSize="70%" color="text">
+                      Select User(s)
+                    </MDTypography>
+                  )}
+                  {userxx.map((api, indx) => (
+                    <Row
+                      key={api.personal.id}
+                      style={{ textAlign: "left", borderBottom: "1px solid gray" }}
+                    >
+                      <Col style={{ paddingTop: "30px" }} sm={4}>
+                        <Form.Check.Input
+                          type="checkbox"
+                          value={api.personal.id}
+                          defaultChecked={api.isCheck}
+                          onClick={(e) => organize3(e, indx, e.target.checked)}
+                        />
+                        <Form.Check.Label style={{ fontSize: "16px" }}>
+                          &nbsp;{api.personal.fname} {api.personal.lname}
+                        </Form.Check.Label>
+                      </Col>
+                      <Col style={{ paddingBottom: "2px" }}>
+                        <div className="row">
+                          <div className="col-sm-5">
+                            <b style={{ fontSize: "11px" }}>onboarding starts</b>
+                            <TextField
+                              id="datetime-local"
+                              // label="onboarding starts"
+                              type="datetime-local"
+                              // style={{ width: "150px" }}
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              style={{ width: "16vw" }}
+                              // value={closing}
+                              onChange={(e) => {
+                                organize2(e, indx, api.personal.id);
+                              }}
+                            />
+                          </div>
+
+                          <div className="col-sm-5">
+                            <b style={{ fontSize: "11px" }}>onboarding ends</b>
+                            <TextField
+                              id="datetime-local"
+                              // label="onboarding starts"
+                              type="datetime-local"
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              // value={closing}
+                              style={{ width: "16vw" }}
+                              onChange={(e) => {
+                                organize(e, indx);
+                                // setClosingTime(e.target.value);
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </Col>
+                      &nbsp;
+                    </Row>
+                  ))}
                 </MDBox>
                 <br />
               </Container>
-
               <MDBox textAlign="center" mx={3}>
-                <Row style={{ paddingBottom: "70px" }}>
-                  <Col>
-                    <MDTypography variant="p" fontWeight="light" color="secondary" fontSize="90%">
-                      <br />
-                      Onboarding Begins
-                    </MDTypography>
-                    <Container>
-                      <DatePicker
-                        placeholderText="MM/DD/YY hh:mm"
-                        style={{ marginRight: "2px" }}
-                        selected={start}
-                        peekNextMonth
-                        showMonthDropdown
-                        showYearDropdown
-                        showTimeSelect
-                        dateFormat="MM/dd/yyyy h:mm aa"
-                        dropdownMode="select"
-                        onChange={(time) => setStart(time)}
-                      />
-                    </Container>
-                  </Col>
-                  <Col>
-                    <MDTypography variant="p" fontWeight="light" color="secondary" fontSize="90%">
-                      <br />
-                      Onboarding Ends
-                    </MDTypography>
-                    <Container>
-                      <DatePicker
-                        placeholderText="MM/DD/YY hh:mm"
-                        style={{ marginRight: "10px" }}
-                        selected={end}
-                        peekNextMonth
-                        showMonthDropdown
-                        showYearDropdown
-                        showTimeSelect
-                        dateFormat="MM/dd/yyyy h:mm aa"
-                        dropdownMode="select"
-                        onChange={(time) => setEnd(time)}
-                      />
-                    </Container>
-                  </Col>
-                </Row>
                 <MDBox textAlign="center" p={3}>
-                  <MDButton color="success" variant="gradient" onClick={handleCreate} size="large">
-                    ADD
-                  </MDButton>
+                  {userxx.length > 0 && (
+                    <MDButton
+                      color="success"
+                      variant="gradient"
+                      onClick={handleCreate}
+                      size="large"
+                    >
+                      ADD
+                    </MDButton>
+                  )}
                 </MDBox>
               </MDBox>
             </MDBox>

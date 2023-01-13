@@ -198,7 +198,7 @@ function UpdateOnboardingSession() {
         reminderTime: OpeningDate - 600000,
         startTime: OpeningDate,
         endTime: ClosingDate,
-        timezone: "Africa/Algiers",
+        timezone: "(UTC+01:00) West Central Africa | Africa/Algiers",
       });
       console.log(raw3);
       const requestOptions3 = {

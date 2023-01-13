@@ -29,7 +29,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 
-export default function MultiSessionOffboarding() {
+export default function MultiSession() {
   const MySwal = withReactContent(Swal);
   const navigate = useNavigate();
   const { allPHeaders: myHeaders } = PHeaders();
@@ -92,7 +92,7 @@ export default function MultiSessionOffboarding() {
     const orgIDs = data11.orgID;
     const headers = miHeaders;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_RAGA_URL}/offboarding/gets/${orgIDs}`, { headers })
+    fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/gets/${orgIDs}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -126,10 +126,10 @@ export default function MultiSessionOffboarding() {
       const orgIDs = data11.orgID;
       const raw3 = JSON.stringify({
         orgID: orgIDs,
-        title: "Offboarding Meeting",
+        title: "Onboarding Meeting",
         createdBy: data11.personalID,
-        description: "Offboarding Meeting",
-        purpose: "OFFBOARDING",
+        description: "Onboarding Meeting",
+        purpose: "ONBOARDING",
         reminderTime: opening - 600000,
         startTime: opening,
         endTime: closing,
@@ -206,7 +206,7 @@ export default function MultiSessionOffboarding() {
                 filtTick.map((r) => ({
                   orgID: orgIDs,
                   mentorID: Number(mentorx),
-                  offboardingID: r.offboardingID,
+                  onboardingID: r.onboardingID,
                   appointmentID: result.data.id,
                 }))
               );
@@ -219,7 +219,7 @@ export default function MultiSessionOffboarding() {
               };
 
               fetch(
-                `${process.env.REACT_APP_RAGA_URL}/offboardingSession/addMultiple`,
+                `${process.env.REACT_APP_RAGA_URL}/onboardingSession/addMultiple`,
                 requestOptions
               )
                 .then(async (res) => {
@@ -245,7 +245,7 @@ export default function MultiSessionOffboarding() {
                   MySwal.fire({
                     title: resultx.status,
                     type: "success",
-                    text: "Added Offboarding Session(s) successfully",
+                    text: "Added Onboarding Session(s) successfully",
                   }).then(() => {
                     window.location.reload();
                   });
@@ -291,7 +291,7 @@ export default function MultiSessionOffboarding() {
         name: r.ids.empName,
         personalID: r.ids.empID,
         appointmentTime: opening,
-        offboardingID: r.ids.id,
+        onboardingID: r.ids.id,
         email: userxx.find((z) => z.personal.id === r.ids.empID).personal.email,
       };
       return go.push(ment);
@@ -315,7 +315,7 @@ export default function MultiSessionOffboarding() {
           textAlign="center"
         >
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Create Offboarding Sessions for multiple Users
+            Create Onboarding Sessions for multiple Users
           </MDTypography>
         </MDBox>
         <Container>
@@ -346,7 +346,7 @@ export default function MultiSessionOffboarding() {
                 <Col style={{ paddingBottom: "2px" }}>
                   <div className="row">
                     <div className="col-sm-6">
-                      <b style={{ fontSize: "11px" }}>offboarding session starts</b> <br />
+                      <b style={{ fontSize: "11px" }}>onboarding session starts</b> <br />
                       <TextField
                         id="datetime-local"
                         // label="onboarding starts"
@@ -362,7 +362,7 @@ export default function MultiSessionOffboarding() {
                       />
                     </div>
                     <div className="col-sm-6">
-                      <b style={{ fontSize: "11px" }}>offboarding session ends</b> <br />
+                      <b style={{ fontSize: "11px" }}>onboarding session ends</b> <br />
                       <TextField
                         id="datetime-local"
                         // label="onboarding starts"
@@ -381,7 +381,7 @@ export default function MultiSessionOffboarding() {
               </Row>
               <hr />
               <br />
-              <b>Select Offboarding Users :</b> <br />
+              <b>Select Onboarding Users :</b> <br />
               {items.map((api, indx) => (
                 <Row key={api.id} style={{ textAlign: "left", borderBottom: "1px solid gray" }}>
                   <Col style={{ paddingTop: "10px" }} sm={4}>

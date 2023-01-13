@@ -24,7 +24,7 @@ import Styles from "styles";
 function Insurance() {
   const MySwal = withReactContent(Swal);
   const { columns: pColumns, rows: pRows } = InsuranceTable();
-
+  const [frequency, setFrequency] = useState("");
   const [individual, setIndividual] = useState("");
   const [individualx, setIndividualx] = useState("");
   const [corporate, setCorporate] = useState("");
@@ -117,8 +117,9 @@ function Insurance() {
       typeID: typex,
       planID: planx,
       item: itemx,
-      itemWorth: itemWorthx,
+      itemWorth: Number(itemWorthx),
       accountOwnerID: accountOwnerx,
+      contributionCategory: Number(frequency),
     });
     const requestOptions = {
       method: "POST",
@@ -527,7 +528,27 @@ function Insurance() {
                       ))}
                     </Form.Select>
                   </div>
-                  <div className="col-sm-6" />
+                  <div className="col-sm-6">
+                    <MDTypography
+                      variant="button"
+                      fontWeight="regular"
+                      fontSize="80%"
+                      textAlign="center"
+                      color="text"
+                    >
+                      Insurance Contribution Frequency
+                    </MDTypography>
+                    <br />
+                    <Form.Select
+                      value={frequency}
+                      onChange={(e) => setFrequency(e.target.value)}
+                      aria-label="Default select example"
+                    >
+                      <option value="">--Select Frequency--</option>
+                      <option value="0">Monthly Contribution</option>
+                      <option value="1">Yearly Contribution</option>
+                    </Form.Select>
+                  </div>
                 </div>
               </Container>
             </MDBox>

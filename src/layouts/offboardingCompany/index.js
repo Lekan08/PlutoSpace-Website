@@ -162,7 +162,7 @@ function OffboardingCompany() {
     scatter[val] = { ...scatter[val], startTime: new Date(e.target.value).getTime(), empID: idx };
     setScatter(scatter);
   };
-  const organize3 = (e, val, ver) => {
+  const organize3 = (val, ver) => {
     scatter[val] = { ...scatter[val], ticked: ver };
     setScatter(scatter);
   };
