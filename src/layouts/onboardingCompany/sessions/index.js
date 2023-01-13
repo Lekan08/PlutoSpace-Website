@@ -25,6 +25,7 @@ function OnboardingSession() {
   const { columns: pColumns, rows: pRows } = OnboardingCompanyTable();
   const [opened, setOpened] = useState(false);
   const [end, setEnd] = useState("");
+  const [status, setStatus] = useState(false);
   const [data, setData] = useState([]);
   const [mentorx, setMentorx] = useState("");
   const [start, setStart] = useState("");
@@ -76,6 +77,8 @@ function OnboardingSession() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
+    const stat = urlParams.get("stat");
+    if (Number(stat) === 2) setStatus(true);
     // const ids = JSON.parse([id]);
 
     // const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -130,72 +133,6 @@ function OnboardingSession() {
       isMounted = false;
     };
   }, []);
-  //   const handleOnTitleKeys = () => {
-  //     const letter = /^[a-zA-Z ]+$/;
-  //     if (!titlex.match(letter)) {
-  //       setCheckedTitle(false);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("title").innerHTML =
-  //         "Name - input only capital and small letters<br>";
-  //     }
-  //     if (titlex.match(letter)) {
-  //       setCheckedTitle(true);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("title").innerHTML = "";
-  //     }
-  //     if (titlex.length === 0) {
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("title").innerHTML = "Title is required<br>";
-  //     }
-  //     setEnabled(checkedTitle === true);
-  // const handleDelete = () => {
-  //   MySwal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed === true) {
-  //       const requestOptions = {
-  //         method: "DELETE",
-  //         headers: miHeaders,
-  //       };
-  //       fetch(
-  //         `${process.env.REACT_APP_RAGA_URL}/onboardingSession/delete/${appID[0].id}`,
-  //         requestOptions
-  //       )
-  //         .then((res) => res.json())
-  //         .then((resx) => {
-  //           if (resx.message === "Expired Access") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Token Does Not Exist") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Unauthorized Access") {
-  //             navigate("/authentication/forbiddenPage");
-  //           }
-  //           MySwal.fire({
-  //             title: resx.status,
-  //             type: "success",
-  //             text: resx.message,
-  //           }).then(() => {
-  //             window.location.reload();
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           MySwal.fire({
-  //             title: error.status,
-  //             type: "error",
-  //             text: error.message,
-  //           });
-  //         });
-  //     }
-  //   });
-  // };
   const handleCreate = () => {
     console.log(data[0]);
     const OpeningDate = new Date(start).getTime();
@@ -381,6 +318,7 @@ function OnboardingSession() {
                     value={mentorx}
                     onChange={(e) => setMentorx(e.target.value)}
                     aria-label="Default select example"
+                    disabled={status}
                   >
                     <option value="">Select Mentor</option>
                     {userxx.map((api) => (
@@ -396,7 +334,7 @@ function OnboardingSession() {
                     <Col>
                       <MDTypography variant="p" fontWeight="light" color="secondary" fontSize="90%">
                         <br />
-                        Onboarding Begins
+                        Onboarding Session Begins
                       </MDTypography>
                       <Container>
                         <DatePicker
@@ -410,13 +348,14 @@ function OnboardingSession() {
                           dateFormat="MM/dd/yyyy h:mm aa"
                           dropdownMode="select"
                           onChange={(time) => setStart(time)}
+                          disabled={status}
                         />
                       </Container>
                     </Col>
                     <Col>
                       <MDTypography variant="p" fontWeight="light" color="secondary" fontSize="90%">
                         <br />
-                        Onboarding Ends
+                        Onboarding Session Ends
                       </MDTypography>
                       <Container>
                         <DatePicker
@@ -430,6 +369,7 @@ function OnboardingSession() {
                           dateFormat="MM/dd/yyyy h:mm aa"
                           dropdownMode="select"
                           onChange={(time) => setEnd(time)}
+                          disabled={status}
                         />
                       </Container>
                     </Col>
@@ -449,9 +389,20 @@ function OnboardingSession() {
               </Container>
               <MDBox textAlign="center" mx={3}>
                 <MDBox textAlign="center" p={3}>
-                  <MDButton color="success" variant="gradient" onClick={handleCreate} size="large">
-                    ASSIGN
-                  </MDButton>
+                  {status ? (
+                    <i style={{ color: "red", fontSize: "10px" }}>
+                      This onboarding has already been terminated
+                    </i>
+                  ) : (
+                    <MDButton
+                      color="success"
+                      variant="gradient"
+                      onClick={handleCreate}
+                      size="large"
+                    >
+                      ASSIGN
+                    </MDButton>
+                  )}
                 </MDBox>
               </MDBox>
             </MDBox>

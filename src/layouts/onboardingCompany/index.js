@@ -89,12 +89,9 @@ function OnboardingCompany() {
   }, []);
 
   const handleCreate = () => {
-    const OpeningDate = new Date(start).getTime();
-    const ClosingDate = new Date(end).getTime();
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const createdByx = data11.personalID;
-    const CurTime = new Date().getTime();
 
     const filt = scatter
       .filter((r) => r.ticked === true)
