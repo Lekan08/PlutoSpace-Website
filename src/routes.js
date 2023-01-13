@@ -172,7 +172,8 @@ import Supplystat from "layouts/supplystats";
 import Products from "layouts/products";
 import UpdateProducts from "layouts/products/update";
 // import UpdateSessions from "layouts/onboardingCompany/sessions/update";
-// import Updateonboarding from "layouts/onboardingCompany/updateonboarding";
+import Updateonboarding from "layouts/onboardingCompany/updateonboarding";
+import Updateoffboarding from "layouts/offboardingCompany/updateoffboarding";
 import ViewProducts from "layouts/products/viewproducts";
 import ProductsBranch from "layouts/products/products-Branch";
 import ViewSupply from "layouts/supply/viewSupply";
@@ -1346,6 +1347,20 @@ const routes = [
     key: "updateOnboardingSession",
     route: "/onboarding/sessions/update",
     component: <UpdateOnboardingSession />,
+  },
+  {
+    name: "Update Onboarding",
+    key: "onboarding/update",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/onboardingCompany/update-Onboarding",
+    component: <Updateonboarding />,
+  },
+  {
+    name: "Update Offboarding",
+    key: "offboarding/update",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/offboardingCompany/update-Offboarding",
+    component: <Updateoffboarding />,
   },
   {
     type: "divider",
