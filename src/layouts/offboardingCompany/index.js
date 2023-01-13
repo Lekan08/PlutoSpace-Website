@@ -64,6 +64,7 @@ function OffboardingCompany() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log(result);
           setUserxx(result);
           setOpened(false);
         }
@@ -139,7 +140,7 @@ function OffboardingCompany() {
           MySwal.fire({
             title: resultr.status,
             type: "success",
-            text: resultr.message,
+            text: "Added Offboarding User(s) Successfully.",
           }).then(() => {
             window.location.reload();
           });
@@ -162,7 +163,7 @@ function OffboardingCompany() {
     scatter[val] = { ...scatter[val], startTime: new Date(e.target.value).getTime(), empID: idx };
     setScatter(scatter);
   };
-  const organize3 = (val, ver) => {
+  const organize3 = (e, val, ver) => {
     scatter[val] = { ...scatter[val], ticked: ver };
     setScatter(scatter);
   };

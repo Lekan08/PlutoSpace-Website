@@ -154,7 +154,7 @@ function OnboardingCompany() {
           MySwal.fire({
             title: resultr.status,
             type: "success",
-            text: resultr.message,
+            text: "Added Onboarding User(s) Successfully.",
           }).then(() => {
             window.location.reload();
           });
