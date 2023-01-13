@@ -61,7 +61,8 @@ function UpdateAssets() {
 
   const [checkedItem, setCheckedItem] = useState("");
   const [checkedItemWorth, setCheckedItemWorth] = useState("");
-  // const [checkedManufacturer, setCheckedManufacturer] = useState("");
+  const [checkedAssigned, setCheckedAssigned] = useState("");
+  const [checkedAssetsTypes, setCheckedAssetsTypes] = useState("");
   //   const [checkedMaximum, setCheckedMaximum] = useState("");
   const [opened, setOpened] = useState(false);
   const { allPHeaders: myHeaders } = PHeaders();
@@ -217,6 +218,26 @@ function UpdateAssets() {
       document.getElementById("itemWorth").innerHTML = "Rate is required<br>";
     }
   };
+  const handleOnAssignedKeys = (value) => {
+    setAssignedTo(value);
+    const Validate = "--Assigned To--";
+    if (value.toString().match(Validate)) {
+      setCheckedAssigned(false);
+    }
+    if (!value.toString().match(Validate)) {
+      setCheckedAssigned(true);
+    }
+  };
+  const handleOnAssetTypeKeys = (value) => {
+    setAssetTypeID(value);
+    const Validate = "--Assets Types--";
+    if (value.match(Validate)) {
+      setCheckedAssetsTypes(false);
+    }
+    if (!value.match(Validate)) {
+      setCheckedAssetsTypes(true);
+    }
+  };
   // const handleOnManfacturerKeys = (value) => {
   //   const letters = /^[a-zA-Z ]+$/;
   //   if (!value.match(letters)) {
@@ -304,7 +325,6 @@ function UpdateAssets() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
         if (result.length !== 0) {
           setId(result[0].id);
           setItem(result[0].item);
@@ -333,7 +353,8 @@ function UpdateAssets() {
           setNewword(result[0].components);
           handleOnItemWorthKeys(result[0].itemWorth);
           handleOnItemKeys(result[0].item);
-          // handleOnManfacturerKeys(result[0].manufacturer);
+          handleOnAssignedKeys(result[0].assignedTo);
+          handleOnAssetTypeKeys(result[0].assetTypeID);
           //   handleOnMaximumKeys(result[0].maximumLifeCycle);
         }
       });
@@ -408,6 +429,7 @@ function UpdateAssets() {
     }, 1);
   };
 
+  // eslint-disable-next-line consistent-return
   const handleClick = (e) => {
     setOpened(true);
     e.preventDefault();
@@ -442,8 +464,9 @@ function UpdateAssets() {
       manufacturer: manufacturerx,
       components: newword,
       assignedTo: assignedTox,
-      attachedDocs: [attachDocs],
+      attachedDocs: attachDocs,
     });
+    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -494,7 +517,7 @@ function UpdateAssets() {
   const ALPHA_NUMERIC_DASH_REGEX = /^[a-zA-Z]+$/;
 
   const handleValidate = (e) => {
-    if (checkedItem && checkedItemWorth === true) {
+    if (checkedItem && checkedItemWorth && checkedAssigned && checkedAssetsTypes === true) {
       handleClick(e);
     }
   };
@@ -516,7 +539,7 @@ function UpdateAssets() {
             style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Update Assets
+              Update Asset
             </MDTypography>
           </MDBox>
           <MDBox
@@ -569,7 +592,7 @@ function UpdateAssets() {
                     <MDBox textAlign="right">
                       <Form.Select
                         value={assetTypeIDx}
-                        onChange={(e) => setAssetTypeID(e.target.value)}
+                        onChange={(e) => handleOnAssetTypeKeys(e.target.value)}
                         aria-label="Default select example"
                       >
                         <option value="">--Assets Types--</option>
@@ -714,7 +737,7 @@ function UpdateAssets() {
                         <TextField
                           id="filled-number"
                           value={serialNox}
-                          label="Serial Number *"
+                          label="Serial Number"
                           placeholder="Serial Number"
                           type="number"
                           size="small"
@@ -806,9 +829,9 @@ function UpdateAssets() {
                         value={assignedTox}
                         aria-label="Default select example"
                         name="branchID"
-                        onChange={(e) => setAssignedTo(e.target.value)}
+                        onChange={(e) => handleOnAssignedKeys(e.target.value)}
                       >
-                        <option>--Assigned To--</option>
+                        <option>--Assigned *--</option>
                         {user.map((apis) => (
                           <option key={apis.personal.id} value={apis.personal.id}>
                             {apis.personal.fname} {apis.personal.lname}

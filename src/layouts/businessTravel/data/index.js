@@ -603,7 +603,7 @@ export default function BusinessData() {
                   View/Update
                 </Dropdown.Item>
                 <Dropdown.Item
-                  onClick={() => navigate(`/business-travel/attachdocument?id=${value}`)}
+                  onClick={() => navigate(`/business-travel/attach-document?id=${value}`)}
                 >
                   Attach Document
                 </Dropdown.Item>

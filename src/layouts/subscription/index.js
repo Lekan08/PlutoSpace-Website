@@ -517,7 +517,7 @@ function MySubscription() {
 
             <Dropdown.Menu>
               <Dropdown.Item
-                onClick={() => navigate(`/my-Subscription/update-My-Subscription?id=${value}`)}
+                onClick={() => navigate(`/subscription/update-Subscription?id=${value}`)}
               >
                 Update
               </Dropdown.Item>
@@ -548,7 +548,7 @@ function MySubscription() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              My Subscriptions
+              Subscription
             </MDTypography>
           </MDBox>
           <MDBox

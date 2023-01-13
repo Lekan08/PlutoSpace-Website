@@ -37,6 +37,7 @@ function UpdateAssetTypes() {
   const [checkedName, setCheckedName] = useState("");
   const [checkedNumber, setCheckedNumber] = useState("");
   const [checkedMaximum, setCheckedMaximum] = useState("");
+  const [checkedTypes, setCheckedTypes] = useState("");
   const [opened, setOpened] = useState(false);
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
@@ -92,6 +93,16 @@ function UpdateAssetTypes() {
       document.getElementById("maximum").innerHTML = "Maximum Life Cycle is required<br>";
     }
   };
+  const handleOnTypeKeys = (value) => {
+    setType(value);
+    const Validate = "--Type *--";
+    if (value.match(Validate)) {
+      setCheckedTypes(false);
+    }
+    if (!value.match(Validate)) {
+      setCheckedTypes(true);
+    }
+  };
 
   const handleGet = () => {
     setOpened(true);
@@ -135,6 +146,7 @@ function UpdateAssetTypes() {
           handleOnRateKeys(result[0].rate);
           handleOnNameKeys(result[0].name);
           handleOnMaximumKeys(result[0].maximumLifeCycle);
+          handleOnTypeKeys(result[0].type);
         }
       });
   };
@@ -215,7 +227,7 @@ function UpdateAssetTypes() {
   };
 
   const handleValidate = (e) => {
-    if (checkedName && checkedNumber && checkedMaximum === true) {
+    if (checkedName && checkedNumber && checkedMaximum && checkedTypes === true) {
       handleClick(e);
     }
   };
@@ -298,9 +310,9 @@ function UpdateAssetTypes() {
                         value={typex || ""}
                         aria-label="Default select example"
                         name="salesID"
-                        onChange={(e) => setType(e.target.value)}
+                        onChange={(e) => handleOnTypeKeys(e.target.value)}
                       >
-                        <option value="">Type</option>
+                        <option value="">--Type *--</option>
                         <option value="1">Depreciating</option>
                         <option value="2">Appreciating</option>
                       </Form.Select>
@@ -309,7 +321,7 @@ function UpdateAssetTypes() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Rate %"
+                      label="Rate % *"
                       value={ratex || ""}
                       onKeyUp={(e) => handleOnRateKeys(e.target.value)}
                       onChange={(e) => setRate(e.target.value)}
@@ -326,7 +338,7 @@ function UpdateAssetTypes() {
                   <div className="col-sm-6">
                     <MDInput
                       type="number"
-                      label="Maximum Life Cycle"
+                      label="Maximum Life Cycle *"
                       value={maximumLifeCyclex || ""}
                       onKeyUp={(e) => handleOnMaximumKeys(e.target.value)}
                       onChange={(e) => setMaximumLifeCycle(e.target.value)}

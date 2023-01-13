@@ -84,9 +84,9 @@ function UpdateBusinessTravel() {
     setAllStates(filteredItems[0].states);
     setResidentialCountry(e.target.value);
   };
-  const handleOnChangeRCState = (e) => {
-    setResidentialState(e.target.value);
-  };
+  // const handleOnChangeRCState = (e) => {
+  //   setResidentialState(e.target.value);
+  // };
 
   const handleOnPurposeKeys = (value) => {
     console.log(value);
@@ -367,6 +367,7 @@ function UpdateBusinessTravel() {
           setApprovalStatus(result[0].approvalStatus);
           setApproveTime(result[0].approveTime);
           setCreatedTime(result[0].createdTime);
+          // handleOnChangeRCCountry(result[0].location.country);
 
           handleOnPurposeKeys(result[0].purpose);
           handleOnAddressKeys(result[0].location.address);
@@ -605,7 +606,7 @@ function UpdateBusinessTravel() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Update Business Travels
+              Update Business Travel
             </MDTypography>
           </MDBox>
           <MDBox
@@ -648,7 +649,7 @@ function UpdateBusinessTravel() {
                   <div className="col-sm-12">
                     <MDInput
                       type="text"
-                      label="Purpose"
+                      label="Purpose *"
                       value={purposex || ""}
                       onKeyUp={(e) => handleOnPurposeKeys(e.target.value)}
                       onChange={(e) => setPurpose(e.target.value)}
@@ -664,7 +665,7 @@ function UpdateBusinessTravel() {
                 <div className="row">
                   <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      Country
+                      Country *
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -683,13 +684,14 @@ function UpdateBusinessTravel() {
                   </div>
                   <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      State
+                      State *
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
                         value={residentialStatex || ""}
                         aria-label="Default select example"
-                        onChange={handleOnChangeRCState}
+                        // onChange={handleOnChangeRCState}
+                        onChange={(e) => setResidentialState(e.target.value)}
                       >
                         <option>--Select State--</option>
                         {allStates.map((apis) => (
@@ -709,7 +711,7 @@ function UpdateBusinessTravel() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Address"
+                      label="Address *"
                       value={addressx}
                       onKeyUp={(e) => handleOnAddressKeys(e.target.value)}
                       onChange={(e) => setAddress(e.target.value)}
@@ -720,7 +722,7 @@ function UpdateBusinessTravel() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="City"
+                      label="City *"
                       value={cityx || ""}
                       onKeyUp={(e) => handleOnCityKeys(e.target.value)}
                       onChange={(e) => setCity(e.target.value)}
@@ -740,7 +742,7 @@ function UpdateBusinessTravel() {
                       value={extraInformationx}
                       // onKeyUp={(e) => handleOnExtraKeys(e.target.value)}
                       onChange={(e) => setExtraInformation(e.target.value)}
-                      label="Extra Information"
+                      label="Extra Information "
                       variant="standard"
                       fullWidth
                     />
@@ -757,7 +759,7 @@ function UpdateBusinessTravel() {
                       value={expectedExpensesx}
                       onKeyUp={(e) => handleOnExpensesKeys(e.target.value)}
                       onChange={(e) => setExpectedExpenses(e.target.value)}
-                      label="Expected Expenses"
+                      label="Expected Expenses *"
                       variant="standard"
                       fullWidth
                     />
@@ -768,7 +770,7 @@ function UpdateBusinessTravel() {
                       value={actualExpensesx}
                       onKeyUp={(e) => handleOnAExpensesKeys(e.target.value)}
                       onChange={(e) => setActualExpenses(e.target.value)}
-                      label="Actual Expenses"
+                      label="Actual Expenses *"
                       variant="standard"
                       fullWidth
                     />
@@ -785,7 +787,7 @@ function UpdateBusinessTravel() {
                       value={actualDaysSpentx}
                       onKeyUp={(e) => handleOnActualDay(e.target.value)}
                       onChange={(e) => setActualDaysSpent(e.target.value)}
-                      label="Actual Day Spent"
+                      label="Actual Day Spent *"
                       variant="standard"
                       fullWidth
                     />
@@ -796,7 +798,7 @@ function UpdateBusinessTravel() {
                       value={noOfDaysRequestedx || ""}
                       onKeyUp={(e) => handleOnRequestKeys(e.target.value)}
                       onChange={(e) => setNoOfDaysRequested(e.target.value)}
-                      label="No of Days Requested"
+                      label="No of Days Requested *"
                       variant="standard"
                       fullWidth
                     />
@@ -814,7 +816,7 @@ function UpdateBusinessTravel() {
                     align="left"
                     color="text"
                   >
-                    Start TIme
+                    Start TIme *
                   </MDTypography>
                   <DatePicker
                     placeholderText="Start Date"
@@ -836,7 +838,7 @@ function UpdateBusinessTravel() {
                       textAlign="center"
                       color="text"
                     >
-                      Approver Name
+                      Approver Name *
                     </MDTypography>
                     <br />
                     <Form.Select

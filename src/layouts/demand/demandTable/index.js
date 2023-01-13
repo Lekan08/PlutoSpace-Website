@@ -305,7 +305,7 @@ export default function DemandTable() {
     navigate(`/demand/update-Demand?id=${value}`);
   };
   const handleDemandToSupplyx = (value) => {
-    navigate(`/demand/convertDemandToSupply?id=${value}`);
+    navigate(`/demand/convert-Demand-To-Supply?id=${value}`);
   };
 
   const handleViewDemand = (value) => {

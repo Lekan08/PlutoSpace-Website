@@ -549,6 +549,8 @@ function Sales() {
     };
   }, [showPrint, onBeforeGetContentResolve]);
 
+  console.log(handlePrint);
+
   const handleClick = (e) => {
     if (Payment === 0) {
       setOpened(true);
@@ -600,9 +602,70 @@ function Sales() {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
           }
+          // if (result.status === "SUCCESS") {
+          //   // handlePrint();
+          // }
           if (result.status === "SUCCESS") {
             handlePrint();
+            const allResult = result.data;
+            const raw2 = JSON.stringify({
+              orgID: orgIDs,
+              type: "SALES",
+              requestID: allResult.id,
+              balance: allResult.subTotalAmount,
+              createdBy: allResult.createdBy,
+              clientID: allResult.individualID,
+              originalAmount: allResult.subTotalAmount,
+            });
+            const requestOptions2 = {
+              method: "POST",
+              headers: myHeaders,
+              body: raw2,
+              redirect: "follow",
+            };
+            fetch(`${process.env.REACT_APP_LOUGA_URL}/creditFacility/add`, requestOptions2)
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                const resultx = await res.text();
+                if (resultx === null || resultx === undefined || resultx === "") {
+                  return {};
+                }
+                return JSON.parse(resultx);
+              })
+              .then((resultx) => {
+                if (resultx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+                console.log(resultx);
+                setOpened(false);
+                MySwal.fire({
+                  title: resultx.status,
+                  type: "success",
+                  text: resultx.message,
+                }).then(() => {
+                  window.location.reload();
+                });
+              })
+              .catch((error) => {
+                setOpened(false);
+                MySwal.fire({
+                  title: error.status,
+                  type: "error",
+                  text: error.message,
+                });
+              });
           }
+          console.log(result);
           setOpened(false);
           MySwal.fire({
             title: result.status,
@@ -912,7 +975,7 @@ function Sales() {
           <Grid container spacing={2}>
             <Grid item xs={2}>
               <Item>
-                <b>saleType</b>
+                <b>Sales Type</b>
               </Item>
             </Grid>
             <Grid item xs={1}>
@@ -1205,8 +1268,8 @@ function Sales() {
                     <TextField
                       id="filled-number"
                       value={bonusAmountxx}
-                      label="Bonus Amount "
-                      placeholder="Bonus Amount "
+                      label="Bonus Amount(NGN) "
+                      placeholder="Bonus Amount(NGN) "
                       type="number"
                       onChange={(e) => setBonusAmount(e.target.value)}
                     />
@@ -1220,8 +1283,8 @@ function Sales() {
                     <TextField
                       id="filled-number"
                       value={subTotalAmountx}
-                      label="Total Amount "
-                      placeholder="Total Amount "
+                      label="Total Amount(NGN) "
+                      placeholder="Total Amount(NGN) "
                       type="number"
                       name="totalAmount"
                       InputProps={{
@@ -1269,10 +1332,10 @@ function Sales() {
                         fontWeight="medium"
                         style={Styles.textSx}
                       >
-                        Cash Payment:
+                        {/* Cash Payment: */}
                       </MDTypography>
                       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Cash Payment: </label>
+                      <label htmlFor="filled-number"> Cash Payment (NGN): </label>
                       <TextField
                         id="filled-number"
                         value={cashPaymentx}
@@ -1295,10 +1358,10 @@ function Sales() {
                         fontWeight="medium"
                         style={Styles.textSx}
                       >
-                        Transfer Payment:
+                        {/* Transfer Payment: */}
                       </MDTypography>
                       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Transfer Payment: </label>
+                      <label htmlFor="filled-number"> Transfer Payment (NGN): </label>
                       <TextField
                         id="filled-number"
                         value={transferPaymentx}
@@ -1320,11 +1383,11 @@ function Sales() {
                       fontWeight="medium"
                       style={Styles.textSx}
                     >
-                      Card Payment:
+                      {/* Card Payment: */}
                     </MDTypography>
                     <FormControl fullWidth>
                       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Card Payment: </label>
+                      <label htmlFor="filled-number"> Card Payment (NGN): </label>
                       <TextField
                         id="filled-number"
                         value={cardPaymentx}
@@ -1333,6 +1396,21 @@ function Sales() {
                         type="number"
                         onChange={(e) => setCardPayment(e.target.value)}
                       />
+                      <div>
+                        <MonnifyConsumer {...monNey} className="btn">
+                          {({ initializePayment }) => (
+                            // eslint-disable-next-line react/button-has-type
+                            <MDButton
+                              variant="gradient"
+                              onClick={() => initializePayment()}
+                              color="info"
+                              width="50%"
+                            >
+                              Pay using card
+                            </MDButton>
+                          )}
+                        </MonnifyConsumer>
+                      </div>
                     </FormControl>
                     {/* <MDBox mt={4} mb={1}>
                       <div>
@@ -1354,47 +1432,6 @@ function Sales() {
                   </Box>
                 </div>
               </div>
-              <div className="Col-sm-3">
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                    <MDTypography
-                      variant="button"
-                      color="info"
-                      fontWeight="medium"
-                      style={Styles.textSx}
-                    >
-                      PAY ON CREDIT:
-                    </MDTypography>
-                    <FormControl fullWidth>
-                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> pay on credit: </label>
-                      <TextField
-                        id="filled-number"
-                        label="Amount"
-                        placeholder="Amount"
-                        type="number"
-                      />
-                    </FormControl>
-                    <MDBox mt={4} mb={1}>
-                      <div>
-                        <MonnifyConsumer {...monNey} className="btn">
-                          {({ initializePayment }) => (
-                            // eslint-disable-next-line react/button-has-type
-                            <MDButton
-                              variant="gradient"
-                              onClick={() => initializePayment()}
-                              color="info"
-                              width="50%"
-                            >
-                              Pay
-                            </MDButton>
-                          )}
-                        </MonnifyConsumer>
-                      </div>
-                    </MDBox>
-                  </Box>
-                </div>
-              </div>
             </Container>
           ) : (
             <></>
@@ -1409,8 +1446,8 @@ function Sales() {
                       <TextField
                         id="filled-number"
                         value={Payment}
-                        label="Balance "
-                        placeholder="Balance"
+                        label="Balance (NGN)"
+                        placeholder="Balance (NGN)"
                         type="number"
                         name="balance"
                         InputProps={{

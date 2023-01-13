@@ -273,7 +273,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(result);
+        // console.log(result);
         if (result) {
           if (result.length !== 0) {
             setItems((item) => [...item, result]);
@@ -384,11 +384,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
         <MDBox>
           {/* eslint-disable-next-line arrow-body-style */}
           {items.map((item) => {
-            const data = item;
+            // const data = item;
             // console.log(items[0]);
             // console.log(items);
             // console.log(item.groupName);
-            console.log(data);
+            // console.log(data);
             // console.log(item[0].msg);
 
             return (

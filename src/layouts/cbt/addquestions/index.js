@@ -146,7 +146,11 @@ function AddQuesToCBT() {
                       const quesIds = sit.cbtQuestion.questionID;
                       if (quesIds === it.id) {
                         check = 1;
-                        newQues.push(it);
+                        const questObj = {
+                          id: sit.cbtQuestion.id,
+                          name: it.question,
+                        };
+                        newQues.push(questObj);
                       }
                     });
                     if (check === 0) {
@@ -180,10 +184,48 @@ function AddQuesToCBT() {
     setNItems((list) => [...list, check]);
   };
 
-  const handleRemoveQues = (check) => {
-    // eslint-disable-next-line no-shadow
-    setItems((stages) => stages.filter((stage) => stage.id !== check.id));
-    setNItems((list) => [...list, check]);
+  // const handleRemoveQues = (check) => {
+  //   // eslint-disable-next-line no-shadow
+  //   setItems((stages) => stages.filter((stage) => stage.id !== check.id));
+  //   setNItems((list) => [...list, check]);
+  // };
+  const handleRemoveQues = (value) => {
+    const requestOptions = {
+      method: "DELETE",
+      headers: miHeaders,
+    };
+
+    fetch(`${process.env.REACT_APP_RAGA_URL}/cbtQuestion/delete/${value}`, requestOptions)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((resx) => {
+        if (resx.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+        }
+        if (resx.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+        }
+        if (resx.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+        }
+        MySwal.fire({
+          title: resx.status,
+          type: "success",
+          text: resx.message,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
   };
 
   // const permissionsList = [];
@@ -506,7 +548,6 @@ function AddQuesToCBT() {
       });
     // }
   };
-  // console.log(handleOnClick);
 
   return (
     <DashboardLayout>
@@ -540,42 +581,6 @@ function AddQuesToCBT() {
         >
           Questions
         </MDTypography>
-        {/* <MDBox pt={0} px={4}>
-          &nbsp;
-          <Form>
-            {itemsx.map((api) => (
-              <div key={api.id} className="mb-3">
-                <Form.Check.Input
-                  type="checkbox"
-                  defaultChecked={api.isCheck}
-                  onClick={(e) => handleOnClick(e, api.id)}
-                />{" "}
-                &nbsp;
-                <Form.Check.Label>&nbsp;{api.question}</Form.Check.Label>
-                {/* &nbsp;
-                <h6>{api.question}</h6> 
-              </div>
-            ))}
-          </Form>
-           <div className="topping">
-            <input type="checkbox" id="topping" name="topping" value="Paneer" />
-            Paneer
-          </div>
-        </MDBox> */}
-        {/* <MDBox> */}
-        {/* <MDBox component="form" role="form">
-          <MDBox mt={4} mb={1}>
-            <MDButton
-              onClick={handleOnClick}
-              variant="gradient"
-              color="info"
-              width="50%"
-              align="center"
-            >
-              Save
-            </MDButton>
-          </MDBox>
-        </MDBox> */}
         <div className="row">
           <div className="col-sm-5">
             <Box sx={{ flexGrow: 1 }}>
@@ -604,9 +609,9 @@ function AddQuesToCBT() {
                   <Grid key={item.id} item xs={12}>
                     <FormControlLabel
                       control={<Checkbox defaultChecked />}
-                      onClick={(e) => handleOnClick(e, item.id)}
-                      onKeyUp={() => handleRemoveQues(item)}
-                      label={item.question}
+                      onClick={() => handleRemoveQues(item.id)}
+                      // onKeyUp={() => handleRemoveQues(item)}
+                      label={item.name}
                     />
                   </Grid>
                 ))}

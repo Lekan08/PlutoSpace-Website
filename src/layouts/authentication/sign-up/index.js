@@ -45,6 +45,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import Styles from "styles";
 
 function Cover() {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -366,7 +367,8 @@ function Cover() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
+          style={Styles.boxSx}
           borderRadius="lg"
           coloredShadow="success"
           mx={2}
@@ -384,7 +386,8 @@ function Cover() {
           <MDBox component="form" role="form">
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -602,7 +605,8 @@ function Cover() {
             </Container>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -726,7 +730,8 @@ function Cover() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -823,7 +828,13 @@ function Cover() {
               </MDTypography>
             </MDBox> */}
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" fullWidth>
+              <MDButton
+                variant="gradient"
+                onClick={handleValidate}
+                // color="info"
+                style={Styles.buttonSx}
+                fullWidth
+              >
                 Create Account
               </MDButton>
             </MDBox>
@@ -834,7 +845,8 @@ function Cover() {
                   component={Link}
                   to="/authentication/sign-in"
                   variant="button"
-                  color="info"
+                  // color="info"
+                  style={Styles.textSx}
                   fontWeight="medium"
                   textGradient
                 >

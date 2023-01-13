@@ -275,7 +275,7 @@ export default function RecruitmentGradingData() {
   }, []);
 
   const handleShow = (value) => {
-    navigate(`/recruitment-Grading/update-Recruitment?id=${value}`);
+    navigate(`/recruitment-Grading/update-Recruitment-Grading?id=${value}`);
   };
 
   const changeCol = (value) => {

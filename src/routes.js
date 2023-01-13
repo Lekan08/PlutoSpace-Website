@@ -95,11 +95,11 @@ import SalaryPayment from "layouts/salaryPayment";
 import Bonusdeduction from "layouts/bonusdeduction";
 import MyBills from "layouts/my-Bills";
 import Accounting from "layouts/accounting";
-import MySubscription from "layouts/my-Subscription";
+import MySubscription from "layouts/subscription";
 import GeneralBills from "layouts/general-Bill";
 import GeneralSubscription from "layouts/general-Subscription";
 import UpdateMyBills from "layouts/my-Bills/update-My-Bills/index";
-import UpdateMySubscription from "layouts/my-Subscription/update-My-Subscription/index";
+import UpdateMySubscription from "layouts/subscription/update-Subscription/index";
 import CloneBonusDeduction from "layouts/bonusdeduction/clone";
 import UpdateBonusOrDeduction from "layouts/bonusdeduction/update";
 import GroupNotifications from "layouts/group-notifications";
@@ -142,7 +142,7 @@ import Tax from "layouts/tax";
 import TaxRemittance from "layouts/tax-Remittance-Personal";
 import TaxRemittanceOrg from "layouts/tax-Remittance-Organisation";
 import RecruitmentGrading from "layouts/recruitmentGrading";
-import RecruitmentUpdate from "layouts/recruitmentGrading/updateRecruitment";
+import RecruitmentUpdate from "layouts/recruitmentGrading/updateRecruitmentGrading";
 import TestQuestion from "layouts/testQuestions/index";
 import Updatetest from "layouts/testQuestions/updatetest";
 import SingleCorporate from "layouts/singleCorporate/index";
@@ -178,7 +178,7 @@ import ProductsBranch from "layouts/products/products-Branch";
 import ViewSupply from "layouts/supply/viewSupply";
 // import AssignCbtQuestion from "layouts/cbt/assignCbtTestQuestion";
 import DemandUpdate from "layouts/demand/update-Demand";
-import ConvertDemandToSupply from "layouts/demand/convertDemandToSupply";
+import ConvertDemandToSupply from "layouts/demand/convert-Demand-To-Supply";
 import ViewDemand from "layouts/demand/view-Demand";
 import Pipeline from "layouts/pipeline";
 import AddStage from "layouts/workFlow/add-Stage";
@@ -213,6 +213,7 @@ import ViewCalendar from "layouts/myAccessor/viewCalendar";
 import CLientLevel from "layouts/clientLevel";
 import WelcomeCbt from "layouts/cbt/instruction";
 import TakeCBT from "layouts/cbt/takeCbt";
+import Reports from "layouts/reports";
 import DeclineReportProduction from "layouts/products/reportProduction/declineReportProduction/";
 import TicketClientSettings from "layouts/tickets/ticketClientSettings";
 
@@ -229,7 +230,7 @@ import UpdateBusinessTravel from "layouts/businessTravel/update";
 import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
 import MarkAsCompleted from "layouts/businessTravel/mark-as-completed";
 import ViewBusiness from "layouts/businessTravel/view";
-import AttachDocument from "layouts/businessTravel/attachdocument";
+import AttachDocument from "layouts/businessTravel/attach-document";
 import ForwardApproval from "layouts/businessTravel/forwardforapproval";
 import TimeSheetManual from "layouts/timesheet";
 import UpdateTimesheet from "layouts/timesheet/update-Timesheet";
@@ -250,7 +251,7 @@ import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
 import LeadsWorkflow from "layouts/leadsWorkflow";
-import AssignCbtTestToJobPost from "layouts/cbt/assignCbtTestToJobPostApplicant";
+import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
 import SalesPayment from "layouts/sales/salesPayment";
 import FilterSales from "layouts/sales/filterSales";
@@ -276,6 +277,12 @@ import AssetAttachDocument from "layouts/assets/attachDocuments";
 import Coupons from "layouts/coupons";
 import UpdateCoupons from "layouts/coupons/update";
 import AppointmentOffboardingSession from "layouts/assignedOffboarding/appointmentSession";
+import TreasuryType from "layouts/treasuryType";
+import UpdateTreasuryType from "layouts/treasuryType/update";
+import Treasury from "layouts/treasury";
+import TreasuryContribution from "layouts/treasury/treasuryContribution";
+import UpdateTreasuryContribution from "layouts/treasury/treasuryContribution/update";
+import TreasuryDebtors from "layouts/treasury/treasuryGetDebtors";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
 import OnboardingCompany from "./layouts/onboardingCompany";
@@ -404,6 +411,14 @@ const routes = [
     icon: <Icon fontSize="small">supervised_user_circle</Icon>,
     route: "/user-Management",
     component: <UserManagement />,
+  },
+  {
+    type: "collapse",
+    name: "Reports",
+    key: "reports",
+    icon: <Icon fontSize="small">supervised_user_circle</Icon>,
+    route: "/reports",
+    component: <Reports />,
   },
   {
     type: "divider",
@@ -612,17 +627,17 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Assets",
+    name: "Asset",
     key: "assets",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets",
+    route: "/asset",
     component: <Assets />,
   },
   {
-    name: "Update Assets",
-    key: "updateassets",
+    name: "Update Asset",
+    key: "updateasset",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets/update",
+    route: "/asset/update",
     component: <UpdateAssets />,
   },
   {
@@ -634,18 +649,18 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Company Assets",
-    key: "companyassets",
+    name: "Company Asset",
+    key: "companyasset",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/company-Assets",
+    route: "/company-Asset",
     component: <CompanyAssets />,
   },
   {
     type: "collapse",
-    name: "Customer Assets",
+    name: "Customer Asset",
     key: "customerassets",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/customer-Assets",
+    route: "/customer-Asset",
     component: <CustomerAssets />,
   },
   {
@@ -697,7 +712,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Business Travel Dashboard",
+    name: "Dashboard",
     key: "businesstravelupdate",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-Travel-Dashboard",
@@ -740,7 +755,7 @@ const routes = [
     name: "Attach Document",
     key: "attachdocument",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/business-travel/attachdocument",
+    route: "/business-travel/attach-document",
     component: <AttachDocument />,
   },
   {
@@ -992,7 +1007,7 @@ const routes = [
     name: "Convert Demand To Supply",
     key: "ConvertDemandToSupply",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/demand/convertDemandToSupply",
+    route: "/demand/convert-Demand-To-Supply",
     component: <ConvertDemandToSupply />,
   },
   {
@@ -1117,7 +1132,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Time-Off Dashboard",
+    name: "Dashboard",
     key: "timeOffRequestdashboard",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/time-off-Request-Dashboard",
@@ -1219,6 +1234,63 @@ const routes = [
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/other-inflow-type",
     component: <OtherInflowType />,
+  },
+  {
+    type: "divider",
+    name: "",
+    key: "divZzz123",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Treasury Type",
+    key: "zino112",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Treasury Type",
+    key: "treasuryType",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury-Type",
+    component: <TreasuryType />,
+  },
+  {
+    name: "Update Treasury Type",
+    key: "updatetreasuryType",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury-Type/update",
+    component: <UpdateTreasuryType />,
+  },
+  {
+    type: "collapse",
+    name: "Treasury",
+    key: "treasury",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury",
+    component: <Treasury />,
+  },
+  {
+    name: "Treasury Contribution",
+    key: "treasuryContribution",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/treasury-Contribution",
+    component: <TreasuryContribution />,
+  },
+  {
+    name: "Update Treasury Contribution",
+    key: "UpdatetreasuryContribution",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/treasury-Contribution/update",
+    component: <UpdateTreasuryContribution />,
+  },
+  {
+    type: "collapse",
+    name: "Treasury Debtors",
+    key: "treasuryGetDebtors",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/treasury-Get-Debtors",
+    component: <TreasuryDebtors />,
   },
   {
     type: "divider",
@@ -1542,9 +1614,9 @@ const routes = [
   {
     type: "collapse",
     name: "CBT",
-    key: "cbt",
+    key: "CBT",
     icon: <Icon fontSize="small">dvr</Icon>,
-    route: "/cbt",
+    route: "/CBT",
     component: <CBT />,
   },
   // {
@@ -1573,8 +1645,8 @@ const routes = [
     name: "AssignCbtTestToJobPost",
     key: "assigncbttesttojobpost",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/cbt/assignCbtTestToJobPostApplicant/",
-    component: <AssignCbtTestToJobPost />,
+    route: "/cbt/assignCBTToJobPost/",
+    component: <AssignCbtToJobPost />,
   },
   {
     name: "ViewCbtResult",
@@ -1712,7 +1784,7 @@ const routes = [
     name: "Update Recruitment Grading",
     key: "updaterecrutmentgrading",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/recruitment-Grading/update-Recruitment",
+    route: "/recruitment-Grading/update-Recruitment-Grading",
     component: <RecruitmentUpdate />,
   },
   {
@@ -1828,7 +1900,7 @@ const routes = [
     name: "Filter Sales",
     key: "filtersales",
     icon: <Icon fontSize="small">point_of_sale</Icon>,
-    route: "/sales/filterSales",
+    route: "/sales/filter-Sales",
     component: <FilterSales />,
   },
   {
@@ -1860,15 +1932,15 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Subscriptions",
-    key: "mySubscription",
+    name: "Subscription",
+    key: "subscription",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/my-Subscription",
+    route: "/subscription",
     component: <MySubscription />,
   },
   {
     type: "collapse",
-    name: "General Subscriptions",
+    name: "General Subscription",
     key: "generalSubscription",
     icon: <Icon fontSize="small">today</Icon>,
     route: "/general-Subscription",
@@ -1878,7 +1950,7 @@ const routes = [
     name: "Update Subscription",
     key: "updateMySubscription",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/my-Subscription/update-My-Subscription",
+    route: "/subscription/update-Subscription",
     component: <UpdateMySubscription />,
   },
   {
@@ -1932,7 +2004,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Dashboard",
+    name: "Dashboard",
     key: "ticketDashboard",
     icon: <Icon fontSize="small">book_online</Icon>,
     route: "/ticket-Dashboard",

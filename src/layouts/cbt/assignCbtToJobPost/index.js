@@ -230,7 +230,7 @@ function AssignCbtTestToJobPost() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <MDBox>
+      <MDBox style={{ paddingLeft: "100px" }}>
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <Card>

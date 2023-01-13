@@ -33,7 +33,7 @@ function ConvertDemandToSupply() {
   // const [checkedVatAmount, setCheckedVatAmount] = useState("");
   // const [checkedBonusAmount, setCheckedBonusAmount] = useState("");
   // const [valuex, setValue] = useState("");
-  const [enabled, setEnabled] = useState("");
+  // const [enabled, setEnabled] = useState("");
   // const [createdx, setCreated] = useState([]);
   // const [appDeclinx, setAppDeclin] = useState("");
   // const [statusTYpex, setStatusType] = useState("");
@@ -130,42 +130,40 @@ function ConvertDemandToSupply() {
   //   };
   // }, []);
 
-  function handleOnTitleKeys() {
+  function handleOnTitleKeys(value) {
     const letter = /^[a-zA-Z ]+$/;
-    if (!titlex.match(letter)) {
+    if (!value.toString().match(letter)) {
       setCheckedTitle(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("title").innerHTML =
         "Name - input only capital and small letters<br>";
     }
-    if (titlex.match(letter)) {
+    if (value.toString().match(letter)) {
       setCheckedTitle(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("title").innerHTML = "";
     }
-    if (titlex.length === 0) {
+    if (value.toString().length === 0) {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("title").innerHTML = "Title is required<br>";
     }
-    setEnabled(checkedTitle === true);
   }
-  const handleOnQuantityKeys = () => {
+  const handleOnQuantityKeys = (value) => {
     const number = /^[0-9 ]+$/;
-    if (!quantityx.match(number)) {
+    if (!value.toString().match(number)) {
       setCheckedQuantity(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("quantity").innerHTML = "Quantity - input only numbers<br>";
     }
-    if (quantityx.match(number)) {
+    if (value.toString().match(number)) {
       setCheckedQuantity(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("quantity").innerHTML = "";
     }
-    if (quantityx.length === 0) {
+    if (value.toString().length === 0) {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("quantity").innerHTML = "Quantity is required<br>";
     }
-    setEnabled(checkedQuantity === true);
   };
   // useEffect(() => {
   //   const headers = miHeaders;
@@ -328,100 +326,104 @@ function ConvertDemandToSupply() {
   // eslint-disable-next-line no-eval
 
   const handleClick = (e) => {
-    handleOnTitleKeys();
-    handleOnQuantityKeys();
+    // handleOnQuantityKeys();
     // handleOnPPQuantityKeys();
     // handleOnBonusAmountKeys();
-    if (enabled) {
-      setOpened(true);
-      e.preventDefault();
-      const data11 = JSON.parse(localStorage.getItem("user1"));
+    // if (enabled) {
+    setOpened(true);
+    e.preventDefault();
+    const data11 = JSON.parse(localStorage.getItem("user1"));
 
-      const orgIDs = data11.orgID;
-      const idx = data11.personalID;
-      const raw = JSON.stringify({
-        title: titlex,
-        orgID: orgIDs,
-        clientID: clientIDx,
-        clientType: clientTypex,
-        supplyingBranchID: supplyingBranx,
-        quantity: quantityx,
-        pricePerQuantity: pricePQ,
-        totalAmount: ans,
-        vatAmount: vatAmountx,
-        payingAmount: payAmountx,
-        bonusAmount: bonusAmountx,
-        createdBy: idx,
-        productID: productIDx,
-        // approverID: approvex,
-        // status: statusTYpex,
-        // approvedBy: approvex,
-        // // approvedTime: 0,
-        // terminatedBy: terminatex,
-        // terminatedTime: 0,
-        // demandID: 0,
+    const orgIDs = data11.orgID;
+    const idx = data11.personalID;
+    const raw = JSON.stringify({
+      title: titlex,
+      orgID: orgIDs,
+      clientID: clientIDx,
+      clientType: clientTypex,
+      supplyingBranchID: supplyingBranx,
+      quantity: quantityx,
+      pricePerQuantity: pricePQ,
+      totalAmount: ans,
+      vatAmount: vatAmountx,
+      payingAmount: payAmountx,
+      bonusAmount: bonusAmountx,
+      createdBy: idx,
+      productID: productIDx,
+      // approverID: approvex,
+      // status: statusTYpex,
+      // approvedBy: approvex,
+      // // approvedTime: 0,
+      // terminatedBy: terminatex,
+      // terminatedTime: 0,
+      // demandID: 0,
 
-        // orgID: string,
-        // clientID: string,
-        // clientType: 0,
-        // supplyingBranchID: string,
-        // quantity: 0,
-        // pricePerQuantity: 0,
-        // totalAmount: 0,
-        // vatAmount: 0,
-        // payingAmount: 0,
-        // bonusAmount: 0,
-        // createdBy: 0,
-        // createdTime: 0,
-        // status: 0,
-        // approvedBy: 0,
-        // approvedTime: 0,
-        // terminatedBy: 0,
-        // terminatedTime: 0,
-        // demandID: "string",
-      });
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
+      // orgID: string,
+      // clientID: string,
+      // clientType: 0,
+      // supplyingBranchID: string,
+      // quantity: 0,
+      // pricePerQuantity: 0,
+      // totalAmount: 0,
+      // vatAmount: 0,
+      // payingAmount: 0,
+      // bonusAmount: 0,
+      // createdBy: 0,
+      // createdTime: 0,
+      // status: 0,
+      // approvedBy: 0,
+      // approvedTime: 0,
+      // terminatedBy: 0,
+      // terminatedTime: 0,
+      // demandID: "string",
+    });
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
 
-      fetch(`${process.env.REACT_APP_LOUGA_URL}/supply/add`, requestOptions)
-        .then(async (res) => {
-          const aToken = res.headers.get("token-1");
-          localStorage.setItem("rexxdex", aToken);
-          return res.json();
-        })
-        .then((result) => {
-          setOpened(false);
-          if (result.message === "Expired Access") {
-            navigate("/authentication/sign-in");
-            window.location.reload();
-          }
-          if (result.message === "Token Does Not Exist") {
-            navigate("/authentication/sign-in");
-            window.location.reload();
-          }
-          if (result.message === "Unauthorized Access") {
-            navigate("/authentication/forbiddenPage");
-            window.location.reload();
-          }
-          MySwal.fire({
-            title: result.status,
-            type: "success",
-            text: result.message,
-          }).then(() => {
-            window.location.reload();
-          });
-        })
-        .catch((error) => {
-          MySwal.fire({
-            title: error.status,
-            type: "error",
-            text: error.message,
-          });
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/supply/add`, requestOptions)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        MySwal.fire({
+          title: result.status,
+          type: "success",
+          text: result.message,
+        }).then(() => {
+          window.location.reload();
         });
+      })
+      .catch((error) => {
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+    // }
+  };
+  const handleValidate = (e) => {
+    if (checkedTitle && checkedQuantity === true) {
+      handleClick(e);
     }
   };
 
@@ -606,6 +608,8 @@ function ConvertDemandToSupply() {
 
             console.log(result[0].clientType);
             handleChangeClient(result[0].clientType);
+            handleOnQuantityKeys(result[0].quantity);
+            handleOnTitleKeys(result[0].title);
           }
           // setIdx(result[0].id);
           //   setTitle(result[0].title);
@@ -1233,7 +1237,7 @@ function ConvertDemandToSupply() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add Supply
+              Convert Demand To Supply
             </MDTypography>
           </MDBox>
           <MDBox
@@ -1275,7 +1279,7 @@ function ConvertDemandToSupply() {
                       type="text"
                       label="Title *"
                       value={titlex || ""}
-                      // onKeyUp={handleOnTitleKeys}
+                      onKeyUp={handleOnTitleKeys}
                       onChange={(e) => setTitle(e.target.value)}
                       variant="standard"
                       fullWidth
@@ -1286,7 +1290,7 @@ function ConvertDemandToSupply() {
                     <MDInput
                       type="text"
                       value={quantityx || ""}
-                      // onKeyUp={handleOnQuantityKeys}
+                      onKeyUp={handleOnQuantityKeys}
                       onChange={(e) => setQuantity(e.target.value)}
                       label="Quantity *"
                       variant="standard"
@@ -1578,12 +1582,12 @@ function ConvertDemandToSupply() {
             <MDBox mt={4} mb={1}>
               <MDButton
                 variant="gradient"
-                onClick={handleClick}
+                onClick={handleValidate}
                 color="info"
                 width="50%"
                 align="left"
               >
-                Save
+                Convert
               </MDButton>
             </MDBox>
           </MDBox>
