@@ -553,7 +553,7 @@ function Reports() {
           console.log(resultSalesTopTen);
           const itemszx = resultSalesTopTen.map((val) => ({
             name: val.name,
-            amount: val.total,
+            amount: val.total.toLocaleString(undefined),
           }));
           console.log(itemszx);
 
@@ -656,7 +656,7 @@ function Reports() {
                                 email: result[0].email,
                                 profilePic: URL,
                               },
-                              total: totals,
+                              total: totals.toLocaleString(undefined),
                               items: itemszx,
                             });
                             console.log(raw);
@@ -756,7 +756,7 @@ function Reports() {
                                 email: result[0].email,
                                 profilePic: URL,
                               },
-                              total: totals,
+                              total: totals.toLocaleString(undefined),
                               items: itemszx,
                             });
                             console.log(raw);
@@ -864,6 +864,375 @@ function Reports() {
     };
   };
 
+  const handleInsurance = (e) => {
+    e.preventDefault();
+    const startTimexxx = new Date(startTimex).getTime();
+    const endTimexxxx = new Date(endTimex).getTime();
+    console.log(startTimexxx);
+    console.log(endTimexxxx);
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+    let isMounted = true;
+    console.log(isMounted);
+    setOpened(true);
+
+    fetch(
+      `${process.env.REACT_APP_JOHANNESBURG_URL}/insurance/getReportsBetween/${orgIDs}?startTime=${startTimexxx}&endTime=${endTimexxxx}`,
+      {
+        headers,
+      }
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
+        return JSON.parse(result);
+      })
+      .then((resultInsuranceReport) => {
+        if (resultInsuranceReport.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (resultInsuranceReport.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (resultInsuranceReport.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(resultInsuranceReport);
+        if (Object.keys(resultInsuranceReport).length !== 0) {
+          console.log(resultInsuranceReport);
+          fetch(`${process.env.REACT_APP_KUBU_URL}/company/get/${orgIDs}`, {
+            headers,
+          })
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              const result = await res.text();
+              if (result === null || result === undefined || result === "") {
+                return {};
+              }
+              return JSON.parse(result);
+            })
+            .then((result) => {
+              if (result.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (result.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (result.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              if (isMounted) {
+                console.log(result);
+                if (result.length !== 0) {
+                  fetch(
+                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${orgIDs}`,
+                    {
+                      headers,
+                    }
+                  )
+                    .then(async (res) => {
+                      const aToken = res.headers.get("token-1");
+                      localStorage.setItem("rexxdex", aToken);
+                      return res.json();
+                    })
+                    .then((resultme) => {
+                      if (resultme.message === "Expired Access") {
+                        navigate("/authentication/sign-in");
+                        window.location.reload();
+                      }
+                      if (resultme.message === "Token Does Not Exist") {
+                        navigate("/authentication/sign-in");
+                        window.location.reload();
+                      }
+                      if (resultme.message === "Unauthorized Access") {
+                        navigate("/authentication/forbiddenPage");
+                        window.location.reload();
+                      }
+                      console.log(resultme.name);
+                      fetch(
+                        `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultme.name}`,
+                        {
+                          headers,
+                        }
+                      )
+                        .then(async (res) => {
+                          const aToken = res.headers.get("token-1");
+                          localStorage.setItem("rexxdex", aToken);
+                          return res.json();
+                        })
+                        .then((resultx) => {
+                          if (resultx.message === "Expired Access") {
+                            navigate("/authentication/sign-in");
+                            window.location.reload();
+                          }
+                          if (resultx.message === "Token Does Not Exist") {
+                            navigate("/authentication/sign-in");
+                            window.location.reload();
+                          }
+                          if (resultx.message === "Unauthorized Access") {
+                            navigate("/authentication/forbiddenPage");
+                            window.location.reload();
+                          }
+
+                          console.log(`link [${resultx[0]}]`);
+                          // eslint-disable-next-line prefer-destructuring
+                          let URL = resultx[0];
+
+                          if (URL === "") {
+                            URL = "https://i.ibb.co/5FG72RG/defaulto.png";
+                            const raw = JSON.stringify({
+                              company: {
+                                id: result[0].id,
+                                name: result[0].name,
+                                street: result[0].street,
+                                city: result[0].city,
+                                state: result[0].state,
+                                country: result[0].country,
+                                pno: result[0].pno,
+                                email: result[0].email,
+                                profilePic: URL,
+                              },
+                              insuranceAmount:
+                                resultInsuranceReport.approvedInsuranceAmount.toLocaleString(
+                                  undefined
+                                ),
+                              insuranceContributionAmount:
+                                resultInsuranceReport.approvedInsuranceContributionAmount.toLocaleString(
+                                  undefined
+                                ),
+                              insuranceDamageAmount:
+                                resultInsuranceReport.approvedInsuranceDamageAmount.toLocaleString(
+                                  undefined
+                                ),
+                            });
+                            console.log(raw);
+                            const requestOptions = {
+                              method: "POST",
+                              headers: myHeaders,
+                              body: raw,
+                              redirect: "follow",
+                            };
+
+                            fetch(
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              requestOptions
+                            )
+                              .then(async (res) => {
+                                const aToken = res.headers.get("token-1");
+                                localStorage.setItem("rexxdex", aToken);
+                                return res.json();
+                              })
+                              .then((resultProdRevGenerate) => {
+                                if (resultProdRevGenerate.message === "Expired Access") {
+                                  navigate("/authentication/sign-in");
+                                  window.location.reload();
+                                }
+                                if (resultProdRevGenerate.message === "Token Does Not Exist") {
+                                  navigate("/authentication/sign-in");
+                                  window.location.reload();
+                                }
+                                if (resultProdRevGenerate.message === "Unauthorized Access") {
+                                  navigate("/authentication/forbiddenPage");
+                                  window.location.reload();
+                                }
+                                console.log(resultProdRevGenerate);
+                                if (resultProdRevGenerate.status === "SUCCESS") {
+                                  fetch(
+                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultProdRevGenerate.data.name}`,
+                                    {
+                                      headers,
+                                    }
+                                  )
+                                    .then(async (res) => {
+                                      const aToken = res.headers.get("token-1");
+                                      localStorage.setItem("rexxdex", aToken);
+                                      return res.json();
+                                    })
+                                    .then((resultxme2) => {
+                                      if (resultxme2.message === "Expired Access") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Token Does Not Exist") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Unauthorized Access") {
+                                        navigate("/authentication/forbiddenPage");
+                                        window.location.reload();
+                                      }
+
+                                      // if (isMounted) {
+                                      console.log(`link [${resultxme2[0]}]`);
+                                      const url = resultxme2[0];
+                                      if (url !== "") {
+                                        const objectURL = url;
+                                        console.log(objectURL);
+
+                                        // (C2) TO "FORCE DOWNLOAD"
+                                        const anchor = document.createElement("a");
+                                        anchor.href = objectURL;
+                                        anchor.download = resultProdRevGenerate.data.name;
+                                        anchor.click();
+
+                                        // (C3) CLEAN UP
+                                        window.URL.revokeObjectURL(objectURL);
+                                        setOpen(false);
+                                      }
+                                    });
+                                }
+                              })
+                              .catch((error) => {
+                                MySwal.fire({
+                                  title: error.status,
+                                  type: "error",
+                                  text: error.message,
+                                });
+                              });
+                          } else {
+                            const raw = JSON.stringify({
+                              company: {
+                                id: result[0].id,
+                                name: result[0].name,
+                                street: result[0].street,
+                                city: result[0].city,
+                                state: result[0].state,
+                                country: result[0].country,
+                                pno: result[0].pno,
+                                email: result[0].email,
+                                profilePic: URL,
+                              },
+                              insuranceAmount:
+                                resultInsuranceReport.approvedInsuranceAmount.toLocaleString(
+                                  undefined
+                                ),
+                              insuranceContributionAmount:
+                                resultInsuranceReport.approvedInsuranceContributionAmount.toLocaleString(
+                                  undefined
+                                ),
+                              insuranceDamageAmount:
+                                resultInsuranceReport.approvedInsuranceDamageAmount.toLocaleString(
+                                  undefined
+                                ),
+                            });
+                            console.log(raw);
+                            const requestOptions = {
+                              method: "POST",
+                              headers: myHeaders,
+                              body: raw,
+                              redirect: "follow",
+                            };
+
+                            fetch(
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              requestOptions
+                            )
+                              .then(async (res) => {
+                                const aToken = res.headers.get("token-1");
+                                localStorage.setItem("rexxdex", aToken);
+                                return res.json();
+                              })
+                              .then((resultProdRevGenerate) => {
+                                if (resultProdRevGenerate.message === "Expired Access") {
+                                  navigate("/authentication/sign-in");
+                                  window.location.reload();
+                                }
+                                if (resultProdRevGenerate.message === "Token Does Not Exist") {
+                                  navigate("/authentication/sign-in");
+                                  window.location.reload();
+                                }
+                                if (resultProdRevGenerate.message === "Unauthorized Access") {
+                                  navigate("/authentication/forbiddenPage");
+                                  window.location.reload();
+                                }
+                                console.log(resultProdRevGenerate);
+                                if (resultProdRevGenerate.status === "SUCCESS") {
+                                  fetch(
+                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultProdRevGenerate.data.name}`,
+                                    {
+                                      headers,
+                                    }
+                                  )
+                                    .then(async (res) => {
+                                      const aToken = res.headers.get("token-1");
+                                      localStorage.setItem("rexxdex", aToken);
+                                      return res.json();
+                                    })
+                                    .then((resultxme2) => {
+                                      if (resultxme2.message === "Expired Access") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Token Does Not Exist") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Unauthorized Access") {
+                                        navigate("/authentication/forbiddenPage");
+                                        window.location.reload();
+                                      }
+
+                                      // if (isMounted) {
+                                      console.log(`link [${resultxme2[0]}]`);
+                                      const url = resultxme2[0];
+                                      if (url !== "") {
+                                        const objectURL = url;
+                                        console.log(objectURL);
+
+                                        // (C2) TO "FORCE DOWNLOAD"
+                                        const anchor = document.createElement("a");
+                                        anchor.href = objectURL;
+                                        anchor.download = resultProdRevGenerate.data.name;
+                                        anchor.click();
+
+                                        // (C3) CLEAN UP
+                                        window.URL.revokeObjectURL(objectURL);
+                                        setOpen(false);
+                                      }
+                                    });
+                                }
+                              })
+                              .catch((error) => {
+                                MySwal.fire({
+                                  title: error.status,
+                                  type: "error",
+                                  text: error.message,
+                                });
+                              });
+                          }
+                        });
+                    });
+                }
+              }
+            });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Sorry...",
+            text: "No Report Found Within The Timeframe",
+          });
+          setOpen(false);
+          setOpened(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  };
+
   const handleSalesByRevenue = (e) => {
     e.preventDefault();
     const startTimexxx = new Date(startTimex).getTime();
@@ -907,8 +1276,8 @@ function Reports() {
         if (resultRevenueTopTen.length !== 0) {
           console.log(resultRevenueTopTen);
           const itemszx = resultRevenueTopTen.map((val) => ({
-            item: val.name,
-            amount: val.totalAmount,
+            name: val.name,
+            amount: val.totalAmount.toLocaleString(undefined),
           }));
           console.log(itemszx);
 
@@ -1011,7 +1380,7 @@ function Reports() {
                                 email: result[0].email,
                                 profilePic: URL,
                               },
-                              total: totals,
+                              total: totals.toLocaleString(undefined),
                               items: itemszx,
                             });
                             console.log(raw);
@@ -1111,7 +1480,7 @@ function Reports() {
                                 email: result[0].email,
                                 profilePic: URL,
                               },
-                              total: totals,
+                              total: totals.toLocaleString(undefined),
                               items: itemszx,
                             });
                             console.log(raw);
@@ -1220,20 +1589,21 @@ function Reports() {
     };
   };
 
-  const handleInsurance = (e) => {
+  const handleFinancial = (e) => {
+    // Zino part Do not associate ur self by touching anything.
+    setOpened(true);
     e.preventDefault();
-    const startTimexxx = new Date(startTimex).getTime();
-    const endTimexxxx = new Date(endTimex).getTime();
-    console.log(startTimexxx);
-    console.log(endTimexxxx);
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
+    const startTime = new Date(startTimex).getTime();
+    const endTime = new Date(endTimex).getTime();
     let isMounted = true;
-    setOpened(true);
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
 
+    // const orgIDs = data11.orgID;
     fetch(
-      `${process.env.REACT_APP_JOHANNESBURG_URL}/insurance/v/${orgIDs}?startTime=${startTimexxx}&endTime=${endTimexxxx}`,
+      `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsBetween/${orgIDs}?startTime=${startTime}&endTime=${endTime}`,
       {
         headers,
       }
@@ -1241,56 +1611,98 @@ function Reports() {
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
-        const result = await res.text();
-        if (result === null || result === undefined || result === "") {
-          return {};
-        }
-        return JSON.parse(result);
+        return res.json();
       })
-      .then((resultInsuranceReport) => {
-        if (resultInsuranceReport.message === "Expired Access") {
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
         }
-        if (resultInsuranceReport.message === "Token Does Not Exist") {
+        if (result.message === "Token Does Not Exist") {
           navigate("/authentication/sign-in");
           window.location.reload();
         }
-        if (resultInsuranceReport.message === "Unauthorized Access") {
+        if (result.message === "Unauthorized Access") {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        console.log(resultInsuranceReport);
-        if (Object.keys(resultInsuranceReport).length !== 0) {
-          console.log(resultInsuranceReport);
+        // setItems(result);
+        console.log(result);
+        const allMAP = result;
+        if (result !== "") {
+          const incomeFIltered = result.filter((os) => os.category === "INCOME");
+          const itemIncome = incomeFIltered.map((each) => ({
+            name: each.category,
+            amount: each.totalAmount,
+          }));
+          const expensesFIltered = result.filter((os) => os.category === "EXPENSES");
+          const expensesIncome = expensesFIltered.map((each) => ({
+            name: each.category,
+            amount: each.totalAmount,
+          }));
+          const zoom111 = expensesFIltered.map((item) => item.totalAmount);
+          // eslint-disable-next-line no-eval
+          console.log(eval(zoom111.join("+")));
+          // eslint-disable-next-line no-eval
+          const ExpensesTotal = eval(zoom111.join("+"));
+          console.log(ExpensesTotal);
+          const zoom112 = incomeFIltered.map((item) => item.totalAmount);
+          // eslint-disable-next-line no-eval
+          const IncomeTotal = eval(zoom112.join("+"));
+          // const calculation = expensesIncome.amount;
+          console.log(itemIncome);
+          console.log(expensesIncome);
+          console.log(expensesIncome);
+          // console.log(calculation);
+          // eslint-disable-next-line no-eval
+          // const ExpensesTotal = eval(calculation.join("+"));
+          // const calculation2 = itemIncome.amount;
+          // console.log(calculation2);
+          // eslint-disable-next-line no-eval
+          // const IncomeTotal = eval(calculation2.join("+"));
+          const zoom = result.map((item) => item.totalAmount);
+          console.log(zoom);
+          // eslint-disable-next-line no-eval
+          console.log(eval(zoom.join("+")));
+          // eslint-disable-next-line no-eval
+          const viewTotal = eval(zoom.join("+"));
+          console.log(viewTotal);
+          // eslint-disable-next-line no-eval
+          const diffInMillis = eval(startTime - endTime);
+          const numberOfDays = diffInMillis < 60 * 60 * 1000;
+          console.log(numberOfDays);
 
+          // const headers = miHeaders;
+          // const data11 = JSON.parse(localStorage.getItem("user1"));
+          // const orgIDs = data11.orgID;
+          // let isMounted = true;
+          e.preventDefault();
+          setOpened(true);
           fetch(`${process.env.REACT_APP_KUBU_URL}/company/get/${orgIDs}`, {
             headers,
           })
             .then(async (res) => {
               const aToken = res.headers.get("token-1");
               localStorage.setItem("rexxdex", aToken);
-              const result = await res.text();
-              if (result === null || result === undefined || result === "") {
-                return {};
-              }
-              return JSON.parse(result);
+              return res.json();
             })
-            .then((result) => {
-              if (result.message === "Expired Access") {
+            .then((resultxp) => {
+              if (resultxp.message === "Expired Access") {
                 navigate("/authentication/sign-in");
                 window.location.reload();
               }
-              if (result.message === "Token Does Not Exist") {
+              if (resultxp.message === "Token Does Not Exist") {
                 navigate("/authentication/sign-in");
                 window.location.reload();
               }
-              if (result.message === "Unauthorized Access") {
+              if (resultxp.message === "Unauthorized Access") {
                 navigate("/authentication/forbiddenPage");
                 window.location.reload();
               }
               if (isMounted) {
                 console.log(result);
+                console.log(resultxp);
                 if (result.length !== 0) {
                   fetch(
                     `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${orgIDs}`,
@@ -1341,6 +1753,8 @@ function Reports() {
                             navigate("/authentication/forbiddenPage");
                             window.location.reload();
                           }
+                          const urlx = resultx[0];
+                          window.open(urlx, "_blank", "noopener,noreferrer");
 
                           console.log(`link [${resultx[0]}]`);
                           // eslint-disable-next-line prefer-destructuring
@@ -1350,20 +1764,22 @@ function Reports() {
                             URL = "https://i.ibb.co/5FG72RG/defaulto.png";
                             const raw = JSON.stringify({
                               company: {
-                                id: result[0].id,
-                                name: result[0].name,
-                                street: result[0].street,
-                                city: result[0].city,
-                                state: result[0].state,
-                                country: result[0].country,
-                                pno: result[0].pno,
-                                email: result[0].email,
+                                id: resultxp[0].id,
+                                name: resultxp[0].name,
+                                street: resultxp[0].street,
+                                city: resultxp[0].city,
+                                state: resultxp[0].state,
+                                country: resultxp[0].country,
+                                pno: resultxp[0].pno,
+                                email: resultxp[0].email,
                                 profilePic: URL,
                               },
-                              insuranceAmount: resultInsuranceReport.insuranceAmount,
-                              insuranceContributionAmount:
-                                resultInsuranceReport.insuranceContributionAmount,
-                              insuranceDamageAmount: resultInsuranceReport.insuranceDamageAmount,
+                              title: `Income Statement for ${resultxp[0].name} for the last ${numberOfDays} days`,
+                              expenseTotal: ExpensesTotal,
+                              incomeTotal: IncomeTotal,
+                              netTotal: viewTotal,
+                              incomeItems: itemIncome,
+                              expenseItems: expensesIncome,
                             });
                             console.log(raw);
                             const requestOptions = {
@@ -1373,8 +1789,9 @@ function Reports() {
                               redirect: "follow",
                             };
 
+                            // if (resultxx.status === "SUCCESS") {
                             fetch(
-                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/income-statement`,
                               requestOptions
                             )
                               .then(async (res) => {
@@ -1382,23 +1799,24 @@ function Reports() {
                                 localStorage.setItem("rexxdex", aToken);
                                 return res.json();
                               })
-                              .then((resultProdRevGenerate) => {
-                                if (resultProdRevGenerate.message === "Expired Access") {
+                              .then((resultxme2) => {
+                                if (resultxme2.message === "Expired Access") {
                                   navigate("/authentication/sign-in");
                                   window.location.reload();
                                 }
-                                if (resultProdRevGenerate.message === "Token Does Not Exist") {
+                                if (resultxme2.message === "Token Does Not Exist") {
                                   navigate("/authentication/sign-in");
                                   window.location.reload();
                                 }
-                                if (resultProdRevGenerate.message === "Unauthorized Access") {
+                                if (resultxme2.message === "Unauthorized Access") {
                                   navigate("/authentication/forbiddenPage");
                                   window.location.reload();
                                 }
-                                console.log(resultProdRevGenerate);
-                                if (resultProdRevGenerate.status === "SUCCESS") {
+
+                                // if (isMounted) {
+                                if (resultxme2.status === "SUCCESS") {
                                   fetch(
-                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultProdRevGenerate.data.name}`,
+                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultxme2.data.name}`,
                                     {
                                       headers,
                                     }
@@ -1408,23 +1826,23 @@ function Reports() {
                                       localStorage.setItem("rexxdex", aToken);
                                       return res.json();
                                     })
-                                    .then((resultxme2) => {
-                                      if (resultxme2.message === "Expired Access") {
+                                    .then((resultxe2) => {
+                                      if (resultxe2.message === "Expired Access") {
                                         navigate("/authentication/sign-in");
                                         window.location.reload();
                                       }
-                                      if (resultxme2.message === "Token Does Not Exist") {
+                                      if (resultxe2.message === "Token Does Not Exist") {
                                         navigate("/authentication/sign-in");
                                         window.location.reload();
                                       }
-                                      if (resultxme2.message === "Unauthorized Access") {
+                                      if (resultxe2.message === "Unauthorized Access") {
                                         navigate("/authentication/forbiddenPage");
                                         window.location.reload();
                                       }
 
                                       // if (isMounted) {
-                                      console.log(`link [${resultxme2[0]}]`);
-                                      const url = resultxme2[0];
+                                      console.log(`link [${resultxe2[0]}]`);
+                                      const url = resultxe2[0];
                                       if (url !== "") {
                                         const objectURL = url;
                                         console.log(objectURL);
@@ -1432,7 +1850,7 @@ function Reports() {
                                         // (C2) TO "FORCE DOWNLOAD"
                                         const anchor = document.createElement("a");
                                         anchor.href = objectURL;
-                                        anchor.download = resultProdRevGenerate.data.name;
+                                        anchor.download = resultxme2.data.name;
                                         anchor.click();
 
                                         // (C3) CLEAN UP
@@ -1442,7 +1860,18 @@ function Reports() {
                                     });
                                 }
                               })
+                              // }
+                              // setOpened(false);
+                              // MySwal.fire({
+                              //   title: result.status,
+                              //   type: "success",
+                              //   text: result.message,
+                              // }).then(() => {
+                              //   window.location.reload();
+                              // });
+                              // })
                               .catch((error) => {
+                                setOpened(false);
                                 MySwal.fire({
                                   title: error.status,
                                   type: "error",
@@ -1452,31 +1881,34 @@ function Reports() {
                           } else {
                             const raw = JSON.stringify({
                               company: {
-                                id: result[0].id,
-                                name: result[0].name,
-                                street: result[0].street,
-                                city: result[0].city,
-                                state: result[0].state,
-                                country: result[0].country,
-                                pno: result[0].pno,
-                                email: result[0].email,
+                                id: resultxp[0].id,
+                                name: resultxp[0].name,
+                                street: resultxp[0].street,
+                                city: resultxp[0].city,
+                                state: resultxp[0].state,
+                                country: resultxp[0].country,
+                                pno: resultxp[0].pno,
+                                email: resultxp[0].email,
                                 profilePic: URL,
                               },
-                              insuranceAmount: resultInsuranceReport.insuranceAmount,
-                              insuranceContributionAmount:
-                                resultInsuranceReport.insuranceContributionAmount,
-                              insuranceDamageAmount: resultInsuranceReport.insuranceDamageAmount,
+                              title: `Income Statement for ${resultxp[0].name} for the last ${numberOfDays}days`,
+                              expenseTotal: ExpensesTotal,
+                              incomeTotal: IncomeTotal,
+                              netTotal: viewTotal,
+                              incomeItems: itemIncome,
+                              expenseItems: expensesIncome,
                             });
+                            console.log(viewTotal);
                             console.log(raw);
+                            console.log(allMAP);
                             const requestOptions = {
                               method: "POST",
                               headers: myHeaders,
                               body: raw,
                               redirect: "follow",
                             };
-
                             fetch(
-                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/income-statement`,
                               requestOptions
                             )
                               .then(async (res) => {
@@ -1484,23 +1916,24 @@ function Reports() {
                                 localStorage.setItem("rexxdex", aToken);
                                 return res.json();
                               })
-                              .then((resultProdRevGenerate) => {
-                                if (resultProdRevGenerate.message === "Expired Access") {
+                              .then((resultxxx) => {
+                                if (resultxxx.message === "Expired Access") {
                                   navigate("/authentication/sign-in");
                                   window.location.reload();
                                 }
-                                if (resultProdRevGenerate.message === "Token Does Not Exist") {
+                                if (resultxxx.message === "Token Does Not Exist") {
                                   navigate("/authentication/sign-in");
                                   window.location.reload();
                                 }
-                                if (resultProdRevGenerate.message === "Unauthorized Access") {
+                                if (resultxxx.message === "Unauthorized Access") {
                                   navigate("/authentication/forbiddenPage");
                                   window.location.reload();
                                 }
-                                console.log(resultProdRevGenerate);
-                                if (resultProdRevGenerate.status === "SUCCESS") {
+                                console.log(resultxxx);
+                                if (resultxxx.status === "SUCCESS") {
+                                  console.log(resultxxx.data.id);
                                   fetch(
-                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultProdRevGenerate.data.name}`,
+                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultxxx.data.name}`,
                                     {
                                       headers,
                                     }
@@ -1523,6 +1956,8 @@ function Reports() {
                                         navigate("/authentication/forbiddenPage");
                                         window.location.reload();
                                       }
+                                      const urls = resultxme2[0];
+                                      window.open(urls, "_blank", "noopener,noreferrer");
 
                                       // if (isMounted) {
                                       console.log(`link [${resultxme2[0]}]`);
@@ -1534,13 +1969,28 @@ function Reports() {
                                         // (C2) TO "FORCE DOWNLOAD"
                                         const anchor = document.createElement("a");
                                         anchor.href = objectURL;
-                                        anchor.download = resultProdRevGenerate.data.name;
+                                        anchor.download = resultxxx.data.name;
                                         anchor.click();
 
                                         // (C3) CLEAN UP
                                         window.URL.revokeObjectURL(objectURL);
-                                        setOpen(false);
                                       }
+                                      MySwal.fire({
+                                        title: resultxp.status,
+                                        type: "success",
+                                        text: resultxp.message,
+                                      }).then(() => {
+                                        // window.location.reload();
+                                      });
+                                      console.log(resultxp);
+                                    })
+                                    .catch((error) => {
+                                      setOpened(false);
+                                      MySwal.fire({
+                                        title: error.status,
+                                        type: "error",
+                                        text: error.message,
+                                      });
                                     });
                                 }
                               })
@@ -1557,17 +2007,8 @@ function Reports() {
                 }
               }
             });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Sorry...",
-            text: "No Report Found Within The Timeframe",
-          });
-          setOpen(false);
-          setOpened(false);
         }
       });
-
     return () => {
       isMounted = false;
     };
@@ -1591,8 +2032,10 @@ function Reports() {
       console.log("sales2 report");
     } else if (showButton === 6) {
       console.log("sales3 report");
-    } else if (showButton === 7) {
       handleSalesByRevenue(e);
+    } else if (showButton === 7) {
+      console.log("financial1 report");
+      handleFinancial(e);
     } else if (showButton === 8) {
       handleSalesByTopTen(e);
     } else if (showButton === 9) {
@@ -1775,6 +2218,7 @@ function Reports() {
                   maxHeight: "150px",
                   cursor: "pointer",
                 }}
+                onClick={() => handleOpenModal(7)}
               >
                 <CardContent>
                   <Typography
@@ -1783,7 +2227,7 @@ function Reports() {
                     component="div"
                     style={{ color: "white", marginTop: "40px" }}
                   >
-                    Sales Reports
+                    Financial Reports
                   </Typography>
                 </CardContent>
               </Card>
@@ -1859,7 +2303,7 @@ function Reports() {
                     variant="h5"
                     component="div"
                     style={{ color: "white", marginTop: "40px" }}
-                    onClick={() => handleOpenModal(7)}
+                    onClick={() => handleOpenModal(6)}
                   >
                     BY REVENUE
                   </Typography>
@@ -1932,7 +2376,7 @@ function Reports() {
                     textAlign="center"
                   >
                     <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                      Select Timeframe
+                      Select Time frame
                     </MDTypography>
                   </MDBox>
                   <MDBox

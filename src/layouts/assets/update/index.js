@@ -464,8 +464,9 @@ function UpdateAssets() {
       manufacturer: manufacturerx,
       components: newword,
       assignedTo: assignedTox,
-      attachedDocs: [attachDocs],
+      attachedDocs: attachDocs,
     });
+    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -538,7 +539,7 @@ function UpdateAssets() {
             style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Update Assets
+              Update Asset
             </MDTypography>
           </MDBox>
           <MDBox
