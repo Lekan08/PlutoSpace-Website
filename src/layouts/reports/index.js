@@ -1234,7 +1234,7 @@ function Reports() {
 
     // const orgIDs = data11.orgID;
     fetch(
-      `${process.env.REACT_APP_JOHANNESBURG_URL}/assets/getBetween/${orgIDs}?startTime=${startTime}&endTime=${endTime}`,
+      `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsBetween/${orgIDs}?startTime=${startTime}&endTime=${endTime}`,
       {
         headers,
       }
@@ -1245,6 +1245,7 @@ function Reports() {
         return res.json();
       })
       .then((result) => {
+        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -1261,21 +1262,47 @@ function Reports() {
         console.log(result);
         const allMAP = result;
         if (result !== "") {
-          const itemz = result.map((each) => ({
-            dateAcquired: each.createdTime,
-            name: each.item,
-            category: each.type.name,
-            currentValue: each.currentWorth,
-            worth: each.itemWorth,
+          const incomeFIltered = result.filter((os) => os.category === "INCOME");
+          const itemIncome = incomeFIltered.map((each) => ({
+            name: each.category,
+            amount: each.totalAmount,
           }));
-          const zoom = result.map((item) => item.itemWorth);
-          console.log(itemz);
+          const expensesFIltered = result.filter((os) => os.category === "EXPENSES");
+          const expensesIncome = expensesFIltered.map((each) => ({
+            name: each.category,
+            amount: each.totalAmount,
+          }));
+          const zoom111 = expensesFIltered.map((item) => item.totalAmount);
+          // eslint-disable-next-line no-eval
+          console.log(eval(zoom111.join("+")));
+          // eslint-disable-next-line no-eval
+          const ExpensesTotal = eval(zoom111.join("+"));
+          console.log(ExpensesTotal);
+          const zoom112 = incomeFIltered.map((item) => item.totalAmount);
+          // eslint-disable-next-line no-eval
+          const IncomeTotal = eval(zoom112.join("+"));
+          // const calculation = expensesIncome.amount;
+          console.log(itemIncome);
+          console.log(expensesIncome);
+          console.log(expensesIncome);
+          // console.log(calculation);
+          // eslint-disable-next-line no-eval
+          // const ExpensesTotal = eval(calculation.join("+"));
+          // const calculation2 = itemIncome.amount;
+          // console.log(calculation2);
+          // eslint-disable-next-line no-eval
+          // const IncomeTotal = eval(calculation2.join("+"));
+          const zoom = result.map((item) => item.totalAmount);
           console.log(zoom);
           // eslint-disable-next-line no-eval
           console.log(eval(zoom.join("+")));
           // eslint-disable-next-line no-eval
           const viewTotal = eval(zoom.join("+"));
           console.log(viewTotal);
+          // eslint-disable-next-line no-eval
+          const diffInMillis = eval(startTime - endTime);
+          const numberOfDays = diffInMillis < 60 * 60 * 1000;
+          console.log(numberOfDays);
 
           // const headers = miHeaders;
           // const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -1378,72 +1405,75 @@ function Reports() {
                                 email: resultxp[0].email,
                                 profilePic: URL,
                               },
-                              total: viewTotal,
-                              items: itemz,
+                              title: `Income Statement for ${resultxp[0].name} for the last ${numberOfDays}days`,
+                              expenseTotal: ExpensesTotal,
+                              incomeTotal: IncomeTotal,
+                              netTotal: viewTotal,
+                              incomeItems: itemIncome,
+                              expenseItems: expensesIncome,
                             });
+                            console.log(raw);
                             const requestOptions = {
                               method: "POST",
                               headers: myHeaders,
                               body: raw,
                               redirect: "follow",
                             };
+
+                            // if (resultxx.status === "SUCCESS") {
                             fetch(
-                              `${process.env.REACT_APP_JOHANNESBURG_URL}/assetTypes/add`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/income-statement`,
                               requestOptions
                             )
                               .then(async (res) => {
                                 const aToken = res.headers.get("token-1");
                                 localStorage.setItem("rexxdex", aToken);
-                                const resultxx = await res.text();
-                                if (
-                                  resultxx === null ||
-                                  resultxx === undefined ||
-                                  resultxx === ""
-                                ) {
-                                  return {};
-                                }
-                                return JSON.parse(resultx);
+                                return res.json();
                               })
-                              .then((resultxx) => {
-                                if (resultxx.message === "Expired Access") {
+                              .then((resultxme2) => {
+                                if (resultxme2.message === "Expired Access") {
                                   navigate("/authentication/sign-in");
                                   window.location.reload();
                                 }
-                                if (resultxx.message === "Token Does Not Exist") {
+                                if (resultxme2.message === "Token Does Not Exist") {
                                   navigate("/authentication/sign-in");
                                   window.location.reload();
                                 }
-                                if (resultxx.message === "Unauthorized Access") {
+                                if (resultxme2.message === "Unauthorized Access") {
                                   navigate("/authentication/forbiddenPage");
                                   window.location.reload();
                                 }
-                                if (resultxx.status === "SUCCESS") {
+
+                                // if (isMounted) {
+                                if (resultxme2.status === "SUCCESS") {
                                   fetch(
-                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/asset-list`,
-                                    requestOptions
+                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultxme2.data.name}`,
+                                    {
+                                      headers,
+                                    }
                                   )
                                     .then(async (res) => {
                                       const aToken = res.headers.get("token-1");
                                       localStorage.setItem("rexxdex", aToken);
                                       return res.json();
                                     })
-                                    .then((resultxme2) => {
-                                      if (resultxme2.message === "Expired Access") {
+                                    .then((resultxe2) => {
+                                      if (resultxe2.message === "Expired Access") {
                                         navigate("/authentication/sign-in");
                                         window.location.reload();
                                       }
-                                      if (resultxme2.message === "Token Does Not Exist") {
+                                      if (resultxe2.message === "Token Does Not Exist") {
                                         navigate("/authentication/sign-in");
                                         window.location.reload();
                                       }
-                                      if (resultxme2.message === "Unauthorized Access") {
+                                      if (resultxe2.message === "Unauthorized Access") {
                                         navigate("/authentication/forbiddenPage");
                                         window.location.reload();
                                       }
 
                                       // if (isMounted) {
-                                      console.log(`link [${resultxme2[0]}]`);
-                                      const url = resultxme2[0];
+                                      console.log(`link [${resultxe2[0]}]`);
+                                      const url = resultxe2[0];
                                       if (url !== "") {
                                         const objectURL = url;
                                         console.log(objectURL);
@@ -1451,23 +1481,26 @@ function Reports() {
                                         // (C2) TO "FORCE DOWNLOAD"
                                         const anchor = document.createElement("a");
                                         anchor.href = objectURL;
-                                        anchor.download = resultxx.data.name;
+                                        anchor.download = resultxme2.data.name;
                                         anchor.click();
 
                                         // (C3) CLEAN UP
                                         window.URL.revokeObjectURL(objectURL);
+                                        setOpen(false);
                                       }
                                     });
                                 }
-                                // setOpened(false);
-                                // MySwal.fire({
-                                //   title: result.status,
-                                //   type: "success",
-                                //   text: result.message,
-                                // }).then(() => {
-                                //   window.location.reload();
-                                // });
                               })
+                              // }
+                              // setOpened(false);
+                              // MySwal.fire({
+                              //   title: result.status,
+                              //   type: "success",
+                              //   text: result.message,
+                              // }).then(() => {
+                              //   window.location.reload();
+                              // });
+                              // })
                               .catch((error) => {
                                 setOpened(false);
                                 MySwal.fire({
@@ -1489,8 +1522,12 @@ function Reports() {
                                 email: resultxp[0].email,
                                 profilePic: URL,
                               },
-                              total: viewTotal,
-                              items: itemz,
+                              title: `Income Statement for ${resultxp[0].name} for the last ${numberOfDays}days`,
+                              expenseTotal: ExpensesTotal,
+                              incomeTotal: IncomeTotal,
+                              netTotal: viewTotal,
+                              incomeItems: itemIncome,
+                              expenseItems: expensesIncome,
                             });
                             console.log(viewTotal);
                             console.log(raw);
@@ -1502,7 +1539,7 @@ function Reports() {
                               redirect: "follow",
                             };
                             fetch(
-                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/asset-list`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/income-statement`,
                               requestOptions
                             )
                               .then(async (res) => {
