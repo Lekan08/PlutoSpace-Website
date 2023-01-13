@@ -1334,6 +1334,47 @@ function Sales() {
                         onChange={(e) => setCardPayment(e.target.value)}
                       />
                     </FormControl>
+                    {/* <MDBox mt={4} mb={1}>
+                      <div>
+                        <MonnifyConsumer {...monNey} className="btn">
+                          {({ initializePayment }) => (
+                            // eslint-disable-next-line react/button-has-type
+                            <MDButton
+                              variant="gradient"
+                              onClick={() => initializePayment()}
+                              color="info"
+                              width="50%"
+                            >
+                              Pay
+                            </MDButton>
+                          )}
+                        </MonnifyConsumer>
+                      </div>
+                    </MDBox> */}
+                  </Box>
+                </div>
+              </div>
+              <div className="Col-sm-3">
+                <div className="col-sm-3">
+                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <MDTypography
+                      variant="button"
+                      color="info"
+                      fontWeight="medium"
+                      style={Styles.textSx}
+                    >
+                      PAY ON CREDIT:
+                    </MDTypography>
+                    <FormControl fullWidth>
+                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                      <label htmlFor="filled-number"> pay on credit: </label>
+                      <TextField
+                        id="filled-number"
+                        label="Amount"
+                        placeholder="Amount"
+                        type="number"
+                      />
+                    </FormControl>
                     <MDBox mt={4} mb={1}>
                       <div>
                         <MonnifyConsumer {...monNey} className="btn">
