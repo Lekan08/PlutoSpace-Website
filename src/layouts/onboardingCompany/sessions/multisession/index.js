@@ -245,7 +245,7 @@ export default function MultiSession() {
                   MySwal.fire({
                     title: resultx.status,
                     type: "success",
-                    text: resultx.message,
+                    text: "Added Onboarding Session(s) successfully",
                   }).then(() => {
                     window.location.reload();
                   });

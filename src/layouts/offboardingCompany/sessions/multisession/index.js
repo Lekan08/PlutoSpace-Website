@@ -245,7 +245,7 @@ export default function MultiSessionOffboarding() {
                   MySwal.fire({
                     title: resultx.status,
                     type: "success",
-                    text: resultx.message,
+                    text: "Added Offboarding Session(s) successfully",
                   }).then(() => {
                     window.location.reload();
                   });
