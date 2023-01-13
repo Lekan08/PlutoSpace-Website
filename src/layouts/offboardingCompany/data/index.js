@@ -390,7 +390,7 @@ export default function OffboardingCompanyTable() {
     if (status === 2) return "TERMINATED";
   };
   const handleUpdate = (value) => {
-    navigate(`/offboardingCompany/update-Offboarding?id=${value}`);
+    navigate(`/company-offboarding/update-Offboarding?id=${value}`);
   };
   const handleSessions = (value) => {
     const filteredItems = items.filter((item) => item.id === value);

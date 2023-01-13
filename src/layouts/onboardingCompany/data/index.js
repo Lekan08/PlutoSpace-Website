@@ -387,7 +387,7 @@ export default function OnboardingCompanyTable() {
     if (status === 2) return "TERMINATED";
   };
   const handleUpdate = (value) => {
-    navigate(`/onboardingCompany/update-Onboarding?id=${value}`);
+    navigate(`/company-onboarding/update-Onboarding?id=${value}`);
   };
   const handleSessions = (value) => {
     const filteredItems = items.filter((item) => item.id === value);

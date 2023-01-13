@@ -1352,14 +1352,14 @@ const routes = [
     name: "Update Onboarding",
     key: "onboarding/update",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/onboardingCompany/update-Onboarding",
+    route: "/company-onboarding/update-Onboarding",
     component: <Updateonboarding />,
   },
   {
     name: "Update Offboarding",
     key: "offboarding/update",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/offboardingCompany/update-Offboarding",
+    route: "/company-offboarding/update-Offboarding",
     component: <Updateoffboarding />,
   },
   {
