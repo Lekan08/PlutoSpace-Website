@@ -1405,7 +1405,7 @@ function Reports() {
                                 email: resultxp[0].email,
                                 profilePic: URL,
                               },
-                              title: `Income Statement for ${resultxp[0].name} for the last ${numberOfDays}days`,
+                              title: `Income Statement for ${resultxp[0].name} for the last ${numberOfDays} days`,
                               expenseTotal: ExpensesTotal,
                               incomeTotal: IncomeTotal,
                               netTotal: viewTotal,
