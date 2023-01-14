@@ -172,7 +172,8 @@ import Supplystat from "layouts/supplystats";
 import Products from "layouts/products";
 import UpdateProducts from "layouts/products/update";
 // import UpdateSessions from "layouts/onboardingCompany/sessions/update";
-// import Updateonboarding from "layouts/onboardingCompany/updateonboarding";
+import Updateonboarding from "layouts/onboardingCompany/updateonboarding";
+import Updateoffboarding from "layouts/offboardingCompany/updateoffboarding";
 import ViewProducts from "layouts/products/viewproducts";
 import ProductsBranch from "layouts/products/products-Branch";
 import ViewSupply from "layouts/supply/viewSupply";
@@ -230,7 +231,7 @@ import UpdateBusinessTravel from "layouts/businessTravel/update";
 import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
 import MarkAsCompleted from "layouts/businessTravel/mark-as-completed";
 import ViewBusiness from "layouts/businessTravel/view";
-import AttachDocument from "layouts/businessTravel/attachdocument";
+import AttachDocument from "layouts/businessTravel/attach-document";
 import ForwardApproval from "layouts/businessTravel/forwardforapproval";
 import TimeSheetManual from "layouts/timesheet";
 import UpdateTimesheet from "layouts/timesheet/update-Timesheet";
@@ -285,6 +286,7 @@ import UpdateTreasuryContribution from "layouts/treasury/treasuryContribution/up
 import TreasuryDebtors from "layouts/treasury/treasuryGetDebtors";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
+import MultiSession from "layouts/onboardingCompany/sessions/multisession";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
@@ -755,7 +757,7 @@ const routes = [
     name: "Attach Document",
     key: "attachdocument",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/business-travel/attachdocument",
+    route: "/business-travel/attach-document",
     component: <AttachDocument />,
   },
   {
@@ -1335,10 +1337,30 @@ const routes = [
     component: <OnboardingSession />,
   },
   {
+    name: "Onboarding Session",
+    key: "onboardingMultiSession",
+    route: "/onboarding/multi-sessions",
+    component: <MultiSession />,
+  },
+  {
     name: "Update Onboarding Session",
     key: "updateOnboardingSession",
     route: "/onboarding/sessions/update",
     component: <UpdateOnboardingSession />,
+  },
+  {
+    name: "Update Onboarding",
+    key: "onboarding/update",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/company-onboarding/update-Onboarding",
+    component: <Updateonboarding />,
+  },
+  {
+    name: "Update Offboarding",
+    key: "offboarding/update",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/company-offboarding/update-Offboarding",
+    component: <Updateoffboarding />,
   },
   {
     type: "divider",

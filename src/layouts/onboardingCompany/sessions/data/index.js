@@ -62,7 +62,6 @@ export default function OnboardingSessionTable() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const pid = urlParams.get("pid");
-    console.log("pid", pid);
     let isMounted = true;
     fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/getMySessions/${orgIDs}/${pid}`, {
       headers,
@@ -86,7 +85,6 @@ export default function OnboardingSessionTable() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
           setItems(result);
         }
       });
@@ -97,7 +95,6 @@ export default function OnboardingSessionTable() {
 
   const handleDisable2 = (id) => {
     const [filteredItems] = items.filter((item) => item.id === id);
-    console.log(filteredItems);
     MySwal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -169,20 +166,19 @@ export default function OnboardingSessionTable() {
 
   // eslint-disable-next-line consistent-return
   const handleStatus = (status) => {
-    if (status === 0) {
+    if (status === 1) {
       return "ATTENDED";
     }
-    if (status === 1) {
-      return "NOT ATTENDED";
+    if (status === 2) {
+      return "FAILED TO ATTEND";
     }
-    if (status === 2) return "FAILED TO ATTEND";
+    if (status === 0) return "PENDING";
   };
   //   const handleUpdate = (value) => {
   //     navigate(`/onboardingCompany/updateonboarding?id=${value}`);
   //   };
   const handleUpdate = (value) => {
     const filteredItems = items.filter((item) => item.id === value);
-    console.log(filteredItems);
     window.sessionStorage.setItem("boarding", JSON.stringify(filteredItems[0]));
     navigate(`/onboarding/sessions/update?id=${value}`);
   };
