@@ -33,6 +33,7 @@ function MyBills() {
   const [dataTablex, setDataTable] = useState([]);
   const [extraInfox, setExtraInfox] = useState("");
   const [paidAmountx, setPaidAmountx] = useState("");
+  const [approverx, setApproverx] = useState("");
   //   const [totalAmountx, setTotalAmountx] = useState("");
   const [taxAmountx, setTaxAmountx] = useState("");
   const [amountx, setAmountx] = useState("");
@@ -150,14 +151,15 @@ function MyBills() {
     const currentlyLogegdIn = data11.personalID;
     const raw = JSON.stringify({
       orgID: orgIDs,
-      empID: assignedTox,
+      empID: Number(assignedTox),
       createdBy: currentlyLogegdIn,
       amount: amountx,
-      taxAmount: taxAmountx,
-      totalAmount: totalAmountx,
-      paidAmount: paidAmountx,
+      taxAmount: Number(taxAmountx),
+      totalAmount: Number(totalAmountx),
+      paidAmount: Number(paidAmountx),
       purpose: purposex,
       extraInformation: extraInfox,
+      approverID: Number(approverx),
     });
     console.log(raw);
     const requestOptions = {
@@ -951,6 +953,21 @@ function MyBills() {
                       onInput={(e) => handleonAssign(e.target.value)}
                     >
                       <option value="">--Assign to--</option>
+                      {userInfox.map((item) => (
+                        <option key={item.personal.id} value={item.personal.id}>
+                          {item.personal.fname} {item.personal.lname}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </div>
+                  <div className="col-sm-6">
+                    <Form.Select
+                      value={approverx}
+                      aria-label="Default select example"
+                      //   onChange={(e) => setAssignTo(e.target.value)}
+                      onInput={(e) => setApproverx(e.target.value)}
+                    >
+                      <option value="">--Should be approved by--</option>
                       {userInfox.map((item) => (
                         <option key={item.personal.id} value={item.personal.id}>
                           {item.personal.fname} {item.personal.lname}

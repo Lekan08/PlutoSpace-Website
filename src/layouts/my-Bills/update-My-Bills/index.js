@@ -27,12 +27,12 @@ function UpdateMyBills() {
   const [paidAmountx, setPaidAmountx] = useState("");
   //   const [totalAmountx, setTotalAmountx] = useState("");
   const [taxAmountx, setTaxAmountx] = useState("");
+  const [approverx, setApproverx] = useState("");
   const [amountx, setAmountx] = useState("");
   const [userInfox, setUserInfo] = useState([]);
   const [imageURL, setImageUrl] = useState([]);
   const [assignedTox, setAssignTo] = useState("");
   const [createdTimeee, setCreatedTime] = useState("");
-  const [approverIDDDD, setApproverID] = useState("");
   const [approveTimexx, setApproveTime] = useState("");
   const [approvalStatusxx, setApprovalStatus] = useState("");
   const [deleteFlagxx, setDeleteFlag] = useState("");
@@ -159,10 +159,10 @@ function UpdateMyBills() {
       purpose: purposex,
       extraInformation: extraInfox,
       attachedDocs: imageURL,
-      approverID: approverIDDDD,
       approveTime: approveTimexx,
       approvalStatus: approvalStatusxx,
       deleteFlag: deleteFlagxx,
+      approverID: approverx,
     });
 
     console.log(raw);
@@ -302,10 +302,10 @@ function UpdateMyBills() {
             setExtraInfox(result[0].extraInformation);
             setAssignTo(result[0].empID);
             setCreatedTime(result[0].createdTime);
-            setApproverID(result[0].approverID);
             setApproveTime(result[0].approveTime);
             setApprovalStatus(result[0].approvalStatus);
             setDeleteFlag(result[0].deleteFlag);
+            setApproverx(result[0].approverID);
             setImageUrl(result[0].attachedDocs);
             console.log(result[0].attachedDocs);
           }
@@ -502,7 +502,19 @@ function UpdateMyBills() {
                     </Form.Select>
                   </div>
                   <div className="col-sm-6">
-                    <></>
+                    <Form.Select
+                      value={approverx}
+                      aria-label="Default select example"
+                      //   onChange={(e) => setAssignTo(e.target.value)}
+                      onInput={(e) => setApproverx(e.target.value)}
+                    >
+                      <option value="">--Should be approved by--</option>
+                      {userInfox.map((item) => (
+                        <option key={item.personal.id} value={item.personal.id}>
+                          {item.personal.fname} {item.personal.lname}
+                        </option>
+                      ))}
+                    </Form.Select>
                   </div>
                 </div>
               </Container>

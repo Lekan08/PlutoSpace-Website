@@ -687,10 +687,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "General Bills",
-    key: "generalBills",
+    name: "Bills Attention",
+    key: "billsAttention",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/general-Bills",
+    route: "/Bills-Attention",
     component: <GeneralBills />,
   },
   {
