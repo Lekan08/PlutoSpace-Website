@@ -401,6 +401,9 @@ function MultipleUpload() {
             </Paper>
           </Accordion.Body>
         </Accordion.Item>
+        <Accordion.Item eventKey="3" onClick={() => navigate("/onboarding/multi-sessions")}>
+          <Accordion.Header>Add Multiple Onboarding Sessions</Accordion.Header>
+        </Accordion.Item>
         <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
           <CircularProgress color="info" />
         </Backdrop>

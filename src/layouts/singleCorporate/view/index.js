@@ -95,8 +95,9 @@ function ViewSingleCorporate() {
   const [lastEngagementTime, setLastEngagementTime] = useState("");
 
   const [product, setProduct] = useState([]);
-  // const [productSupplyRequest, setProductSupplyRequest] = useState([]);
+  const [totalRequest, setTotalRequest] = useState([]);
   // console.log(setProductSupplyRequest);
+  console.log(product);
 
   const [opened, setOpened] = useState(false);
 
@@ -772,7 +773,18 @@ function ViewSingleCorporate() {
         }
         console.log(result);
         if (isMounted) {
-          setProduct(result);
+          if (result.length !== 0) {
+            const zoom = result.map((item) => item.product);
+            console.log(zoom);
+            if (zoom.length !== 0 && zoom !== null) {
+              console.log(zoom);
+              // const view = zoom.map((item) => item.name);
+              setProduct(zoom);
+            }
+            // product
+            const zoom1 = result.map((item) => item.totalRequests);
+            setTotalRequest(zoom1);
+          }
 
           console.log(result);
         }
@@ -1438,20 +1450,16 @@ function ViewSingleCorporate() {
                                   description="ALL PRODUCT/PACKAGE SUPPLY REQUEST"
                                   chart={{
                                     labels: [
-                                      `${product[0].product.name}`,
-                                      `${product[1].product.name}`,
-                                      // `${product[2].product.name}`,
+                                      // product,
+                                      `${product[0].name}`,
+                                      product[1].name,
                                     ],
                                     datasets: [
                                       {
                                         chartType: "Bar Chart",
                                         label: "TOTAL REQUEST",
                                         color: "success",
-                                        data: [
-                                          product[0].totalRequests,
-                                          product[1].totalRequests,
-                                          // product[2].totalRequests,
-                                        ],
+                                        data: totalRequest,
                                       },
                                     ],
                                   }}
@@ -1882,78 +1890,67 @@ function ViewSingleCorporate() {
           </Box>
         </Modal> */}
       </div>
-      <MDBox my={1} />
-      <Grid container spacing={0.5}>
-        <Grid item xs={6}>
-          {" "}
-          <Paper sx={styleDST} variant="outlined" square>
-            <MDBox sx={{ maxHeight: 195 }}>
-              <div
-                className="scrollbar scrollbar-primary mt-2 mx-auto"
-                style={scrollContainerStyle}
-              >
-                <MDBox mb={1.5}>
-                  <MDBox
-                    variant="gradient"
-                    bgColor="info"
-                    borderRadius="lg"
-                    coloredShadow="success"
-                    mt={0}
-                    mx={2}
-                    p={1}
-                    mb={2}
-                    textAlign="left"
-                  >
-                    <MDTypography
-                      variant="h4"
-                      fontWeight="medium"
-                      color="white"
-                      textAlign="center"
-                      mt={1}
-                    >
-                      Assets
-                    </MDTypography>
+      <Grid item xs={6} md={3} lg={4}>
+        <Card sx={{ maxHeight: 350 }}>
+          <MDBox
+            variant="gradient"
+            bgColor="success"
+            borderRadius="lg"
+            coloredShadow="success"
+            mt={0}
+            mx={2}
+            p={1}
+            mb={2}
+            textAlign="left"
+          >
+            <MDTypography variant="h4" fontWeight="medium" color="white" textAlign="center" mt={1}>
+              Assets
+            </MDTypography>
+          </MDBox>
+          <div className="scrollbar scrollbar-primary mt-2 mx-auto" style={scrollContainerStyle}>
+            <MDBox mb={-3}>
+              <Container>
+                <div className="row">
+                  <MDBox>
+                    <Grid item xs={12} md={12} lg={12}>
+                      {assetsx.map((item) => (
+                        <Grid item xs={12} md={12} lg={12}>
+                          <Card
+                            sx={{ maxWidth: 345 }}
+                            key={item.id}
+                            style={{ backgroundColor: "#5F8575" }}
+                          >
+                            <CardContent>
+                              <MDTypography
+                                variant="h6"
+                                color="white"
+                                fontSize="75%"
+                                textAlign="left"
+                                mt={1}
+                              >
+                                Item - {item.item}
+                              </MDTypography>
+                              <MDTypography
+                                variant="h6"
+                                color="white"
+                                fontSize="75%"
+                                textAlign="left"
+                                mt={1}
+                              >
+                                Item Worth - {item.itemWorth}
+                              </MDTypography>
+                            </CardContent>
+                          </Card>
+                          &nbsp; &nbsp;
+                        </Grid>
+                      ))}
+                    </Grid>
                   </MDBox>
-                  <Container>
-                    <div className="row">
-                      <MDBox>
-                        {assetsx.map((item) => (
-                          // <Link to={`/Tickets/Chats?id=${item.id}`}>
-                          <Grid item xs={12} md={12} lg={12} key={item.id}>
-                            <Card sx={{ maxWidth: 345 }}>
-                              <CardContent>
-                                <MDTypography
-                                  variant="h6"
-                                  color="text"
-                                  fontSize="75%"
-                                  textAlign="left"
-                                  mt={1}
-                                >
-                                  Item - {item.item}
-                                </MDTypography>
-                                <MDTypography
-                                  variant="h6"
-                                  color="text"
-                                  fontSize="75%"
-                                  textAlign="left"
-                                  mt={1}
-                                >
-                                  Item Worth - {item.itemWorth}
-                                </MDTypography>
-                              </CardContent>
-                            </Card>
-                            &nbsp;
-                          </Grid>
-                          // </Link>
-                        ))}
-                      </MDBox>
-                    </div>
-                  </Container>
-                </MDBox>
-              </div>
+                </div>
+              </Container>
             </MDBox>
-          </Paper>
-        </Grid>
+          </div>
+        </Card>
       </Grid>
 
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>

@@ -172,7 +172,8 @@ import Supplystat from "layouts/supplystats";
 import Products from "layouts/products";
 import UpdateProducts from "layouts/products/update";
 // import UpdateSessions from "layouts/onboardingCompany/sessions/update";
-// import Updateonboarding from "layouts/onboardingCompany/updateonboarding";
+import Updateonboarding from "layouts/onboardingCompany/updateonboarding";
+import Updateoffboarding from "layouts/offboardingCompany/updateoffboarding";
 import ViewProducts from "layouts/products/viewproducts";
 import ProductsBranch from "layouts/products/products-Branch";
 import ViewSupply from "layouts/supply/viewSupply";
@@ -230,7 +231,7 @@ import UpdateBusinessTravel from "layouts/businessTravel/update";
 import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
 import MarkAsCompleted from "layouts/businessTravel/mark-as-completed";
 import ViewBusiness from "layouts/businessTravel/view";
-import AttachDocument from "layouts/businessTravel/attachdocument";
+import AttachDocument from "layouts/businessTravel/attach-document";
 import ForwardApproval from "layouts/businessTravel/forwardforapproval";
 import TimeSheetManual from "layouts/timesheet";
 import UpdateTimesheet from "layouts/timesheet/update-Timesheet";
@@ -279,8 +280,13 @@ import UpdateCoupons from "layouts/coupons/update";
 import AppointmentOffboardingSession from "layouts/assignedOffboarding/appointmentSession";
 import TreasuryType from "layouts/treasuryType";
 import UpdateTreasuryType from "layouts/treasuryType/update";
+import Treasury from "layouts/treasury";
+import TreasuryContribution from "layouts/treasury/treasuryContribution";
+import UpdateTreasuryContribution from "layouts/treasury/treasuryContribution/update";
+import TreasuryDebtors from "layouts/treasury/treasuryGetDebtors";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
+import MultiSession from "layouts/onboardingCompany/sessions/multisession";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
@@ -623,40 +629,40 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Assets",
+    name: "Asset",
     key: "assets",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets",
+    route: "/asset",
     component: <Assets />,
   },
   {
-    name: "Update Assets",
-    key: "updateassets",
+    name: "Update Asset",
+    key: "updateasset",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets/update",
+    route: "/asset/update",
     component: <UpdateAssets />,
   },
   {
     name: "Attach Documents",
     key: "attachDocuments",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets/attach-Documents",
+    route: "/asset/attach-Documents",
     component: <AssetAttachDocument />,
   },
   {
     type: "collapse",
-    name: "Company Assets",
-    key: "companyassets",
+    name: "Company Asset",
+    key: "companyasset",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/company-Assets",
+    route: "/company-Asset",
     component: <CompanyAssets />,
   },
   {
     type: "collapse",
-    name: "Customer Assets",
+    name: "Customer Asset",
     key: "customerassets",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/customer-Assets",
+    route: "/customer-Asset",
     component: <CustomerAssets />,
   },
   {
@@ -751,7 +757,7 @@ const routes = [
     name: "Attach Document",
     key: "attachdocument",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/business-travel/attachdocument",
+    route: "/business-travel/attach-document",
     component: <AttachDocument />,
   },
   {
@@ -1259,6 +1265,36 @@ const routes = [
     component: <UpdateTreasuryType />,
   },
   {
+    type: "collapse",
+    name: "Treasury",
+    key: "treasury",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury",
+    component: <Treasury />,
+  },
+  {
+    name: "Treasury Contribution",
+    key: "treasuryContribution",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/treasury-Contribution",
+    component: <TreasuryContribution />,
+  },
+  {
+    name: "Update Treasury Contribution",
+    key: "UpdatetreasuryContribution",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/treasury-Contribution/update",
+    component: <UpdateTreasuryContribution />,
+  },
+  {
+    type: "collapse",
+    name: "Treasury Debtors",
+    key: "treasuryGetDebtors",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/treasury-Get-Debtors",
+    component: <TreasuryDebtors />,
+  },
+  {
     type: "divider",
     name: "",
     key: "divd1",
@@ -1301,10 +1337,30 @@ const routes = [
     component: <OnboardingSession />,
   },
   {
+    name: "Onboarding Session",
+    key: "onboardingMultiSession",
+    route: "/onboarding/multi-sessions",
+    component: <MultiSession />,
+  },
+  {
     name: "Update Onboarding Session",
     key: "updateOnboardingSession",
     route: "/onboarding/sessions/update",
     component: <UpdateOnboardingSession />,
+  },
+  {
+    name: "Update Onboarding",
+    key: "onboarding/update",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/company-onboarding/update-Onboarding",
+    component: <Updateonboarding />,
+  },
+  {
+    name: "Update Offboarding",
+    key: "offboarding/update",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/company-offboarding/update-Offboarding",
+    component: <Updateoffboarding />,
   },
   {
     type: "divider",
@@ -1580,9 +1636,9 @@ const routes = [
   {
     type: "collapse",
     name: "CBT",
-    key: "cbt",
+    key: "CBT",
     icon: <Icon fontSize="small">dvr</Icon>,
-    route: "/cbt",
+    route: "/CBT",
     component: <CBT />,
   },
   // {
@@ -1866,7 +1922,7 @@ const routes = [
     name: "Filter Sales",
     key: "filtersales",
     icon: <Icon fontSize="small">point_of_sale</Icon>,
-    route: "/sales/filterSales",
+    route: "/sales/filter-Sales",
     component: <FilterSales />,
   },
   {

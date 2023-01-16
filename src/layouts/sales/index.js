@@ -549,6 +549,8 @@ function Sales() {
     };
   }, [showPrint, onBeforeGetContentResolve]);
 
+  console.log(handlePrint);
+
   const handleClick = (e) => {
     if (Payment === 0) {
       setOpened(true);
@@ -600,9 +602,70 @@ function Sales() {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
           }
+          // if (result.status === "SUCCESS") {
+          //   // handlePrint();
+          // }
           if (result.status === "SUCCESS") {
             handlePrint();
+            const allResult = result.data;
+            const raw2 = JSON.stringify({
+              orgID: orgIDs,
+              type: "SALES",
+              requestID: allResult.id,
+              balance: allResult.subTotalAmount,
+              createdBy: allResult.createdBy,
+              clientID: allResult.individualID,
+              originalAmount: allResult.subTotalAmount,
+            });
+            const requestOptions2 = {
+              method: "POST",
+              headers: myHeaders,
+              body: raw2,
+              redirect: "follow",
+            };
+            fetch(`${process.env.REACT_APP_LOUGA_URL}/creditFacility/add`, requestOptions2)
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                const resultx = await res.text();
+                if (resultx === null || resultx === undefined || resultx === "") {
+                  return {};
+                }
+                return JSON.parse(resultx);
+              })
+              .then((resultx) => {
+                if (resultx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+                console.log(resultx);
+                setOpened(false);
+                MySwal.fire({
+                  title: resultx.status,
+                  type: "success",
+                  text: resultx.message,
+                }).then(() => {
+                  window.location.reload();
+                });
+              })
+              .catch((error) => {
+                setOpened(false);
+                MySwal.fire({
+                  title: error.status,
+                  type: "error",
+                  text: error.message,
+                });
+              });
           }
+          console.log(result);
           setOpened(false);
           MySwal.fire({
             title: result.status,
@@ -912,7 +975,7 @@ function Sales() {
           <Grid container spacing={2}>
             <Grid item xs={2}>
               <Item>
-                <b>saleType</b>
+                <b>Sales Type</b>
               </Item>
             </Grid>
             <Grid item xs={1}>
@@ -1205,8 +1268,8 @@ function Sales() {
                     <TextField
                       id="filled-number"
                       value={bonusAmountxx}
-                      label="Bonus Amount "
-                      placeholder="Bonus Amount "
+                      label="Bonus Amount(NGN) "
+                      placeholder="Bonus Amount(NGN) "
                       type="number"
                       onChange={(e) => setBonusAmount(e.target.value)}
                     />
@@ -1220,8 +1283,8 @@ function Sales() {
                     <TextField
                       id="filled-number"
                       value={subTotalAmountx}
-                      label="Total Amount "
-                      placeholder="Total Amount "
+                      label="Total Amount(NGN) "
+                      placeholder="Total Amount(NGN) "
                       type="number"
                       name="totalAmount"
                       InputProps={{

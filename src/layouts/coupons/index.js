@@ -260,7 +260,7 @@ function Coupons() {
                         id="filled-number"
                         value={amountx}
                         label="Amount"
-                        placeholder="Amount* "
+                        placeholder="Amount (NGN) *"
                         onKeyUp={handleOnAmountKeys}
                         size="small"
                         type="number"

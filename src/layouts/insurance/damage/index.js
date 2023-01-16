@@ -671,7 +671,6 @@ function InsuranceDamage() {
             </MDBox>
           </MDBox>
           <br />
-          <hr />
           <MDBox
             variant="gradient"
             // bgColor="info"

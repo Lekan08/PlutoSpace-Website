@@ -659,8 +659,8 @@ function MySubscription() {
                     id="outlined-textarea"
                     rows={2}
                     value={particularsx || ""}
-                    label="Particulars "
-                    placeholder="Particulars "
+                    label="Description "
+                    placeholder="Description "
                     onChange={(e) => setParticularsx(e.target.value)}
                     onKeyUp={(e) => handleParticulars(e.target.value)}
                     sx={{
