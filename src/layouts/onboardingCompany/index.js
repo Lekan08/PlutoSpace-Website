@@ -103,7 +103,6 @@ function OnboardingCompany() {
         createdBy: Number(createdByx),
       }));
     const raw = JSON.stringify(filt);
-    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -137,7 +136,6 @@ function OnboardingCompany() {
           return res.json();
         })
         .then((resultr) => {
-          console.log(resultr);
           if (resultr.message === "Expired Access") {
             navigate("/authentication/sign-in");
           }
