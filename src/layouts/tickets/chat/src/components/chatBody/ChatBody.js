@@ -238,7 +238,7 @@ export default function ChatBody({ socket, initialTicketID }) {
     //   }
     // });
     // eslint-disable-next-line react/prop-types
-    socket.on("receive_message", (allEventata) => {
+    socket.on("receive_message_ticket", (allEventata) => {
       if (isMounted) {
         console.log(allEventata);
         // let receivedMessage = "";
@@ -703,7 +703,7 @@ export default function ChatBody({ socket, initialTicketID }) {
       };
 
       // eslint-disable-next-line react/prop-types
-      await socket.emit("send_message", messageData);
+      await socket.emit("send_message_ticket", messageData);
       setChatDataa((list) => [...list, dataa]);
 
       setMsg("");
