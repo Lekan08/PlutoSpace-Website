@@ -771,7 +771,6 @@ function UserProfile() {
   }, []);
 
   const downloadByPaySlipName = (paySlipName) => {
-    const headers = miHeaders;
     const raw1 = JSON.stringify({
       name: paySlipName,
     });
@@ -792,7 +791,7 @@ function UserProfile() {
         // (C2) TO "FORCE DOWNLOAD"
         const anchor = document.createElement("a");
         anchor.href = objectURL;
-        anchor.download = resxx.name;
+        anchor.download = paySlipName;
         anchor.click();
 
         // (C3) CLEAN UP
@@ -867,8 +866,8 @@ function UserProfile() {
               downloadByPaySlipName(paySlipName);
             });
         } else if (resx.status === "RECORD_EXIST") {
-          const paySlipName = resx.data.paySlipName;
-          downloadByPaySlipName(paySlipName);
+          const paySlipNamex = resx.data.paySlipName;
+          downloadByPaySlipName(paySlipNamex);
         }
       })
       .catch((error) => {
