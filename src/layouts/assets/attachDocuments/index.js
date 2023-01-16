@@ -52,6 +52,7 @@ function AssetAttachDocument() {
   // const [docs, setDocs] = useState([]);
   const [imageUrl, setImageUrl] = useState(RollingGif);
   // const [showFrame, setShowFrame] = useState(false);
+  const [name, setName] = useState([]);
 
   const [viewDoc, setViewDoc] = React.useState(false);
 
@@ -182,11 +183,8 @@ function AssetAttachDocument() {
           if (isMounted) {
             if (result[0].attachedDocs !== null) {
               setItems(result[0].attachedDocs);
-              //       // setShowFrame(true);
-              //       console.log(result);
-              //       console.log(null);
-              //       console.log(result[0].attachedDocs);
             }
+            // }
           }
         }
       });
@@ -578,6 +576,7 @@ function AssetAttachDocument() {
         console.log(result);
         const TYPE = result.type;
         if (result.name) {
+          setName(result.name);
           fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.name}`, {
             headers,
           })
@@ -843,6 +842,7 @@ function AssetAttachDocument() {
               display="block"
               position="relative"
             />
+            <h1>Pure{name}</h1>
           </MDBox>
         </Card>
       </Backdrop>

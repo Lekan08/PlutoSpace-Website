@@ -646,7 +646,7 @@ const routes = [
     name: "Attach Documents",
     key: "attachDocuments",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets/attach-Documents",
+    route: "/asset/attach-Documents",
     component: <AssetAttachDocument />,
   },
   {
