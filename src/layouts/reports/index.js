@@ -161,7 +161,7 @@ function Reports() {
         const allMAP = result;
         if (result !== "") {
           const itemz = result.map((each) => ({
-            dateAcquired: each.createdTime,
+            dateAcquired: new Date(each.createdTime).toDateString(),
             name: each.item,
             category: each.type.name,
             currentValue: each.currentWorth,
