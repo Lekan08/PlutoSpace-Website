@@ -62,7 +62,7 @@ function Basic() {
   //     width: 5000,
   //   },
   // };
-  console.log(Styles);
+  // console.log(Styles);
 
   // Password toggle handler
   const togglePassword = () => {
