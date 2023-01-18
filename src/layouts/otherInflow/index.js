@@ -37,6 +37,10 @@ function OtherInflow() {
   const [otherInflowTypex, setOtherInflowType] = useState("");
   const [oitx, setOIT] = useState([]);
   const [particularz, setParticular] = useState("");
+  const [showClients, setShowClients] = useState(false);
+  const [clientx, setClient] = useState([]);
+  const [clientTypex, setClientTypex] = useState("");
+  const [clientIDx, setClientIDx] = useState("");
 
   const [checkedAmount, setCheckedAmount] = useState("");
   const [checkedTaxAmount, setCheckedTaxAmount] = useState("");
@@ -123,11 +127,14 @@ function OtherInflow() {
       orgID: orgIDs,
       particulars: particularz,
       createdBy: idx,
+      clientID: clientIDx,
+      clientType: clientTypex,
       amount: amountx,
       taxAmount: taxAmountx,
       totalAmount: TotalAmountx,
       otherInflowTypeID: otherInflowTypex,
     });
+    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -173,6 +180,49 @@ function OtherInflow() {
           type: "error",
           text: error.message,
         });
+      });
+  };
+  const handleChangeClient = (value) => {
+    const callClientType = value.toString();
+    setClientTypex(callClientType);
+    let clientTyppe = "";
+    if (callClientType === "1") {
+      setShowClients(true);
+      clientTyppe = "individual";
+    } else if (callClientType === "2") {
+      setShowClients(false);
+      clientTyppe = "corporate";
+    }
+    setOpened(true);
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/${clientTyppe}/gets/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        setClient(result);
       });
   };
 
@@ -264,6 +314,76 @@ function OtherInflow() {
                           </option>
                         ))}
                       </Form.Select>
+                    </MDBox>
+                  </div>
+                </div>
+              </Container>
+            </MDBox>
+            <MDBox>
+              <Container>
+                <div className="row">
+                  <div className="col-sm-6">
+                    <MDTypography
+                      variant="button"
+                      fontWeight="regular"
+                      fontSize="80%"
+                      align="left"
+                      color="text"
+                      mt={0}
+                    >
+                      Client Type
+                    </MDTypography>
+                    <MDBox textAlign="right">
+                      <Form.Select
+                        onChange={(e) => handleChangeClient(e.target.value)}
+                        value={clientTypex || ""}
+                        aria-label="Default select example"
+                      >
+                        <option>--Select Client Type--</option>
+                        <option value="1">Individual</option>
+                        <option value="2">Corporate</option>
+                      </Form.Select>
+                    </MDBox>
+                  </div>
+                  <div className="col-sm-6">
+                    <MDBox mt={0}>
+                      <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        fontSize="80%"
+                        align="left"
+                        color="text"
+                      >
+                        Client
+                      </MDTypography>{" "}
+                      {showClients ? (
+                        <Form.Select
+                          value={clientIDx}
+                          onChange={(e) => setClientIDx(e.target.value)}
+                          aria-label="Default select example"
+                        >
+                          <option value="">--Select User--</option>
+                          {clientx.map((api) => (
+                            <option key={api.id} value={api.id}>
+                              {api.title} {api.fname} {api.lname}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      ) : (
+                        <Form.Select
+                          value={clientIDx}
+                          onChange={(e) => setClientIDx(e.target.value)}
+                          aria-label="Default select example"
+                        >
+                          <option value="">--Select User--</option>
+                          {clientx.map((api) => (
+                            <option key={api.id} value={api.id}>
+                              {api.name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      )}
+                      <br />
                     </MDBox>
                   </div>
                 </div>

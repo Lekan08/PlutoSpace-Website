@@ -1268,8 +1268,8 @@ function Sales() {
                     <TextField
                       id="filled-number"
                       value={bonusAmountxx}
-                      label="Bonus Amount(NGN) "
-                      placeholder="Bonus Amount(NGN) "
+                      label="Bonus Amount (NGN) "
+                      placeholder="Bonus Amount (NGN) "
                       type="number"
                       onChange={(e) => setBonusAmount(e.target.value)}
                     />
@@ -1283,8 +1283,8 @@ function Sales() {
                     <TextField
                       id="filled-number"
                       value={subTotalAmountx}
-                      label="Total Amount(NGN) "
-                      placeholder="Total Amount(NGN) "
+                      label="Total Amount (NGN) "
+                      placeholder="Total Amount (NGN) "
                       type="number"
                       name="totalAmount"
                       InputProps={{
