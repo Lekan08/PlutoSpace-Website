@@ -1026,7 +1026,7 @@ function Reports() {
                             };
 
                             fetch(
-                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/insurance`,
                               requestOptions
                             )
                               .then(async (res) => {
@@ -1136,7 +1136,7 @@ function Reports() {
                             };
 
                             fetch(
-                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/insurance`,
                               requestOptions
                             )
                               .then(async (res) => {
