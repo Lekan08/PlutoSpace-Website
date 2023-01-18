@@ -1104,12 +1104,12 @@ export default function Pipeline() {
   //   // }
   // };
   // console.log(handleClick);
-  console.log(taskId);
+  // console.log(taskId);
   const handleViewSupply = () => {
     navigate(`/project/subtask?id=${taskId}&workflowID=${projectGet[0].workflowID}`);
   };
   // console.log(currentStageID);
-  console.log(taskId);
+  // console.log(taskId);
   return (
     <DashboardLayout>
       <DashboardNavbar />
