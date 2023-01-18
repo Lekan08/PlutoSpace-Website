@@ -646,7 +646,7 @@ const routes = [
     name: "Attach Documents",
     key: "attachDocuments",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets/attach-Documents",
+    route: "/asset/attach-Documents",
     component: <AssetAttachDocument />,
   },
   {
@@ -687,10 +687,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "General Bills",
-    key: "generalBills",
+    name: "Bills Attention",
+    key: "billsAttention",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/general-Bills",
+    route: "/Bills-Attention",
     component: <GeneralBills />,
   },
   {
@@ -1352,14 +1352,14 @@ const routes = [
     name: "Update Onboarding",
     key: "onboarding/update",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/onboardingCompany/update-Onboarding",
+    route: "/company-onboarding/update-Onboarding",
     component: <Updateonboarding />,
   },
   {
     name: "Update Offboarding",
     key: "offboarding/update",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/offboardingCompany/update-Offboarding",
+    route: "/company-offboarding/update-Offboarding",
     component: <Updateoffboarding />,
   },
   {

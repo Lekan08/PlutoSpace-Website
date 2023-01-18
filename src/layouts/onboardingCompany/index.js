@@ -89,12 +89,9 @@ function OnboardingCompany() {
   }, []);
 
   const handleCreate = () => {
-    const OpeningDate = new Date(start).getTime();
-    const ClosingDate = new Date(end).getTime();
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const createdByx = data11.personalID;
-    const CurTime = new Date().getTime();
 
     const filt = scatter
       .filter((r) => r.ticked === true)
@@ -106,7 +103,6 @@ function OnboardingCompany() {
         createdBy: Number(createdByx),
       }));
     const raw = JSON.stringify(filt);
-    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -140,7 +136,6 @@ function OnboardingCompany() {
           return res.json();
         })
         .then((resultr) => {
-          console.log(resultr);
           if (resultr.message === "Expired Access") {
             navigate("/authentication/sign-in");
           }
@@ -154,7 +149,7 @@ function OnboardingCompany() {
           MySwal.fire({
             title: resultr.status,
             type: "success",
-            text: resultr.message,
+            text: "Added Onboarding User(s) Successfully.",
           }).then(() => {
             window.location.reload();
           });

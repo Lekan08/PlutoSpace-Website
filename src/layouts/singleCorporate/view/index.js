@@ -95,8 +95,9 @@ function ViewSingleCorporate() {
   const [lastEngagementTime, setLastEngagementTime] = useState("");
 
   const [product, setProduct] = useState([]);
-  // const [productSupplyRequest, setProductSupplyRequest] = useState([]);
+  const [totalRequest, setTotalRequest] = useState([]);
   // console.log(setProductSupplyRequest);
+  console.log(product);
 
   const [opened, setOpened] = useState(false);
 
@@ -772,7 +773,18 @@ function ViewSingleCorporate() {
         }
         console.log(result);
         if (isMounted) {
-          setProduct(result);
+          if (result.length !== 0) {
+            const zoom = result.map((item) => item.product);
+            console.log(zoom);
+            if (zoom.length !== 0 && zoom !== null) {
+              console.log(zoom);
+              // const view = zoom.map((item) => item.name);
+              setProduct(zoom);
+            }
+            // product
+            const zoom1 = result.map((item) => item.totalRequests);
+            setTotalRequest(zoom1);
+          }
 
           console.log(result);
         }
@@ -1438,20 +1450,16 @@ function ViewSingleCorporate() {
                                   description="ALL PRODUCT/PACKAGE SUPPLY REQUEST"
                                   chart={{
                                     labels: [
-                                      `${product[0].product.name}`,
-                                      `${product[1].product.name}`,
-                                      // `${product[2].product.name}`,
+                                      // product,
+                                      `${product[0].name}`,
+                                      product[1].name,
                                     ],
                                     datasets: [
                                       {
                                         chartType: "Bar Chart",
                                         label: "TOTAL REQUEST",
                                         color: "success",
-                                        data: [
-                                          product[0].totalRequests,
-                                          product[1].totalRequests,
-                                          // product[2].totalRequests,
-                                        ],
+                                        data: totalRequest,
                                       },
                                     ],
                                   }}

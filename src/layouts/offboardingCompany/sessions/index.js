@@ -25,6 +25,7 @@ function OffboardingSession() {
   const { columns: pColumns, rows: pRows } = OffboardingCompanyTable();
   const [opened, setOpened] = useState(false);
   const [end, setEnd] = useState("");
+  const [status, setStatus] = useState(false);
   const [data, setData] = useState([]);
   const [mentorx, setMentorx] = useState("");
   const [start, setStart] = useState("");
@@ -81,6 +82,9 @@ function OffboardingSession() {
     // const data11 = JSON.parse(localStorage.getItem("user1"));
 
     // const ids = data11.id;
+    const stat = urlParams.get("stat");
+
+    if (Number(stat) === 2) setStatus(true);
     let isMounted = true;
     fetch(`${process.env.REACT_APP_RAGA_URL}/offboarding/getByIds/${ids}`, {
       headers,
@@ -381,6 +385,7 @@ function OffboardingSession() {
                     value={mentorx}
                     onChange={(e) => setMentorx(e.target.value)}
                     aria-label="Default select example"
+                    disabled={status}
                   >
                     <option value="">Select Mentor</option>
                     {userxx.map((api) => (
@@ -396,7 +401,7 @@ function OffboardingSession() {
                     <Col>
                       <MDTypography variant="p" fontWeight="light" color="secondary" fontSize="90%">
                         <br />
-                        Offboarding Begins
+                        Offboarding Session Begins
                       </MDTypography>
                       <Container>
                         <DatePicker
@@ -410,13 +415,14 @@ function OffboardingSession() {
                           dateFormat="MM/dd/yyyy h:mm aa"
                           dropdownMode="select"
                           onChange={(time) => setStart(time)}
+                          disabled={status}
                         />
                       </Container>
                     </Col>
                     <Col>
                       <MDTypography variant="p" fontWeight="light" color="secondary" fontSize="90%">
                         <br />
-                        Offboarding Ends
+                        Offboarding Session Ends
                       </MDTypography>
                       <Container>
                         <DatePicker
@@ -430,6 +436,7 @@ function OffboardingSession() {
                           dateFormat="MM/dd/yyyy h:mm aa"
                           dropdownMode="select"
                           onChange={(time) => setEnd(time)}
+                          disabled={status}
                         />
                       </Container>
                     </Col>
@@ -449,9 +456,20 @@ function OffboardingSession() {
               </Container>
               <MDBox textAlign="center" mx={3}>
                 <MDBox textAlign="center" p={3}>
-                  <MDButton color="success" variant="gradient" onClick={handleCreate} size="large">
-                    ASSIGN
-                  </MDButton>
+                  {status ? (
+                    <i style={{ color: "red", fontSize: "10px" }}>
+                      This offboarding has already been terminated
+                    </i>
+                  ) : (
+                    <MDButton
+                      color="success"
+                      variant="gradient"
+                      onClick={handleCreate}
+                      size="large"
+                    >
+                      ASSIGN
+                    </MDButton>
+                  )}
                 </MDBox>
               </MDBox>
             </MDBox>
