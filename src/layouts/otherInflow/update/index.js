@@ -38,6 +38,8 @@ function UpdateOtherInflow() {
 
   const [checkedAmount, setCheckedAmount] = useState("");
   const [checkedTaxAmount, setCheckedTaxAmount] = useState("");
+  const [checkedClientType, setCheckedClientType] = useState("");
+  const [checkedClientID, setCheckedClientID] = useState("");
   const [itemsx, setItems] = useState([]);
 
   const [opened, setOpened] = useState(false);
@@ -115,9 +117,27 @@ function UpdateOtherInflow() {
 
   const TotalAmountx = parseInt(taxAmountx, 10) + parseInt(amountx, 10);
 
+  const handleOnClientIDKeys = (value) => {
+    setClientIDx(value);
+    const Validate = "--Select User *--";
+    if (value.toString().match(Validate)) {
+      setCheckedClientID(false);
+    }
+    if (!value.toString().match(Validate)) {
+      setCheckedClientID(true);
+    }
+  };
+
   const handleChangeClient = (value) => {
     const callClientType = value.toString();
     setClientTypex(callClientType);
+    const Validate = "--Select Client Type *--";
+    if (value.toString().match(Validate)) {
+      setCheckedClientType(false);
+    }
+    if (!value.toString().match(Validate)) {
+      setCheckedClientType(true);
+    }
     let clientTyppe = "";
     if (callClientType === "1") {
       setShowClients(true);
@@ -200,6 +220,7 @@ function UpdateOtherInflow() {
         setClientIDx(result[0].clientID);
         handleOnAmountKeys(result[0].amount);
         handleOnTaxAmountKeys(result[0].taxAmount);
+        handleOnClientIDKeys(result[0].clientID);
       });
   };
 
@@ -283,7 +304,7 @@ function UpdateOtherInflow() {
   };
 
   const handleValidate = (e) => {
-    if (checkedAmount && checkedTaxAmount === true) {
+    if (checkedAmount && checkedTaxAmount && checkedClientType && checkedClientID === true) {
       handleClick(e);
     }
   };
@@ -323,7 +344,7 @@ function UpdateOtherInflow() {
                 <div className="row">
                   <div className="col-sm-6">
                     <TextField
-                      label="Amount *"
+                      label="Amount (NGN)*"
                       type="number"
                       value={amountx}
                       onKeyUp={(e) => handleOnAmountKeys(e.target.value)}
@@ -332,7 +353,7 @@ function UpdateOtherInflow() {
                   </div>
                   <div className="col-sm-6">
                     <TextField
-                      label="Amount *"
+                      label="Tax Amount (NGN)*"
                       type="number"
                       value={taxAmountx}
                       onKeyUp={(e) => handleOnTaxAmountKeys(e.target.value)}
@@ -415,7 +436,7 @@ function UpdateOtherInflow() {
                       {showClients ? (
                         <Form.Select
                           value={clientIDx}
-                          onChange={(e) => setClientIDx(e.target.value)}
+                          onChange={(e) => handleOnClientIDKeys(e.target.value)}
                           aria-label="Default select example"
                         >
                           <option value="">--Select User--</option>
@@ -428,7 +449,7 @@ function UpdateOtherInflow() {
                       ) : (
                         <Form.Select
                           value={clientIDx}
-                          onChange={(e) => setClientIDx(e.target.value)}
+                          onChange={(e) => handleOnClientIDKeys(e.target.value)}
                           aria-label="Default select example"
                         >
                           <option value="">--Select User--</option>

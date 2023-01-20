@@ -251,6 +251,7 @@ import OtherInflow from "layouts/otherInflow";
 import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
+import CreditFacility from "layouts/creditFacility";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
@@ -1667,7 +1668,7 @@ const routes = [
     name: "AssignCbtTestToJobPost",
     key: "assigncbttesttojobpost",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/cbt/assignCBTToJobPost/",
+    route: "/CBT/assign-CBT-To-JobPost/",
     component: <AssignCbtToJobPost />,
   },
   {
@@ -1908,6 +1909,14 @@ const routes = [
     icon: <Icon fontSize="small">point_of_sale</Icon>,
     route: "/sales",
     component: <Sales />,
+  },
+  {
+    type: "collapse",
+    name: "Credit Facility",
+    key: "creditFacility",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/credit-Facility",
+    component: <CreditFacility />,
   },
   {
     // type: "collapse",

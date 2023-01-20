@@ -44,6 +44,8 @@ function OtherInflow() {
 
   const [checkedAmount, setCheckedAmount] = useState("");
   const [checkedTaxAmount, setCheckedTaxAmount] = useState("");
+  const [checkedClientType, setCheckedClientType] = useState("");
+  const [checkedClientID, setCheckedClientID] = useState("");
 
   const TotalAmountx = parseInt(taxAmountx, 10) + parseInt(amountx, 10);
 
@@ -182,9 +184,27 @@ function OtherInflow() {
         });
       });
   };
+
+  const handleOnClientIDKeys = (value) => {
+    setClientIDx(value);
+    const Validate = "--Select User *--";
+    if (value.toString().match(Validate)) {
+      setCheckedClientID(false);
+    }
+    if (!value.toString().match(Validate)) {
+      setCheckedClientID(true);
+    }
+  };
   const handleChangeClient = (value) => {
     const callClientType = value.toString();
     setClientTypex(callClientType);
+    const Validate = "--Select Client Type *--";
+    if (value.toString().match(Validate)) {
+      setCheckedClientType(false);
+    }
+    if (!value.toString().match(Validate)) {
+      setCheckedClientType(true);
+    }
     let clientTyppe = "";
     if (callClientType === "1") {
       setShowClients(true);
@@ -227,7 +247,7 @@ function OtherInflow() {
   };
 
   const handleValidate = (e) => {
-    if (checkedAmount && checkedTaxAmount === true) {
+    if (checkedAmount && checkedTaxAmount && checkedClientType && checkedClientID === true) {
       handleClick(e);
     }
   };
@@ -267,7 +287,7 @@ function OtherInflow() {
                 <div className="row">
                   <div className="col-sm-6">
                     <TextField
-                      label="Amount *"
+                      label="Amount (NGN)*"
                       type="number"
                       value={amountx}
                       onKeyUp={(e) => handleOnAmountKeys(e.target.value)}
@@ -276,7 +296,7 @@ function OtherInflow() {
                   </div>
                   <div className="col-sm-6">
                     <TextField
-                      label="Tax Amount *"
+                      label="Tax Amount (NGN)*"
                       type="number"
                       value={taxAmountx}
                       onKeyUp={(e) => handleOnTaxAmountKeys(e.target.value)}
@@ -339,7 +359,7 @@ function OtherInflow() {
                         value={clientTypex || ""}
                         aria-label="Default select example"
                       >
-                        <option>--Select Client Type--</option>
+                        <option>--Select Client Type *--</option>
                         <option value="1">Individual</option>
                         <option value="2">Corporate</option>
                       </Form.Select>
@@ -359,10 +379,10 @@ function OtherInflow() {
                       {showClients ? (
                         <Form.Select
                           value={clientIDx}
-                          onChange={(e) => setClientIDx(e.target.value)}
+                          onChange={(e) => handleOnClientIDKeys(e.target.value)}
                           aria-label="Default select example"
                         >
-                          <option value="">--Select User--</option>
+                          <option value="">--Select User *--</option>
                           {clientx.map((api) => (
                             <option key={api.id} value={api.id}>
                               {api.title} {api.fname} {api.lname}
@@ -372,10 +392,10 @@ function OtherInflow() {
                       ) : (
                         <Form.Select
                           value={clientIDx}
-                          onChange={(e) => setClientIDx(e.target.value)}
+                          onChange={(e) => handleOnClientIDKeys(e.target.value)}
                           aria-label="Default select example"
                         >
-                          <option value="">--Select User--</option>
+                          <option value="">--Select User *--</option>
                           {clientx.map((api) => (
                             <option key={api.id} value={api.id}>
                               {api.name}

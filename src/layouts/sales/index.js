@@ -614,9 +614,11 @@ function Sales() {
               requestID: allResult.id,
               balance: allResult.subTotalAmount,
               createdBy: allResult.createdBy,
+              clientType: "1",
               clientID: allResult.individualID,
               originalAmount: allResult.subTotalAmount,
             });
+            console.log(raw2);
             const requestOptions2 = {
               method: "POST",
               headers: myHeaders,
@@ -648,13 +650,13 @@ function Sales() {
                 }
                 console.log(resultx);
                 setOpened(false);
-                MySwal.fire({
-                  title: resultx.status,
-                  type: "success",
-                  text: resultx.message,
-                }).then(() => {
-                  window.location.reload();
-                });
+                // MySwal.fire({
+                //   title: resultx.status,
+                //   type: "success",
+                //   text: resultx.message,
+                // }).then(() => {
+                //   window.location.reload();
+                // });
               })
               .catch((error) => {
                 setOpened(false);
@@ -810,6 +812,7 @@ function Sales() {
   //   };
   // }, []);
 
+  console.log(productx);
   return (
     <DashboardLayout>
       <DashboardNavbar />
