@@ -175,6 +175,7 @@ function BusinessTravelAttachDocument() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log(result);
         if (result.length !== 0) {
           setAllResult(result);
           if (result !== "") {
@@ -457,9 +458,8 @@ function BusinessTravelAttachDocument() {
     }
   };
 
-  const handleDelete = (value, index) => {
+  const handleDelete = (value) => {
     console.log(value);
-    console.log(index);
     handleClose();
     // const filteredItems = items.filter((item) => item.id === value);
     // console.log(filteredItems);
@@ -566,13 +566,12 @@ function BusinessTravelAttachDocument() {
     });
   };
 
-  const handleDownload = (value, index) => {
+  const handleDownload = (value) => {
     // const filteredItems = items.filter((item) => item.id === value);
     // console.log(filteredItems);
     // const docKey = filteredItems[0].attachedDocs[index];
     // console.log(filteredItems[0].attachedDocs);
     console.log(value);
-    console.log(index);
     // console.log(filteredItems);
     // console.log(docKey);
     handleClose();
@@ -845,8 +844,10 @@ function BusinessTravelAttachDocument() {
         &nbsp; &nbsp;
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
-            {items.map((api, index) => {
+            {items.map((api) => {
               //  const docName = api.name;
+              console.log(api);
+
               const docType = api.type;
               //  const docSize = api.size;
               //  const docDate = api.createdTime;
@@ -895,14 +896,14 @@ function BusinessTravelAttachDocument() {
                         </Button>
                         <CardActions>
                           <Button
-                            onClick={() => handleDelete(api, index)}
+                            onClick={() => handleDelete(api)}
                             style={{ color: "white" }}
                             startIcon={<DeleteIcon />}
                           >
                             Remove
                           </Button>
                           <Button
-                            onClick={() => handleDownload(api, index)}
+                            onClick={() => handleDownload(api)}
                             style={{ color: "white" }}
                             startIcon={<DownloadIcon />}
                           >
