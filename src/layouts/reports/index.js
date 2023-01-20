@@ -161,7 +161,7 @@ function Reports() {
         const allMAP = result;
         if (result !== "") {
           const itemz = result.map((each) => ({
-            dateAcquired: each.createdTime,
+            dateAcquired: new Date(each.createdTime).toDateString(),
             name: each.item,
             category: each.type.name,
             currentValue: each.currentWorth,
@@ -1026,7 +1026,7 @@ function Reports() {
                             };
 
                             fetch(
-                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/insurance`,
                               requestOptions
                             )
                               .then(async (res) => {
@@ -1136,7 +1136,7 @@ function Reports() {
                             };
 
                             fetch(
-                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/insurance`,
                               requestOptions
                             )
                               .then(async (res) => {

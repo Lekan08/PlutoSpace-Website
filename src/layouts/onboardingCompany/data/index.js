@@ -379,7 +379,7 @@ export default function OnboardingCompanyTable() {
   // eslint-disable-next-line consistent-return
   const handleStatus = (status) => {
     if (status === 0) {
-      return "NOT COMPLETED";
+      return "PENDING";
     }
     if (status === 1) {
       return "COMPLETED";
@@ -392,7 +392,9 @@ export default function OnboardingCompanyTable() {
   const handleSessions = (value) => {
     const filteredItems = items.filter((item) => item.id === value);
     console.log(filteredItems);
-    navigate(`/onboarding/sessions?id=${value}&pid=${filteredItems[0].empID}`);
+    navigate(
+      `/onboarding/sessions?id=${value}&pid=${filteredItems[0].empID}&stat=${filteredItems[0].status}`
+    );
   };
 
   return {

@@ -395,7 +395,9 @@ export default function OffboardingCompanyTable() {
   const handleSessions = (value) => {
     const filteredItems = items.filter((item) => item.id === value);
     console.log(filteredItems);
-    navigate(`/offboarding/sessions?id=${value}&pid=${filteredItems[0].empID}`);
+    navigate(
+      `/offboarding/sessions?id=${value}&pid=${filteredItems[0].empID}&stat=${filteredItems[0].status}`
+    );
   };
 
   return {

@@ -64,9 +64,23 @@ function OffboardingCompany() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
-          setUserxx(result);
-          setOpened(false);
+          fetch(`${process.env.REACT_APP_RAGA_URL}/offboarding/gets/${orgIDs}`, { headers })
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultx) => {
+              const arr = [];
+              // eslint-disable-next-line no-plusplus
+              for (let i = 0; i < result.length; i++) {
+                if (!resultx.find((r) => r.empID === result[i].personal.id)) {
+                  arr.push(result[i]);
+                }
+              }
+              setUserxx(arr);
+              setOpened(false);
+            });
         }
       });
     return () => {

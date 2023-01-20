@@ -770,6 +770,48 @@ function UserProfile() {
     };
   }, []);
 
+  const downloadByPaySlipName = (paySlipName) => {
+    const raw1 = JSON.stringify({
+      name: paySlipName,
+    });
+    console.log(raw1);
+    const requestOptions1 = {
+      method: "POST",
+      headers: imHeaders,
+      body: raw1,
+      redirect: "follow",
+    };
+
+    fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/download`, requestOptions1)
+      .then((res) => res.blob())
+      .then((resx1) => {
+        const objectURL = URL.createObjectURL(resx1);
+        console.log(objectURL);
+
+        // (C2) TO "FORCE DOWNLOAD"
+        const anchor = document.createElement("a");
+        anchor.href = objectURL;
+        anchor.download = paySlipName;
+        anchor.click();
+
+        // (C3) CLEAN UP
+        window.URL.revokeObjectURL(objectURL);
+
+        MySwal.fire({
+          title: "SUCCESS",
+          type: "success",
+          text: "Download Successful",
+        });
+      })
+      .catch((error) => {
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+
   const handleGenReceipt = (value) => {
     const headers = miHeaders;
 
@@ -820,46 +862,12 @@ function UserProfile() {
                 navigate("/authentication/forbiddenPage");
               }
 
-              const raw1 = JSON.stringify({
-                name: resxx.name,
-              });
-              console.log(raw1);
-              const requestOptions1 = {
-                method: "POST",
-                headers: imHeaders,
-                body: raw1,
-                redirect: "follow",
-              };
-
-              fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/download`, requestOptions1)
-                .then((res) => res.blob())
-                .then((resx1) => {
-                  const objectURL = URL.createObjectURL(resx1);
-                  console.log(objectURL);
-
-                  // (C2) TO "FORCE DOWNLOAD"
-                  const anchor = document.createElement("a");
-                  anchor.href = objectURL;
-                  anchor.download = resxx.name;
-                  anchor.click();
-
-                  // (C3) CLEAN UP
-                  window.URL.revokeObjectURL(objectURL);
-
-                  MySwal.fire({
-                    title: "SUCCESS",
-                    type: "success",
-                    text: "Download Successful",
-                  });
-                })
-                .catch((error) => {
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
+              const paySlipName = resxx.name;
+              downloadByPaySlipName(paySlipName);
             });
+        } else if (resx.status === "RECORD_EXIST") {
+          const paySlipNamex = resx.data.paySlipName;
+          downloadByPaySlipName(paySlipNamex);
         }
       })
       .catch((error) => {
