@@ -292,6 +292,7 @@ import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/update";
+import Voucher from "./layouts/voucher/index";
 
 const routes = [
   {
@@ -693,6 +694,14 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/Bills-Attention",
     component: <GeneralBills />,
+  },
+  {
+    type: "collapse",
+    name: "Voucher Attention",
+    key: "voucherAttention",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/Voucher-Attention",
+    component: <Voucher />,
   },
   {
     name: "Update Bills",
