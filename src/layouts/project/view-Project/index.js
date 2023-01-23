@@ -58,6 +58,7 @@ export default function Pipeline() {
   const [modalDescrip, setModalDescrip] = useState("");
   const [modalExpectedStartTime, setModalExpectedStartTime] = useState("");
   const [modalActualStartTime, setModalActualStartTime] = useState("");
+  const [modalActualEndTime, setModalActualEndTime] = useState("");
   const [modalTotalActualCost, setModalTotalActualCost] = useState("");
   const [taskId, setTaskid] = useState("");
   // const [alreadyComm, setALreadyComm] = useState(false);
@@ -82,9 +83,12 @@ export default function Pipeline() {
     setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const createdByx = data11.id;
+    const createdByx = data11.personalID;
 
     const modalActualStartTimex = new Date(modalActualStartTime).getTime();
+    const modalActualEndTimex = new Date(modalActualEndTime).getTime();
+    console.log(modalActualStartTimex);
+    console.log(modalActualEndTimex);
 
     const raw = JSON.stringify({
       id: taskCarrierUpdate[0].id,
@@ -96,7 +100,7 @@ export default function Pipeline() {
       expectedStartTime: modalExpectedStartTime,
       expectedEndTime: modalExpectedEndTime,
       actualStartTime: modalActualStartTimex,
-      actualEndTime: taskCarrierUpdate[0].actualEndTime,
+      actualEndTime: modalActualEndTimex,
       totalExpectedCost: Number(modalCost),
       totalActualCost: modalTotalActualCost,
       currentStageID: taskCarrierUpdate[0].currentStageID,
@@ -256,7 +260,7 @@ export default function Pipeline() {
     setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const createdByx = data11.id;
+    const createdByx = data11.personalID;
     const raw = JSON.stringify({
       orgID: orgIDs,
       projectID: projectIDx,
@@ -379,7 +383,7 @@ export default function Pipeline() {
     setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const createdByx = data11.id;
+    const createdByx = data11.personalID;
     const raw = JSON.stringify({
       id: filteredData[0].id,
       orgID: orgIDs,
@@ -792,6 +796,42 @@ export default function Pipeline() {
     display: "block",
   };
 
+  const changeDateandTime = (timestamp) => {
+    const date = new Date(timestamp);
+    let month = "0";
+    if (date.getMonth() + 1 < 10) {
+      const mymonth = date.getMonth() + 1;
+      month += mymonth;
+    } else {
+      const mymonth = date.getMonth() + 1;
+      month = mymonth;
+    }
+    let day = "0";
+    if (date.getDate() < 10) {
+      day += date.getDate();
+    } else {
+      day = date.getDate();
+    }
+    const retDate = `${date.getFullYear()}-${month}-${day}`;
+
+    let hour = "0";
+    let minutes = "0";
+
+    if (date.getHours() < 10) {
+      hour += date.getHours();
+    } else {
+      hour = date.getHours();
+    }
+
+    if (date.getMinutes() < 10) {
+      minutes += date.getMinutes();
+    } else {
+      minutes = date.getMinutes();
+    }
+
+    return `${retDate}T${hour}:${minutes}`;
+  };
+
   // const updateGetById = () => {
   //   const headers = miHeaders;
 
@@ -1029,6 +1069,7 @@ export default function Pipeline() {
     setModalExpectedStartTime(filterFirstedd[0].expectedStartTime);
     setModalExpectedEndTime(filterFirstedd[0].expectedEndTime);
     setModalActualStartTime(filterFirstedd[0].actualStartTime);
+    setModalActualEndTime(filterFirstedd[0].actualStartTime);
     setModalTotalActualCost(filterFirstedd[0].totalActualCost);
     setModalAssignTo(filterFirstedd[0].assignedTo);
   };
@@ -1116,21 +1157,29 @@ export default function Pipeline() {
       <MDBox mt={1} mb={1} style={{ height: "350px", width: "100%", backgroundColor: "#ffffff" }}>
         <Container>
           <div>
-            <MDTypography variant="h4" textAlign="left" fontWeight="bold" color="secondary" mt={1}>
-              {namex}
-              <FormatListBulletedIcon />
-              <DashboardIcon />
-            </MDTypography>
+            <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+              <Box p={1}>
+                <MDTypography variant="h4" textAlign="left" fontWeight="bold" color="secondary">
+                  {namex}
+                </MDTypography>
+              </Box>
+              <Box p={1}>
+                <FormatListBulletedIcon style={{ cursor: "pointer" }} />
+              </Box>
+              <Box p={1}>
+                <DashboardIcon style={{ cursor: "pointer" }} />
+              </Box>
+            </Box>
 
             <MDTypography
-              variant="h6"
+              variant="h5"
               textAlign="center"
               fontWeight="medium"
               color="secondary"
               mt={1}
               mb={4}
             >
-              Create A Task
+              Create Task
             </MDTypography>
             <MDBox mx={34} textAlign="right">
               <></>
@@ -1308,7 +1357,7 @@ export default function Pipeline() {
                                                 borderRadius: 10,
                                                 fontSize: "15px",
                                                 backgroundColor: snapshots.isDragging
-                                                  ? "#263B4A"
+                                                  ? "#121212"
                                                   : "#318CE7",
                                                 color: "white",
                                                 ...provideds.draggableProps.style,
@@ -1411,7 +1460,7 @@ export default function Pipeline() {
                   multiline
                 />
                 {/* if na here i go put my code for comment */}
-                <div
+                {/* <div
                   style={{
                     backgroundColor: "ButtonFace",
                     padding: "10px",
@@ -1419,17 +1468,129 @@ export default function Pipeline() {
                     margin: "10px",
                     fontSize: "13px",
                   }}
-                >
-                  <br />
-                  Expected Cost :
+                > */}
+                &nbsp; &nbsp;{" "}
+                <div className="col-md-3">
                   <TextField
-                    label="(NGN) "
-                    type="number"
-                    value={modalCost}
-                    size="small"
-                    onChange={(e) => setModalCost(e.target.value)}
+                    id="datetime-local"
+                    label="Actual Start Time"
+                    type="datetime-local"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      width: 400,
+                    }}
+                    value={changeDateandTime(modalActualStartTime)}
+                    onChange={(e) => setModalActualStartTime(e.target.value)}
                   />
                 </div>
+                &nbsp; &nbsp;
+                <div className="col-md-3">
+                  <TextField
+                    id="datetime-local"
+                    label="Actual End Time"
+                    type="datetime-local"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      width: 400,
+                    }}
+                    value={changeDateandTime(modalActualEndTime)}
+                    onChange={(e) => setModalActualEndTime(e.target.value)}
+                  />
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-md-3">
+                  <TextField
+                    id="filled-read-only-input"
+                    label="Actual Cost (NGN)"
+                    value={modalTotalActualCost}
+                    sx={{
+                      width: 400,
+                    }}
+                    onChange={(e) => setModalTotalActualCost(e.target.value)}
+                  />
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-8">
+                  <Form.Select
+                    value={modalAssignedTox}
+                    aria-label="Default select example"
+                    onChange={(e) => setModalAssignTo(e.target.value)}
+                  >
+                    <option>--Assign to--</option>
+                    {userInfox.map((item) => (
+                      <option key={item.personal.id} value={item.personal.id}>
+                        {item.personal.fname} {item.personal.lname}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-2">
+                  {modalCost > 0 ? (
+                    <TextField
+                      id="filled-read-only-input"
+                      label="Expected Cost (NGN)"
+                      value={modalCost}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      sx={{
+                        width: 400,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-3">
+                  {modalExpectedStartTime > 0 ? (
+                    <TextField
+                      id="datetime-local"
+                      label="Expected Start Time"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      value={changeDateandTime(modalExpectedStartTime)}
+                      sx={{
+                        width: 400,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-3">
+                  {modalExpectedEndTime > 0 ? (
+                    <TextField
+                      id="datetime-local"
+                      label="Expected End Time"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      sx={{
+                        width: 400,
+                      }}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      value={changeDateandTime(modalExpectedEndTime)}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                &nbsp; &nbsp;
                 <MDButton
                   variant="gradient"
                   onClick={handleUpdateTask}
@@ -1452,7 +1613,7 @@ export default function Pipeline() {
                 </MDButton>
                 <br />
                 <br />
-                <container>
+                <Container>
                   <ul className="list-group mb-4">
                     {items.map((taskID) => (
                       <li key={taskID.id} className="list-group-item">
@@ -1473,7 +1634,7 @@ export default function Pipeline() {
                       </li>
                     ))}
                   </ul>
-                </container>
+                </Container>
                 <br />
               </Grid>
               <Grid
