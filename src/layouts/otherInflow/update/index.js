@@ -31,9 +31,15 @@ function UpdateOtherInflow() {
   const [otherInflowTypex, setOtherInflowType] = useState("");
   const [oitx, setOIT] = useState([]);
   const [particularz, setParticular] = useState("");
+  const [showClients, setShowClients] = useState(false);
+  const [clientx, setClient] = useState([]);
+  const [clientTypex, setClientTypex] = useState("");
+  const [clientIDx, setClientIDx] = useState("");
 
   const [checkedAmount, setCheckedAmount] = useState("");
   const [checkedTaxAmount, setCheckedTaxAmount] = useState("");
+  const [checkedClientType, setCheckedClientType] = useState("");
+  const [checkedClientID, setCheckedClientID] = useState("");
   const [itemsx, setItems] = useState([]);
 
   const [opened, setOpened] = useState(false);
@@ -111,6 +117,68 @@ function UpdateOtherInflow() {
 
   const TotalAmountx = parseInt(taxAmountx, 10) + parseInt(amountx, 10);
 
+  const handleOnClientIDKeys = (value) => {
+    setClientIDx(value);
+    const Validate = "--Select User *--";
+    if (value.toString().match(Validate)) {
+      setCheckedClientID(false);
+    }
+    if (!value.toString().match(Validate)) {
+      setCheckedClientID(true);
+    }
+  };
+
+  const handleChangeClient = (value) => {
+    const callClientType = value.toString();
+    setClientTypex(callClientType);
+    const Validate = "--Select Client Type *--";
+    if (value.toString().match(Validate)) {
+      setCheckedClientType(false);
+    }
+    if (!value.toString().match(Validate)) {
+      setCheckedClientType(true);
+    }
+    let clientTyppe = "";
+    if (callClientType === "1") {
+      setShowClients(true);
+      clientTyppe = "individual";
+    } else if (callClientType === "2") {
+      setShowClients(false);
+      clientTyppe = "corporate";
+    }
+    setOpened(true);
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/${clientTyppe}/gets/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        setClient(result);
+      });
+  };
+
   const handleGet = () => {
     setOpened(true);
     const queryString = window.location.search;
@@ -139,13 +207,20 @@ function UpdateOtherInflow() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log(result);
         setItems(result);
         setAmount(result[0].amount);
         setTaxAmount(result[0].taxAmount);
         setOtherInflowType(result[0].otherInflowTypeID);
         setParticular(result[0].particulars);
+        if (result[0].clientType !== 0) {
+          handleChangeClient(result[0].clientType);
+        }
+        setClientTypex(result[0].clientType);
+        setClientIDx(result[0].clientID);
         handleOnAmountKeys(result[0].amount);
         handleOnTaxAmountKeys(result[0].taxAmount);
+        handleOnClientIDKeys(result[0].clientID);
       });
   };
 
@@ -229,7 +304,7 @@ function UpdateOtherInflow() {
   };
 
   const handleValidate = (e) => {
-    if (checkedAmount && checkedTaxAmount === true) {
+    if (checkedAmount && checkedTaxAmount && checkedClientType && checkedClientID === true) {
       handleClick(e);
     }
   };
@@ -269,7 +344,7 @@ function UpdateOtherInflow() {
                 <div className="row">
                   <div className="col-sm-6">
                     <TextField
-                      label="Amount *"
+                      label="Amount (NGN)*"
                       type="number"
                       value={amountx}
                       onKeyUp={(e) => handleOnAmountKeys(e.target.value)}
@@ -278,7 +353,7 @@ function UpdateOtherInflow() {
                   </div>
                   <div className="col-sm-6">
                     <TextField
-                      label="Amount *"
+                      label="Tax Amount (NGN)*"
                       type="number"
                       value={taxAmountx}
                       onKeyUp={(e) => handleOnTaxAmountKeys(e.target.value)}
@@ -316,6 +391,76 @@ function UpdateOtherInflow() {
                           </option>
                         ))}
                       </Form.Select>
+                    </MDBox>
+                  </div>
+                </div>
+              </Container>
+            </MDBox>
+            <MDBox>
+              <Container>
+                <div className="row">
+                  <div className="col-sm-6">
+                    <MDTypography
+                      variant="button"
+                      fontWeight="regular"
+                      fontSize="80%"
+                      align="left"
+                      color="text"
+                      mt={0}
+                    >
+                      Client Type
+                    </MDTypography>
+                    <MDBox textAlign="right">
+                      <Form.Select
+                        onChange={(e) => handleChangeClient(e.target.value)}
+                        value={clientTypex || ""}
+                        aria-label="Default select example"
+                      >
+                        <option>--Select Client Type--</option>
+                        <option value="1">Individual</option>
+                        <option value="2">Corporate</option>
+                      </Form.Select>
+                    </MDBox>
+                  </div>
+                  <div className="col-sm-6">
+                    <MDBox mt={0}>
+                      <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        fontSize="80%"
+                        align="left"
+                        color="text"
+                      >
+                        Client
+                      </MDTypography>{" "}
+                      {showClients ? (
+                        <Form.Select
+                          value={clientIDx}
+                          onChange={(e) => handleOnClientIDKeys(e.target.value)}
+                          aria-label="Default select example"
+                        >
+                          <option value="">--Select User--</option>
+                          {clientx.map((api) => (
+                            <option key={api.id} value={api.id}>
+                              {api.title} {api.fname} {api.lname}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      ) : (
+                        <Form.Select
+                          value={clientIDx}
+                          onChange={(e) => handleOnClientIDKeys(e.target.value)}
+                          aria-label="Default select example"
+                        >
+                          <option value="">--Select User--</option>
+                          {clientx.map((api) => (
+                            <option key={api.id} value={api.id}>
+                              {api.name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      )}
+                      <br />
                     </MDBox>
                   </div>
                 </div>

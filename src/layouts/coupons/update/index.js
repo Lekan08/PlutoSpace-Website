@@ -298,8 +298,8 @@ function UpdateCoupons() {
                       <TextField
                         id="filled-number"
                         value={amountx}
-                        label="Amount"
-                        placeholder="Amount* "
+                        label="Amount (NGN)"
+                        placeholder="Amount (NGN)*"
                         onKeyUp={handleOnAmountKeys}
                         size="small"
                         type="number"
