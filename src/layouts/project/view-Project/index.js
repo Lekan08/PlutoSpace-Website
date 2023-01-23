@@ -57,8 +57,8 @@ export default function Pipeline() {
   const [modalTitle, setModalTitle] = useState("");
   const [modalDescrip, setModalDescrip] = useState("");
   const [modalExpectedStartTime, setModalExpectedStartTime] = useState("");
-  const [modalActualStartTime, setModalActualStartTime] = useState("");
-  const [modalActualEndTime, setModalActualEndTime] = useState("");
+  const [modalActualStartTime, setModalActualStartTime] = useState(new Date().getTime());
+  const [modalActualEndTime, setModalActualEndTime] = useState(new Date().getTime());
   const [modalTotalActualCost, setModalTotalActualCost] = useState("");
   const [taskId, setTaskid] = useState("");
   // const [alreadyComm, setALreadyComm] = useState(false);
@@ -80,7 +80,6 @@ export default function Pipeline() {
   };
 
   const handleUpdateTask = () => {
-    setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const createdByx = data11.personalID;
@@ -89,116 +88,127 @@ export default function Pipeline() {
     const modalActualEndTimex = new Date(modalActualEndTime).getTime();
     console.log(modalActualStartTimex);
     console.log(modalActualEndTimex);
-
-    const raw = JSON.stringify({
-      id: taskCarrierUpdate[0].id,
-      orgID: orgIDs,
-      projectID: taskCarrierUpdate[0].projectID,
-      title: modalTitle,
-      descrip: modalDescrip,
-      assignedTo: modalAssignedTox,
-      expectedStartTime: modalExpectedStartTime,
-      expectedEndTime: modalExpectedEndTime,
-      actualStartTime: modalActualStartTimex,
-      actualEndTime: modalActualEndTimex,
-      totalExpectedCost: Number(modalCost),
-      totalActualCost: modalTotalActualCost,
-      currentStageID: taskCarrierUpdate[0].currentStageID,
-      prerequisiteTaskID: taskCarrierUpdate[0].prerequisiteTaskID,
-      deleteFlag: taskCarrierUpdate[0].deleteFlag,
-    });
-
-    console.log(raw);
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/update`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        handleClose();
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          window.location.reload();
-        });
-        console.log(result);
-        if (result.data !== null) {
-          const raww = JSON.stringify({
-            orgID: orgIDs,
-            projectID: projectIDx,
-            taskID: result.data.id,
-            actionBy: createdByx,
-            actionTaken: "updated this Task on",
-          });
-          console.log(raw);
-          const requestOptionsx = {
-            method: "POST",
-            headers: myHeaders,
-            body: raww,
-            redirect: "follow",
-          };
-          fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
-            .then(async (res) => {
-              const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              return res.json();
-            })
-            .then((resultr) => {
-              console.log(result);
-              setOpened(false);
-              if (resultr.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultr.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultr.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-                window.location.reload();
-              }
-              console.log(resultr.status);
-            })
-            .catch((errorr) => {
-              setOpened(false);
-
-              console.log(errorr.status);
-            });
-        }
-      })
-
-      .catch((error) => {
-        setOpened(false);
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
+    if (modalActualEndTimex < modalActualStartTimex) {
+      setOpen(false);
+      MySwal.fire({
+        title: "Invalid Date",
+        type: "error",
+        text: "Your Actual Start Time Date should come before your Actual End Time Date",
+      }).then(() => {
+        setOpen(true);
       });
+    } else {
+      setOpened(true);
+      const raw = JSON.stringify({
+        id: taskCarrierUpdate[0].id,
+        orgID: orgIDs,
+        projectID: taskCarrierUpdate[0].projectID,
+        title: modalTitle,
+        descrip: modalDescrip,
+        assignedTo: modalAssignedTox,
+        expectedStartTime: modalExpectedStartTime,
+        expectedEndTime: modalExpectedEndTime,
+        actualStartTime: modalActualStartTimex,
+        actualEndTime: modalActualEndTimex,
+        totalExpectedCost: Number(modalCost),
+        totalActualCost: modalTotalActualCost,
+        currentStageID: taskCarrierUpdate[0].currentStageID,
+        prerequisiteTaskID: taskCarrierUpdate[0].prerequisiteTaskID,
+        deleteFlag: taskCarrierUpdate[0].deleteFlag,
+      });
+
+      console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/update`, requestOptions)
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          console.log(result);
+          setOpened(false);
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          handleClose();
+          MySwal.fire({
+            title: result.status,
+            type: "success",
+            text: result.message,
+          }).then(() => {
+            window.location.reload();
+          });
+          console.log(result);
+          if (result.data !== null) {
+            const raww = JSON.stringify({
+              orgID: orgIDs,
+              projectID: projectIDx,
+              taskID: result.data.id,
+              actionBy: createdByx,
+              actionTaken: "updated this Task on",
+            });
+            console.log(raw);
+            const requestOptionsx = {
+              method: "POST",
+              headers: myHeaders,
+              body: raww,
+              redirect: "follow",
+            };
+            fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                return res.json();
+              })
+              .then((resultr) => {
+                console.log(result);
+                setOpened(false);
+                if (resultr.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultr.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultr.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+                console.log(resultr.status);
+              })
+              .catch((errorr) => {
+                setOpened(false);
+
+                console.log(errorr.status);
+              });
+          }
+        })
+
+        .catch((error) => {
+          setOpened(false);
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
+        });
+    }
   };
   useEffect(() => {
     const queryString = window.location.search;
