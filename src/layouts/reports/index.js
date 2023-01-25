@@ -161,7 +161,7 @@ function Reports() {
         const allMAP = result;
         if (result !== "") {
           const itemz = result.map((each) => ({
-            dateAcquired: each.createdTime,
+            dateAcquired: new Date(each.createdTime).toDateString(),
             name: each.item,
             category: each.type.name,
             currentValue: each.currentWorth,
@@ -1026,7 +1026,7 @@ function Reports() {
                             };
 
                             fetch(
-                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/insurance`,
                               requestOptions
                             )
                               .then(async (res) => {
@@ -1136,7 +1136,7 @@ function Reports() {
                             };
 
                             fetch(
-                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/product-revenue`,
+                              `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/insurance`,
                               requestOptions
                             )
                               .then(async (res) => {
@@ -2168,41 +2168,7 @@ function Reports() {
           </Grid>
         </Box>
       </Card>
-      &nbsp; &nbsp;
-      <Card style={{ padding: "10px", paddingTop: "10px" }}>
-        <MDTypography textAlign="center" variant="h4" fontWeight="medium" color="secondary" mt={1}>
-          INSURANCE REPORTS
-        </MDTypography>
-        &nbsp; &nbsp;
-        <Box sx={{ flexGrow: 1 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6} lg={4}>
-              <Card
-                style={{
-                  backgroundColor: "#EB5353",
-                  minHeight: "150px",
-                  maxHeight: "150px",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleOpenModal(3)}
-              >
-                <CardContent>
-                  <Typography
-                    className="center"
-                    variant="h5"
-                    component="div"
-                    style={{ color: "white", marginTop: "40px" }}
-                  >
-                    INSURANCE REPORTS
-                  </Typography>
-                </CardContent>
-              </Card>
-              &nbsp; &nbsp;
-            </Grid>
-          </Grid>
-        </Box>
-      </Card>
-      &nbsp; &nbsp;
+      &nbsp;
       <Card style={{ padding: "10px" }}>
         <MDTypography textAlign="center" variant="h4" fontWeight="medium" color="secondary" mt={1}>
           FINANCIAL REPORTS
@@ -2272,6 +2238,40 @@ function Reports() {
                     style={{ color: "white", marginTop: "40px" }}
                   >
                     Sales Reports
+                  </Typography>
+                </CardContent>
+              </Card>
+              &nbsp; &nbsp;
+            </Grid>
+          </Grid>
+        </Box>
+      </Card>
+      &nbsp; &nbsp;
+      <Card style={{ padding: "10px", paddingTop: "10px" }}>
+        <MDTypography textAlign="center" variant="h4" fontWeight="medium" color="secondary" mt={1}>
+          INSURANCE REPORTS
+        </MDTypography>
+        &nbsp; &nbsp;
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6} lg={4}>
+              <Card
+                style={{
+                  backgroundColor: "#EB5353",
+                  minHeight: "150px",
+                  maxHeight: "150px",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleOpenModal(3)}
+              >
+                <CardContent>
+                  <Typography
+                    className="center"
+                    variant="h5"
+                    component="div"
+                    style={{ color: "white", marginTop: "40px" }}
+                  >
+                    INSURANCE REPORTS
                   </Typography>
                 </CardContent>
               </Card>

@@ -247,6 +247,7 @@ function AssetAttachDocument() {
   const handleImageUpload = (e) => {
     handleClose();
     if (files !== "" && files !== 0) {
+      console.log(files);
       if (files === undefined) {
         MySwal.fire({
           title: "INVALID_INPUT",
@@ -284,6 +285,7 @@ function AssetAttachDocument() {
 
         const raw = formData;
         console.log(raw);
+        console.log("file", files[0]);
 
         const requestOptions = {
           method: "POST",

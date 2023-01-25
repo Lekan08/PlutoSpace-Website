@@ -57,7 +57,8 @@ export default function Pipeline() {
   const [modalTitle, setModalTitle] = useState("");
   const [modalDescrip, setModalDescrip] = useState("");
   const [modalExpectedStartTime, setModalExpectedStartTime] = useState("");
-  const [modalActualStartTime, setModalActualStartTime] = useState("");
+  const [modalActualStartTime, setModalActualStartTime] = useState(new Date().getTime());
+  const [modalActualEndTime, setModalActualEndTime] = useState(new Date().getTime());
   const [modalTotalActualCost, setModalTotalActualCost] = useState("");
   const [taskId, setTaskid] = useState("");
   // const [alreadyComm, setALreadyComm] = useState(false);
@@ -79,122 +80,135 @@ export default function Pipeline() {
   };
 
   const handleUpdateTask = () => {
-    setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const createdByx = data11.id;
+    const createdByx = data11.personalID;
 
     const modalActualStartTimex = new Date(modalActualStartTime).getTime();
-
-    const raw = JSON.stringify({
-      id: taskCarrierUpdate[0].id,
-      orgID: orgIDs,
-      projectID: taskCarrierUpdate[0].projectID,
-      title: modalTitle,
-      descrip: modalDescrip,
-      assignedTo: modalAssignedTox,
-      expectedStartTime: modalExpectedStartTime,
-      expectedEndTime: modalExpectedEndTime,
-      actualStartTime: modalActualStartTimex,
-      actualEndTime: taskCarrierUpdate[0].actualEndTime,
-      totalExpectedCost: Number(modalCost),
-      totalActualCost: modalTotalActualCost,
-      currentStageID: taskCarrierUpdate[0].currentStageID,
-      prerequisiteTaskID: taskCarrierUpdate[0].prerequisiteTaskID,
-      deleteFlag: taskCarrierUpdate[0].deleteFlag,
-    });
-
-    console.log(raw);
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/update`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        handleClose();
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          window.location.reload();
-        });
-        console.log(result);
-        if (result.data !== null) {
-          const raww = JSON.stringify({
-            orgID: orgIDs,
-            projectID: projectIDx,
-            taskID: result.data.id,
-            actionBy: createdByx,
-            actionTaken: "updated this Task on",
-          });
-          console.log(raw);
-          const requestOptionsx = {
-            method: "POST",
-            headers: myHeaders,
-            body: raww,
-            redirect: "follow",
-          };
-          fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
-            .then(async (res) => {
-              const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              return res.json();
-            })
-            .then((resultr) => {
-              console.log(result);
-              setOpened(false);
-              if (resultr.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultr.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultr.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-                window.location.reload();
-              }
-              console.log(resultr.status);
-            })
-            .catch((errorr) => {
-              setOpened(false);
-
-              console.log(errorr.status);
-            });
-        }
-      })
-
-      .catch((error) => {
-        setOpened(false);
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
+    const modalActualEndTimex = new Date(modalActualEndTime).getTime();
+    console.log(modalActualStartTimex);
+    console.log(modalActualEndTimex);
+    if (modalActualEndTimex < modalActualStartTimex) {
+      setOpen(false);
+      MySwal.fire({
+        title: "Invalid Date",
+        type: "error",
+        text: "Your Actual Start Time Date should come before your Actual End Time Date",
+      }).then(() => {
+        setOpen(true);
       });
+    } else {
+      setOpened(true);
+      const raw = JSON.stringify({
+        id: taskCarrierUpdate[0].id,
+        orgID: orgIDs,
+        projectID: taskCarrierUpdate[0].projectID,
+        title: modalTitle,
+        descrip: modalDescrip,
+        assignedTo: modalAssignedTox,
+        expectedStartTime: modalExpectedStartTime,
+        expectedEndTime: modalExpectedEndTime,
+        actualStartTime: modalActualStartTimex,
+        actualEndTime: modalActualEndTimex,
+        totalExpectedCost: Number(modalCost),
+        totalActualCost: modalTotalActualCost,
+        currentStageID: taskCarrierUpdate[0].currentStageID,
+        prerequisiteTaskID: taskCarrierUpdate[0].prerequisiteTaskID,
+        deleteFlag: taskCarrierUpdate[0].deleteFlag,
+      });
+
+      console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/update`, requestOptions)
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          console.log(result);
+          setOpened(false);
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          handleClose();
+          MySwal.fire({
+            title: result.status,
+            type: "success",
+            text: result.message,
+          }).then(() => {
+            window.location.reload();
+          });
+          console.log(result);
+          if (result.data !== null) {
+            const raww = JSON.stringify({
+              orgID: orgIDs,
+              projectID: projectIDx,
+              taskID: result.data.id,
+              actionBy: createdByx,
+              actionTaken: "updated this Task on",
+            });
+            console.log(raw);
+            const requestOptionsx = {
+              method: "POST",
+              headers: myHeaders,
+              body: raww,
+              redirect: "follow",
+            };
+            fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                return res.json();
+              })
+              .then((resultr) => {
+                console.log(result);
+                setOpened(false);
+                if (resultr.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultr.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultr.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+                console.log(resultr.status);
+              })
+              .catch((errorr) => {
+                setOpened(false);
+
+                console.log(errorr.status);
+              });
+          }
+        })
+
+        .catch((error) => {
+          setOpened(false);
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
+        });
+    }
   };
   useEffect(() => {
     const queryString = window.location.search;
@@ -256,7 +270,7 @@ export default function Pipeline() {
     setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const createdByx = data11.id;
+    const createdByx = data11.personalID;
     const raw = JSON.stringify({
       orgID: orgIDs,
       projectID: projectIDx,
@@ -379,7 +393,7 @@ export default function Pipeline() {
     setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const createdByx = data11.id;
+    const createdByx = data11.personalID;
     const raw = JSON.stringify({
       id: filteredData[0].id,
       orgID: orgIDs,
@@ -792,6 +806,42 @@ export default function Pipeline() {
     display: "block",
   };
 
+  const changeDateandTime = (timestamp) => {
+    const date = new Date(timestamp);
+    let month = "0";
+    if (date.getMonth() + 1 < 10) {
+      const mymonth = date.getMonth() + 1;
+      month += mymonth;
+    } else {
+      const mymonth = date.getMonth() + 1;
+      month = mymonth;
+    }
+    let day = "0";
+    if (date.getDate() < 10) {
+      day += date.getDate();
+    } else {
+      day = date.getDate();
+    }
+    const retDate = `${date.getFullYear()}-${month}-${day}`;
+
+    let hour = "0";
+    let minutes = "0";
+
+    if (date.getHours() < 10) {
+      hour += date.getHours();
+    } else {
+      hour = date.getHours();
+    }
+
+    if (date.getMinutes() < 10) {
+      minutes += date.getMinutes();
+    } else {
+      minutes = date.getMinutes();
+    }
+
+    return `${retDate}T${hour}:${minutes}`;
+  };
+
   // const updateGetById = () => {
   //   const headers = miHeaders;
 
@@ -1029,6 +1079,7 @@ export default function Pipeline() {
     setModalExpectedStartTime(filterFirstedd[0].expectedStartTime);
     setModalExpectedEndTime(filterFirstedd[0].expectedEndTime);
     setModalActualStartTime(filterFirstedd[0].actualStartTime);
+    setModalActualEndTime(filterFirstedd[0].actualStartTime);
     setModalTotalActualCost(filterFirstedd[0].totalActualCost);
     setModalAssignTo(filterFirstedd[0].assignedTo);
   };
@@ -1104,33 +1155,41 @@ export default function Pipeline() {
   //   // }
   // };
   // console.log(handleClick);
-  console.log(taskId);
+  // console.log(taskId);
   const handleViewSupply = () => {
     navigate(`/project/subtask?id=${taskId}&workflowID=${projectGet[0].workflowID}`);
   };
   // console.log(currentStageID);
-  console.log(taskId);
+  // console.log(taskId);
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mt={1} mb={1} style={{ height: "350px", width: "100%", backgroundColor: "#ffffff" }}>
         <Container>
           <div>
-            <MDTypography variant="h4" textAlign="left" fontWeight="bold" color="secondary" mt={1}>
-              {namex}
-              <FormatListBulletedIcon />
-              <DashboardIcon />
-            </MDTypography>
+            <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+              <Box p={1}>
+                <MDTypography variant="h4" textAlign="left" fontWeight="bold" color="secondary">
+                  {namex}
+                </MDTypography>
+              </Box>
+              <Box p={1}>
+                <FormatListBulletedIcon style={{ cursor: "pointer" }} />
+              </Box>
+              <Box p={1}>
+                <DashboardIcon style={{ cursor: "pointer" }} />
+              </Box>
+            </Box>
 
             <MDTypography
-              variant="h6"
+              variant="h5"
               textAlign="center"
               fontWeight="medium"
               color="secondary"
               mt={1}
               mb={4}
             >
-              Create A Task
+              Create Task
             </MDTypography>
             <MDBox mx={34} textAlign="right">
               <></>
@@ -1308,7 +1367,7 @@ export default function Pipeline() {
                                                 borderRadius: 10,
                                                 fontSize: "15px",
                                                 backgroundColor: snapshots.isDragging
-                                                  ? "#263B4A"
+                                                  ? "#121212"
                                                   : "#318CE7",
                                                 color: "white",
                                                 ...provideds.draggableProps.style,
@@ -1411,7 +1470,7 @@ export default function Pipeline() {
                   multiline
                 />
                 {/* if na here i go put my code for comment */}
-                <div
+                {/* <div
                   style={{
                     backgroundColor: "ButtonFace",
                     padding: "10px",
@@ -1419,17 +1478,129 @@ export default function Pipeline() {
                     margin: "10px",
                     fontSize: "13px",
                   }}
-                >
-                  <br />
-                  Expected Cost :
+                > */}
+                &nbsp; &nbsp;{" "}
+                <div className="col-md-3">
                   <TextField
-                    label="(NGN) "
-                    type="number"
-                    value={modalCost}
-                    size="small"
-                    onChange={(e) => setModalCost(e.target.value)}
+                    id="datetime-local"
+                    label="Actual Start Time"
+                    type="datetime-local"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      width: 400,
+                    }}
+                    value={changeDateandTime(modalActualStartTime)}
+                    onChange={(e) => setModalActualStartTime(e.target.value)}
                   />
                 </div>
+                &nbsp; &nbsp;
+                <div className="col-md-3">
+                  <TextField
+                    id="datetime-local"
+                    label="Actual End Time"
+                    type="datetime-local"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      width: 400,
+                    }}
+                    value={changeDateandTime(modalActualEndTime)}
+                    onChange={(e) => setModalActualEndTime(e.target.value)}
+                  />
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-md-3">
+                  <TextField
+                    id="filled-read-only-input"
+                    label="Actual Cost (NGN)"
+                    value={modalTotalActualCost}
+                    sx={{
+                      width: 400,
+                    }}
+                    onChange={(e) => setModalTotalActualCost(e.target.value)}
+                  />
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-8">
+                  <Form.Select
+                    value={modalAssignedTox}
+                    aria-label="Default select example"
+                    onChange={(e) => setModalAssignTo(e.target.value)}
+                  >
+                    <option>--Assign to--</option>
+                    {userInfox.map((item) => (
+                      <option key={item.personal.id} value={item.personal.id}>
+                        {item.personal.fname} {item.personal.lname}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-2">
+                  {modalCost > 0 ? (
+                    <TextField
+                      id="filled-read-only-input"
+                      label="Expected Cost (NGN)"
+                      value={modalCost}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      sx={{
+                        width: 400,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-3">
+                  {modalExpectedStartTime > 0 ? (
+                    <TextField
+                      id="datetime-local"
+                      label="Expected Start Time"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      value={changeDateandTime(modalExpectedStartTime)}
+                      sx={{
+                        width: 400,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-3">
+                  {modalExpectedEndTime > 0 ? (
+                    <TextField
+                      id="datetime-local"
+                      label="Expected End Time"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      sx={{
+                        width: 400,
+                      }}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      value={changeDateandTime(modalExpectedEndTime)}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                &nbsp; &nbsp;
                 <MDButton
                   variant="gradient"
                   onClick={handleUpdateTask}
@@ -1452,7 +1623,7 @@ export default function Pipeline() {
                 </MDButton>
                 <br />
                 <br />
-                <container>
+                <Container>
                   <ul className="list-group mb-4">
                     {items.map((taskID) => (
                       <li key={taskID.id} className="list-group-item">
@@ -1473,7 +1644,7 @@ export default function Pipeline() {
                       </li>
                     ))}
                   </ul>
-                </container>
+                </Container>
                 <br />
               </Grid>
               <Grid

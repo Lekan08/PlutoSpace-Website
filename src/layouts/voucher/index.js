@@ -22,7 +22,7 @@ import TextField from "@mui/material/TextField";
 import DataTable from "examples/Tables/DataTable";
 import MDInput from "components/MDInput";
 
-function GeneralBills() {
+function Voucher() {
   const style = {
     position: "absolute",
     top: "50%",
@@ -88,7 +88,9 @@ function GeneralBills() {
     const empID = data11.personalID;
     let isMounted = true;
     setOpened(true);
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/bills/getForApproval/${orgIDs}/${empID}`, { headers })
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/voucher/getForApproval/${orgIDs}/${empID}`, {
+      headers,
+    })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -162,123 +164,55 @@ function GeneralBills() {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Approve bill!",
+        confirmButtonText: "Yes, Approve voucher!",
       }).then((result) => {
         if (result.isConfirmed === true) {
-          MySwal.fire({
-            title: "Voucher",
-            text: "Would you like to create a voucher for this bill?",
-            icon: "warning",
-            showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            // cancelButtonColor: "#d33",
-            confirmButtonText: "Yes",
-            denyButtonText: "No",
-          }).then((resulty) => {
-            if (resulty.isDenied === true) {
-              handleClose();
-              const headers = miHeaders;
-              const data11 = JSON.parse(localStorage.getItem("user1"));
-              const empID = data11.personalID;
-              setOpened(true);
-              fetch(
-                `${process.env.REACT_APP_LOUGA_URL}/bills/approveOrDecline/${idx}/${empID}/${statusx}`,
-                {
-                  headers,
-                }
-              )
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  const resultres = await res.text();
-                  if (resultres === null || resultres === undefined || resultres === "") {
-                    return {};
-                  }
-                  return JSON.parse(resultres);
-                })
-                .then((resultx) => {
-                  if (resultx.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultx.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultx.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                    window.location.reload();
-                  }
-                  setOpened(false);
-                  MySwal.fire({
-                    title: resultx.status,
-                    type: "success",
-                    text: resultx.message,
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                })
-                .catch((error) => {
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
-            } else if (resulty.isConfirmed === true) {
-              handleClose2();
-              handleOpen2();
-              const data11 = JSON.parse(localStorage.getItem("user1"));
-              const headers = miHeaders;
-              const empID = data11.personalID;
-              const orgIDs = data11.orgID;
-              fetch(
-                `${process.env.REACT_APP_LOUGA_URL}/bills/approveOrDecline/${idx}/${empID}/${statusx}`,
-                {
-                  headers,
-                }
-              )
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  const resultres = await res.text();
-                  if (resultres === null || resultres === undefined || resultres === "") {
-                    return {};
-                  }
-                  return JSON.parse(resultres);
-                })
-                .then((resultx) => {
-                  if (resultx.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultx.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultx.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                    window.location.reload();
-                  }
-                  setOpened(false);
-                  MySwal.fire({
-                    title: resultx.status,
-                    type: "success",
-                    text: resultx.message,
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                })
-                .catch((error) => {
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
-            }
-          });
+          handleClose();
+          const headers = miHeaders;
+          const data11 = JSON.parse(localStorage.getItem("user1"));
+          const empID = data11.personalID;
+          setOpened(true);
+          fetch(`${process.env.REACT_APP_LOUGA_URL}/voucher/approveOrDecline/${idx}/${statusx}`, {
+            headers,
+          })
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              const resultres = await res.text();
+              if (resultres === null || resultres === undefined || resultres === "") {
+                return {};
+              }
+              return JSON.parse(resultres);
+            })
+            .then((resultx) => {
+              if (resultx.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultx.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultx.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              setOpened(false);
+              MySwal.fire({
+                title: resultx.status,
+                type: "success",
+                text: resultx.message,
+              }).then(() => {
+                window.location.reload();
+              });
+            })
+            .catch((error) => {
+              MySwal.fire({
+                title: error.status,
+                type: "error",
+                text: error.message,
+              });
+            });
         }
       });
     } else {
@@ -289,19 +223,16 @@ function GeneralBills() {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Disapprove bill!",
+        confirmButtonText: "Yes, Disapprove voucher!",
       }).then((result) => {
         if (result.isConfirmed === true) {
           const headers = miHeaders;
           const data11 = JSON.parse(localStorage.getItem("user1"));
           const empID = data11.personalID;
           setOpened(true);
-          fetch(
-            `${process.env.REACT_APP_LOUGA_URL}/bills/approveOrDecline/${idx}/${empID}/${statusx}`,
-            {
-              headers,
-            }
-          )
+          fetch(`${process.env.REACT_APP_LOUGA_URL}/voucher/approveOrDecline/${idx}/${statusx}`, {
+            headers,
+          })
             .then(async (res) => {
               const aToken = res.headers.get("token-1");
               localStorage.setItem("rexxdex", aToken);
@@ -498,7 +429,7 @@ function GeneralBills() {
       redirect: "follow",
     };
     console.log(requestOptions);
-
+    handleClose2();
     setOpened(true);
     fetch(`${process.env.REACT_APP_LOUGA_URL}/voucher/add`, requestOptions)
       .then(async (res) => {
@@ -548,7 +479,7 @@ function GeneralBills() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Bills Attention
+              Voucher Attention
             </MDTypography>
           </MDBox>
           <MDBox
@@ -567,41 +498,36 @@ function GeneralBills() {
         <DataTable
           table={{
             columns: [
-              { Header: "Purpose", accessor: "purpose", align: "left" },
-              {
-                Header: "Extra Information",
-                accessor: "extraInformation",
-                align: "left",
-              },
+              { Header: "Particulars", accessor: "particulars", align: "left" },
               {
                 Header: "Amount",
                 accessor: "amount",
                 align: "left",
               },
               {
-                Header: "Tax Amount",
-                accessor: "taxAmount",
+                Header: "Issued To",
+                accessor: "issueToName",
                 align: "left",
               },
               {
-                Header: "Paid Amount",
-                accessor: "paidAmount",
+                Header: "Payment Method",
+                accessor: "paymentMethod",
                 align: "left",
               },
               {
-                Header: "Assigned To",
-                accessor: "empName",
+                Header: "Initiated By",
+                accessor: "initiatedByName",
                 align: "left",
               },
               {
-                Header: "Approver Status",
-                accessor: "approvalStatus",
+                Header: "Status",
+                accessor: "status",
                 Cell: ({ cell: { value } }) => status(value),
                 align: "left",
               },
               {
-                Header: "Created Time",
-                accessor: "createdTime",
+                Header: "Issue Time",
+                accessor: "issueTime",
                 Cell: ({ cell: { value } }) => changeDate(value),
                 align: "left",
               },
@@ -629,9 +555,9 @@ function GeneralBills() {
                         <Dropdown.Item onClick={() => handleDecisionMaking(value, 2)}>
                           Decline
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={() => handleForwardDecision(value)}>
+                        {/* <Dropdown.Item onClick={() => handleForwardDecision(value)}>
                           Forward Approval
-                        </Dropdown.Item>
+                        </Dropdown.Item> */}
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
@@ -790,8 +716,8 @@ function GeneralBills() {
               </Form.Select>
             </div>
           </div>
-          <div className="col-sm-5" style={{ marginTop: -10 }}>
-            <b style={{ fontSize: "11px" }}>Issued Time</b>
+          <div className="col-sm-5">
+            <b style={{ fontSize: "11px" }}>offboarding starts</b>
             <TextField
               id="datetime-local"
               // label="onboarding starts"
@@ -806,7 +732,6 @@ function GeneralBills() {
               }}
             />
           </div>
-          <br />
           <div style={{ textAlign: "center" }}>
             <MDButton color="warning" onClick={handleVoucher}>
               Submit
@@ -829,4 +754,4 @@ function GeneralBills() {
   );
 }
 
-export default GeneralBills;
+export default Voucher;

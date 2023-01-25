@@ -259,7 +259,7 @@ function Coupons() {
                       <TextField
                         id="filled-number"
                         value={amountx}
-                        label="Amount"
+                        label="Amount (NGN)"
                         placeholder="Amount (NGN) *"
                         onKeyUp={handleOnAmountKeys}
                         size="small"

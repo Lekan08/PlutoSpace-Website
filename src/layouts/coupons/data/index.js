@@ -258,7 +258,7 @@ export default function CuponsData() {
   return {
     columns: [
       // { Header: "Text", accessor: "text", align: "left" },
-      { Header: "Amount", accessor: "amount", align: "left" },
+      { Header: "Amount (NGN)", accessor: "amount", align: "left" },
       { Header: "Frequency", accessor: "frequency", align: "left" },
       { Header: "Left Usage", accessor: "leftUsage", align: "left" },
       // {

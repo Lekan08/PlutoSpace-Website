@@ -260,7 +260,7 @@ const SubTask = () => {
           // const urlParams = new URLSearchParams(queryString);
           const ids = urlParams.get("id");
           // const data11 = JSON.parse(localStorage.getItem("user1"));
-          const createdByx = data11.id;
+          const createdByx = data11.personalID;
           const raww = JSON.stringify({
             orgID: orgIDs,
             projectID: ids,
