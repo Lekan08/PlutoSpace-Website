@@ -241,7 +241,6 @@ export default function Pipeline() {
           window.location.reload();
         }
         console.log(result);
-        console.log(setSubtask);
         console.log(subTask);
         if (isMounted) {
           console.log(taskID);
@@ -710,7 +709,6 @@ export default function Pipeline() {
                               stageAppResult.push(itemm);
                             }
                           });
-                          console.log(stageAppResult);
                           Object.assign(obj, {
                             [item.id]: {
                               name: `${item.name}`,
@@ -842,225 +840,6 @@ export default function Pipeline() {
     return `${retDate}T${hour}:${minutes}`;
   };
 
-  // const updateGetById = () => {
-  //   const headers = miHeaders;
-
-  //   const queryString = window.location.search;
-  //   const urlParams = new URLSearchParams(queryString);
-  //   const ids = urlParams.get("id");
-  //   // const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //   // const orgIDs = data11.orgID;
-  //   // console.log(taskId);
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/getByIds/${ids}`, {
-  //     headers,
-  //   })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       console.log(result);
-  //       if (isMounted) {
-  //         // eslint-disable-next-line eqeqeq
-  //         if (result !== 0 && result !== "" && result !== []) {
-  //           setBigZzzz(result);
-  //           // updateGetById(id);
-  //         }
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // };
-
-  // const zinoUpdates = (e) => {
-  //   // handleOnNameKeys();
-  //   // if (enabled) {
-  //   setOpened(true);
-  //   e.preventDefault();
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //   const orgIDs = data11.orgID;
-  //   // const personalIds = data11.personalID;
-
-  //   // const queryString = window.location.search;
-  //   // const urlParams = new URLSearchParams(queryString);
-  //   // const ids = urlParams.get("id");
-
-  //   const raw = JSON.stringify({
-  //     id: items[0].id,
-  //     orgID: orgIDs,
-  //     projectID: items[0].projectID,
-  //     taskID: items[0].taskID,
-  //     subTaskID: "string",
-  //     comment: zino,
-  //     empID: items[0].empID,
-  //     createdTime: items[0].createdTime,
-  //     deleteFlag: items[0].deleteFlag,
-  //   });
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: "follow",
-  //   };
-  //   console.log(raw);
-  //   fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/update`, requestOptions)
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       setOpened(false);
-  //       // MySwal.fire({
-  //       //   title: result.status,
-  //       //   type: "success",
-  //       //   text: result.message,
-  //       // }).then(() => {
-  //       //   window.location.reload();
-  //       // });
-  //     })
-  //     .then(() => {
-  //       window.location.reload();
-  //     });
-  //   // .catch((error) => {
-  //   //   setOpened(false);
-  //   //   MySwal.fire({
-  //   //     title: error.status,
-  //   //     type: "error",
-  //   //     text: error.message,
-  //   //   });
-  //   // });
-  //   // }
-  // };
-
-  // const setCommentxxxx = (id) => {
-  //   const headers = miHeaders;
-
-  //   // const queryString = window.location.search;
-  //   // const urlParams = new URLSearchParams(queryString);
-  //   // const ids = urlParams.get("id");
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //   const orgIDs = data11.orgID;
-  //   console.log(taskId);
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/getForTask/${orgIDs}/${id}`, {
-  //     headers,
-  //   })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       console.log(result);
-  //       if (isMounted) {
-  //         // eslint-disable-next-line eqeqeq
-  //         if (result !== 0 && result !== "" && result !== []) {
-  //           setZino(result);
-  //           // setBigZzzz(result);
-  //           // setItems(result);
-  //           // zinoUpdates(id);
-  //         }
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // };
-  // console.log(zino);
-
-  // eslint-disable-next-line no-unused-vars
-
-  // const setCommentxxxx = (id) => {
-  //   const headers = miHeaders;
-
-  //   // const queryString = window.location.search;
-  //   // const urlParams = new URLSearchParams(queryString);
-  //   // const ids = urlParams.get("id");
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //   const orgIDs = data11.orgID;
-  //   console.log(taskId);
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/getForTask/${orgIDs}/${id}`, {
-  //     headers,
-  //   })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       console.log(result);
-  //       if (isMounted) {
-  //         // eslint-disable-next-line eqeqeq
-  //         if (result.length === 0) {
-  //           setALreadyComm(true);
-  //         } else if (result !== 0 && result !== "" && result !== []) {
-  //           setZino(result[0].comment);
-  //         }
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // };
-  // console.log(zino);
-
   const openModal = (id) => {
     console.log("This is for modal");
     setTaskid(id);
@@ -1156,8 +935,10 @@ export default function Pipeline() {
   // };
   // console.log(handleClick);
   // console.log(taskId);
-  const handleViewSupply = () => {
-    navigate(`/project/subtask?id=${taskId}&workflowID=${projectGet[0].workflowID}`);
+  const handleViewSubtask = () => {
+    navigate(
+      `/project/subtask?id=${taskId}&workflowID=${projectGet[0].workflowID}&projectId=${projectIDx}`
+    );
   };
   // console.log(currentStageID);
   // console.log(taskId);
@@ -1614,7 +1395,7 @@ export default function Pipeline() {
                 &nbsp; &nbsp;
                 <MDButton
                   variant="gradient"
-                  onClick={handleViewSupply}
+                  onClick={handleViewSubtask}
                   color="info"
                   width="50%"
                   align="left"
