@@ -771,6 +771,7 @@ function UserProfile() {
   }, []);
 
   const downloadByPaySlipName = (paySlipName) => {
+    setOpened(true);
     const raw1 = JSON.stringify({
       name: paySlipName,
     });
@@ -797,6 +798,7 @@ function UserProfile() {
         // (C3) CLEAN UP
         window.URL.revokeObjectURL(objectURL);
 
+        setOpened(false);
         MySwal.fire({
           title: "SUCCESS",
           type: "success",
@@ -804,6 +806,7 @@ function UserProfile() {
         });
       })
       .catch((error) => {
+        setOpened(false);
         MySwal.fire({
           title: error.status,
           type: "error",
@@ -813,11 +816,12 @@ function UserProfile() {
   };
 
   const handleGenReceipt = (value) => {
+    setOpened(true);
     const headers = miHeaders;
 
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
+    // const orgIDs = data11.orgID;
     const paymentHisValue = value;
 
     fetch(`${process.env.REACT_APP_TANTA_URL}/payroll/generatePaySlip/${paymentHisValue}`, {
@@ -829,48 +833,49 @@ function UserProfile() {
         return res.json();
       })
       .then((resx) => {
-        if (resx.status === "SUCCESS") {
-          if (resx.message === "Expired Access") {
-            navigate("/authentication/sign-in");
-          }
-          if (resx.message === "Token Does Not Exist") {
-            navigate("/authentication/sign-in");
-          }
-          if (resx.message === "Unauthorized Access") {
-            navigate("/authentication/forbiddenPage");
-          }
-          console.log(resx);
-          fetch(
-            `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${resx.data.receiptNo}`,
-            {
-              headers,
+        console.log(resx);
+        const raw = JSON.stringify(resx.data);
+        fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/accounting/generatePayslip`, {
+          headers,
+          method: "POST",
+          body: raw,
+        })
+          .then(async (res) => {
+            const aToken = res.headers.get("token-1");
+            localStorage.setItem("rexxdex", aToken);
+            return res.json();
+          })
+          .then((accRes) => {
+            if (accRes.message === "Expired Access") {
+              navigate("/authentication/sign-in");
             }
-          )
-            .then(async (res) => {
-              const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              return res.json();
-            })
-            .then((resxx) => {
-              if (resxx.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-              }
-              if (resxx.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-              }
-              if (resxx.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-              }
+            if (accRes.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+            }
+            if (accRes.message === "Unauthorized Access") {
+              navigate("/authentication/forbiddenPage");
+            }
+            if (accRes.status === "SUCCESS") {
+              console.log(accRes);
 
-              const paySlipName = resxx.name;
+              const { paySlipName } = accRes.data.payroll;
               downloadByPaySlipName(paySlipName);
+            } else if (accRes.status === "RECORD_EXIST") {
+              const paySlipNamex = accRes.data.payroll.paySlipName;
+              downloadByPaySlipName(paySlipNamex);
+            }
+          })
+          .catch((error) => {
+            setOpened(false);
+            MySwal.fire({
+              title: error.status,
+              type: "error",
+              text: error.message,
             });
-        } else if (resx.status === "RECORD_EXIST") {
-          const paySlipNamex = resx.data.paySlipName;
-          downloadByPaySlipName(paySlipNamex);
-        }
+          });
       })
       .catch((error) => {
+        setOpened(false);
         MySwal.fire({
           title: error.status,
           type: "error",
