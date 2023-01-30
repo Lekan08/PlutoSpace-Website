@@ -245,7 +245,7 @@ export default function MultiSessionOffboarding() {
                   MySwal.fire({
                     title: resultx.status,
                     type: "success",
-                    text: resultx.message,
+                    text: "Added Offboarding Session(s) successfully",
                   }).then(() => {
                     window.location.reload();
                   });
@@ -382,22 +382,26 @@ export default function MultiSessionOffboarding() {
               <hr />
               <br />
               <b>Select Offboarding Users :</b> <br />
-              {items.map((api, indx) => (
-                <Row key={api.id} style={{ textAlign: "left", borderBottom: "1px solid gray" }}>
-                  <Col style={{ paddingTop: "10px" }} sm={4}>
-                    <Form.Check.Input
-                      type="checkbox"
-                      value={api.id}
-                      // defaultChecked={api.isCheck}
-                      onClick={(e) => pwush(e.target.checked, api, indx)}
-                    />
-                    <Form.Check.Label style={{ fontSize: "16px" }}>
-                      &nbsp;{api.empName}
-                    </Form.Check.Label>
-                  </Col>
-                  &nbsp;
-                </Row>
-              ))}
+              {items.map((api, indx) => {
+                if (api.status !== 2)
+                  return (
+                    <Row key={api.id} style={{ textAlign: "left", borderBottom: "1px solid gray" }}>
+                      <Col style={{ paddingTop: "10px" }} sm={4}>
+                        <Form.Check.Input
+                          type="checkbox"
+                          value={api.id}
+                          // defaultChecked={api.isCheck}
+                          onClick={(e) => pwush(e.target.checked, api, indx)}
+                        />
+                        <Form.Check.Label style={{ fontSize: "16px" }}>
+                          &nbsp;{api.empName}
+                        </Form.Check.Label>
+                      </Col>
+                      &nbsp;
+                    </Row>
+                  );
+                return null;
+              })}
               <br />
               <ReactiveButton
                 size="large"

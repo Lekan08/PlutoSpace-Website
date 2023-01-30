@@ -172,7 +172,8 @@ import Supplystat from "layouts/supplystats";
 import Products from "layouts/products";
 import UpdateProducts from "layouts/products/update";
 // import UpdateSessions from "layouts/onboardingCompany/sessions/update";
-// import Updateonboarding from "layouts/onboardingCompany/updateonboarding";
+import Updateonboarding from "layouts/onboardingCompany/updateonboarding";
+import Updateoffboarding from "layouts/offboardingCompany/updateoffboarding";
 import ViewProducts from "layouts/products/viewproducts";
 import ProductsBranch from "layouts/products/products-Branch";
 import ViewSupply from "layouts/supply/viewSupply";
@@ -204,7 +205,8 @@ import DocumentLibrary from "layouts/documentLibrary";
 import UpdateReportProduction from "layouts/products/reportProduction/update";
 import ProjectUpdate from "layouts/project/update-Project";
 import ProjectView from "layouts/project/view-Project";
-// import SubTask from "layouts/project/subTask";
+// eslint-disable-next-line import/no-unresolved
+import Subtask from "layouts/project/subtask";
 import Updatesub from "layouts/project/updatesubtask";
 import ViewApplication from "layouts/jobposts/applications/viewApplication";
 import DemandSupply from "layouts/demandSupplyStat";
@@ -250,7 +252,7 @@ import OtherInflow from "layouts/otherInflow";
 import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
-import creditFacility from "layouts/sales/credit-facilities";
+import CreditFacility from "layouts/creditFacility";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
@@ -286,10 +288,12 @@ import UpdateTreasuryContribution from "layouts/treasury/treasuryContribution/up
 import TreasuryDebtors from "layouts/treasury/treasuryGetDebtors";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
+import MultiSession from "layouts/onboardingCompany/sessions/multisession";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/update";
+import Voucher from "./layouts/voucher/index";
 
 const routes = [
   {
@@ -653,7 +657,7 @@ const routes = [
     name: "Attach Documents",
     key: "attachDocuments",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/assets/attach-Documents",
+    route: "/asset/attach-Documents",
     component: <AssetAttachDocument />,
   },
   {
@@ -694,11 +698,19 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "General Bills",
-    key: "generalBills",
+    name: "Bills Attention",
+    key: "billsAttention",
     icon: <Icon fontSize="small">today</Icon>,
-    route: "/general-Bills",
+    route: "/Bills-Attention",
     component: <GeneralBills />,
+  },
+  {
+    type: "collapse",
+    name: "Voucher Attention",
+    key: "voucherAttention",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/Voucher-Attention",
+    component: <Voucher />,
   },
   {
     name: "Update Bills",
@@ -1344,10 +1356,30 @@ const routes = [
     component: <OnboardingSession />,
   },
   {
+    name: "Onboarding Session",
+    key: "onboardingMultiSession",
+    route: "/onboarding/multi-sessions",
+    component: <MultiSession />,
+  },
+  {
     name: "Update Onboarding Session",
     key: "updateOnboardingSession",
     route: "/onboarding/sessions/update",
     component: <UpdateOnboardingSession />,
+  },
+  {
+    name: "Update Onboarding",
+    key: "onboarding/update",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/company-onboarding/update-Onboarding",
+    component: <Updateonboarding />,
+  },
+  {
+    name: "Update Offboarding",
+    key: "offboarding/update",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/company-offboarding/update-Offboarding",
+    component: <Updateoffboarding />,
   },
   {
     type: "divider",
@@ -1514,13 +1546,13 @@ const routes = [
     route: "/project/view-Project",
     component: <ProjectView />,
   },
-  // {
-  //   name: "Add Subtask ",
-  //   key: "SubTask",
-  //   icon: <Icon fontSize="small">meeting_room</Icon>,
-  //   route: "/project/subtask",
-  //   component: <SubTask />,
-  // },
+  {
+    name: "Subtask ",
+    key: "Subtask",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/project/subtask",
+    component: <Subtask />,
+  },
   {
     name: "Update Subtask ",
     key: "Updatesub",
@@ -1654,7 +1686,7 @@ const routes = [
     name: "AssignCbtTestToJobPost",
     key: "assigncbttesttojobpost",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/cbt/assignCBTToJobPost/",
+    route: "/CBT/assign-CBT-To-JobPost/",
     component: <AssignCbtToJobPost />,
   },
   {
@@ -1895,6 +1927,14 @@ const routes = [
     icon: <Icon fontSize="small">point_of_sale</Icon>,
     route: "/sales",
     component: <Sales />,
+  },
+  {
+    type: "collapse",
+    name: "Credit Facility",
+    key: "creditFacility",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/credit-Facility",
+    component: <CreditFacility />,
   },
   {
     // type: "collapse",

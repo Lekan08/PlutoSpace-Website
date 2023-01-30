@@ -25,6 +25,7 @@ function OnboardingSession() {
   const { columns: pColumns, rows: pRows } = OnboardingCompanyTable();
   const [opened, setOpened] = useState(false);
   const [end, setEnd] = useState("");
+  const [status, setStatus] = useState(false);
   const [data, setData] = useState([]);
   const [mentorx, setMentorx] = useState("");
   const [start, setStart] = useState("");
@@ -76,6 +77,8 @@ function OnboardingSession() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
+    const stat = urlParams.get("stat");
+    if (Number(stat) === 2) setStatus(true);
     // const ids = JSON.parse([id]);
 
     // const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -130,77 +133,10 @@ function OnboardingSession() {
       isMounted = false;
     };
   }, []);
-  //   const handleOnTitleKeys = () => {
-  //     const letter = /^[a-zA-Z ]+$/;
-  //     if (!titlex.match(letter)) {
-  //       setCheckedTitle(false);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("title").innerHTML =
-  //         "Name - input only capital and small letters<br>";
-  //     }
-  //     if (titlex.match(letter)) {
-  //       setCheckedTitle(true);
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("title").innerHTML = "";
-  //     }
-  //     if (titlex.length === 0) {
-  //       // eslint-disable-next-line no-unused-expressions
-  //       document.getElementById("title").innerHTML = "Title is required<br>";
-  //     }
-  //     setEnabled(checkedTitle === true);
-  // const handleDelete = () => {
-  //   MySwal.fire({
-  //     title: "Are you sure?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, delete it!",
-  //   }).then((result) => {
-  //     if (result.isConfirmed === true) {
-  //       const requestOptions = {
-  //         method: "DELETE",
-  //         headers: miHeaders,
-  //       };
-  //       fetch(
-  //         `${process.env.REACT_APP_RAGA_URL}/onboardingSession/delete/${appID[0].id}`,
-  //         requestOptions
-  //       )
-  //         .then((res) => res.json())
-  //         .then((resx) => {
-  //           if (resx.message === "Expired Access") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Token Does Not Exist") {
-  //             navigate("/authentication/sign-in");
-  //           }
-  //           if (resx.message === "Unauthorized Access") {
-  //             navigate("/authentication/forbiddenPage");
-  //           }
-  //           MySwal.fire({
-  //             title: resx.status,
-  //             type: "success",
-  //             text: resx.message,
-  //           }).then(() => {
-  //             window.location.reload();
-  //           });
-  //         })
-  //         .catch((error) => {
-  //           MySwal.fire({
-  //             title: error.status,
-  //             type: "error",
-  //             text: error.message,
-  //           });
-  //         });
-  //     }
-  //   });
-  // };
   const handleCreate = () => {
     console.log(data[0]);
     const OpeningDate = new Date(start).getTime();
     const ClosingDate = new Date(end).getTime();
-    const CurTime = new Date().getTime();
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const [filteredItems] = userxx.filter((item) => item.personal.id === Number(mentorx));
@@ -216,7 +152,7 @@ function OnboardingSession() {
       reminderTime: OpeningDate - 600000,
       startTime: OpeningDate,
       endTime: ClosingDate,
-      timezone: "Africa/Algiers",
+      timezone: "(UTC+01:00) West Central Africa | Africa/Algiers",
     });
     console.log(raw3);
     const requestOptions3 = {
@@ -225,148 +161,129 @@ function OnboardingSession() {
       body: raw3,
       redirect: "follow",
     };
-    let check = 0;
-    if (OpeningDate < CurTime) {
-      check = 1;
-      MySwal.fire({
-        title: "Invalid Date",
-        type: "error",
-        text: "Please Enter A Date From The Future",
-      });
-    }
-    if (check === 0 && ClosingDate < OpeningDate) {
-      check = 1;
-      MySwal.fire({
-        title: "Invalid Closing Date",
-        type: "error",
-        text: "Please Enter A Date From The Future",
-      });
-    }
-    if (check === 0) {
-      fetch(`${process.env.REACT_APP_RAGA_URL}/appointment/add`, requestOptions3)
-        .then(async (res) => {
-          const aToken = res.headers.get("token-1");
-          localStorage.setItem("rexxdex", aToken);
-          return res.json();
-        })
-        .then((result) => {
-          setOpened(false);
-          console.log(result);
-          // setAppID(result.data.id);
-          if (result.message === "Expired Access") {
-            navigate("/authentication/sign-in");
-          }
-          if (result.message === "Token Does Not Exist") {
-            navigate("/authentication/sign-in");
-          }
-          if (result.message === "Unauthorized Access") {
-            navigate("/authentication/forbiddenPage");
-          }
-          const raw2 = JSON.stringify([
-            {
-              orgID: data[0].orgID,
+    fetch(`${process.env.REACT_APP_RAGA_URL}/appointment/add`, requestOptions3)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        setOpened(false);
+        console.log(result);
+        // setAppID(result.data.id);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+        }
+        const raw2 = JSON.stringify([
+          {
+            orgID: data[0].orgID,
+            appointmentID: result.data.id,
+            name: data[0].empName,
+            email: filteredItemsEmp.personal.email,
+            personalID: data[0].empID,
+            appointmentTime: OpeningDate,
+          },
+          {
+            orgID: data[0].orgID,
+            appointmentID: result.data.id,
+            name: `${filteredItems.personal.fname} ${filteredItems.personal.lname}`,
+            email: filteredItems.personal.email,
+            personalID: Number(mentorx),
+            appointmentTime: OpeningDate,
+          },
+        ]);
+        console.log(raw2);
+        const requestOptions2 = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw2,
+          redirect: "follow",
+        };
+        fetch(`${process.env.REACT_APP_RAGA_URL}/appointmentParticipant/add`, requestOptions2)
+          .then(async (res) => {
+            const aToken = res.headers.get("token-1");
+            localStorage.setItem("rexxdex", aToken);
+            return res.json();
+          })
+          .then((resultr) => {
+            console.log(resultr);
+            const raw = JSON.stringify({
+              orgID: orgIDs,
+              mentorID: Number(mentorx),
+              onboardingID: data[0].id,
               appointmentID: result.data.id,
-              name: data[0].empName,
-              email: filteredItemsEmp.personal.email,
-              personalID: data[0].empID,
-              appointmentTime: OpeningDate,
-            },
-            {
-              orgID: data[0].orgID,
-              appointmentID: result.data.id,
-              name: `${filteredItems.personal.fname} ${filteredItems.personal.lname}`,
-              email: filteredItems.personal.email,
-              personalID: Number(mentorx),
-              appointmentTime: OpeningDate,
-            },
-          ]);
-          console.log(raw2);
-          const requestOptions2 = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw2,
-            redirect: "follow",
-          };
-          fetch(`${process.env.REACT_APP_RAGA_URL}/appointmentParticipant/add`, requestOptions2)
-            .then(async (res) => {
-              const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              return res.json();
-            })
-            .then((resultr) => {
-              console.log(resultr);
-              const raw = JSON.stringify({
-                orgID: orgIDs,
-                mentorID: Number(mentorx),
-                onboardingID: data[0].id,
-                appointmentID: result.data.id,
-              });
-              console.log(raw);
-              const requestOptions = {
-                method: "POST",
-                headers: myHeaders,
-                body: raw,
-                redirect: "follow",
-              };
-
-              fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/add`, requestOptions)
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  return res.json();
-                })
-                .then((resultx) => {
-                  console.log(resultx);
-                  // setOpened(false);
-                  if (resultx.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultx.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                    window.location.reload();
-                  }
-                  if (resultx.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                    window.location.reload();
-                  }
-                  MySwal.fire({
-                    title: resultx.status,
-                    type: "success",
-                    text: resultx.message,
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                })
-                .catch((error) => {
-                  setOpened(false);
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
-            })
-            .catch((error) => {
-              console.log(error);
             });
-          MySwal.fire({
-            title: result.status,
-            type: "success",
-            text: result.message,
-          }).then(() => {
-            window.location.reload();
+            console.log(raw);
+            const requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: raw,
+              redirect: "follow",
+            };
+
+            fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/add`, requestOptions)
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                return res.json();
+              })
+              .then((resultx) => {
+                console.log(resultx);
+                // setOpened(false);
+                if (resultx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+                MySwal.fire({
+                  title: resultx.status,
+                  type: "success",
+                  text: resultx.message,
+                }).then(() => {
+                  window.location.reload();
+                });
+              })
+              .catch((error) => {
+                setOpened(false);
+                MySwal.fire({
+                  title: error.status,
+                  type: "error",
+                  text: error.message,
+                });
+              });
+          })
+          .catch((error) => {
+            console.log(error);
           });
-        })
-        .catch((error) => {
-          setOpened(false);
-          MySwal.fire({
-            title: error.status,
-            type: "error",
-            text: error.message,
-          });
+        MySwal.fire({
+          title: result.status,
+          type: "success",
+          text: result.message,
+        }).then(() => {
+          window.location.reload();
         });
-    }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
   };
   return (
     <DashboardLayout>
@@ -401,6 +318,7 @@ function OnboardingSession() {
                     value={mentorx}
                     onChange={(e) => setMentorx(e.target.value)}
                     aria-label="Default select example"
+                    disabled={status}
                   >
                     <option value="">Select Mentor</option>
                     {userxx.map((api) => (
@@ -416,7 +334,7 @@ function OnboardingSession() {
                     <Col>
                       <MDTypography variant="p" fontWeight="light" color="secondary" fontSize="90%">
                         <br />
-                        Onboarding Begins
+                        Onboarding Session Begins
                       </MDTypography>
                       <Container>
                         <DatePicker
@@ -430,13 +348,14 @@ function OnboardingSession() {
                           dateFormat="MM/dd/yyyy h:mm aa"
                           dropdownMode="select"
                           onChange={(time) => setStart(time)}
+                          disabled={status}
                         />
                       </Container>
                     </Col>
                     <Col>
                       <MDTypography variant="p" fontWeight="light" color="secondary" fontSize="90%">
                         <br />
-                        Onboarding Ends
+                        Onboarding Session Ends
                       </MDTypography>
                       <Container>
                         <DatePicker
@@ -450,6 +369,7 @@ function OnboardingSession() {
                           dateFormat="MM/dd/yyyy h:mm aa"
                           dropdownMode="select"
                           onChange={(time) => setEnd(time)}
+                          disabled={status}
                         />
                       </Container>
                     </Col>
@@ -469,9 +389,20 @@ function OnboardingSession() {
               </Container>
               <MDBox textAlign="center" mx={3}>
                 <MDBox textAlign="center" p={3}>
-                  <MDButton color="success" variant="gradient" onClick={handleCreate} size="large">
-                    ASSIGN
-                  </MDButton>
+                  {status ? (
+                    <i style={{ color: "red", fontSize: "10px" }}>
+                      This onboarding has already been terminated
+                    </i>
+                  ) : (
+                    <MDButton
+                      color="success"
+                      variant="gradient"
+                      onClick={handleCreate}
+                      size="large"
+                    >
+                      ASSIGN
+                    </MDButton>
+                  )}
                 </MDBox>
               </MDBox>
             </MDBox>

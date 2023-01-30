@@ -222,10 +222,10 @@ function UpdateAssets() {
     setAssignedTo(value);
     const Validate = "--Assigned To--";
     if (value.toString().match(Validate)) {
-      setCheckedAssigned(false);
+      setCheckedAssigned(true);
     }
     if (!value.toString().match(Validate)) {
-      setCheckedAssigned(true);
+      setCheckedAssigned(false);
     }
   };
   const handleOnAssetTypeKeys = (value) => {
