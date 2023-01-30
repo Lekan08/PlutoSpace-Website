@@ -701,7 +701,11 @@ const Subtask = () => {
               {items.map((api, i) => (
                 <Grid key={api.id} item xs={12} md={6} lg={3}>
                   <Card
-                    style={{ backgroundColor: colors[i], maxHeight: "170px", minHeight: "170px" }}
+                    style={{
+                      backgroundColor: colors[i % 5],
+                      maxHeight: "170px",
+                      minHeight: "170px",
+                    }}
                   >
                     <CardContent>
                       {/* <Typography sx={{ fontSize: 14 }} style={{ color: "white" }} gutterBottom>
@@ -721,7 +725,7 @@ const Subtask = () => {
                           Delete
                         </Button>
                         {api.assignedToName ? (
-                          <Avatar sx={{ bgcolor: colorName[i], width: 33, height: 33 }}>
+                          <Avatar sx={{ bgcolor: colorName[i % 5], width: 33, height: 33 }}>
                             {api.assignedToName.substring(0, 2).toUpperCase()}
                           </Avatar>
                         ) : (
