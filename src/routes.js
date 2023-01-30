@@ -250,6 +250,7 @@ import OtherInflow from "layouts/otherInflow";
 import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
+import creditFacility from "layouts/sales/credit-facilities";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
@@ -338,6 +339,14 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/matters-Arising",
     component: <MattersArising />,
+  },
+  {
+    type: "collapse",
+    name: "Credit Faclilities",
+    key: "creditFacility",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/sales/credit-facilities",
+    component: <creditFacility />,
   },
   {
     name: "Escalate Matter",
