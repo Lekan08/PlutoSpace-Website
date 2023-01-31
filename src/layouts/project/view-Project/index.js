@@ -57,8 +57,8 @@ export default function Pipeline() {
   const [modalTitle, setModalTitle] = useState("");
   const [modalDescrip, setModalDescrip] = useState("");
   const [modalExpectedStartTime, setModalExpectedStartTime] = useState("");
-  const [modalActualStartTime, setModalActualStartTime] = useState(new Date().getTime());
-  const [modalActualEndTime, setModalActualEndTime] = useState(new Date().getTime());
+  const [modalActualStartTime, setModalActualStartTime] = useState();
+  const [modalActualEndTime, setModalActualEndTime] = useState();
   const [modalTotalActualCost, setModalTotalActualCost] = useState("");
   const [taskId, setTaskid] = useState("");
   // const [alreadyComm, setALreadyComm] = useState(false);
@@ -805,6 +805,9 @@ export default function Pipeline() {
   };
 
   const changeDateandTime = (timestamp) => {
+    if (timestamp === 0) {
+      return "";
+    }
     const date = new Date(timestamp);
     let month = "0";
     if (date.getMonth() + 1 < 10) {

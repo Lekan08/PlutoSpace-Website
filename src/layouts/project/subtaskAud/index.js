@@ -64,13 +64,13 @@ const SubtaskAudit1 = ({ taskId }) => {
   };
 
   return (
-    <div>
+    <div style={{ overflowY: "scroll", overflowX: "hidden", height: "50vh", left: "10vw" }}>
       <MDTypography variant="h3" textAlign="center" fontWeight="light" color="secondary" mt={1}>
         SUBTASK AUDIT
       </MDTypography>
       {subtaskAudits.map((item) => (
         <MDTypography
-          variant="h6"
+          fontSize="11px"
           textAlign="center"
           fontWeight="light"
           color="secondary"
