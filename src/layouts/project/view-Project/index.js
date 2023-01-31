@@ -57,7 +57,8 @@ export default function Pipeline() {
   const [modalTitle, setModalTitle] = useState("");
   const [modalDescrip, setModalDescrip] = useState("");
   const [modalExpectedStartTime, setModalExpectedStartTime] = useState("");
-  const [modalActualStartTime, setModalActualStartTime] = useState("");
+  const [modalActualStartTime, setModalActualStartTime] = useState();
+  const [modalActualEndTime, setModalActualEndTime] = useState();
   const [modalTotalActualCost, setModalTotalActualCost] = useState("");
   const [taskId, setTaskid] = useState("");
   // const [alreadyComm, setALreadyComm] = useState(false);
@@ -79,122 +80,135 @@ export default function Pipeline() {
   };
 
   const handleUpdateTask = () => {
-    setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const createdByx = data11.id;
+    const createdByx = data11.personalID;
 
     const modalActualStartTimex = new Date(modalActualStartTime).getTime();
-
-    const raw = JSON.stringify({
-      id: taskCarrierUpdate[0].id,
-      orgID: orgIDs,
-      projectID: taskCarrierUpdate[0].projectID,
-      title: modalTitle,
-      descrip: modalDescrip,
-      assignedTo: modalAssignedTox,
-      expectedStartTime: modalExpectedStartTime,
-      expectedEndTime: modalExpectedEndTime,
-      actualStartTime: modalActualStartTimex,
-      actualEndTime: taskCarrierUpdate[0].actualEndTime,
-      totalExpectedCost: Number(modalCost),
-      totalActualCost: modalTotalActualCost,
-      currentStageID: taskCarrierUpdate[0].currentStageID,
-      prerequisiteTaskID: taskCarrierUpdate[0].prerequisiteTaskID,
-      deleteFlag: taskCarrierUpdate[0].deleteFlag,
-    });
-
-    console.log(raw);
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/update`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        console.log(result);
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        handleClose();
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          window.location.reload();
-        });
-        console.log(result);
-        if (result.data !== null) {
-          const raww = JSON.stringify({
-            orgID: orgIDs,
-            projectID: projectIDx,
-            taskID: result.data.id,
-            actionBy: createdByx,
-            actionTaken: "updated this Task on",
-          });
-          console.log(raw);
-          const requestOptionsx = {
-            method: "POST",
-            headers: myHeaders,
-            body: raww,
-            redirect: "follow",
-          };
-          fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
-            .then(async (res) => {
-              const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              return res.json();
-            })
-            .then((resultr) => {
-              console.log(result);
-              setOpened(false);
-              if (resultr.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultr.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultr.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-                window.location.reload();
-              }
-              console.log(resultr.status);
-            })
-            .catch((errorr) => {
-              setOpened(false);
-
-              console.log(errorr.status);
-            });
-        }
-      })
-
-      .catch((error) => {
-        setOpened(false);
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
+    const modalActualEndTimex = new Date(modalActualEndTime).getTime();
+    console.log(modalActualStartTimex);
+    console.log(modalActualEndTimex);
+    if (modalActualEndTimex < modalActualStartTimex) {
+      setOpen(false);
+      MySwal.fire({
+        title: "Invalid Date",
+        type: "error",
+        text: "Your Actual Start Time Date should come before your Actual End Time Date",
+      }).then(() => {
+        setOpen(true);
       });
+    } else {
+      setOpened(true);
+      const raw = JSON.stringify({
+        id: taskCarrierUpdate[0].id,
+        orgID: orgIDs,
+        projectID: taskCarrierUpdate[0].projectID,
+        title: modalTitle,
+        descrip: modalDescrip,
+        assignedTo: modalAssignedTox,
+        expectedStartTime: modalExpectedStartTime,
+        expectedEndTime: modalExpectedEndTime,
+        actualStartTime: modalActualStartTimex,
+        actualEndTime: modalActualEndTimex,
+        totalExpectedCost: Number(modalCost),
+        totalActualCost: modalTotalActualCost,
+        currentStageID: taskCarrierUpdate[0].currentStageID,
+        prerequisiteTaskID: taskCarrierUpdate[0].prerequisiteTaskID,
+        deleteFlag: taskCarrierUpdate[0].deleteFlag,
+      });
+
+      console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/update`, requestOptions)
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          console.log(result);
+          setOpened(false);
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          handleClose();
+          MySwal.fire({
+            title: result.status,
+            type: "success",
+            text: result.message,
+          }).then(() => {
+            window.location.reload();
+          });
+          console.log(result);
+          if (result.data !== null) {
+            const raww = JSON.stringify({
+              orgID: orgIDs,
+              projectID: projectIDx,
+              taskID: result.data.id,
+              actionBy: createdByx,
+              actionTaken: "updated this Task on",
+            });
+            console.log(raw);
+            const requestOptionsx = {
+              method: "POST",
+              headers: myHeaders,
+              body: raww,
+              redirect: "follow",
+            };
+            fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                return res.json();
+              })
+              .then((resultr) => {
+                console.log(result);
+                setOpened(false);
+                if (resultr.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultr.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultr.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+                console.log(resultr.status);
+              })
+              .catch((errorr) => {
+                setOpened(false);
+
+                console.log(errorr.status);
+              });
+          }
+        })
+
+        .catch((error) => {
+          setOpened(false);
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
+        });
+    }
   };
   useEffect(() => {
     const queryString = window.location.search;
@@ -227,7 +241,6 @@ export default function Pipeline() {
           window.location.reload();
         }
         console.log(result);
-        console.log(setSubtask);
         console.log(subTask);
         if (isMounted) {
           console.log(taskID);
@@ -256,7 +269,7 @@ export default function Pipeline() {
     setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const createdByx = data11.id;
+    const createdByx = data11.personalID;
     const raw = JSON.stringify({
       orgID: orgIDs,
       projectID: projectIDx,
@@ -379,7 +392,7 @@ export default function Pipeline() {
     setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const createdByx = data11.id;
+    const createdByx = data11.personalID;
     const raw = JSON.stringify({
       id: filteredData[0].id,
       orgID: orgIDs,
@@ -696,7 +709,6 @@ export default function Pipeline() {
                               stageAppResult.push(itemm);
                             }
                           });
-                          console.log(stageAppResult);
                           Object.assign(obj, {
                             [item.id]: {
                               name: `${item.name}`,
@@ -792,224 +804,44 @@ export default function Pipeline() {
     display: "block",
   };
 
-  // const updateGetById = () => {
-  //   const headers = miHeaders;
+  const changeDateandTime = (timestamp) => {
+    if (timestamp === 0) {
+      return "";
+    }
+    const date = new Date(timestamp);
+    let month = "0";
+    if (date.getMonth() + 1 < 10) {
+      const mymonth = date.getMonth() + 1;
+      month += mymonth;
+    } else {
+      const mymonth = date.getMonth() + 1;
+      month = mymonth;
+    }
+    let day = "0";
+    if (date.getDate() < 10) {
+      day += date.getDate();
+    } else {
+      day = date.getDate();
+    }
+    const retDate = `${date.getFullYear()}-${month}-${day}`;
 
-  //   const queryString = window.location.search;
-  //   const urlParams = new URLSearchParams(queryString);
-  //   const ids = urlParams.get("id");
-  //   // const data11 = JSON.parse(localStorage.getItem("user1"));
+    let hour = "0";
+    let minutes = "0";
 
-  //   // const orgIDs = data11.orgID;
-  //   // console.log(taskId);
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/getByIds/${ids}`, {
-  //     headers,
-  //   })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       console.log(result);
-  //       if (isMounted) {
-  //         // eslint-disable-next-line eqeqeq
-  //         if (result !== 0 && result !== "" && result !== []) {
-  //           setBigZzzz(result);
-  //           // updateGetById(id);
-  //         }
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // };
+    if (date.getHours() < 10) {
+      hour += date.getHours();
+    } else {
+      hour = date.getHours();
+    }
 
-  // const zinoUpdates = (e) => {
-  //   // handleOnNameKeys();
-  //   // if (enabled) {
-  //   setOpened(true);
-  //   e.preventDefault();
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
+    if (date.getMinutes() < 10) {
+      minutes += date.getMinutes();
+    } else {
+      minutes = date.getMinutes();
+    }
 
-  //   const orgIDs = data11.orgID;
-  //   // const personalIds = data11.personalID;
-
-  //   // const queryString = window.location.search;
-  //   // const urlParams = new URLSearchParams(queryString);
-  //   // const ids = urlParams.get("id");
-
-  //   const raw = JSON.stringify({
-  //     id: items[0].id,
-  //     orgID: orgIDs,
-  //     projectID: items[0].projectID,
-  //     taskID: items[0].taskID,
-  //     subTaskID: "string",
-  //     comment: zino,
-  //     empID: items[0].empID,
-  //     createdTime: items[0].createdTime,
-  //     deleteFlag: items[0].deleteFlag,
-  //   });
-  //   const requestOptions = {
-  //     method: "POST",
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: "follow",
-  //   };
-  //   console.log(raw);
-  //   fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/update`, requestOptions)
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       setOpened(false);
-  //       // MySwal.fire({
-  //       //   title: result.status,
-  //       //   type: "success",
-  //       //   text: result.message,
-  //       // }).then(() => {
-  //       //   window.location.reload();
-  //       // });
-  //     })
-  //     .then(() => {
-  //       window.location.reload();
-  //     });
-  //   // .catch((error) => {
-  //   //   setOpened(false);
-  //   //   MySwal.fire({
-  //   //     title: error.status,
-  //   //     type: "error",
-  //   //     text: error.message,
-  //   //   });
-  //   // });
-  //   // }
-  // };
-
-  // const setCommentxxxx = (id) => {
-  //   const headers = miHeaders;
-
-  //   // const queryString = window.location.search;
-  //   // const urlParams = new URLSearchParams(queryString);
-  //   // const ids = urlParams.get("id");
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //   const orgIDs = data11.orgID;
-  //   console.log(taskId);
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/getForTask/${orgIDs}/${id}`, {
-  //     headers,
-  //   })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       console.log(result);
-  //       if (isMounted) {
-  //         // eslint-disable-next-line eqeqeq
-  //         if (result !== 0 && result !== "" && result !== []) {
-  //           setZino(result);
-  //           // setBigZzzz(result);
-  //           // setItems(result);
-  //           // zinoUpdates(id);
-  //         }
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // };
-  // console.log(zino);
-
-  // eslint-disable-next-line no-unused-vars
-
-  // const setCommentxxxx = (id) => {
-  //   const headers = miHeaders;
-
-  //   // const queryString = window.location.search;
-  //   // const urlParams = new URLSearchParams(queryString);
-  //   // const ids = urlParams.get("id");
-  //   const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //   const orgIDs = data11.orgID;
-  //   console.log(taskId);
-  //   let isMounted = true;
-  //   fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/getForTask/${orgIDs}/${id}`, {
-  //     headers,
-  //   })
-  //     .then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       return res.json();
-  //     })
-  //     .then((result) => {
-  //       if (result.message === "Expired Access") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Token Does Not Exist") {
-  //         navigate("/authentication/sign-in");
-  //         window.location.reload();
-  //       }
-  //       if (result.message === "Unauthorized Access") {
-  //         navigate("/authentication/forbiddenPage");
-  //         window.location.reload();
-  //       }
-  //       console.log(result);
-  //       if (isMounted) {
-  //         // eslint-disable-next-line eqeqeq
-  //         if (result.length === 0) {
-  //           setALreadyComm(true);
-  //         } else if (result !== 0 && result !== "" && result !== []) {
-  //           setZino(result[0].comment);
-  //         }
-  //       }
-  //     });
-  //   return () => {
-  //     isMounted = false;
-  //   };
-  // };
-  // console.log(zino);
+    return `${retDate}T${hour}:${minutes}`;
+  };
 
   const openModal = (id) => {
     console.log("This is for modal");
@@ -1029,6 +861,7 @@ export default function Pipeline() {
     setModalExpectedStartTime(filterFirstedd[0].expectedStartTime);
     setModalExpectedEndTime(filterFirstedd[0].expectedEndTime);
     setModalActualStartTime(filterFirstedd[0].actualStartTime);
+    setModalActualEndTime(filterFirstedd[0].actualStartTime);
     setModalTotalActualCost(filterFirstedd[0].totalActualCost);
     setModalAssignTo(filterFirstedd[0].assignedTo);
   };
@@ -1105,8 +938,10 @@ export default function Pipeline() {
   // };
   // console.log(handleClick);
   // console.log(taskId);
-  const handleViewSupply = () => {
-    navigate(`/project/subtask?id=${taskId}&workflowID=${projectGet[0].workflowID}`);
+  const handleViewSubtask = () => {
+    navigate(
+      `/project/subtask?id=${taskId}&workflowID=${projectGet[0].workflowID}&projectId=${projectIDx}`
+    );
   };
   // console.log(currentStageID);
   // console.log(taskId);
@@ -1116,21 +951,29 @@ export default function Pipeline() {
       <MDBox mt={1} mb={1} style={{ height: "350px", width: "100%", backgroundColor: "#ffffff" }}>
         <Container>
           <div>
-            <MDTypography variant="h4" textAlign="left" fontWeight="bold" color="secondary" mt={1}>
-              {namex}
-              <FormatListBulletedIcon />
-              <DashboardIcon />
-            </MDTypography>
+            <Box display="flex" flexDirection="row" p={1} m={1} bgcolor="background.paper">
+              <Box p={1}>
+                <MDTypography variant="h4" textAlign="left" fontWeight="bold" color="secondary">
+                  {namex}
+                </MDTypography>
+              </Box>
+              <Box p={1}>
+                <FormatListBulletedIcon style={{ cursor: "pointer" }} />
+              </Box>
+              <Box p={1}>
+                <DashboardIcon style={{ cursor: "pointer" }} />
+              </Box>
+            </Box>
 
             <MDTypography
-              variant="h6"
+              variant="h5"
               textAlign="center"
               fontWeight="medium"
               color="secondary"
               mt={1}
               mb={4}
             >
-              Create A Task
+              Create Task
             </MDTypography>
             <MDBox mx={34} textAlign="right">
               <></>
@@ -1308,7 +1151,7 @@ export default function Pipeline() {
                                                 borderRadius: 10,
                                                 fontSize: "15px",
                                                 backgroundColor: snapshots.isDragging
-                                                  ? "#263B4A"
+                                                  ? "#121212"
                                                   : "#318CE7",
                                                 color: "white",
                                                 ...provideds.draggableProps.style,
@@ -1411,7 +1254,7 @@ export default function Pipeline() {
                   multiline
                 />
                 {/* if na here i go put my code for comment */}
-                <div
+                {/* <div
                   style={{
                     backgroundColor: "ButtonFace",
                     padding: "10px",
@@ -1419,17 +1262,129 @@ export default function Pipeline() {
                     margin: "10px",
                     fontSize: "13px",
                   }}
-                >
-                  <br />
-                  Expected Cost :
+                > */}
+                &nbsp; &nbsp;{" "}
+                <div className="col-md-3">
                   <TextField
-                    label="(NGN) "
-                    type="number"
-                    value={modalCost}
-                    size="small"
-                    onChange={(e) => setModalCost(e.target.value)}
+                    id="datetime-local"
+                    label="Actual Start Time"
+                    type="datetime-local"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      width: 400,
+                    }}
+                    value={changeDateandTime(modalActualStartTime)}
+                    onChange={(e) => setModalActualStartTime(e.target.value)}
                   />
                 </div>
+                &nbsp; &nbsp;
+                <div className="col-md-3">
+                  <TextField
+                    id="datetime-local"
+                    label="Actual End Time"
+                    type="datetime-local"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    sx={{
+                      width: 400,
+                    }}
+                    value={changeDateandTime(modalActualEndTime)}
+                    onChange={(e) => setModalActualEndTime(e.target.value)}
+                  />
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-md-3">
+                  <TextField
+                    id="filled-read-only-input"
+                    label="Actual Cost (NGN)"
+                    value={modalTotalActualCost}
+                    sx={{
+                      width: 400,
+                    }}
+                    onChange={(e) => setModalTotalActualCost(e.target.value)}
+                  />
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-8">
+                  <Form.Select
+                    value={modalAssignedTox}
+                    aria-label="Default select example"
+                    onChange={(e) => setModalAssignTo(e.target.value)}
+                  >
+                    <option>--Assign to--</option>
+                    {userInfox.map((item) => (
+                      <option key={item.personal.id} value={item.personal.id}>
+                        {item.personal.fname} {item.personal.lname}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-2">
+                  {modalCost > 0 ? (
+                    <TextField
+                      id="filled-read-only-input"
+                      label="Expected Cost (NGN)"
+                      value={modalCost}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      sx={{
+                        width: 400,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-3">
+                  {modalExpectedStartTime > 0 ? (
+                    <TextField
+                      id="datetime-local"
+                      label="Expected Start Time"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      value={changeDateandTime(modalExpectedStartTime)}
+                      sx={{
+                        width: 400,
+                      }}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                &nbsp; &nbsp;
+                <div className="col-sm-3">
+                  {modalExpectedEndTime > 0 ? (
+                    <TextField
+                      id="datetime-local"
+                      label="Expected End Time"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      sx={{
+                        width: 400,
+                      }}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                      value={changeDateandTime(modalExpectedEndTime)}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                &nbsp; &nbsp;
                 <MDButton
                   variant="gradient"
                   onClick={handleUpdateTask}
@@ -1443,7 +1398,7 @@ export default function Pipeline() {
                 &nbsp; &nbsp;
                 <MDButton
                   variant="gradient"
-                  onClick={handleViewSupply}
+                  onClick={handleViewSubtask}
                   color="info"
                   width="50%"
                   align="left"
@@ -1452,7 +1407,7 @@ export default function Pipeline() {
                 </MDButton>
                 <br />
                 <br />
-                <container>
+                <Container>
                   <ul className="list-group mb-4">
                     {items.map((taskID) => (
                       <li key={taskID.id} className="list-group-item">
@@ -1473,7 +1428,7 @@ export default function Pipeline() {
                       </li>
                     ))}
                   </ul>
-                </container>
+                </Container>
                 <br />
               </Grid>
               <Grid
