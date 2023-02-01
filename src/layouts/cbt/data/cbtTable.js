@@ -309,6 +309,7 @@ export default function CBTTable() {
       filteredItems = [];
     } else {
       filteredItems = filteredData.filter((item) => item.id === value);
+      console.log(filteredItems);
 
       cbttime = new Date(filteredItems[0].deadline);
     }
