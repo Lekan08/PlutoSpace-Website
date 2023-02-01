@@ -253,7 +253,6 @@ export default function Pipeline() {
   }, []);
 
   useEffect(() => {
-    console.log("is it rendering");
     console.log(modalAssignedTox);
     // setShowButton(true);
   }, [modalActualStartTime, modalTotalActualCost, modalDescrip, modalTitle, modalAssignedTox]);
