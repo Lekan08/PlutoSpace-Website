@@ -80,6 +80,7 @@ function Sales() {
   const [checkedPortfolio, setCheckedPortfolio] = useState("");
   const [servicex, setService] = useState([]);
   const [showClients, setShowClients] = useState(false);
+  const [creditFacilityx, setCreditFacility] = useState("");
   const onBeforeGetContentResolve = useRef();
   <style type="text/css" media="print">
     {"\
@@ -519,7 +520,11 @@ function Sales() {
   //   };
   // }, []);
   const Payment = eval(
-    Number(cashPaymentx) + Number(cardPaymentx) + Number(transferPaymentx) - Number(subTotalAmountx)
+    Number(cashPaymentx) +
+      Number(cardPaymentx) +
+      Number(transferPaymentx) +
+      Number(creditFacilityx) -
+      Number(subTotalAmountx)
   );
   const Pay = () => {
     setShowPayment(true);
@@ -607,65 +612,67 @@ function Sales() {
           // }
           if (result.status === "SUCCESS") {
             handlePrint();
-            const allResult = result.data;
-            const raw2 = JSON.stringify({
-              orgID: orgIDs,
-              type: "SALES",
-              requestID: allResult.id,
-              balance: allResult.subTotalAmount,
-              createdBy: allResult.createdBy,
-              clientType: "1",
-              clientID: allResult.individualID,
-              originalAmount: allResult.subTotalAmount,
-            });
-            console.log(raw2);
-            const requestOptions2 = {
-              method: "POST",
-              headers: myHeaders,
-              body: raw2,
-              redirect: "follow",
-            };
-            fetch(`${process.env.REACT_APP_LOUGA_URL}/creditFacility/add`, requestOptions2)
-              .then(async (res) => {
-                const aToken = res.headers.get("token-1");
-                localStorage.setItem("rexxdex", aToken);
-                const resultx = await res.text();
-                if (resultx === null || resultx === undefined || resultx === "") {
-                  return {};
-                }
-                return JSON.parse(resultx);
-              })
-              .then((resultx) => {
-                if (resultx.message === "Expired Access") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (resultx.message === "Token Does Not Exist") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (resultx.message === "Unauthorized Access") {
-                  navigate("/authentication/forbiddenPage");
-                  window.location.reload();
-                }
-                console.log(resultx);
-                setOpened(false);
-                // MySwal.fire({
-                //   title: resultx.status,
-                //   type: "success",
-                //   text: resultx.message,
-                // }).then(() => {
-                //   window.location.reload();
-                // });
-              })
-              .catch((error) => {
-                setOpened(false);
-                MySwal.fire({
-                  title: error.status,
-                  type: "error",
-                  text: error.message,
-                });
+            if (creditFacilityx > 0) {
+              const allResult = result.data;
+              const raw2 = JSON.stringify({
+                orgID: orgIDs,
+                type: "SALES",
+                requestID: allResult.id,
+                balance: allResult.subTotalAmount,
+                createdBy: allResult.createdBy,
+                clientType: "1",
+                clientID: allResult.individualID,
+                originalAmount: allResult.subTotalAmount,
               });
+              console.log(raw2);
+              const requestOptions2 = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw2,
+                redirect: "follow",
+              };
+              fetch(`${process.env.REACT_APP_LOUGA_URL}/creditFacility/add`, requestOptions2)
+                .then(async (res) => {
+                  const aToken = res.headers.get("token-1");
+                  localStorage.setItem("rexxdex", aToken);
+                  const resultx = await res.text();
+                  if (resultx === null || resultx === undefined || resultx === "") {
+                    return {};
+                  }
+                  return JSON.parse(resultx);
+                })
+                .then((resultx) => {
+                  if (resultx.message === "Expired Access") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (resultx.message === "Token Does Not Exist") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (resultx.message === "Unauthorized Access") {
+                    navigate("/authentication/forbiddenPage");
+                    window.location.reload();
+                  }
+                  console.log(resultx);
+                  setOpened(false);
+                  // MySwal.fire({
+                  //   title: resultx.status,
+                  //   type: "success",
+                  //   text: resultx.message,
+                  // }).then(() => {
+                  //   window.location.reload();
+                  // });
+                })
+                .catch((error) => {
+                  setOpened(false);
+                  MySwal.fire({
+                    title: error.status,
+                    type: "error",
+                    text: error.message,
+                  });
+                });
+            }
           }
           console.log(result);
           setOpened(false);
@@ -1432,6 +1439,32 @@ function Sales() {
                         </MonnifyConsumer>
                       </div>
                     </MDBox> */}
+                  </Box>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-sm-3">
+                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <FormControl fullWidth>
+                      <MDTypography
+                        variant="button"
+                        color="info"
+                        fontWeight="medium"
+                        style={Styles.textSx}
+                      >
+                        {/* Cash Payment: */}
+                      </MDTypography>
+                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                      <label htmlFor="filled-number"> Credit Facility (NGN): </label>
+                      <TextField
+                        id="filled-number"
+                        value={creditFacilityx}
+                        label="Credit Facility"
+                        placeholder="Credit Facility"
+                        type="number"
+                        onChange={(e) => setCreditFacility(e.target.value)}
+                      />
+                    </FormControl>
                   </Box>
                 </div>
               </div>

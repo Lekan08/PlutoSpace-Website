@@ -222,10 +222,10 @@ function UpdateAssets() {
     setAssignedTo(value);
     const Validate = "--Assigned To--";
     if (value.toString().match(Validate)) {
-      setCheckedAssigned(true);
+      setCheckedAssigned(false);
     }
     if (!value.toString().match(Validate)) {
-      setCheckedAssigned(false);
+      setCheckedAssigned(true);
     }
   };
   const handleOnAssetTypeKeys = (value) => {
@@ -517,6 +517,10 @@ function UpdateAssets() {
   const ALPHA_NUMERIC_DASH_REGEX = /^[a-zA-Z]+$/;
 
   const handleValidate = (e) => {
+    console.log(checkedItem);
+    console.log(checkedItemWorth);
+    console.log(checkedAssigned);
+    console.log(checkedAssetsTypes);
     if (checkedItem && checkedItemWorth && checkedAssigned && checkedAssetsTypes === true) {
       handleClick(e);
     }

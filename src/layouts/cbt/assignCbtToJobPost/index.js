@@ -65,6 +65,7 @@ function AssignCbtTestToJobPost() {
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
+  console.log(items[0]);
   const handleOnClick = (e) => {
     // setOpened(true);
     e.preventDefault();
