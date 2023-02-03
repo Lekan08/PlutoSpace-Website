@@ -33,6 +33,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import Modal from "@mui/material/Modal";
 // import Typography from "@mui/material/Typography";
 import TaskAudit from "layouts/project/taskAudit";
+import SubtaskAvailable from "layouts/project/view-Project/subtaskAvailable";
 
 export default function Pipeline() {
   const MySwal = withReactContent(Swal);
@@ -1159,6 +1160,10 @@ export default function Pipeline() {
                                               // onKeyUp={() => }
                                             >
                                               {item.title}
+                                              <SubtaskAvailable
+                                                taskID={item.id}
+                                                assignedToName={item.assignedToName}
+                                              />
                                             </div>
                                           )}
                                         </Draggable>
