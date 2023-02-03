@@ -1391,6 +1391,7 @@ export default function Pipeline() {
                   width="50%"
                   align="center"
                   size="small"
+                  style={{ marginTop: "10px" }}
                 >
                   Update
                 </MDButton>
@@ -1401,8 +1402,9 @@ export default function Pipeline() {
                   color="info"
                   width="50%"
                   align="left"
+                  style={{ marginTop: "10px" }}
                 >
-                  Create SubTask
+                  Subtask
                 </MDButton>
                 <br />
                 <br />
