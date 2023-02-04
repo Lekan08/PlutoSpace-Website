@@ -53,7 +53,6 @@ function BusinessTravelAttachDocument() {
   const [allResult, setAllResult] = useState("");
 
   const [viewDoc, setViewDoc] = React.useState(false);
-
   const { allGHeaders: miHeaders } = GHeaders();
   const { allIHeaders: iiHeadersx } = IHeaders();
 
@@ -513,7 +512,7 @@ function BusinessTravelAttachDocument() {
         //       });
         //     } else {
         const requestOptionsd = {
-          method: "DELETE",
+          method: "GET",
           headers: miHeaders,
         };
         const queryString = window.location.search;
@@ -540,6 +539,7 @@ function BusinessTravelAttachDocument() {
               navigate("/authentication/forbiddenPage");
             }
             console.log(`STATUS - ${resxx.status} - - - - - - MESSAGE - ${resxx.message}`);
+            console.log(resxx);
             setOpened(false);
             MySwal.fire({
               title: resxx.status,
