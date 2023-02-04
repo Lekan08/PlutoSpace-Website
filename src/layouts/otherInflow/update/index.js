@@ -200,6 +200,7 @@ function UpdateOtherInflow() {
         setClientIDx(result[0].clientID);
         handleOnAmountKeys(result[0].amount);
         handleOnTaxAmountKeys(result[0].taxAmount);
+        // handleOnClientIDKeys(result[0].clientID);
       });
   };
 
@@ -323,7 +324,7 @@ function UpdateOtherInflow() {
                 <div className="row">
                   <div className="col-sm-6">
                     <TextField
-                      label="Amount *"
+                      label="Amount (NGN)*"
                       type="number"
                       value={amountx}
                       onKeyUp={(e) => handleOnAmountKeys(e.target.value)}
@@ -332,7 +333,7 @@ function UpdateOtherInflow() {
                   </div>
                   <div className="col-sm-6">
                     <TextField
-                      label="Amount *"
+                      label="Tax Amount (NGN)*"
                       type="number"
                       value={taxAmountx}
                       onKeyUp={(e) => handleOnTaxAmountKeys(e.target.value)}

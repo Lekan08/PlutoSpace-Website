@@ -205,7 +205,7 @@ import DocumentLibrary from "layouts/documentLibrary";
 import UpdateReportProduction from "layouts/products/reportProduction/update";
 import ProjectUpdate from "layouts/project/update-Project";
 import ProjectView from "layouts/project/view-Project";
-// import SubTask from "layouts/project/subTask";
+import Subtask from "layouts/project/subtask";
 import Updatesub from "layouts/project/updatesubtask";
 import ViewApplication from "layouts/jobposts/applications/viewApplication";
 import DemandSupply from "layouts/demandSupplyStat";
@@ -251,6 +251,7 @@ import OtherInflow from "layouts/otherInflow";
 import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
+import CreditFacility from "layouts/creditFacility";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
@@ -291,6 +292,7 @@ import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/update";
+import Voucher from "./layouts/voucher/index";
 
 const routes = [
   {
@@ -692,6 +694,14 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/Bills-Attention",
     component: <GeneralBills />,
+  },
+  {
+    type: "collapse",
+    name: "Voucher Attention",
+    key: "voucherAttention",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/Voucher-Attention",
+    component: <Voucher />,
   },
   {
     name: "Update Bills",
@@ -1527,13 +1537,13 @@ const routes = [
     route: "/project/view-Project",
     component: <ProjectView />,
   },
-  // {
-  //   name: "Add Subtask ",
-  //   key: "SubTask",
-  //   icon: <Icon fontSize="small">meeting_room</Icon>,
-  //   route: "/project/subtask",
-  //   component: <SubTask />,
-  // },
+  {
+    name: "Subtask ",
+    key: "Subtask",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/project/subtask",
+    component: <Subtask />,
+  },
   {
     name: "Update Subtask ",
     key: "Updatesub",
@@ -1667,7 +1677,7 @@ const routes = [
     name: "AssignCbtTestToJobPost",
     key: "assigncbttesttojobpost",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/cbt/assignCBTToJobPost/",
+    route: "/CBT/assign-CBT-To-JobPost/",
     component: <AssignCbtToJobPost />,
   },
   {
@@ -1908,6 +1918,14 @@ const routes = [
     icon: <Icon fontSize="small">point_of_sale</Icon>,
     route: "/sales",
     component: <Sales />,
+  },
+  {
+    type: "collapse",
+    name: "Credit Facility",
+    key: "creditFacility",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/credit-Facility",
+    component: <CreditFacility />,
   },
   {
     // type: "collapse",

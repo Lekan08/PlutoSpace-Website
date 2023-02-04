@@ -65,12 +65,14 @@ function AssignCbtTestToJobPost() {
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
+  console.log(items[0]);
   const handleOnClick = (e) => {
     // setOpened(true);
     e.preventDefault();
     // const data11 = JSON.parse(localStorage.getItem("user1"));
     // const orgIDs = data11.orgID;
     // const personalIDs = data11.personalID;
+    console.log(items[0]);
     if (items[0].jobPostID !== null && items[0].jobPostID !== "") {
       MySwal.fire({
         // title: "Poll Not Opened",
@@ -78,7 +80,7 @@ function AssignCbtTestToJobPost() {
         type: "info",
         text: `A job post has been attached already`,
       }).then(() => {
-        navigate("/cbt");
+        navigate("/CBT");
       });
     } else {
       const raw = JSON.stringify({

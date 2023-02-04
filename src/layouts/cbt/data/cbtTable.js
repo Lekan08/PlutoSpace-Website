@@ -309,6 +309,7 @@ export default function CBTTable() {
       filteredItems = [];
     } else {
       filteredItems = filteredData.filter((item) => item.id === value);
+      console.log(filteredItems);
 
       cbttime = new Date(filteredItems[0].deadline);
     }
@@ -407,12 +408,12 @@ export default function CBTTable() {
     navigate(`/cbt/add-questions/?id=${value}`);
   };
 
-  const handleAddAnswer = (value) => {
-    navigate(`/cbt/takeCbt/?id=${value}`);
-  };
+  // const handleAddAnswer = (value) => {
+  //   navigate(`/cbt/takeCbt/?id=${value}`);
+  // };
 
   const handleAssignCbtTestToJobPost = (value) => {
-    navigate(`/cbt/assignCBTToJobPost/?id=${value}`);
+    navigate(`/CBT/assign-CBT-To-JobPost/?id=${value}`);
   };
 
   const toMinutes = (durationx) => {
@@ -494,9 +495,9 @@ export default function CBTTable() {
                 <Dropdown.Item onClick={() => handleAssignCbtTestToJobPost(value)}>
                   Assign CBT To Job Post
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleAddAnswer(value)}>
+                {/* <Dropdown.Item onClick={() => handleAddAnswer(value)}>
                   Take Cbt Question
-                </Dropdown.Item>
+                </Dropdown.Item> */}
                 <Dropdown.Item onClick={() => handleQuestion(value)}>
                   Add Test Question To CBT
                 </Dropdown.Item>

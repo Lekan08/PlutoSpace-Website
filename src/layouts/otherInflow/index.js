@@ -182,6 +182,7 @@ function OtherInflow() {
         });
       });
   };
+
   const handleChangeClient = (value) => {
     const callClientType = value.toString();
     setClientTypex(callClientType);
@@ -267,7 +268,7 @@ function OtherInflow() {
                 <div className="row">
                   <div className="col-sm-6">
                     <TextField
-                      label="Amount *"
+                      label="Amount (NGN)*"
                       type="number"
                       value={amountx}
                       onKeyUp={(e) => handleOnAmountKeys(e.target.value)}
@@ -276,7 +277,7 @@ function OtherInflow() {
                   </div>
                   <div className="col-sm-6">
                     <TextField
-                      label="Tax Amount *"
+                      label="Tax Amount (NGN)*"
                       type="number"
                       value={taxAmountx}
                       onKeyUp={(e) => handleOnTaxAmountKeys(e.target.value)}
