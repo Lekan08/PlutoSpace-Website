@@ -47,6 +47,7 @@ function Updateoffboarding() {
 
     const orgIDs = data11.orgID;
     let isMounted = true;
+    setOpened(true);
     fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -67,6 +68,7 @@ function Updateoffboarding() {
           window.location.reload();
         }
         if (isMounted) {
+          setOpened(false);
           setUserxx(result);
         }
       });
@@ -108,6 +110,7 @@ function Updateoffboarding() {
       isMounted = false;
     };
   }, []);
+
   //   const handleOnTitleKeys = () => {
   //     const letter = /^[a-zA-Z ]+$/;
   //     if (!titlex.match(letter)) {
@@ -140,7 +143,8 @@ function Updateoffboarding() {
       empID: Number(onboardingx),
       startTime: OpeningDate,
       endTime: ClosingDate,
-      status: 1,
+      // eslint-disable-next-line object-shorthand
+      status: status,
       createdBy: Number(createdByxx),
       deleteFlag: deleteFlagx,
       terminatedBy: terminatedByx,
@@ -153,6 +157,7 @@ function Updateoffboarding() {
       body: raw,
       redirect: "follow",
     };
+    setOpened(true);
 
     fetch(`${process.env.REACT_APP_RAGA_URL}/offboarding/update`, requestOptions)
       .then(async (res) => {
@@ -161,7 +166,7 @@ function Updateoffboarding() {
         return res.json();
       })
       .then((result) => {
-        // setOpened(false);
+        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -332,7 +337,7 @@ function Updateoffboarding() {
                     onClick={handleUpdate}
                     size="large"
                   >
-                    ADD
+                    UPDATE
                   </MDButton>
                 </MDBox>
               </MDBox>

@@ -47,6 +47,7 @@ function Updateonboarding() {
 
     const orgIDs = data11.orgID;
     let isMounted = true;
+    setOpened(true);
     fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -68,6 +69,7 @@ function Updateonboarding() {
         }
         if (isMounted) {
           setUserxx(result);
+          setOpened(false);
         }
       });
     fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/getByIds/${ids}`, {
@@ -93,10 +95,10 @@ function Updateonboarding() {
         }
         if (isMounted) {
           console.log(result);
+          setOnboardingx(result[0].empID);
           setIdx(result[0].id);
           setEnd(result[0].endTime);
           setStart(result[0].startTime);
-          setOnboardingx(result[0].empID);
           setDeleteFlag(result[0].deleteFlag);
           setTerminatedBy(result[0].terminatedBy);
           setTerminatedTime(result[0].terminatedTime);
@@ -140,7 +142,8 @@ function Updateonboarding() {
       empID: Number(onboardingx),
       startTime: OpeningDate,
       endTime: ClosingDate,
-      status: 1,
+      // eslint-disable-next-line object-shorthand
+      status: status,
       createdBy: Number(createdByxx),
       deleteFlag: deleteFlagx,
       terminatedBy: terminatedByx,
@@ -153,6 +156,7 @@ function Updateonboarding() {
       body: raw,
       redirect: "follow",
     };
+    setOpened(true);
 
     fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/update`, requestOptions)
       .then(async (res) => {
@@ -161,7 +165,7 @@ function Updateonboarding() {
         return res.json();
       })
       .then((result) => {
-        // setOpened(false);
+        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -332,7 +336,7 @@ function Updateonboarding() {
                     onClick={handleUpdate}
                     size="large"
                   >
-                    ADD
+                    UPDATE
                   </MDButton>
                 </MDBox>
               </MDBox>

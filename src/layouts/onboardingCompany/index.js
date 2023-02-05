@@ -92,7 +92,7 @@ function OnboardingCompany() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const createdByx = data11.personalID;
-
+    setOpened(true);
     const filt = scatter
       .filter((r) => r.ticked === true)
       .map((r) => ({
