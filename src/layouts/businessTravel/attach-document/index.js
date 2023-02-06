@@ -42,7 +42,7 @@ import RollingGif from "assets/images/Rolling.gif";
 import ClearIcon from "@mui/icons-material/Clear";
 import Styles from "styles";
 
-function BusinessTravelAttachDocument() {
+function BusinessTravelAttachDocuments() {
   const [files, setFiles] = useState("");
   const [open, setOpenn] = React.useState(false);
   const [opened, setOpened] = useState(false);
@@ -959,4 +959,4 @@ function BusinessTravelAttachDocument() {
     </DashboardLayout>
   );
 }
-export default BusinessTravelAttachDocument;
+export default BusinessTravelAttachDocuments;
