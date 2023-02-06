@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-plusplus */
@@ -617,7 +618,7 @@ function UpdateCalendar() {
               </MDBox>
             </div>
             <br />
-            <div className="col-sm-5">
+            {/* <div className="col-sm-5">
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
@@ -639,7 +640,7 @@ function UpdateCalendar() {
                   ))}
                 </Form>
               </Accordion>
-            </div>
+            </div> */}
             <br />
             <MDBox mt={2} mb={2}>
               <MDButton
