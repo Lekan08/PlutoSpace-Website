@@ -6,7 +6,9 @@ import MDBox from "components/MDBox";
 import ReactiveButton from "reactive-button";
 
 export default function VideoChat() {
-  window.location = "https://cairo-videochat.netlify.app";
+  const data11 = JSON.parse(localStorage.getItem("user1"));
+  const pid = data11.personalID;
+  window.location = `https://cairo-videochat.netlify.app/index.html?pid=${pid}`;
   return (
     <DashboardLayout>
       <DashboardNavbar />
