@@ -33,6 +33,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import Modal from "@mui/material/Modal";
 // import Typography from "@mui/material/Typography";
 import TaskAudit from "layouts/project/taskAudit";
+import SubtaskAvailable from "layouts/project/view-Project/subtaskAvailable";
 
 export default function Pipeline() {
   const MySwal = withReactContent(Swal);
@@ -253,7 +254,6 @@ export default function Pipeline() {
   }, []);
 
   useEffect(() => {
-    console.log("is it rendering");
     console.log(modalAssignedTox);
     // setShowButton(true);
   }, [modalActualStartTime, modalTotalActualCost, modalDescrip, modalTitle, modalAssignedTox]);
@@ -1160,6 +1160,10 @@ export default function Pipeline() {
                                               // onKeyUp={() => }
                                             >
                                               {item.title}
+                                              <SubtaskAvailable
+                                                taskID={item.id}
+                                                assignedToName={item.assignedToName}
+                                              />
                                             </div>
                                           )}
                                         </Draggable>
@@ -1392,6 +1396,7 @@ export default function Pipeline() {
                   width="50%"
                   align="center"
                   size="small"
+                  style={{ marginTop: "10px" }}
                 >
                   Update
                 </MDButton>
@@ -1402,8 +1407,9 @@ export default function Pipeline() {
                   color="info"
                   width="50%"
                   align="left"
+                  style={{ marginTop: "10px" }}
                 >
-                  Create SubTask
+                  Subtask
                 </MDButton>
                 <br />
                 <br />

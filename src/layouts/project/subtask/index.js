@@ -1126,7 +1126,7 @@ const Subtask = () => {
                         &nbsp; &nbsp;
                         <IconButton onClick={() => handleUpdatesub(taskID.id)}>
                           <BrowserUpdatedIcon />
-                        </IconButton> 
+                        </IconButton>
                     ))}
                   </ul>
                 </Container> */}
