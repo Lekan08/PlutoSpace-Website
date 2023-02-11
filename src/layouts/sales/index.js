@@ -100,6 +100,7 @@ function Sales() {
       totalAmount: Number(""),
       product: "",
       psArray: [],
+      disableField: true,
     },
   ]);
   console.log(user);
@@ -478,6 +479,12 @@ function Sales() {
         parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10);
     } else if (event.target.name === "saleType") {
       console.log(event.target.value);
+      const ssType = event.target.value;
+      if (ssType === "3") {
+        data[index].disableField = false;
+      } else {
+        data[index].disableField = true;
+      }
       // data[index][event.target.name] = handleChangeProdServ(event.target.value);
       data[index][event.target.name] = event.target.value;
       handleChangeProdServ(event.target.value, index);
@@ -498,6 +505,7 @@ function Sales() {
       totalAmount: Number(""),
       product: "",
       psArray: [],
+      disableField: true,
     };
     setCounter([...counter, object]);
   };
@@ -1149,7 +1157,11 @@ function Sales() {
                           onChange={(event) => handleFormChange(event, index)}
                           // onChange={(e) => setPPQuantity(e.target.value)}
                           // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          required
+                          // required
+
+                          InputProps={{
+                            readOnly: form.disableField,
+                          }}
                         />
                       </FormControl>
                     </Box>
@@ -1170,7 +1182,7 @@ function Sales() {
                           onChange={(event) => handleFormChange(event, index)}
                           // onChange={(e) => setQuantity(e.target.value)}
                           // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          required
+                          // required
                         />
                       </FormControl>
                     </Box>
