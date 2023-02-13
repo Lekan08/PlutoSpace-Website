@@ -1451,8 +1451,8 @@ function ViewSingleCorporate() {
                                   chart={{
                                     labels: [
                                       // product,
-                                      `${product[0].name}`,
-                                      product[1].name,
+                                      // `${product[0].name}`,
+                                      // product[1].name,
                                     ],
                                     datasets: [
                                       {
