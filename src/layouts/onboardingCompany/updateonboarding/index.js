@@ -216,7 +216,7 @@ function Updateonboarding() {
               textAlign="center"
             >
               <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                Update Onboarding User
+                Update Onboarding
               </MDTypography>
             </MDBox>
             <br />

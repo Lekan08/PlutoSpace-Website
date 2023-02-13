@@ -78,8 +78,8 @@ function Sales() {
   const [cashierx, setCashier] = useState([]);
   const [checkedEmail, setCheckedEmail] = useState("");
   const [checkedPortfolio, setCheckedPortfolio] = useState("");
-  const [servicex, setService] = useState([]);
-  const [showClients, setShowClients] = useState(false);
+  const [receiptNo, setReceiptNo] = useState("");
+  // const [showClients, setShowClients] = useState(false);
   const [creditFacilityx, setCreditFacility] = useState("");
   const onBeforeGetContentResolve = useRef();
   <style type="text/css" media="print">
@@ -98,6 +98,9 @@ function Sales() {
       amount: Number(""),
       taxAmount: Number(""),
       totalAmount: Number(""),
+      product: "",
+      psArray: [],
+      disableField: true,
     },
   ]);
   console.log(user);
@@ -350,13 +353,14 @@ function Sales() {
   };
 
   // eslint-disable-next-line consistent-return
-  const handleChangeProdServ = (value) => {
+  const handleChangeProdServ = (value, index) => {
     const chnageToString = value.toString();
-    if (chnageToString === "1") {
-      setShowClients(true);
-    } else if (chnageToString === "2") {
-      setShowClients(false);
-    }
+    const data = [...counter];
+    // if (chnageToString === "1") {
+    //   setShowClients(false);
+    // } else if (chnageToString === "2") {
+    //   setShowClients(true);
+    // }
     if (chnageToString === "1") {
       setOpened(true);
       const headers = miHeaders;
@@ -386,7 +390,9 @@ function Sales() {
           }
           console.log(result);
           if (isMounted) {
-            setProduct(result);
+            // setProduct(result);
+            data[index].psArray = result;
+            setCounter(data);
           }
         });
       return () => {
@@ -418,12 +424,16 @@ function Sales() {
             window.location.reload();
           }
           console.log(result);
-          setService(result);
+          // setProduct(result);
+          data[index].psArray = result;
+          setCounter(data);
         });
     }
     if (chnageToString === "3") {
       setProduct([]);
-      setService([]);
+      data[index].psArray = [];
+      setCounter(data);
+      // setService([]);
     }
   };
 
@@ -432,7 +442,7 @@ function Sales() {
     console.log(index, "index");
     const data = [...counter];
     data[index][event.target.name] = event.target.value;
-    if (event.target.name === "pricePerUnit") {
+    if (data[index].saleType === "3" && event.target.name === "pricePerUnit") {
       data[index].amount = parseInt(data[index].quantity, 10) * parseInt(event.target.value, 10);
       data[index].totalAmount =
         parseInt(data[index].quantity, 10) * parseInt(event.target.value, 10) +
@@ -451,7 +461,15 @@ function Sales() {
       setSubTotalAmount(eval(zoom.join("+")));
       // eslint-disable-next-line no-eval
     } else if (event.target.name === "product") {
-      data[index][event.target.name] = event.target.value;
+      console.log(event.target.value);
+      const productObj = JSON.parse(event.target.value);
+      data[index][event.target.name] = productObj.name;
+      data[index].salesID = productObj.id;
+      if (data[index].saleType === "1") {
+        data[index].pricePerUnit = productObj.pricePerQuantity;
+      } else if (data[index].saleType === "2") {
+        data[index].pricePerUnit = productObj.pricePerUnit;
+      }
     } else if (event.target.name === "taxAmount") {
       data[index].totalAmount = parseInt(data[index].amount, 10) + parseInt(event.target.value, 10);
       const zoom = counter.map((item) => item.taxAmount);
@@ -459,8 +477,17 @@ function Sales() {
     } else if (event.target.name === "quantity") {
       data[index].totalAmount =
         parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10);
-    } else if (event.target.name === "salesID") {
-      handleChangeProdServ(event.target.value);
+    } else if (event.target.name === "saleType") {
+      console.log(event.target.value);
+      const ssType = event.target.value;
+      if (ssType === "3") {
+        data[index].disableField = false;
+      } else {
+        data[index].disableField = true;
+      }
+      // data[index][event.target.name] = handleChangeProdServ(event.target.value);
+      data[index][event.target.name] = event.target.value;
+      handleChangeProdServ(event.target.value, index);
       console.log("testing");
     }
     setCounter(data);
@@ -476,7 +503,9 @@ function Sales() {
       amount: Number(""),
       taxAmount: Number(""),
       totalAmount: Number(""),
-      product: Number(""),
+      product: "",
+      psArray: [],
+      disableField: true,
     };
     setCounter([...counter, object]);
   };
@@ -611,6 +640,7 @@ function Sales() {
           //   // handlePrint();
           // }
           if (result.status === "SUCCESS") {
+            setReceiptNo(result.data.receiptNo);
             handlePrint();
             if (creditFacilityx > 0) {
               const allResult = result.data;
@@ -903,6 +933,7 @@ function Sales() {
               returnable
             </p>
             <h4 align="center">Have a great day |||</h4>
+            <h4 align="center">Receipt Number: {receiptNo}</h4>
           </>
         ) : (
           ""
@@ -1035,6 +1066,7 @@ function Sales() {
               const branchx = form.branchID;
               const totalAmountxx = parseInt(form.amount, 10) + parseInt(form.taxAmount, 10);
               const taxAmoun = parseInt(form.taxAmount, 10);
+              // const tried = form.product;
               return (
                 <>
                   <div className="col-sm-2">
@@ -1055,9 +1087,9 @@ function Sales() {
     /> */}
                     <MDBox>
                       <Form.Select
-                        value={form.salesID}
+                        value={form.saleType}
                         aria-label="Default select example"
-                        name="salesID"
+                        name="saleType"
                         onChange={(event) => handleFormChange(event, index)}
                       >
                         <option value="">Sales Type</option>
@@ -1070,39 +1102,21 @@ function Sales() {
                     {/* <input onChange={(e) => setName(e.target.value)} value={namex || ""} type="text" /> */}
                   </div>
                   <div className="col-sm-1">
-                    {showClients ? (
-                      <MDBox>
-                        <Form.Select
-                          value={form.product}
-                          aria-label="Default select example"
-                          name="product"
-                          onChange={(event) => handleFormChange(event, index)}
-                        >
-                          <option>Product</option>
-                          {productx.map((apis) => (
-                            <option key={apis.id} value={apis.name}>
-                              {apis.name}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </MDBox>
-                    ) : (
-                      <MDBox>
-                        <Form.Select
-                          value={form.product}
-                          aria-label="Default select example"
-                          name="product"
-                          onChange={(event) => handleFormChange(event, index)}
-                        >
-                          <option>Company Services</option>
-                          {servicex.map((apis) => (
-                            <option key={apis.id} value={apis.name}>
-                              {apis.name}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </MDBox>
-                    )}
+                    <MDBox>
+                      <Form.Select
+                        value={form.salesID}
+                        aria-label="Default select example"
+                        name="product"
+                        onChange={(event) => handleFormChange(event, index)}
+                      >
+                        <option>Select</option>
+                        {form.psArray.map((apis) => (
+                          <option key={apis.id} value={JSON.stringify(apis)}>
+                            {apis.name}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </MDBox>
                   </div>
                   <div className="col-sm-2">
                     <MDBox>
@@ -1143,7 +1157,11 @@ function Sales() {
                           onChange={(event) => handleFormChange(event, index)}
                           // onChange={(e) => setPPQuantity(e.target.value)}
                           // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          required
+                          // required
+
+                          InputProps={{
+                            readOnly: form.disableField,
+                          }}
                         />
                       </FormControl>
                     </Box>
@@ -1164,7 +1182,7 @@ function Sales() {
                           onChange={(event) => handleFormChange(event, index)}
                           // onChange={(e) => setQuantity(e.target.value)}
                           // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          required
+                          // required
                         />
                       </FormControl>
                     </Box>

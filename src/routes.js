@@ -205,7 +205,7 @@ import DocumentLibrary from "layouts/documentLibrary";
 import UpdateReportProduction from "layouts/products/reportProduction/update";
 import ProjectUpdate from "layouts/project/update-Project";
 import ProjectView from "layouts/project/view-Project";
-import Subtask from "layouts/project/subtask";
+// import Subtask from "layouts/project/subtask";
 import Updatesub from "layouts/project/updatesubtask";
 import ViewApplication from "layouts/jobposts/applications/viewApplication";
 import DemandSupply from "layouts/demandSupplyStat";
@@ -1537,13 +1537,13 @@ const routes = [
     route: "/project/view-Project",
     component: <ProjectView />,
   },
-  {
-    name: "Subtask ",
-    key: "Subtask",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/project/subtask",
-    component: <Subtask />,
-  },
+  // {
+  //   name: "Subtask ",
+  //   key: "Subtask",
+  //   icon: <Icon fontSize="small">meeting_room</Icon>,
+  //   route: "/project/subtask",
+  //   component: <Subtask />,
+  // },
   {
     name: "Update Subtask ",
     key: "Updatesub",

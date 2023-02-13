@@ -217,7 +217,7 @@ function Updateoffboarding() {
               textAlign="center"
             >
               <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                Update Offboarding User
+                Update Offboarding
               </MDTypography>
             </MDBox>
             <br />
