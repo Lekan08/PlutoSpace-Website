@@ -226,6 +226,7 @@ import UpdateUserPension from "layouts/companyPension/updateUserPension";
 import CompanyPension from "layouts/companyPension";
 import AddPension from "layouts/companyPension/addPension";
 import MyPension from "layouts/myPension";
+import ThirdParty from "layouts/third-Party";
 import BusinessTravel from "layouts/businessTravel";
 import UpdateBusinessTravel from "layouts/businessTravel/update";
 import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
@@ -423,6 +424,14 @@ const routes = [
     icon: <Icon fontSize="small">supervised_user_circle</Icon>,
     route: "/reports",
     component: <Reports />,
+  },
+  {
+    type: "collapse",
+    name: "Third Party",
+    key: "thirdParty",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/third-Party",
+    component: <ThirdParty />,
   },
   {
     type: "divider",
