@@ -42,7 +42,7 @@ import RollingGif from "assets/images/Rolling.gif";
 import ClearIcon from "@mui/icons-material/Clear";
 import Styles from "styles";
 
-function BusinessTravelAttachDocument() {
+function BusinessTravelAttachDocuments() {
   const [files, setFiles] = useState("");
   const [open, setOpenn] = React.useState(false);
   const [opened, setOpened] = useState(false);
@@ -53,7 +53,6 @@ function BusinessTravelAttachDocument() {
   const [allResult, setAllResult] = useState("");
 
   const [viewDoc, setViewDoc] = React.useState(false);
-
   const { allGHeaders: miHeaders } = GHeaders();
   const { allIHeaders: iiHeadersx } = IHeaders();
 
@@ -175,6 +174,7 @@ function BusinessTravelAttachDocument() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log(result);
         if (result.length !== 0) {
           setAllResult(result);
           if (result !== "") {
@@ -457,9 +457,8 @@ function BusinessTravelAttachDocument() {
     }
   };
 
-  const handleDelete = (value, index) => {
+  const handleDelete = (value) => {
     console.log(value);
-    console.log(index);
     handleClose();
     // const filteredItems = items.filter((item) => item.id === value);
     // console.log(filteredItems);
@@ -513,7 +512,7 @@ function BusinessTravelAttachDocument() {
         //       });
         //     } else {
         const requestOptionsd = {
-          method: "DELETE",
+          method: "GET",
           headers: miHeaders,
         };
         const queryString = window.location.search;
@@ -540,6 +539,7 @@ function BusinessTravelAttachDocument() {
               navigate("/authentication/forbiddenPage");
             }
             console.log(`STATUS - ${resxx.status} - - - - - - MESSAGE - ${resxx.message}`);
+            console.log(resxx);
             setOpened(false);
             MySwal.fire({
               title: resxx.status,
@@ -566,13 +566,12 @@ function BusinessTravelAttachDocument() {
     });
   };
 
-  const handleDownload = (value, index) => {
+  const handleDownload = (value) => {
     // const filteredItems = items.filter((item) => item.id === value);
     // console.log(filteredItems);
     // const docKey = filteredItems[0].attachedDocs[index];
     // console.log(filteredItems[0].attachedDocs);
     console.log(value);
-    console.log(index);
     // console.log(filteredItems);
     // console.log(docKey);
     handleClose();
@@ -845,8 +844,10 @@ function BusinessTravelAttachDocument() {
         &nbsp; &nbsp;
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
-            {items.map((api, index) => {
+            {items.map((api) => {
               //  const docName = api.name;
+              console.log(api);
+
               const docType = api.type;
               //  const docSize = api.size;
               //  const docDate = api.createdTime;
@@ -895,14 +896,14 @@ function BusinessTravelAttachDocument() {
                         </Button>
                         <CardActions>
                           <Button
-                            onClick={() => handleDelete(api, index)}
+                            onClick={() => handleDelete(api)}
                             style={{ color: "white" }}
                             startIcon={<DeleteIcon />}
                           >
                             Remove
                           </Button>
                           <Button
-                            onClick={() => handleDownload(api, index)}
+                            onClick={() => handleDownload(api)}
                             style={{ color: "white" }}
                             startIcon={<DownloadIcon />}
                           >
@@ -958,4 +959,4 @@ function BusinessTravelAttachDocument() {
     </DashboardLayout>
   );
 }
-export default BusinessTravelAttachDocument;
+export default BusinessTravelAttachDocuments;

@@ -10,6 +10,8 @@ import MDTypography from "components/MDTypography";
 import { Container, Form } from "react-bootstrap";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React, { useState, useEffect } from "react";
+import Chip from "@mui/material/Chip";
+import Paper from "@mui/material/Paper";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,6 +28,7 @@ import withReactContent from "sweetalert2-react-content";
 import DataTable from "examples/Tables/DataTable";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
+import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import timezones from "layouts/appointments/timezones.json";
 import CalendarData from "./data";
@@ -36,12 +39,14 @@ function Appointments() {
   const [enabled, setEnabled] = useState("");
   const { columns: pColumns, rows: pRows } = CalendarData();
   const [applicantx, setApplicantx] = useState([]);
+  const [emailx, setEmail] = useState([]);
   const MySwal = withReactContent(Swal);
   const timezonex = timezones;
   const [newEvent, setNewEvent] = useState({ title: "", time: "", end: "" });
   // eslint-disable-next-line no-unused-vars
   const [allEvents, setAllEvents] = useState([]);
 
+  const [emailAccount, setEmailAccount] = React.useState([]);
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
   const purpose = "APPOINTMENT";
@@ -53,6 +58,8 @@ function Appointments() {
   const [remind, setRemind] = useState(0);
   const [reminde, setReminde] = useState("");
   const [timezone, setTimezone] = useState("");
+  const [validate, setValidate] = useState("");
+  const [errorx, setError] = useState(false);
   // const changeDate = (timestamp) => {
   //   const date = new Date(timestamp);
   //   const retDate = date.toDateString();
@@ -275,6 +282,18 @@ function Appointments() {
               appointmentTime: timezoneConverter(time),
               appointmentID: result.data.id,
             }));
+            // eslint-disable-next-line array-callback-return
+            emailAccount.map((item) => {
+              const onePayload = {
+                orgID: orgIDs,
+                appointmentID: result.data.id,
+                name: item.label,
+                email: item.label,
+                appointmentTime: timezoneConverter(time),
+              };
+
+              raww.push(onePayload);
+            });
             const raw2 = JSON.stringify(raww);
             console.log(raw2);
             const requestOptions2 = {
@@ -367,7 +386,64 @@ function Appointments() {
     }
     console.log(applicantx);
   };
+  const AddChipData = (num) => {
+    if (num === 1) {
+      if (emailx !== "") {
+        const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
+        if (!emailx.match(letters)) {
+          setError(true);
+          setValidate("input a valid email");
+        }
+        if (emailx.match(letters)) {
+          setError(false);
+          const chipData = {
+            key: Math.floor(Math.random() * 1000),
+            label: emailx,
+          };
+          setEmailAccount((list) => [chipData, ...list]);
+          setEmail("");
+        }
+      }
+    }
+  };
+  const handleKeyDown = (e, num) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      AddChipData(num);
+    }
+  };
+  const handleEmailDelete = (chipToDelete) => () => {
+    setEmailAccount((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    console.log(emailAccount);
+  };
 
+  const ListItem = styled("li")(({ theme }) => ({
+    margin: theme.spacing(0.5),
+  }));
+  const style = {
+    boxShadow: 2,
+    overflow: "scroll",
+    height: "90px",
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    listStyle: "none",
+    p: 0.5,
+    mt: 0,
+    "&::-webkit-scrollbar": {
+      width: "6px",
+      height: "2px",
+    },
+    "&::-webkit-scrollbar-track": {
+      boxShadow: "inset 0 0 1px rgba(0,0,0,0.00)",
+      webkitBoxShadow: "inset 0 0 1px rgba(0,0,0,0.00)",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#4285F4",
+      borderRadius: "10px",
+      webkitBoxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.1)",
+    },
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -597,6 +673,56 @@ function Appointments() {
                 </Form>
               </Accordion>
             </div>
+            <br />
+            <MDBox>
+              &nbsp;
+              <MDBox component="form" role="form">
+                <MDBox variant="gradient" mx={0} mt={-3} p={2} mb={1} textAlign="center">
+                  <MDTypography variant="h4" fontWeight="medium" color="info" mt={1}>
+                    Add Participants Not In The Organization
+                  </MDTypography>
+                </MDBox>
+              </MDBox>
+              <Container>
+                <div className="row">
+                  <div className="col-sm-6">
+                    <MDBox>
+                      <MDInput
+                        type="text"
+                        label="Email *"
+                        value={emailx || ""}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(e, 1)}
+                        // onKeyUp={() => handleOnPEmailKeys()}
+                        variant="standard"
+                        style={{ width: "80%" }}
+                      />
+                      <MDButton
+                        variant="gradient"
+                        onClick={() => AddChipData(1)}
+                        color="info"
+                        width="50%"
+                        align="center"
+                        size="small"
+                      >
+                        Add
+                      </MDButton>
+                      <br />
+                      {errorx && <i style={{ color: "red", fontSize: "12px" }}>{validate}</i>}
+                    </MDBox>
+                  </div>
+                  <div className="col-sm-6">
+                    <Paper sx={style} component="ul">
+                      {emailAccount.map((data) => (
+                        <ListItem key={data.index}>
+                          <Chip label={data.label} onDelete={handleEmailDelete(data)} />
+                        </ListItem>
+                      ))}
+                    </Paper>
+                  </div>
+                </div>
+              </Container>
+            </MDBox>
             <br />
             <MDBox mt={2} mb={2}>
               <MDButton

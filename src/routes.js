@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/no-named-as-default */
 /**
@@ -205,7 +206,7 @@ import DocumentLibrary from "layouts/documentLibrary";
 import UpdateReportProduction from "layouts/products/reportProduction/update";
 import ProjectUpdate from "layouts/project/update-Project";
 import ProjectView from "layouts/project/view-Project";
-import Subtask from "layouts/project/subtask";
+// import Subtask from "layouts/project/subtask";
 import Updatesub from "layouts/project/updatesubtask";
 import ViewApplication from "layouts/jobposts/applications/viewApplication";
 import DemandSupply from "layouts/demandSupplyStat";
@@ -257,6 +258,7 @@ import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
 import SalesPayment from "layouts/sales/salesPayment";
+import GeneralLedger from "layouts/general-ledger";
 import FilterSales from "layouts/sales/filterSales";
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
@@ -452,6 +454,14 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/accounting",
     component: <Accounting />,
+  },
+  {
+    type: "collapse",
+    name: "General Ledger",
+    key: "generalLedger",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/general-ledger",
+    component: <GeneralLedger />,
   },
   {
     type: "divider",
@@ -1546,13 +1556,13 @@ const routes = [
     route: "/project/view-Project",
     component: <ProjectView />,
   },
-  {
-    name: "Subtask ",
-    key: "Subtask",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/project/subtask",
-    component: <Subtask />,
-  },
+  // {
+  //   name: "Subtask ",
+  //   key: "Subtask",
+  //   icon: <Icon fontSize="small">meeting_room</Icon>,
+  //   route: "/project/subtask",
+  //   component: <Subtask />,
+  // },
   {
     name: "Update Subtask ",
     key: "Updatesub",
