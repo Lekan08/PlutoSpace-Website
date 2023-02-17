@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/no-named-as-default */
 /**
@@ -256,6 +257,7 @@ import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
 import SalesPayment from "layouts/sales/salesPayment";
+import GeneralLedger from "layouts/general-ledger";
 import FilterSales from "layouts/sales/filterSales";
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
@@ -443,6 +445,14 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/accounting",
     component: <Accounting />,
+  },
+  {
+    type: "collapse",
+    name: "General Ledger",
+    key: "generalLedger",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/general-ledger",
+    component: <GeneralLedger />,
   },
   {
     type: "divider",
