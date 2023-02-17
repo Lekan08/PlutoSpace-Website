@@ -218,14 +218,18 @@ function UpdateAssets() {
       document.getElementById("itemWorth").innerHTML = "Rate is required<br>";
     }
   };
+  console.log(checkedAssigned);
   const handleOnAssignedKeys = (value) => {
     setAssignedTo(value);
-    const Validate = "--Assigned To--";
+    console.log(value);
+    const Validate = "--Assigned *--";
     if (value.toString().match(Validate)) {
       setCheckedAssigned(false);
+      console.log("rest");
     }
     if (!value.toString().match(Validate)) {
       setCheckedAssigned(true);
+      console.log("food");
     }
   };
   const handleOnAssetTypeKeys = (value) => {

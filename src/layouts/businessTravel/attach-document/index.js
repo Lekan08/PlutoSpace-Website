@@ -847,7 +847,6 @@ function BusinessTravelAttachDocuments() {
             {items.map((api) => {
               //  const docName = api.name;
               console.log(api);
-
               const docType = api.type;
               //  const docSize = api.size;
               //  const docDate = api.createdTime;
