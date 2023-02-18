@@ -199,14 +199,13 @@ import InterviewDate from "layouts/interviewSchedule/Interview-Date";
 import Accessor from "layouts/myAccessor";
 import Appointments from "layouts/appointments";
 import MyCalendar from "layouts/myCalendar";
-
+import Viewcredit from "layouts/creditFacility/view";
 import UpdateCalendar from "layouts/appointments/updateAppointment";
 import DocumentLibrary from "layouts/documentLibrary";
 import UpdateReportProduction from "layouts/products/reportProduction/update";
 import ProjectUpdate from "layouts/project/update-Project";
 import ProjectView from "layouts/project/view-Project";
-// eslint-disable-next-line import/no-unresolved
-import Subtask from "layouts/project/subtask";
+// import Subtask from "layouts/project/subtask";
 import Updatesub from "layouts/project/updatesubtask";
 import ViewApplication from "layouts/jobposts/applications/viewApplication";
 import DemandSupply from "layouts/demandSupplyStat";
@@ -659,6 +658,13 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/asset/attach-Documents",
     component: <AssetAttachDocument />,
+  },
+  {
+    name: "VIEW CREDIT",
+    key: "Viewcredit",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/creditFacility/view",
+    component: <Viewcredit />,
   },
   {
     type: "collapse",
@@ -1546,13 +1552,13 @@ const routes = [
     route: "/project/view-Project",
     component: <ProjectView />,
   },
-  {
-    name: "Subtask ",
-    key: "Subtask",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/project/subtask",
-    component: <Subtask />,
-  },
+  // {
+  //   name: "Subtask ",
+  //   key: "Subtask",
+  //   icon: <Icon fontSize="small">meeting_room</Icon>,
+  //   route: "/project/subtask",
+  //   component: <Subtask />,
+  // },
   {
     name: "Update Subtask ",
     key: "Updatesub",
