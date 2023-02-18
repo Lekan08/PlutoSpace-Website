@@ -19,7 +19,7 @@ import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
 import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
-import Box from "@mui/material/Box";
+// import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import AllCountriesAndStates from "countries-states-master/countries";
 import DataTable from "examples/Tables/DataTable";
@@ -494,9 +494,7 @@ function ThirdParty() {
     "&::-webkit-scrollbar": {
       width: 20,
     },
-    "&::-webkit-scrollbar-track": {
-      backgroundColor: "white",
-    },
+
     "&::-webkit-scrollbar-thumb": {
       backgroundColor: "#f5f5f5",
       borderRadius: 10,
@@ -725,7 +723,7 @@ function ThirdParty() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={modalStyle}>
+          <Card sx={modalStyle}>
             <HighlightOffIcon
               onClick={handleClose}
               fontSize="large"
@@ -735,15 +733,16 @@ function ThirdParty() {
                 color: "red",
                 float: "right",
                 position: "absolute",
-                left: 490,
+                left: 740,
                 right: 0,
                 top: 0,
                 bottom: 0,
                 cursor: "pointer",
               }}
-            />{" "}
+            />
+
             <UpdateThirdParty updateValue={updateValue} />
-          </Box>
+          </Card>
         </Modal>
       </div>
       <Footer />

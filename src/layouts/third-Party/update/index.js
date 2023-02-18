@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
-import Card from "@mui/material/Card";
 import { Container, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MDTypography from "components/MDTypography";
@@ -175,7 +174,7 @@ function UpdateThirdParty({ updateValue }) {
   };
 
   // eslint-disable-next-line consistent-return
-  const handleClick = (e) => {
+  const handleUClick = (e) => {
     e.preventDefault();
     const raw = JSON.stringify({
       id: idx,
@@ -284,7 +283,7 @@ function UpdateThirdParty({ updateValue }) {
     };
   }, []);
 
-  const handleValidate = (e) => {
+  const handleUValidate = (e) => {
     if (
       UcheckedCountry &&
       UcheckedName &&
@@ -295,7 +294,7 @@ function UpdateThirdParty({ updateValue }) {
       UcheckedType &&
       UcheckedState === true
     ) {
-      handleClick(e);
+      handleUClick(e);
     }
   };
 
@@ -305,7 +304,7 @@ function UpdateThirdParty({ updateValue }) {
   }, [namex]);
   return (
     // eslint-disable-next-line react/jsx-filename-extension
-    <Card>
+    <>
       <MDBox
         variant="gradient"
         bgColor="info"
@@ -369,7 +368,7 @@ function UpdateThirdParty({ updateValue }) {
                   placeholder="Name "
                   onKeyUp={(e) => UhandleName(e.target.value)}
                   sx={{
-                    width: 700,
+                    width: 684,
                   }}
                   multiline
                   required
@@ -383,7 +382,7 @@ function UpdateThirdParty({ updateValue }) {
                   label=" Phone Number "
                   type="number"
                   sx={{
-                    width: 344,
+                    width: 330,
                   }}
                   value={UphoneNumberx}
                   onChange={(e) => UhandlePhoneNumber(e.target.value)}
@@ -399,7 +398,7 @@ function UpdateThirdParty({ updateValue }) {
                   placeholder="Email "
                   type="email"
                   sx={{
-                    width: 362,
+                    width: 333,
                   }}
                   value={Uemailx}
                   onChange={(e) => UhandleEmailSelect(e.target.value)}
@@ -466,7 +465,7 @@ function UpdateThirdParty({ updateValue }) {
                   label="Street "
                   placeholder="Street "
                   sx={{
-                    width: 362,
+                    width: 333,
                   }}
                   multiline
                   required
@@ -486,23 +485,24 @@ function UpdateThirdParty({ updateValue }) {
                   <option value="Vendor">VENDOR</option>
                   <option value="Contractor">CONTRACTOR</option>
                 </Form.Select>
-              </div>
+              </div>{" "}
+              &nbsp; &nbsp;
+              <MDBox mt={4} mb={1}>
+                <MDButton
+                  variant="gradient"
+                  onClick={handleUValidate}
+                  color="info"
+                  width="50%"
+                  align="left"
+                >
+                  Update
+                </MDButton>
+              </MDBox>
             </div>
           </Container>
         </MDBox>
-        <MDBox mt={4} mb={1}>
-          <MDButton
-            variant="gradient"
-            onClick={handleValidate}
-            color="info"
-            width="50%"
-            align="left"
-          >
-            Update
-          </MDButton>
-        </MDBox>
       </MDBox>
-    </Card>
+    </>
   );
 }
 
