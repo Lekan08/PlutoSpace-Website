@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
-// import MDInput from "components/MDInput";
-// import DataTable from "examples/Tables/DataTable";
-// import taxData from "layouts/tax/data/taxTableData";
+import Modal from "@mui/material/Modal";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
 import { Container, Form, Dropdown } from "react-bootstrap";
@@ -10,6 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import MDTypography from "components/MDTypography";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -20,16 +19,18 @@ import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
 import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
-// import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import AllCountriesAndStates from "countries-states-master/countries";
 import DataTable from "examples/Tables/DataTable";
+import UpdateThirdParty from "layouts/third-Party/update";
 
 function ThirdParty() {
   const { allGHeaders: miHeaders } = GHeaders();
   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
   const MySwal = withReactContent(Swal);
-  // const { columns: pColumns, rows: pRows } = taxData();
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
 
   const [dataTablex, setDataTable] = useState([]);
   const [allStates, setAllStates] = useState([]);
@@ -41,6 +42,7 @@ function ThirdParty() {
   const [namex, setNamex] = useState("");
   const [cityx, setCityx] = useState("");
   const [streetx, setStreetx] = useState("");
+  const [updateValue, setUpdateValue] = useState("");
 
   const [checkedCountry, setCheckedCountry] = useState(false);
   const [checkedState, setCheckedState] = useState(false);
@@ -340,6 +342,12 @@ function ThirdParty() {
       }
     });
   };
+
+  const handleUpdate = (value) => {
+    setUpdateValue(value);
+    setOpen(true);
+  };
+
   const handleValidate = (e) => {
     handleName(namex);
     handleCity(cityx);
@@ -456,9 +464,7 @@ function ThirdParty() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigate(`/timesheet/update-Timesheet?id=${value}`)}>
-                Update
-              </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleUpdate(value)}>Update</Dropdown.Item>
 
               <Dropdown.Item onClick={() => handledeleteq(value)}>Delete</Dropdown.Item>
               {/* <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item> */}
@@ -469,6 +475,33 @@ function ThirdParty() {
       align: "left",
     },
   ];
+
+  // MODAL STYLE
+  const modalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    bgcolor: "#ffffff",
+    border: "3px solid #5F9DF7",
+    borderRadius: 5,
+    boxShadow: 24,
+    p: 4,
+    overflow: "auto",
+    height: "80%",
+    display: "flex",
+    "&::-webkit-scrollbar": {
+      width: 20,
+    },
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: "white",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#f5f5f5",
+      borderRadius: 10,
+    },
+  };
 
   return (
     <DashboardLayout>
@@ -530,7 +563,7 @@ function ThirdParty() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-5">
+                  <div className="col-sm-12">
                     <TextField
                       id="outlined-textarea"
                       value={namex || ""}
@@ -651,7 +684,7 @@ function ThirdParty() {
                       aria-label="Default select example"
                       onChange={(e) => handleType(e.target.value)}
                     >
-                      <option value="">--Type--</option>
+                      <option value="">--Type *--</option>
                       <option value="Vendor">VENDOR</option>
                       <option value="Contractor">CONTRACTOR</option>
                     </Form.Select>
@@ -685,7 +718,34 @@ function ThirdParty() {
           canSearch
         />
       </MDBox>
-
+      <div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={modalStyle}>
+            <HighlightOffIcon
+              onClick={handleClose}
+              fontSize="large"
+              style={{
+                // display: "flex",
+                padding: "5px",
+                color: "red",
+                float: "right",
+                position: "absolute",
+                left: 490,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                cursor: "pointer",
+              }}
+            />{" "}
+            <UpdateThirdParty updateValue={updateValue} />
+          </Box>
+        </Modal>
+      </div>
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />
