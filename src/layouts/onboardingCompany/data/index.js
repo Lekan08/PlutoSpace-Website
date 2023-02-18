@@ -23,7 +23,6 @@ export default function OnboardingCompanyTable() {
   // const { allPHeaders: myHeaders } = PHeaders();
   // const axios = require("axios");
   const [items, setItems] = useState([]);
-  // const [id, setId] = useState("");
   const navigate = useNavigate();
 
   // eslint-disable-next-line no-unused-vars
@@ -87,8 +86,11 @@ export default function OnboardingCompanyTable() {
           })
           .then((results) => {
             console.log(results, "del");
-            const appID = results[0].appointmentID;
-            fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/delete/${id}`, requestOptions)
+            const appID = results[0]?.appointmentID;
+            fetch(
+              `${process.env.REACT_APP_RAGA_URL}/onboarding/delete/${filteredItems[0].id}`,
+              requestOptions
+            )
               .then((res) => res.json())
               .then((resx) => {
                 if (resx.message === "Expired Access") {
@@ -122,6 +124,13 @@ export default function OnboardingCompanyTable() {
               .then((res) => res.json())
               .then((resx) => {
                 console.log(resx);
+              })
+              .catch((error) => {
+                MySwal.fire({
+                  title: error.status,
+                  type: "error",
+                  text: error.message,
+                });
               });
             fetch(`${process.env.REACT_APP_RAGA_URL}/appointment/cancel/${appID}`, requestOptions)
               .then(async (res) => {
@@ -144,6 +153,9 @@ export default function OnboardingCompanyTable() {
               .then((resy) => {
                 console.log(resy);
               });
+          })
+          .catch((error) => {
+            console.log(error);
           });
       }
     });

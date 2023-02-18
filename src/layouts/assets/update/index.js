@@ -218,14 +218,18 @@ function UpdateAssets() {
       document.getElementById("itemWorth").innerHTML = "Rate is required<br>";
     }
   };
+  console.log(checkedAssigned);
   const handleOnAssignedKeys = (value) => {
     setAssignedTo(value);
-    const Validate = "--Assigned To--";
+    console.log(value);
+    const Validate = "--Assigned *--";
     if (value.toString().match(Validate)) {
-      setCheckedAssigned(true);
+      setCheckedAssigned(false);
+      console.log("rest");
     }
     if (!value.toString().match(Validate)) {
-      setCheckedAssigned(false);
+      setCheckedAssigned(true);
+      console.log("food");
     }
   };
   const handleOnAssetTypeKeys = (value) => {
@@ -517,6 +521,10 @@ function UpdateAssets() {
   const ALPHA_NUMERIC_DASH_REGEX = /^[a-zA-Z]+$/;
 
   const handleValidate = (e) => {
+    console.log(checkedItem);
+    console.log(checkedItemWorth);
+    console.log(checkedAssigned);
+    console.log(checkedAssetsTypes);
     if (checkedItem && checkedItemWorth && checkedAssigned && checkedAssetsTypes === true) {
       handleClick(e);
     }
