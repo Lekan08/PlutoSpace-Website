@@ -1916,7 +1916,7 @@ function ViewSingleCorporate() {
                       {assetsx.map((item) => (
                         <Grid item xs={12} md={12} lg={12}>
                           <Card
-                            sx={{ maxWidth: 345 }}
+                            sx={{ maxWidth: 960 }}
                             key={item.id}
                             style={{ backgroundColor: "#5F8575" }}
                           >
