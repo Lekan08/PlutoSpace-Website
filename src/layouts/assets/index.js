@@ -720,7 +720,7 @@ function Assets() {
                               name="branchID"
                               onChange={(e) => handleOnAssignedKeys(e.target.value)}
                             >
-                              <option>--Assigned To *--</option>
+                              <option value="0">--Assigned To *--</option>
                               {user.map((apis) => (
                                 <option key={apis.personal.id} value={apis.personal.id}>
                                   {apis.personal.fname} {apis.personal.lname}

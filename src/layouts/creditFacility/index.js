@@ -4,7 +4,9 @@ import DataTable from "examples/Tables/DataTable";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
+import { Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -108,33 +110,36 @@ function CreditFacility() {
       Cell: ({ cell: { value } }) => changeDate(value),
       align: "left",
     },
-    // {
-    //   Header: "Actions",
-    //   accessor: "id",
-    //   // eslint-disable-next-line react/prop-types
-    //   Cell: ({ cell: { value } }) => (
-    //     <div
-    //       style={{
-    //         width: "100%",
-    //         backgroundColor: "#f96d02",
-    //         borderRadius: "2px",
-    //       }}
-    //     >
-    //       <Dropdown>
-    //         <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-    //           <Icon sx={{ fontWeight: "light" }}>settings</Icon>
-    //         </Dropdown.Toggle>
+    {
+      Header: "Actions",
+      accessor: "id",
+      // eslint-disable-next-line react/prop-types
+      Cell: ({ cell: { value } }) => (
+        <div
+          style={{
+            width: "100%",
+            backgroundColor: "#f96d02",
+            borderRadius: "2px",
+          }}
+        >
+          <Dropdown>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+              <Icon sx={{ fontWeight: "light" }}>settings</Icon>
+            </Dropdown.Toggle>
 
-    //         <Dropdown.Menu>
-    //           <Dropdown.Item onClick={() => handleUpdate(value, dataTablex)}>Update </Dropdown.Item>
-    //           <Dropdown.Item onClick={() => handleDelete(value)}>Delete </Dropdown.Item>
-    //           <Dropdown.Item onClick={() => handleapprove(value)}>Approve </Dropdown.Item>
-    //         </Dropdown.Menu>
-    //       </Dropdown>
-    //     </div>
-    //   ),
-    //   align: "left",
-    // },
+            <Dropdown.Menu>
+              <Dropdown.Item onClick={() => navigate(`/creditFacility/makepayment?id=${value}`)}>
+                Make Payment
+              </Dropdown.Item>
+              {/* <Dropdown.Item onClick={() => handleView(value, dataTablex)}>View </Dropdown.Item> */}
+              {/* <Dropdown.Item onClick={() => handleDelete(value)}>Delete </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleapprove(value)}>Approve </Dropdown.Item> */}
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+      ),
+      align: "left",
+    },
   ];
 
   return (
