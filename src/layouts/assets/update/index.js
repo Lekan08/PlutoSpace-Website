@@ -222,14 +222,12 @@ function UpdateAssets() {
   const handleOnAssignedKeys = (value) => {
     setAssignedTo(value);
     console.log(value);
-    const Validate = "--Assigned *--";
+    const Validate = "--Assigned*--";
     if (value.toString().match(Validate)) {
       setCheckedAssigned(false);
-      console.log("rest");
     }
     if (!value.toString().match(Validate)) {
       setCheckedAssigned(true);
-      console.log("food");
     }
   };
   const handleOnAssetTypeKeys = (value) => {
@@ -839,7 +837,7 @@ function UpdateAssets() {
                         name="branchID"
                         onChange={(e) => handleOnAssignedKeys(e.target.value)}
                       >
-                        <option>--Assigned *--</option>
+                        <option value="0">--Assigned To *--</option>
                         {user.map((apis) => (
                           <option key={apis.personal.id} value={apis.personal.id}>
                             {apis.personal.fname} {apis.personal.lname}

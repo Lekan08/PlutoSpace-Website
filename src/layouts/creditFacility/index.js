@@ -5,7 +5,9 @@ import DataTable from "examples/Tables/DataTable";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
+import { Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -119,11 +121,19 @@ function CreditFacility() {
       // eslint-disable-next-line react/prop-types
       Cell: ({ cell: { value } }) => (
         <div
+<<<<<<< HEAD
         // style={{
         //   width: "100%",
         //   backgroundColor: "#f96d02",
         //   borderRadius: "2px",
         // }}
+=======
+          style={{
+            width: "100%",
+            backgroundColor: "#f96d02",
+            borderRadius: "2px",
+          }}
+>>>>>>> ee810733f8eebf1a646b43283fd536bd3b687602
         >
           <Dropdown>
             <Dropdown.Toggle variant="secondary" id="dropdown-basic">
@@ -131,9 +141,20 @@ function CreditFacility() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
+<<<<<<< HEAD
               <Dropdown.Item onClick={() => handleUpdate(value)}>view credits </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>{" "}
+=======
+              <Dropdown.Item onClick={() => navigate(`/creditFacility/makepayment?id=${value}`)}>
+                Make Payment
+              </Dropdown.Item>
+              {/* <Dropdown.Item onClick={() => handleView(value, dataTablex)}>View </Dropdown.Item> */}
+              {/* <Dropdown.Item onClick={() => handleDelete(value)}>Delete </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleapprove(value)}>Approve </Dropdown.Item> */}
+            </Dropdown.Menu>
+          </Dropdown>
+>>>>>>> ee810733f8eebf1a646b43283fd536bd3b687602
         </div>
       ),
       align: "left",
