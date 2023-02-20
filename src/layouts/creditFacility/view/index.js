@@ -270,6 +270,7 @@ function Viewcredit() {
   //         });
   //     }
   //   };
+
   const { allGHeaders: miHeaders } = GHeaders();
 
   useEffect(() => {
@@ -280,7 +281,6 @@ function Viewcredit() {
     const ids = urlParams.get("id");
     // const clientID = data11.id;
     let isMounted = true;
-    // eslint-disable-next-line no-irregular-whitespace
     fetch(`${process.env.REACT_APP_LOUGA_URL}/creditFacility/getByIds/${ids}`, {
       headers,
     })
