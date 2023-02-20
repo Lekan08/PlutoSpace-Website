@@ -131,7 +131,9 @@ function CreditFacility() {
               <Dropdown.Item onClick={() => navigate(`/credit-Facility/make-payment?id=${value}`)}>
                 Make Payment
               </Dropdown.Item>
-              {/* <Dropdown.Item onClick={() => handleView(value, dataTablex)}>View </Dropdown.Item> */}
+              <Dropdown.Item onClick={() => navigate(`/credit-Facility/view?id=${value}`)}>
+                View
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>
@@ -139,7 +141,6 @@ function CreditFacility() {
       align: "left",
     },
   ];
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
