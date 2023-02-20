@@ -254,6 +254,7 @@ import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
 import CreditFacility from "layouts/creditFacility";
+import MakePayment from "layouts/creditFacility/makepayment";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
@@ -1945,6 +1946,13 @@ const routes = [
     icon: <Icon fontSize="small">point_of_sale</Icon>,
     route: "/credit-Facility",
     component: <CreditFacility />,
+  },
+  {
+    name: "Make Payment",
+    key: "makepayment",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/credit-Facility/make-payment",
+    component: <MakePayment />,
   },
   {
     // type: "collapse",

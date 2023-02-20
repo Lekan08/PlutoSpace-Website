@@ -128,12 +128,10 @@ function CreditFacility() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigate(`/creditFacility/makepayment?id=${value}`)}>
+              <Dropdown.Item onClick={() => navigate(`/credit-Facility/make-payment?id=${value}`)}>
                 Make Payment
               </Dropdown.Item>
               {/* <Dropdown.Item onClick={() => handleView(value, dataTablex)}>View </Dropdown.Item> */}
-              {/* <Dropdown.Item onClick={() => handleDelete(value)}>Delete </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleapprove(value)}>Approve </Dropdown.Item> */}
             </Dropdown.Menu>
           </Dropdown>
         </div>
