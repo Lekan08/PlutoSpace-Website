@@ -58,6 +58,7 @@ import AnnouncementType from "layouts/announcementtype";
 import Steps from "layouts/companysteps";
 import Branches from "layouts/branches/index";
 import UpdateBranch from "layouts/branches/data/updateBranch";
+import CreateBranch from "layouts/authentication/companyRegistration/createBranch";
 import CompanyReg from "layouts/authentication/companyRegistration";
 import SysRoles from "layouts/systemRoles";
 import RolesAndPerms from "layouts/systemRoles/addRolesAndPerms";
@@ -255,7 +256,7 @@ import CreditFacility from "layouts/creditFacility";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
-import SalesPayment from "layouts/sales/salesPayment";
+// import SalesPayment from "layouts/sales/salesPayment";
 import FilterSales from "layouts/sales/filterSales";
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
@@ -288,6 +289,8 @@ import TreasuryDebtors from "layouts/treasury/treasuryGetDebtors";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
 import MultiSession from "layouts/onboardingCompany/sessions/multisession";
+import Accounts from "layouts/accounting-main";
+import AccountSheet from "layouts/accounting-main/account-sheet";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
@@ -435,6 +438,21 @@ const routes = [
     title: "Accounting",
     key: "titd2Accounting",
     route: "",
+  },
+  {
+    type: "collapse",
+    name: "Accounts",
+    key: "accounting-main",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/accounts",
+    component: <Accounts />,
+  },
+  {
+    name: "Account Sheet",
+    key: "accounting-sheet",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/accounts/account-sheet",
+    component: <AccountSheet />,
   },
   {
     type: "collapse",
@@ -1927,14 +1945,14 @@ const routes = [
     route: "/credit-Facility",
     component: <CreditFacility />,
   },
-  {
-    // type: "collapse",
-    name: "Sales Payment",
-    key: "salespayment",
-    icon: <Icon fontSize="small">point_of_sale</Icon>,
-    route: "/sales/sales-payment",
-    component: <SalesPayment />,
-  },
+  // {
+  //   // type: "collapse",
+  //   name: "Sales Payment",
+  //   key: "salespayment",
+  //   icon: <Icon fontSize="small">point_of_sale</Icon>,
+  //   route: "/sales/sales-payment",
+  //   component: <SalesPayment />,
+  // },
   {
     type: "collapse",
     name: "Filter Sales",
@@ -2167,6 +2185,13 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/Update-Branch",
     component: <UpdateBranch />,
+  },
+  {
+    name: "Create Branch",
+    key: "createBranch",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/Create-Branch",
+    component: <CreateBranch />,
   },
   {
     type: "collapse",
