@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/no-named-as-default */
 /**
@@ -200,7 +201,7 @@ import InterviewDate from "layouts/interviewSchedule/Interview-Date";
 import Accessor from "layouts/myAccessor";
 import Appointments from "layouts/appointments";
 import MyCalendar from "layouts/myCalendar";
-
+import Viewcredit from "layouts/creditFacility/view";
 import UpdateCalendar from "layouts/appointments/updateAppointment";
 import DocumentLibrary from "layouts/documentLibrary";
 import UpdateReportProduction from "layouts/products/reportProduction/update";
@@ -227,6 +228,7 @@ import UpdateUserPension from "layouts/companyPension/updateUserPension";
 import CompanyPension from "layouts/companyPension";
 import AddPension from "layouts/companyPension/addPension";
 import MyPension from "layouts/myPension";
+import ThirdParty from "layouts/third-Party";
 import BusinessTravel from "layouts/businessTravel";
 import UpdateBusinessTravel from "layouts/businessTravel/update";
 import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
@@ -257,6 +259,7 @@ import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
 // import SalesPayment from "layouts/sales/salesPayment";
+import GeneralLedger from "layouts/general-ledger";
 import FilterSales from "layouts/sales/filterSales";
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
@@ -347,6 +350,14 @@ const routes = [
     component: <MattersArising />,
   },
   {
+    type: "collapse",
+    name: "Credit Faclilities",
+    key: "creditFacility",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/sales/credit-facilities",
+    component: <creditFacility />,
+  },
+  {
     name: "Escalate Matter",
     key: "escalatematter",
     icon: <Icon fontSize="small">meeting_room</Icon>,
@@ -428,6 +439,14 @@ const routes = [
     component: <Reports />,
   },
   {
+    type: "collapse",
+    name: "Third Party",
+    key: "thirdParty",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/third-Party",
+    component: <ThirdParty />,
+  },
+  {
     type: "divider",
     name: "",
     key: "divd1Accounting",
@@ -461,6 +480,14 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/accounting",
     component: <Accounting />,
+  },
+  {
+    type: "collapse",
+    name: "General Ledger",
+    key: "generalLedger",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/general-ledger",
+    component: <GeneralLedger />,
   },
   {
     type: "divider",
@@ -668,6 +695,13 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/asset/attach-Documents",
     component: <AssetAttachDocument />,
+  },
+  {
+    name: "VIEW CREDIT",
+    key: "Viewcredit",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/creditFacility/view",
+    component: <Viewcredit />,
   },
   {
     type: "collapse",
