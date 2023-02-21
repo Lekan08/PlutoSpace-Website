@@ -514,6 +514,7 @@ function Sales() {
     data.splice(index, 1);
     setCounter(data);
   };
+  const allTot = eval(subTotalAmountx - bonusAmountxx);
 
   // useEffect(() => {
   //   const headers = miHeaders;
@@ -553,7 +554,8 @@ function Sales() {
       Number(cardPaymentx) +
       Number(transferPaymentx) +
       Number(creditFacilityx) -
-      Number(subTotalAmountx)
+      Number(allTot)
+    // Number(bonusAmountxx)
   );
   const Pay = () => {
     setShowPayment(true);
@@ -940,137 +942,153 @@ function Sales() {
         )}
       </div>
       <Card>
-        <MDBox style={{ paddingLeft: "450px" }}>
-          <Container>
-            <div className="row" style={{ paddingLeft: "450px" }}>
-              <div className="col-sm-12">
-                <MDTypography
-                  variant="button"
-                  //   style={{ paddingLeft: "300px" }}
-                  fontWeight="regular"
-                  color="text"
-                  mt={8}
-                >
-                  Individual
-                </MDTypography>
-                <MDBox>
-                  <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                    onClick={() => openModal()}
-                  >
-                    <PersonAddIcon sx={{ color: "#f96d02" }} />
-                  </IconButton>
-                </MDBox>
-                <MDBox>
-                  <Form.Select
-                    value={indix || ""}
-                    aria-label="Default select example"
-                    onChange={(e) => {
-                      setIndi(e.target.value);
-                      const { value } = e.target;
-                      const fData = individualx.filter((indii) => indii.id === value);
-                      setIndiName(`${fData[0].fname} ${fData[0].lname}`);
-                      if (fData[0].email) {
-                        setEmail(`${fData[0].email}`);
-                      } else {
-                        setEmail("");
-                      }
-                      if (fData[0].pno) {
-                        setPno(`${fData[0].pno}`);
-                      } else {
-                        setPno("");
-                      }
-                    }}
-                  >
-                    <option>--Select Individual--</option>
-                    {individualx.map((apis) => (
-                      <option key={apis.id} value={apis.id}>
-                        {apis.fname} {apis.lname}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </MDBox>
-              </div>
-            </div>
-          </Container>
-        </MDBox>
-        <br />
-        &nbsp; &nbsp;
-        <MDBox>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            aria-haspopup="true"
-            color="inherit"
-            onClick={addFields}
+        <MDBox pt={4} pb={3} px={20}>
+          <MDBox
+            variant="gradient"
+            borderRadius="lg"
+            coloredShadow="info"
+            mx={2}
+            mt={-3}
+            p={2}
+            mb={1}
+            textAlign="center"
+            style={Styles.boxSx}
           >
-            <Add sx={{ color: "#f96d02" }} />
-          </IconButton>
-        </MDBox>
-        <Card style={{ backgroundColor: "#CCC1FF" }}>
-          <Grid container spacing={2}>
-            <Grid item xs={2}>
-              <Item>
-                <b>Sales Type</b>
-              </Item>
+            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+              Sales
+            </MDTypography>
+          </MDBox>
+          <MDBox style={{ paddingLeft: "450px" }}>
+            <Container>
+              <div className="row" style={{ paddingLeft: "450px" }}>
+                <div className="col-sm-12">
+                  <MDTypography
+                    variant="button"
+                    //   style={{ paddingLeft: "300px" }}
+                    fontWeight="regular"
+                    color="text"
+                    mt={8}
+                  >
+                    Individual
+                  </MDTypography>
+                  <MDBox>
+                    <IconButton
+                      size="large"
+                      aria-label="account of current user"
+                      aria-controls="primary-search-account-menu"
+                      aria-haspopup="true"
+                      color="inherit"
+                      onClick={() => openModal()}
+                    >
+                      <PersonAddIcon sx={{ color: "#f96d02" }} />
+                    </IconButton>
+                  </MDBox>
+                  <MDBox>
+                    <Form.Select
+                      value={indix || ""}
+                      aria-label="Default select example"
+                      onChange={(e) => {
+                        setIndi(e.target.value);
+                        const { value } = e.target;
+                        const fData = individualx.filter((indii) => indii.id === value);
+                        setIndiName(`${fData[0].fname} ${fData[0].lname}`);
+                        if (fData[0].email) {
+                          setEmail(`${fData[0].email}`);
+                        } else {
+                          setEmail("");
+                        }
+                        if (fData[0].pno) {
+                          setPno(`${fData[0].pno}`);
+                        } else {
+                          setPno("");
+                        }
+                      }}
+                    >
+                      <option>--Select Individual--</option>
+                      {individualx.map((apis) => (
+                        <option key={apis.id} value={apis.id}>
+                          {apis.fname} {apis.lname}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </MDBox>
+                </div>
+              </div>
+            </Container>
+          </MDBox>
+          <br />
+          &nbsp; &nbsp;
+          <MDBox>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+              onClick={addFields}
+            >
+              <Add sx={{ color: "#f96d02" }} />
+            </IconButton>
+          </MDBox>
+          <Card style={{ backgroundColor: "#CCC1FF" }}>
+            <Grid container spacing={2}>
+              <Grid item xs={2}>
+                <Item>
+                  <b>Sales Type</b>
+                </Item>
+              </Grid>
+              <Grid item xs={1}>
+                <Item>
+                  <b>Product</b>
+                </Item>
+              </Grid>
+              <Grid item xs={2}>
+                <Item>
+                  <b>Branch</b>
+                </Item>
+              </Grid>
+              <Grid item xs={2}>
+                <Item>
+                  <b>Price Per Unit (NGN)</b>
+                </Item>
+              </Grid>
+              <Grid item xs={1}>
+                <Item>
+                  <h6>
+                    <b>Quantity</b>
+                  </h6>
+                </Item>
+              </Grid>
+              <Grid item xs={2}>
+                <Item>
+                  <b>Amount (NGN)</b>
+                </Item>
+              </Grid>
+              <Grid item xs={1}>
+                <Item>
+                  <b>Tax Amount</b>
+                </Item>
+              </Grid>
+              <Grid item xs={1}>
+                <Item>
+                  <b>Total Amount (NGN)</b>
+                </Item>
+              </Grid>
             </Grid>
-            <Grid item xs={1}>
-              <Item>
-                <b>Product</b>
-              </Item>
-            </Grid>
-            <Grid item xs={2}>
-              <Item>
-                <b>Branch</b>
-              </Item>
-            </Grid>
-            <Grid item xs={2}>
-              <Item>
-                <b>Price Per Unit (NGN)</b>
-              </Item>
-            </Grid>
-            <Grid item xs={1}>
-              <Item>
-                <h6>
-                  <b>Quantity</b>
-                </h6>
-              </Item>
-            </Grid>
-            <Grid item xs={2}>
-              <Item>
-                <b>Amount (NGN)</b>
-              </Item>
-            </Grid>
-            <Grid item xs={1}>
-              <Item>
-                <b>Tax Amount</b>
-              </Item>
-            </Grid>
-            <Grid item xs={1}>
-              <Item>
-                <b>Total Amount (NGN)</b>
-              </Item>
-            </Grid>
-          </Grid>
-        </Card>
-        &nbsp;
-        <Grid>
-          <div className="row">
-            {counter.map((form, index) => {
-              const amountxx = parseInt(form.pricePerUnit, 10) * parseInt(form.quantity, 10);
-              const branchx = form.branchID;
-              const totalAmountxx = parseInt(form.amount, 10) + parseInt(form.taxAmount, 10);
-              const taxAmoun = parseInt(form.taxAmount, 10);
-              // const tried = form.product;
-              return (
-                <>
-                  <div className="col-sm-2">
-                    {/* <MDInput
+          </Card>
+          &nbsp;
+          <Grid>
+            <div className="row">
+              {counter.map((form, index) => {
+                const amountxx = parseInt(form.pricePerUnit, 10) * parseInt(form.quantity, 10);
+                const branchx = form.branchID;
+                const totalAmountxx = parseInt(form.amount, 10) + parseInt(form.taxAmount, 10);
+                const taxAmoun = parseInt(form.taxAmount, 10);
+                // const tried = form.product;
+                return (
+                  <>
+                    <div className="col-sm-2">
+                      {/* <MDInput
       type="text"
       value={namex || ""}
       onChange={(e) => setName(e.target.value)}
@@ -1079,139 +1097,139 @@ function Sales() {
       variant="standard"
       fullWidth
     /> */}
-                    {/* <TextField
+                      {/* <TextField
       id="outlined-error-helper-text"
       label="Error"
       // defaultValue="Hello World"
       // helperText="Incorrect entry."
     /> */}
-                    <MDBox>
-                      <Form.Select
-                        value={form.saleType}
-                        aria-label="Default select example"
-                        name="saleType"
-                        onChange={(event) => handleFormChange(event, index)}
-                      >
-                        <option value="">Sales Type</option>
-                        <option value="1">Product</option>
-                        <option value="2">Company Service</option>
-                        <option value="3">Custom Sales</option>
-                      </Form.Select>
-                    </MDBox>
+                      <MDBox>
+                        <Form.Select
+                          value={form.saleType}
+                          aria-label="Default select example"
+                          name="saleType"
+                          onChange={(event) => handleFormChange(event, index)}
+                        >
+                          <option value="">Sales Type</option>
+                          <option value="1">Product</option>
+                          <option value="2">Company Service</option>
+                          <option value="3">Custom Sales</option>
+                        </Form.Select>
+                      </MDBox>
 
-                    {/* <input onChange={(e) => setName(e.target.value)} value={namex || ""} type="text" /> */}
-                  </div>
-                  <div className="col-sm-1">
-                    <MDBox>
-                      <Form.Select
-                        value={form.salesID}
-                        aria-label="Default select example"
-                        name="product"
-                        onChange={(event) => handleFormChange(event, index)}
-                      >
-                        <option>Select</option>
-                        {form.psArray.map((apis) => (
-                          <option key={apis.id} value={JSON.stringify(apis)}>
-                            {apis.name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </MDBox>
-                  </div>
-                  <div className="col-sm-2">
-                    <MDBox>
-                      <Form.Select
-                        value={branchx}
-                        aria-label="Default select example"
-                        name="branchID"
-                        onChange={(event) => handleFormChange(event, index)}
-                      >
-                        <option>Branch</option>
-                        {productBranx.map((apis) => (
-                          <option key={apis.id} value={apis.id}>
-                            {apis.name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </MDBox>
-                  </div>
-                  <div className="col-sm-2">
-                    {/* <TextField
+                      {/* <input onChange={(e) => setName(e.target.value)} value={namex || ""} type="text" /> */}
+                    </div>
+                    <div className="col-sm-1">
+                      <MDBox>
+                        <Form.Select
+                          value={form.salesID}
+                          aria-label="Default select example"
+                          name="product"
+                          onChange={(event) => handleFormChange(event, index)}
+                        >
+                          <option>Select</option>
+                          {form.psArray.map((apis) => (
+                            <option key={apis.id} value={JSON.stringify(apis)}>
+                              {apis.name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </MDBox>
+                    </div>
+                    <div className="col-sm-2">
+                      <MDBox>
+                        <Form.Select
+                          value={branchx}
+                          aria-label="Default select example"
+                          name="branchID"
+                          onChange={(event) => handleFormChange(event, index)}
+                        >
+                          <option>Branch</option>
+                          {productBranx.map((apis) => (
+                            <option key={apis.id} value={apis.id}>
+                              {apis.name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </MDBox>
+                    </div>
+                    <div className="col-sm-2">
+                      {/* <TextField
       id="outlined-error-helper-text"
       label="First Name"
       // defaultValue="Hello World"
       // helperText="Incorrect entry."
     /> */}
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={form.pricePerUnit}
-                          label="Price Per Unit"
-                          placeholder="Pice Per Unit "
-                          size="small"
-                          name="pricePerUnit"
-                          // key={c}
-                          // className={index}
-                          type="number"
-                          onChange={(event) => handleFormChange(event, index)}
-                          // onChange={(e) => setPPQuantity(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          // required
+                      <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="filled-number"
+                            value={form.pricePerUnit}
+                            label="Price Per Unit"
+                            placeholder="Pice Per Unit "
+                            size="small"
+                            name="pricePerUnit"
+                            // key={c}
+                            // className={index}
+                            type="number"
+                            onChange={(event) => handleFormChange(event, index)}
+                            // onChange={(e) => setPPQuantity(e.target.value)}
+                            // onKeyUp={(e) => handleTaxAmount(e.target.value)}
+                            // required
 
-                          InputProps={{
-                            readOnly: form.disableField,
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  <div className="col-sm-1">
-                    <Box sx={{ minWidth: 100 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={form.quantity}
-                          label="Quantity "
-                          placeholder="Quantity "
-                          name="quantity"
-                          // key={c}
-                          // className={index}
-                          type="number"
-                          size="small"
-                          onChange={(event) => handleFormChange(event, index)}
-                          // onChange={(e) => setQuantity(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          // required
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  <div className="col-sm-2">
-                    <Box sx={{ minWidth: 120 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={amountxx}
-                          label="Amount "
-                          placeholder="Amount "
-                          name="Amount"
-                          // key={c}
-                          // className={index}
-                          size="small"
-                          type="number"
-                          // onChange={handleOnSelect2}
-                          // onChange={(e) => handleOnlastChange(e)}
-                          // onKeyUp={(e) => setAmount(e.target.value)}
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  <div className="col-sm-1">
-                    {/* <Box sx={{ minWidth: 100 }}>
+                            InputProps={{
+                              readOnly: form.disableField,
+                            }}
+                          />
+                        </FormControl>
+                      </Box>
+                    </div>
+                    <div className="col-sm-1">
+                      <Box sx={{ minWidth: 100 }}>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="filled-number"
+                            value={form.quantity}
+                            label="Quantity "
+                            placeholder="Quantity "
+                            name="quantity"
+                            // key={c}
+                            // className={index}
+                            type="number"
+                            size="small"
+                            onChange={(event) => handleFormChange(event, index)}
+                            // onChange={(e) => setQuantity(e.target.value)}
+                            // onKeyUp={(e) => handleTaxAmount(e.target.value)}
+                            // required
+                          />
+                        </FormControl>
+                      </Box>
+                    </div>
+                    <div className="col-sm-2">
+                      <Box sx={{ minWidth: 120 }}>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="filled-number"
+                            value={amountxx}
+                            label="Amount "
+                            placeholder="Amount "
+                            name="Amount"
+                            // key={c}
+                            // className={index}
+                            size="small"
+                            type="number"
+                            // onChange={handleOnSelect2}
+                            // onChange={(e) => handleOnlastChange(e)}
+                            // onKeyUp={(e) => setAmount(e.target.value)}
+                            InputProps={{
+                              readOnly: true,
+                            }}
+                          />
+                        </FormControl>
+                      </Box>
+                    </div>
+                    <div className="col-sm-1">
+                      {/* <Box sx={{ minWidth: 100 }}>
                       <FormControl fullWidth>
                         <TextField
                           id="filled-number"
@@ -1227,220 +1245,231 @@ function Sales() {
                         />
                       </FormControl>
                     </Box> */}
-                    <Box sx={{ minWidth: 100 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={taxAmoun}
-                          label="Tax Amount (NGN) "
-                          placeholder="Tax Amount "
-                          size="small"
-                          name="taxAmount"
-                          // key={c}
-                          // className={index}
-                          type="number"
-                          onChange={(event) => handleFormChange(event, index)}
-                          // onChange={(e) => setPPQuantity(e.target.value)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          required
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  <div className="col-sm-1">
-                    <Box sx={{ minWidth: 100 }}>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="filled-number"
-                          value={totalAmountxx}
-                          label="Total Amount "
-                          placeholder="Total Amount "
-                          type="number"
-                          size="small"
-                          name="totalAmount"
-                          // onChange={(event) => handleFormChange(event, index)}
-                          // onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                          // required
-                          InputProps={{
-                            readOnly: true,
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                  </div>
-                  <MDBox>
-                    <IconButton
-                      size="large"
-                      aria-label="account of current user"
-                      aria-controls="primary-search-account-menu"
-                      aria-haspopup="true"
-                      color="inherit"
-                      onClick={() => removeFields(index)}
-                    >
-                      <CancelPresentationIcon sx={{ color: "#f96d02" }} />
-                    </IconButton>
-                  </MDBox>
-                  <br />
-                </>
-              );
-            })}
-          </div>
-          &nbsp; &nbsp;
-        </Grid>
-        <MDBox>
-          <Container>
-            <div className="row">
-              <div className="col-sm-3">
-                <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                  <FormControl fullWidth>
-                    <TextField
-                      id="filled-number"
-                      value={bonusAmountxx}
-                      label="Bonus Amount (NGN) "
-                      placeholder="Bonus Amount (NGN) "
-                      type="number"
-                      onChange={(e) => setBonusAmount(e.target.value)}
-                    />
-                  </FormControl>
-                </Box>
-              </div>
-              <div className="col-sm-3" />
-              <div className="col-sm-3">
-                <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                  <FormControl fullWidth>
-                    <TextField
-                      id="filled-number"
-                      value={subTotalAmountx}
-                      label="Total Amount (NGN) "
-                      placeholder="Total Amount (NGN) "
-                      type="number"
-                      name="totalAmount"
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                    />
-                  </FormControl>
-                </Box>
-              </div>
+                      <Box sx={{ minWidth: 100 }}>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="filled-number"
+                            value={taxAmoun}
+                            label="Tax Amount (NGN) "
+                            placeholder="Tax Amount "
+                            size="small"
+                            name="taxAmount"
+                            // key={c}
+                            // className={index}
+                            type="number"
+                            onChange={(event) => handleFormChange(event, index)}
+                            // onChange={(e) => setPPQuantity(e.target.value)}
+                            // onKeyUp={(e) => handleTaxAmount(e.target.value)}
+                            required
+                          />
+                        </FormControl>
+                      </Box>
+                    </div>
+                    <div className="col-sm-1">
+                      <Box sx={{ minWidth: 100 }}>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="filled-number"
+                            value={totalAmountxx}
+                            label="Total Amount "
+                            placeholder="Total Amount "
+                            type="number"
+                            size="small"
+                            name="totalAmount"
+                            // onChange={(event) => handleFormChange(event, index)}
+                            // onKeyUp={(e) => handleTaxAmount(e.target.value)}
+                            // required
+                            InputProps={{
+                              readOnly: true,
+                            }}
+                          />
+                        </FormControl>
+                      </Box>
+                    </div>
+                    <MDBox>
+                      <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="primary-search-account-menu"
+                        aria-haspopup="true"
+                        color="inherit"
+                        onClick={() => removeFields(index)}
+                      >
+                        <CancelPresentationIcon sx={{ color: "#f96d02" }} />
+                      </IconButton>
+                    </MDBox>
+                    <br />
+                  </>
+                );
+              })}
             </div>
-          </Container>
-        </MDBox>
-        <br />
-        &nbsp; &nbsp;
-        <MDBox style={{ paddingLeft: "30px" }}>
-          <Container>
-            <div className="row">
-              <div className="col-sm-12">
-                <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
-                  <Form.Label style={{ fontSize: 14 }}>Comment</Form.Label>
-                  <Form.Control
-                    as="textarea"
-                    value={commentx || ""}
-                    onKeyUp={handleOnPortfolioKeys}
-                    onChange={(e) => setComment(e.target.value)}
-                    rows={2}
-                  />
-                </Form.Group>
-              </div>
-            </div>
-          </Container>
-        </MDBox>
-        <br />
-        &nbsp; &nbsp;
-        <MDBox>
-          {showPayment ? (
+            &nbsp; &nbsp;
+          </Grid>
+          <MDBox>
             <Container>
               <div className="row">
                 <div className="col-sm-3">
                   <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
                     <FormControl fullWidth>
+                      <TextField
+                        id="filled-number"
+                        value={bonusAmountxx}
+                        label="Bonus Amount (NGN) "
+                        placeholder="Bonus Amount (NGN) "
+                        type="number"
+                        onChange={(e) => setBonusAmount(e.target.value)}
+                      />
+                    </FormControl>
+                  </Box>
+                </div>
+                <div className="col-sm-3" />
+                <div className="col-sm-3">
+                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <FormControl fullWidth>
+                      <TextField
+                        id="filled-number"
+                        value={subTotalAmountx}
+                        label="Total Amount (NGN) "
+                        placeholder="Total Amount (NGN) "
+                        type="number"
+                        name="totalAmount"
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                    </FormControl>
+                  </Box>
+                </div>
+              </div>
+            </Container>
+          </MDBox>
+          <br />
+          &nbsp; &nbsp;
+          <MDBox style={{ paddingLeft: "30px" }}>
+            <Container>
+              <div className="row">
+                <div className="col-sm-12">
+                  <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
+                    <Form.Label style={{ fontSize: 14 }}>Comment</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      value={commentx || ""}
+                      onKeyUp={handleOnPortfolioKeys}
+                      onChange={(e) => setComment(e.target.value)}
+                      rows={2}
+                    />
+                  </Form.Group>
+                </div>
+              </div>
+            </Container>
+          </MDBox>
+          <br />
+          <MDBox mt={4} mb={1}>
+            <MDButton
+              variant="gradient"
+              onClick={Pay}
+              style={Styles.buttonSx}
+              width="50%"
+              align="left"
+            >
+              Select Payment Method
+            </MDButton>
+          </MDBox>
+          &nbsp; &nbsp;
+          <MDBox>
+            {showPayment ? (
+              <Container>
+                <div className="row">
+                  <div className="col-sm-3">
+                    <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                      <FormControl fullWidth>
+                        <MDTypography
+                          variant="button"
+                          color="info"
+                          fontWeight="medium"
+                          style={Styles.textSx}
+                        >
+                          {/* Cash Payment: */}
+                        </MDTypography>
+                        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                        <label htmlFor="filled-number"> Cash Payment (NGN): </label>
+                        <TextField
+                          id="filled-number"
+                          value={cashPaymentx}
+                          label="Amount"
+                          placeholder="Amount"
+                          type="number"
+                          onChange={(e) => setCashPayment(e.target.value)}
+                        />
+                      </FormControl>
+                    </Box>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-3">
+                    <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                      <FormControl fullWidth>
+                        <MDTypography
+                          variant="button"
+                          color="info"
+                          fontWeight="medium"
+                          style={Styles.textSx}
+                        >
+                          {/* Transfer Payment: */}
+                        </MDTypography>
+                        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                        <label htmlFor="filled-number"> Transfer Payment (NGN): </label>
+                        <TextField
+                          id="filled-number"
+                          value={transferPaymentx}
+                          label="Amount"
+                          placeholder="Amount"
+                          type="number"
+                          onChange={(e) => setTransferPayment(e.target.value)}
+                        />
+                      </FormControl>
+                    </Box>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-sm-3">
+                    <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
                       <MDTypography
                         variant="button"
                         color="info"
                         fontWeight="medium"
                         style={Styles.textSx}
                       >
-                        {/* Cash Payment: */}
+                        {/* Card Payment: */}
                       </MDTypography>
-                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Cash Payment (NGN): </label>
-                      <TextField
-                        id="filled-number"
-                        value={cashPaymentx}
-                        label="Amount"
-                        placeholder="Amount"
-                        type="number"
-                        onChange={(e) => setCashPayment(e.target.value)}
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                    <FormControl fullWidth>
-                      <MDTypography
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        style={Styles.textSx}
-                      >
-                        {/* Transfer Payment: */}
-                      </MDTypography>
-                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Transfer Payment (NGN): </label>
-                      <TextField
-                        id="filled-number"
-                        value={transferPaymentx}
-                        label="Amount"
-                        placeholder="Amount"
-                        type="number"
-                        onChange={(e) => setTransferPayment(e.target.value)}
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                    <MDTypography
-                      variant="button"
-                      color="info"
-                      fontWeight="medium"
-                      style={Styles.textSx}
-                    >
-                      {/* Card Payment: */}
-                    </MDTypography>
-                    <FormControl fullWidth>
-                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Card Payment (NGN): </label>
-                      <TextField
-                        id="filled-number"
-                        value={cardPaymentx}
-                        label="Amount"
-                        placeholder="Amount"
-                        type="number"
-                        onChange={(e) => setCardPayment(e.target.value)}
-                      />
-                      <div>
-                        <MonnifyConsumer {...monNey} className="btn">
-                          {({ initializePayment }) => (
-                            // eslint-disable-next-line react/button-has-type
-                            <MDButton
-                              variant="gradient"
-                              onClick={() => initializePayment()}
-                              color="info"
-                              width="50%"
-                            >
-                              Pay using card
-                            </MDButton>
-                          )}
-                        </MonnifyConsumer>
-                      </div>
-                    </FormControl>
-                    {/* <MDBox mt={4} mb={1}>
+                      <FormControl fullWidth>
+                        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                        <label htmlFor="filled-number"> Card Payment (NGN): </label>
+                        <TextField
+                          id="filled-number"
+                          value={cardPaymentx}
+                          label="Amount"
+                          placeholder="Amount"
+                          type="number"
+                          onChange={(e) => setCardPayment(e.target.value)}
+                        />
+                        <div>
+                          <MonnifyConsumer {...monNey} className="btn">
+                            {({ initializePayment }) => (
+                              // eslint-disable-next-line react/button-has-type
+                              <MDButton
+                                variant="gradient"
+                                onClick={() => initializePayment()}
+                                color="info"
+                                width="50%"
+                              >
+                                Pay using card
+                              </MDButton>
+                            )}
+                          </MonnifyConsumer>
+                        </div>
+                      </FormControl>
+                      {/* <MDBox mt={4} mb={1}>
                       <div>
                         <MonnifyConsumer {...monNey} className="btn">
                           {({ initializePayment }) => (
@@ -1457,85 +1486,75 @@ function Sales() {
                         </MonnifyConsumer>
                       </div>
                     </MDBox> */}
-                  </Box>
+                    </Box>
+                  </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                    <FormControl fullWidth>
-                      <MDTypography
-                        variant="button"
-                        color="info"
-                        fontWeight="medium"
-                        style={Styles.textSx}
-                      >
-                        {/* Cash Payment: */}
-                      </MDTypography>
-                      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-                      <label htmlFor="filled-number"> Credit Facility (NGN): </label>
-                      <TextField
-                        id="filled-number"
-                        value={creditFacilityx}
-                        label="Credit Facility"
-                        placeholder="Credit Facility"
-                        type="number"
-                        onChange={(e) => setCreditFacility(e.target.value)}
-                      />
-                    </FormControl>
-                  </Box>
+                <div className="row">
+                  <div className="col-sm-3">
+                    <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                      <FormControl fullWidth>
+                        <MDTypography
+                          variant="button"
+                          color="info"
+                          fontWeight="medium"
+                          style={Styles.textSx}
+                        >
+                          {/* Cash Payment: */}
+                        </MDTypography>
+                        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                        <label htmlFor="filled-number"> Credit Facility (NGN): </label>
+                        <TextField
+                          id="filled-number"
+                          value={creditFacilityx}
+                          label="Credit Facility"
+                          placeholder="Credit Facility"
+                          type="number"
+                          onChange={(e) => setCreditFacility(e.target.value)}
+                        />
+                      </FormControl>
+                    </Box>
+                  </div>
                 </div>
-              </div>
-            </Container>
-          ) : (
-            <></>
-          )}
+              </Container>
+            ) : (
+              <></>
+            )}
 
-          <MDBox style={{ paddingTop: "40px", paddingLeft: "400px" }}>
-            <Container>
-              <div className="row">
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <TextField
-                        id="filled-number"
-                        value={Payment}
-                        label="Balance (NGN)"
-                        placeholder="Balance (NGN)"
-                        type="number"
-                        name="balance"
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      />
-                    </FormControl>
-                  </Box>
+            <MDBox style={{ paddingTop: "40px", paddingLeft: "400px" }}>
+              <Container>
+                <div className="row">
+                  <div className="col-sm-3">
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControl fullWidth>
+                        <TextField
+                          id="filled-number"
+                          value={Payment}
+                          label="Balance (NGN)"
+                          placeholder="Balance (NGN)"
+                          type="number"
+                          name="balance"
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                        />
+                      </FormControl>
+                    </Box>
+                  </div>
                 </div>
-              </div>
-            </Container>
+              </Container>
+            </MDBox>
           </MDBox>
-        </MDBox>
-        <MDBox mt={4} mb={1}>
-          <MDButton
-            variant="gradient"
-            onClick={Pay}
-            style={Styles.buttonSx}
-            width="50%"
-            align="left"
-          >
-            Pay
-          </MDButton>
-        </MDBox>
-        <MDBox mt={4} mb={1} align="center">
-          <MDButton
-            variant="gradient"
-            onClick={handleValidate2}
-            style={Styles.buttonSx}
-            width="50%"
-            align="left"
-          >
-            Print
-          </MDButton>
+          <MDBox mt={4} mb={1} align="center">
+            <MDButton
+              variant="gradient"
+              onClick={handleValidate2}
+              style={Styles.buttonSx}
+              width="50%"
+              align="left"
+            >
+              Pay
+            </MDButton>
+          </MDBox>
         </MDBox>
       </Card>
       <div>
