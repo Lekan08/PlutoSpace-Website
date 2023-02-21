@@ -255,6 +255,9 @@ function MakePayment() {
             <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
               {" "}
             </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="amount">
+              {" "}
+            </MDTypography>
           </MDBox>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
@@ -263,7 +266,7 @@ function MakePayment() {
                   <div className="col-sm-6">
                     <TextField
                       id="filled-number"
-                      value={amountx || ""}
+                      value={amountx}
                       label="Amount (NGN) "
                       placeholder="Amount "
                       type="number"
@@ -279,7 +282,7 @@ function MakePayment() {
                     <Form.Select
                       value={collectedByx}
                       aria-label="Default select example"
-                      onChange={(e) => setCollectedBy(e.target.value)}
+                      //   onChange={(e) => setCollectedBy(e.target.value)}
                       onInput={(e) => handleCollectedBy(e.target.value)}
                     >
                       <option value="0">--Collected By--</option>
