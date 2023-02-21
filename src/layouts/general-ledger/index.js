@@ -51,6 +51,7 @@ function GeneralLedger() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [opened, setOpened] = useState(false);
+  const [disab, setDisab] = useState(false);
   const navigate = useNavigate();
 
   const { allPHeaders: myHeaders } = PHeaders();
@@ -64,8 +65,8 @@ function GeneralLedger() {
       setEnd(fetched[1]);
       setGets(true);
       setItems(LedgerInfo);
+      if (LedgerInfo.length > 0) setDisab(true);
     }
-    console.log(fetched, LedgerInfo);
   }, []);
 
   // eslint-disable-next-line consistent-return
@@ -114,7 +115,6 @@ function GeneralLedger() {
             setOpened(false);
             const LedgerInfo = JSON.stringify(result);
             const fetched = JSON.stringify([start, end]);
-            console.log(LedgerInfo, fetched);
             localStorage.setItem("fetched", fetched);
             localStorage.setItem("LedgerInfo", LedgerInfo);
           }
@@ -151,6 +151,13 @@ function GeneralLedger() {
     }
     return `${retDate} ${hour}:${minutes}:${seconds}`;
   };
+
+  const handlePost = (value) => {
+    const transaction = items.filter((data) => data.requestID === value);
+    sessionStorage.setItem("transaction", JSON.stringify(transaction));
+    navigate(`/general-ledger/post-transaction`);
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -195,6 +202,7 @@ function GeneralLedger() {
                       shrink: true,
                     }}
                     value={start}
+                    disabled={disab}
                     onChange={(e) => setStart(e.target.value)}
                   />
                 </div>
@@ -210,6 +218,7 @@ function GeneralLedger() {
                       shrink: true,
                     }}
                     value={end}
+                    disabled={disab}
                     onChange={(e) => setEnd(e.target.value)}
                   />
                 </div>
@@ -217,14 +226,17 @@ function GeneralLedger() {
               </div>
             </MDBox>
           </div>
+          {disab && (
+            <i style={{ color: "red", fontSize: "60%" }}>
+              please post all transactions before generating new transactions
+            </i>
+          )}
           <MDBox mt={4} mb={1}>
             <MDButton
               variant="gradient"
               onClick={handleGets}
-              //   color="info"
               style={Styles.buttonSx}
-              // width="50%"
-              // align="left"
+              disabled={disab}
             >
               Fetch
             </MDButton>
@@ -248,6 +260,7 @@ function GeneralLedger() {
                   { Header: "Source", accessor: "source", align: "left" },
                   { Header: "Total Amount", accessor: "totalAmount", align: "left" },
                   { Header: "particulars", accessor: "particulars", align: "left" },
+                  { Header: "category", accessor: "category", align: "left" },
                   {
                     Header: "Created Date",
                     accessor: "createdTime",
@@ -256,7 +269,7 @@ function GeneralLedger() {
                   },
                   {
                     Header: "actions",
-                    accessor: "id",
+                    accessor: "requestID",
                     // eslint-disable-next-line react/prop-types
                     Cell: ({ cell: { value } }) => (
                       <div
@@ -272,22 +285,9 @@ function GeneralLedger() {
                           </Dropdown.Toggle>
 
                           <Dropdown.Menu>
-                            <Dropdown.Item>Post Transaction</Dropdown.Item>
-                            {/* <Dropdown.Item onClick={() => handleUpdateInsuranceDamage(value)}>
-                              Update
+                            <Dropdown.Item onClick={() => handlePost(value)}>
+                              Post Transaction
                             </Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleDecisionInsurance(value, 1)}>
-                              Approve
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleDecisionInsurance(value, 2)}>
-                              Decline
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleForward(value)}>
-                              Forward Decision
-                            </Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleDisable(value)}>
-                              Disable
-                            </Dropdown.Item> */}
                           </Dropdown.Menu>
                         </Dropdown>
                       </div>

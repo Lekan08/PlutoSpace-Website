@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
-import { Dropdown } from "react-bootstrap";
+import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -11,7 +11,6 @@ import { Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import Icon from "@mui/material/Icon";
 
 function CreditFacility() {
   const { allGHeaders: miHeaders } = GHeaders();
@@ -61,9 +60,6 @@ function CreditFacility() {
   }, []);
 
   console.log(dataTable);
-  const handleUpdate = (value) => {
-    navigate(`/creditFacility/view?id=${value}`);
-  };
 
   //  Method to change date from timestamp
   const changeDate = (timestamp) => {
@@ -121,19 +117,11 @@ function CreditFacility() {
       // eslint-disable-next-line react/prop-types
       Cell: ({ cell: { value } }) => (
         <div
-<<<<<<< HEAD
-        // style={{
-        //   width: "100%",
-        //   backgroundColor: "#f96d02",
-        //   borderRadius: "2px",
-        // }}
-=======
           style={{
             width: "100%",
             backgroundColor: "#f96d02",
             borderRadius: "2px",
           }}
->>>>>>> ee810733f8eebf1a646b43283fd536bd3b687602
         >
           <Dropdown>
             <Dropdown.Toggle variant="secondary" id="dropdown-basic">
@@ -141,30 +129,38 @@ function CreditFacility() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-<<<<<<< HEAD
-              <Dropdown.Item onClick={() => handleUpdate(value)}>view credits </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>{" "}
-=======
-              <Dropdown.Item onClick={() => navigate(`/creditFacility/makepayment?id=${value}`)}>
+              <Dropdown.Item onClick={() => navigate(`/credit-Facility/make-payment?id=${value}`)}>
                 Make Payment
               </Dropdown.Item>
-              {/* <Dropdown.Item onClick={() => handleView(value, dataTablex)}>View </Dropdown.Item> */}
-              {/* <Dropdown.Item onClick={() => handleDelete(value)}>Delete </Dropdown.Item>
-              <Dropdown.Item onClick={() => handleapprove(value)}>Approve </Dropdown.Item> */}
+              <Dropdown.Item onClick={() => navigate(`/credit-Facility/view?id=${value}`)}>
+                View
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
->>>>>>> ee810733f8eebf1a646b43283fd536bd3b687602
         </div>
       ),
       align: "left",
     },
   ];
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={3}>
+        <MDBox
+          variant="gradient"
+          bgColor="info"
+          borderRadius="lg"
+          coloredShadow="info"
+          mx={2}
+          mt={-3}
+          p={2}
+          mb={1}
+          textAlign="center"
+        >
+          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            Credit Facility
+          </MDTypography>
+        </MDBox>
         <DataTable
           table={{ columns: pColumns, rows: dataTable }}
           isSorted

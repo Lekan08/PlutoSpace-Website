@@ -201,7 +201,6 @@ import InterviewDate from "layouts/interviewSchedule/Interview-Date";
 import Accessor from "layouts/myAccessor";
 import Appointments from "layouts/appointments";
 import MyCalendar from "layouts/myCalendar";
-import Viewcredit from "layouts/creditFacility/view";
 import UpdateCalendar from "layouts/appointments/updateAppointment";
 import DocumentLibrary from "layouts/documentLibrary";
 import UpdateReportProduction from "layouts/products/reportProduction/update";
@@ -255,11 +254,12 @@ import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
 import CreditFacility from "layouts/creditFacility";
+import MakePayment from "layouts/creditFacility/makepayment";
+import ViewCreditFacility from "layouts/creditFacility/view";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
-// import SalesPayment from "layouts/sales/salesPayment";
-import GeneralLedger from "layouts/general-ledger";
+import SalesPayment from "layouts/sales/salesPayment";
 import FilterSales from "layouts/sales/filterSales";
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
@@ -299,6 +299,9 @@ import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/update";
 import Voucher from "./layouts/voucher/index";
+
+import GeneralLedger from "layouts/general-ledger";
+import PostTransactions from "./layouts/general-ledger/postTransactions/index";
 
 const routes = [
   {
@@ -348,14 +351,6 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/matters-Arising",
     component: <MattersArising />,
-  },
-  {
-    type: "collapse",
-    name: "Credit Faclilities",
-    key: "creditFacility",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/sales/credit-facilities",
-    component: <creditFacility />,
   },
   {
     name: "Escalate Matter",
@@ -488,6 +483,13 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/general-ledger",
     component: <GeneralLedger />,
+  },
+  {
+    name: "Post Transaction",
+    key: "generalLedger",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/general-ledger/post-transaction",
+    component: <PostTransactions />,
   },
   {
     type: "divider",
@@ -695,13 +697,6 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/asset/attach-Documents",
     component: <AssetAttachDocument />,
-  },
-  {
-    name: "VIEW CREDIT",
-    key: "Viewcredit",
-    icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/creditFacility/view",
-    component: <Viewcredit />,
   },
   {
     type: "collapse",
@@ -1979,14 +1974,28 @@ const routes = [
     route: "/credit-Facility",
     component: <CreditFacility />,
   },
-  // {
-  //   // type: "collapse",
-  //   name: "Sales Payment",
-  //   key: "salespayment",
-  //   icon: <Icon fontSize="small">point_of_sale</Icon>,
-  //   route: "/sales/sales-payment",
-  //   component: <SalesPayment />,
-  // },
+  {
+    name: "Make Payment",
+    key: "makepayment",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/credit-Facility/make-payment",
+    component: <MakePayment />,
+  },
+  {
+    name: "View Credit Facility",
+    key: "creditFacility/view",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/credit-Facility/view",
+    component: <ViewCreditFacility />,
+  },
+  {
+    // type: "collapse",
+    name: "Sales Payment",
+    key: "salespayment",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/sales/sales-payment",
+    component: <SalesPayment />,
+  },
   {
     type: "collapse",
     name: "Filter Sales",
