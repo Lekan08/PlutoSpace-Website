@@ -119,7 +119,7 @@ function ThirdParty() {
 
   const handleEmailSelect = (valuex) => {
     setEmailx(valuex);
-    const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
+    const letters = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/);
     if (!valuex.match(letters)) {
       setCheckedEmail(false);
       // eslint-disable-next-line no-unused-expressions
@@ -551,7 +551,7 @@ function ThirdParty() {
 
   const UhandleEmailSelect = (valuex) => {
     setUemailx(valuex);
-    const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
+    const letters = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/);
     if (!valuex.match(letters)) {
       UsetCheckedEmail(false);
       // eslint-disable-next-line no-unused-expressions

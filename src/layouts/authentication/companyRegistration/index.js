@@ -285,19 +285,26 @@ function CompanyReg() {
                         console.log(
                           `STATUS - ${resultPH.status} - - - - - - MESSAGE - ${resultPH.message}`
                         );
+                        setOpened(false);
+                        MySwal.fire({
+                          title: result.status,
+                          type: "success",
+                          text: result.message,
+                        }).then(() => {
+                          navigate(`/Create-Branch?orgID=${result.data.id}`, { replace: true });
+                        });
                       });
                   });
               }
             });
+        } else {
+          setOpened(false);
+          MySwal.fire({
+            title: result.status,
+            type: "success",
+            text: result.message,
+          });
         }
-        setOpened(false);
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          navigate("/authentication/sign-in", { replace: true });
-        });
       })
       .catch((error) => {
         setOpened(false);
