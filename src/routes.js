@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/no-named-as-default */
 /**
@@ -58,6 +59,7 @@ import AnnouncementType from "layouts/announcementtype";
 import Steps from "layouts/companysteps";
 import Branches from "layouts/branches/index";
 import UpdateBranch from "layouts/branches/data/updateBranch";
+import CreateBranch from "layouts/authentication/companyRegistration/createBranch";
 import CompanyReg from "layouts/authentication/companyRegistration";
 import SysRoles from "layouts/systemRoles";
 import RolesAndPerms from "layouts/systemRoles/addRolesAndPerms";
@@ -199,7 +201,6 @@ import InterviewDate from "layouts/interviewSchedule/Interview-Date";
 import Accessor from "layouts/myAccessor";
 import Appointments from "layouts/appointments";
 import MyCalendar from "layouts/myCalendar";
-
 import UpdateCalendar from "layouts/appointments/updateAppointment";
 import DocumentLibrary from "layouts/documentLibrary";
 import UpdateReportProduction from "layouts/products/reportProduction/update";
@@ -226,6 +227,7 @@ import UpdateUserPension from "layouts/companyPension/updateUserPension";
 import CompanyPension from "layouts/companyPension";
 import AddPension from "layouts/companyPension/addPension";
 import MyPension from "layouts/myPension";
+import ThirdParty from "layouts/third-Party";
 import BusinessTravel from "layouts/businessTravel";
 import UpdateBusinessTravel from "layouts/businessTravel/update";
 import BusinessTravelDashboard from "layouts/businesstravel-dashboard";
@@ -252,10 +254,13 @@ import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
 import CreditFacility from "layouts/creditFacility";
+import MakePayment from "layouts/creditFacility/makepayment";
+import ViewCreditFacility from "layouts/creditFacility/view";
 import LeadsWorkflow from "layouts/leadsWorkflow";
 import AssignCbtToJobPost from "layouts/cbt/assignCbtToJobPost";
 import ViewResultsAdmin from "layouts/cbt/viewResults";
 import SalesPayment from "layouts/sales/salesPayment";
+import GeneralLedger from "layouts/general-ledger";
 import FilterSales from "layouts/sales/filterSales";
 import Services from "layouts/services";
 import UpdateService from "layouts/services/update";
@@ -288,6 +293,8 @@ import TreasuryDebtors from "layouts/treasury/treasuryGetDebtors";
 
 import AppraisalHistory from "layouts/appraisal/appraisalHistory";
 import MultiSession from "layouts/onboardingCompany/sessions/multisession";
+import Accounts from "layouts/accounting-main";
+import AccountSheet from "layouts/accounting-main/account-sheet";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
@@ -425,6 +432,14 @@ const routes = [
     component: <Reports />,
   },
   {
+    type: "collapse",
+    name: "Third Party",
+    key: "thirdParty",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/third-Party",
+    component: <ThirdParty />,
+  },
+  {
     type: "divider",
     name: "",
     key: "divd1Accounting",
@@ -438,11 +453,34 @@ const routes = [
   },
   {
     type: "collapse",
+    name: "Accounts",
+    key: "accounting-main",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/accounts",
+    component: <Accounts />,
+  },
+  {
+    name: "Account Sheet",
+    key: "accounting-sheet",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/accounts/account-sheet",
+    component: <AccountSheet />,
+  },
+  {
+    type: "collapse",
     name: "Accounting",
     key: "accounting",
     icon: <Icon fontSize="small">today</Icon>,
     route: "/accounting",
     component: <Accounting />,
+  },
+  {
+    type: "collapse",
+    name: "General Ledger",
+    key: "generalLedger",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/general-ledger",
+    component: <GeneralLedger />,
   },
   {
     type: "divider",
@@ -1928,6 +1966,20 @@ const routes = [
     component: <CreditFacility />,
   },
   {
+    name: "Make Payment",
+    key: "makepayment",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/credit-Facility/make-payment",
+    component: <MakePayment />,
+  },
+  {
+    name: "View Credit Facility",
+    key: "creditFacility/view",
+    icon: <Icon fontSize="small">point_of_sale</Icon>,
+    route: "/credit-Facility/view",
+    component: <ViewCreditFacility />,
+  },
+  {
     // type: "collapse",
     name: "Sales Payment",
     key: "salespayment",
@@ -2167,6 +2219,13 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/Update-Branch",
     component: <UpdateBranch />,
+  },
+  {
+    name: "Create Branch",
+    key: "createBranch",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/Create-Branch",
+    component: <CreateBranch />,
   },
   {
     type: "collapse",
