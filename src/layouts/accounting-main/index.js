@@ -131,9 +131,19 @@ function Accounts() {
       categories: [
         { name: "CURRENT", value: "CURRENT" },
         { name: "FIXED", value: "FIXED" },
-        { name: "OPERATING COST", value: "OPERATING_COST" },
-        { name: "NON OPERATING COST", value: "NON_OPERATING_COST" },
+        // { name: "OPERATING COST", value: "OPERATING_COST" },
+        // { name: "NON OPERATING COST", value: "NON_OPERATING_COST" },
       ],
+    },
+    {
+      name: "BANKS",
+      value: "BANKS",
+      categories: [],
+    },
+    {
+      name: "CREDIT CARDS",
+      value: "CREDIT_CARDS",
+      categories: [],
     },
     {
       name: "EQUITY",
@@ -143,7 +153,11 @@ function Accounts() {
     {
       name: "EXPENSES",
       value: "EXPENSES",
-      categories: [],
+      categories: [
+        { name: "COST OF GOODS SOLD", value: "COST_OF_GOODS_SOLD" },
+        { name: "OPERATING COST", value: "OPERATING_COST" },
+        { name: "NON OPERATING COST", value: "NON_OPERATING_COST" },
+      ],
     },
     {
       name: "INCOME",
@@ -155,9 +169,7 @@ function Accounts() {
       value: "LIABILITY",
       categories: [
         { name: "CURRENT", value: "CURRENT" },
-        { name: "FIXED", value: "FIXED" },
-        { name: "OPERATING COST", value: "OPERATING_COST" },
-        { name: "NON OPERATING COST", value: "NON_OPERATING_COST" },
+        { name: "LONG TERM", value: "LONG_TERM" },
       ],
     },
   ];
