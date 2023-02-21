@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
 import DataTable from "examples/Tables/DataTable";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -145,6 +146,21 @@ function CreditFacility() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox pt={3}>
+        <MDBox
+          variant="gradient"
+          bgColor="info"
+          borderRadius="lg"
+          coloredShadow="info"
+          mx={2}
+          mt={-3}
+          p={2}
+          mb={1}
+          textAlign="center"
+        >
+          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            Credit Facility
+          </MDTypography>
+        </MDBox>
         <DataTable
           table={{ columns: pColumns, rows: dataTable }}
           isSorted

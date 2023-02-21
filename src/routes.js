@@ -201,7 +201,6 @@ import InterviewDate from "layouts/interviewSchedule/Interview-Date";
 import Accessor from "layouts/myAccessor";
 import Appointments from "layouts/appointments";
 import MyCalendar from "layouts/myCalendar";
-// import Viewcredit from "layouts/creditFacility/view";
 import UpdateCalendar from "layouts/appointments/updateAppointment";
 import DocumentLibrary from "layouts/documentLibrary";
 import UpdateReportProduction from "layouts/products/reportProduction/update";
@@ -350,14 +349,6 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/matters-Arising",
     component: <MattersArising />,
-  },
-  {
-    type: "collapse",
-    name: "Credit Faclilities",
-    key: "creditFacility",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/sales/credit-facilities",
-    component: <creditFacility />,
   },
   {
     name: "Escalate Matter",

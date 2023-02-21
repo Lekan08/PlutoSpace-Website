@@ -34,6 +34,20 @@ function MakePayment() {
   const [collectedByx, setCollectedBy] = useState([]);
   const [userInfox, setUserInfo] = useState([]);
 
+  const handleAmount = (valuex) => {
+    console.log(valuex);
+    if (!valuex) {
+      setAmount(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("amount").innerHTML = "Amount is required";
+    }
+    if (valuex) {
+      setAmount(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("amount").innerHTML = " ";
+    }
+  };
+
   const handleCollectedBy = (valuex) => {
     setCollectedBy(valuex);
     console.log(valuex);
@@ -49,27 +63,13 @@ function MakePayment() {
     }
   };
 
-  const handleAmount = (valuex) => {
-    console.log(valuex);
-    if (!valuex) {
-      setAmount(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("amount").innerHTML = "Amount is required";
-    }
-    if (valuex) {
-      setAmount(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("amount").innerHTML = " ";
-    }
-  };
-
   const handleClick = (e) => {
     e.preventDefault();
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const idx = data11.personalID;
     const raw = JSON.stringify({
       id: idx,
-      amount: amountx,
+      amount: Number(amountx),
       collectedBy: collectedByx,
       notes: notex,
     });
@@ -252,10 +252,10 @@ function MakePayment() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="amount">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="amount">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="collectedBy">
               {" "}
             </MDTypography>
           </MDBox>
