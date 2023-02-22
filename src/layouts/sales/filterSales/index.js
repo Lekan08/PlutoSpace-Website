@@ -292,7 +292,7 @@ function FilterSales() {
                       <Box sx={{ minWidth: 100 }}>
                         <FormControl fullWidth>
                           <TextField
-                            label="Start Total Amount(NGN) *"
+                            label="Start Total Amount (NGN)"
                             type="number"
                             value={startAmountx}
                             onChange={(e) => setStartAmount(e.target.value)}
@@ -305,7 +305,7 @@ function FilterSales() {
                       <Box sx={{ minWidth: 100 }}>
                         <FormControl fullWidth>
                           <TextField
-                            label="End Total Amount(NGN) *"
+                            label="End Total Amount (NGN)"
                             type="number"
                             value={endAmountx}
                             onChange={(e) => setEndAmount(e.target.value)}
@@ -325,7 +325,7 @@ function FilterSales() {
                         <FormControl fullWidth>
                           <TextField
                             id="datetime-local"
-                            label="Start Time *"
+                            label="Start Time"
                             type="datetime-local"
                             InputLabelProps={{
                               shrink: true,
