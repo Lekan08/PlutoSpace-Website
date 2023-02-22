@@ -184,6 +184,7 @@ function Accounts() {
   //   const [showClients, setShowClients] = useState(false);
 
   const [items, setItems] = useState([]);
+  const [superAccounts, setSuperAccounts] = useState([]);
 
   const [opened, setOpened] = useState(false);
 
@@ -312,12 +313,88 @@ function Accounts() {
       });
   };
 
+  const handleGetSuperAccount = () => {
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    setOpened(true);
+    const headers = miHeaders;
+    // const date = new Date();
+    // const firstDay = new Date(date.getFullYear(), date.getMonth(), 1).getTime();
+    // const curDay = new Date().getTime();
+
+    // const startTimee = new Date(startTimex).getTime();
+    // const endTimee = new Date(endTimex).getTime();
+    // let nStartTime = firstDay;
+    // let nEndTime = curDay;
+    // if (startTimex === "") {
+    //   nStartTime = firstDay;
+    // } else {
+    //   nStartTime = startTimee;
+    // }
+    // if (endTimex === "") {
+    //   nEndTime = curDay;
+    // } else {
+    //   nEndTime = endTimee;
+    // }
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/accounts/getSuperAccounts/${orgIDs}`, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(result);
+        if (result.status !== 500) {
+          // if (Object.keys(result).length !== 0) {
+          if (result.length !== 0) {
+            setSuperAccounts(result);
+          } else {
+            setSuperAccounts([]);
+          }
+          // }
+        }
+
+        setOpened(false);
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+        // }).then(() => {
+        //   handleOpen();
+        // });
+      });
+  };
+
   useEffect(() => {
     let isMounted = true;
 
     if (isMounted) {
       //   fetches the table data
       handleGets();
+      handleGetSuperAccount();
     }
     return () => {
       isMounted = false;
@@ -1071,7 +1148,7 @@ function Accounts() {
                                 aria-label="Default select example"
                               >
                                 <option value="">--Select a super acount--</option>
-                                {items.map((each) => (
+                                {superAccounts.map((each) => (
                                   <option key={each.id} value={each.id}>
                                     {each.name}
                                   </option>
@@ -1605,7 +1682,7 @@ function Accounts() {
                                     aria-label="Default select example"
                                   >
                                     <option value="">--Select a super acount--</option>
-                                    {items.map((each) => (
+                                    {superAccounts.map((each) => (
                                       <option key={each.id} value={each.id}>
                                         {each.name}
                                       </option>
