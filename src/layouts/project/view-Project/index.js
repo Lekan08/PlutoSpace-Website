@@ -861,7 +861,7 @@ export default function Pipeline() {
     setModalExpectedStartTime(filterFirstedd[0].expectedStartTime);
     setModalExpectedEndTime(filterFirstedd[0].expectedEndTime);
     setModalActualStartTime(filterFirstedd[0].actualStartTime);
-    setModalActualEndTime(filterFirstedd[0].actualStartTime);
+    setModalActualEndTime(filterFirstedd[0].actualEndTime);
     setModalTotalActualCost(filterFirstedd[0].totalActualCost);
     setModalAssignTo(filterFirstedd[0].assignedTo);
   };
@@ -1156,10 +1156,14 @@ export default function Pipeline() {
                                                 color: "white",
                                                 ...provideds.draggableProps.style,
                                               }}
-                                              onClick={() => openModal(item.id)}
                                               // onKeyUp={() => }
                                             >
-                                              {item.title}
+                                              <Box
+                                                style={{ backgroundColor: "#318CE7" }}
+                                                onClick={() => openModal(item.id)}
+                                              >
+                                                {item.title}
+                                              </Box>
                                               <SubtaskAvailable
                                                 taskID={item.id}
                                                 assignedToName={item.assignedToName}
