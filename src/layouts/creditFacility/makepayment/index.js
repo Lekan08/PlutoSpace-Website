@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import { Container, Dropdown, Form } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -13,7 +13,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Footer from "examples/Footer";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
-import Icon from "@mui/material/Icon";
+// import Icon from "@mui/material/Icon";
 // import Select from "react-select";
 import Styles from "styles";
 import PHeaders from "postHeader";
@@ -28,47 +28,49 @@ function MakePayment() {
   const navigate = useNavigate();
 
   const [opened, setOpened] = useState(false);
-  const [dataTablex, setDataTable] = useState([]);
+  const [dataTablex, setDataTablex] = useState([]);
   const [amountx, setAmount] = useState("");
   const [notex] = useState("");
-  const [collectedByx, setCollectedBy] = useState([]);
+  const [collectedByx, setCollectedBy] = useState("");
   const [userInfox, setUserInfo] = useState([]);
 
-  const handleCollectedBy = (valuex) => {
-    setCollectedBy(valuex);
-    console.log(valuex);
+  const [checkedAmountx, setCheckedAmountx] = useState(false);
+  const [checkedCollectedByx, setCheckedCollectedByx] = useState(false);
+
+  const handleAmount = (valuex) => {
     if (!valuex) {
-      setCollectedBy(false);
+      setCheckedAmountx(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("collectedBy").innerHTML = "Assign bill to user <br>";
+      document.getElementById("amount").innerHTML = "Amount is required";
     }
     if (valuex) {
-      setCollectedBy(true);
+      setCheckedAmountx(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("amount").innerHTML = " ";
+    }
+  };
+  const handleCollectedBy = (valuex) => {
+    setCollectedBy(valuex);
+    if (!valuex) {
+      setCheckedCollectedByx(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("collectedBy").innerHTML = "Collected by is required<br>";
+    }
+    if (valuex) {
+      setCheckedCollectedByx(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("collectedBy").innerHTML = " ";
     }
   };
 
-  const handleAmount = (valuex) => {
-    console.log(valuex);
-    if (!valuex) {
-      setAmount(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("amount").innerHTML = "Amount is required";
-    }
-    if (valuex) {
-      setAmount(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("amount").innerHTML = " ";
-    }
-  };
-
   const handleClick = (e) => {
+    setOpened(true);
     e.preventDefault();
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-    const idx = data11.personalID;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const ids = urlParams.get("id");
     const raw = JSON.stringify({
-      id: idx,
+      id: ids,
       amount: amountx,
       collectedBy: collectedByx,
       notes: notex,
@@ -110,7 +112,6 @@ function MakePayment() {
         }).then(() => {
           window.location.reload();
         });
-        console.log(result);
       })
       .catch((error) => {
         setOpened(false);
@@ -149,11 +150,57 @@ function MakePayment() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
           setUserInfo(result);
-          setDataTable(result);
         }
       });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const handleGet = () => {
+    setOpened(true);
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const id = urlParams.get("id");
+
+    const headers = miHeaders;
+
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/creditFacility/getByIds/${id}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (result.length !== 0) {
+          if (result[0].payments !== null && result[0].payments.length > 0) {
+            setDataTablex(result[0].payments);
+          }
+          setAmount(result[0].itemamount);
+          setCollectedBy(result[0].itemCollectedBy);
+        }
+      }, []);
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+    if (isMounted) {
+      handleGet();
+    }
     return () => {
       isMounted = false;
     };
@@ -164,61 +211,58 @@ function MakePayment() {
     const retDate = date.toDateString();
     return retDate;
   };
-  //   const handleValidate = (e) => {
-  //     handleAmount(amountx);
-  //     handleCollectedBy(collectedByx);
-  //     if (
-  //       checkedAmountx &&
-  //       checkcollectedByx === true
-  //     ) {
-  //       handleClick(e);
-  //     }
-  //   };
+  const handleValidate = (e) => {
+    handleAmount(amountx);
+    handleCollectedBy(collectedByx);
+    if (checkedAmountx && checkedCollectedByx === true) {
+      handleClick(e);
+    }
+  };
 
   const pColumns = [
     {
-      Header: "Amount",
+      Header: "Amount (NGN)",
       accessor: "amount",
       align: "left",
     },
     {
       Header: "Collected By",
-      accessor: "empName",
+      accessor: "collectedByName",
       align: "left",
     },
     {
-      Header: "Created Time",
-      accessor: "createdTime",
+      Header: "Collected Time",
+      accessor: "collectedTime",
       Cell: ({ cell: { value } }) => changeDate(value),
       align: "left",
     },
-    {
-      Header: "Actions",
-      accessor: "id",
-      // eslint-disable-next-line react/prop-types
-      Cell: ({ cell: { value } }) => (
-        <div
-          style={{
-            width: "100%",
-            backgroundColor: "#f96d02",
-            borderRadius: "2px",
-          }}
-        >
-          <Dropdown>
-            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-              <Icon sx={{ fontWeight: "light" }}>settings</Icon>
-            </Dropdown.Toggle>
+    // {
+    //   Header: "Actions",
+    //   accessor: "id",
+    //   // eslint-disable-next-line react/prop-types
+    //   Cell: ({ cell: { value } }) => (
+    //     <div
+    //       style={{
+    //         width: "100%",
+    //         backgroundColor: "#f96d02",
+    //         borderRadius: "2px",
+    //       }}
+    //     >
+    //       <Dropdown>
+    //         <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+    //           <Icon sx={{ fontWeight: "light" }}>settings</Icon>
+    //         </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigate(`/my-Bills/update-My-Bills?id=${value}`)}>
-                Update
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      ),
-      align: "left",
-    },
+    //         {/* <Dropdown.Menu>
+    //           <Dropdown.Item onClick={() => navigate(`/my-Bills/update-My-Bills?id=${value}`)}>
+    //             Update
+    //           </Dropdown.Item>
+    //         </Dropdown.Menu> */}
+    //       </Dropdown>
+    //     </div>
+    //   ),
+    //   align: "left",
+    // },
   ];
 
   return (
@@ -252,7 +296,10 @@ function MakePayment() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="amount">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="collectedBy">
               {" "}
             </MDTypography>
           </MDBox>
@@ -263,14 +310,14 @@ function MakePayment() {
                   <div className="col-sm-6">
                     <TextField
                       id="filled-number"
-                      value={amountx || ""}
+                      value={amountx}
                       label="Amount (NGN) "
                       placeholder="Amount "
                       type="number"
                       onChange={(e) => setAmount(e.target.value)}
                       onKeyUp={(e) => handleAmount(e.target.value)}
                       sx={{
-                        width: 250,
+                        width: 200,
                       }}
                       required
                     />
@@ -279,10 +326,10 @@ function MakePayment() {
                     <Form.Select
                       value={collectedByx}
                       aria-label="Default select example"
-                      onChange={(e) => setCollectedBy(e.target.value)}
+                      //   onChange={(e) => setCollectedBy(e.target.value)}
                       onInput={(e) => handleCollectedBy(e.target.value)}
                     >
-                      <option value="0">--Collected By--</option>
+                      <option>--Collected By--</option>
                       {userInfox.map((item) => (
                         <option key={item.personal.id} value={item.personal.id}>
                           {item.personal.fname} {item.personal.lname}
@@ -297,7 +344,7 @@ function MakePayment() {
               <MDBox mt={4} mb={1}>
                 <MDButton
                   variant="gradient"
-                  onClick={handleClick}
+                  onClick={handleValidate}
                   color="info"
                   style={Styles.buttonSx}
                   width="50%"
