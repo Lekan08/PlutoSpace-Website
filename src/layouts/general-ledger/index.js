@@ -118,6 +118,14 @@ function GeneralLedger() {
             localStorage.setItem("fetched", fetched);
             localStorage.setItem("LedgerInfo", LedgerInfo);
           }
+        })
+        .catch((error) => {
+          setOpened(false);
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
         });
       return () => {
         isMounted = false;
@@ -162,7 +170,7 @@ function GeneralLedger() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={20}>
+        <MDBox pt={4} pb={3} px="10vw">
           <MDBox
             variant="gradient"
             // bgColor="info"
@@ -192,37 +200,39 @@ function GeneralLedger() {
                 justifyContent: "center",
               }}
             >
-              <div className="col-sm-6">
-                <div className="col-sm-3">
-                  <TextField
-                    id="datetime-local"
-                    label="From *"
-                    type="datetime-local"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    value={start}
-                    disabled={disab}
-                    onChange={(e) => setStart(e.target.value)}
-                  />
+              <div className="row" style={{ paddingTop: 20 }}>
+                <div className="col-sm-6" style={{ paddingLeft: "5vw", paddingRight: "5vw" }}>
+                  <div className="col-sm-3">
+                    <TextField
+                      id="datetime-local"
+                      label="From *"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      value={start}
+                      disabled={disab}
+                      onChange={(e) => setStart(e.target.value)}
+                    />
+                  </div>
+                  <i style={{ color: "red", fontSize: "60%" }}>required</i>
                 </div>
-                <i style={{ color: "red", fontSize: "60%" }}>required</i>
-              </div>
-              <div className="col-sm-6" style={{ paddingLeft: "100px" }}>
-                <div className="col-sm-3">
-                  <TextField
-                    id="datetime-local"
-                    label="To *"
-                    type="datetime-local"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    value={end}
-                    disabled={disab}
-                    onChange={(e) => setEnd(e.target.value)}
-                  />
+                <div className="col-sm-6" style={{ paddingLeft: "5vw", paddingRight: "5vw" }}>
+                  <div className="col-sm-3">
+                    <TextField
+                      id="datetime-local"
+                      label="To *"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      value={end}
+                      disabled={disab}
+                      onChange={(e) => setEnd(e.target.value)}
+                    />
+                  </div>
+                  <i style={{ color: "red", fontSize: "60%" }}>required</i>
                 </div>
-                <i style={{ color: "red", fontSize: "60%" }}>required</i>
               </div>
             </MDBox>
           </div>
@@ -309,7 +319,12 @@ function GeneralLedger() {
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
             <img
               src={accountingLoader}
               alt="work"
@@ -318,7 +333,15 @@ function GeneralLedger() {
                 width: "35%",
               }}
             />
-            {/* <CircularProgress color="info" /> */}
+            <div
+              className="row"
+              style={{
+                position: "absolute",
+                marginTop: "9rem",
+              }}
+            >
+              Please wait, this may take some time...
+            </div>
           </div>
         </>
       </Backdrop>
