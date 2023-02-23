@@ -564,7 +564,7 @@ function Sales() {
       Number(transferPaymentx) +
       Number(creditFacilityx) -
       Number(allTot)
-    // Number(bonusAmountxx)
+    // Number(bonusAmountxx) zz
   );
   const Pay = () => {
     setShowPayment(true);
