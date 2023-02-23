@@ -2271,7 +2271,7 @@ function Reports() {
                     component="div"
                     style={{ color: "white", marginTop: "40px" }}
                   >
-                    INSURANCE REPORTS
+                    Insurance Reports
                   </Typography>
                 </CardContent>
               </Card>
@@ -2305,7 +2305,7 @@ function Reports() {
                     style={{ color: "white", marginTop: "40px" }}
                     onClick={() => handleOpenModal(6)}
                   >
-                    BY REVENUE
+                    By Revenue
                   </Typography>
                 </CardContent>
               </Card>
@@ -2328,7 +2328,7 @@ function Reports() {
                     component="div"
                     style={{ color: "white", marginTop: "40px" }}
                   >
-                    BY QUANTITY
+                    By Quantity
                   </Typography>
                 </CardContent>
               </Card>
