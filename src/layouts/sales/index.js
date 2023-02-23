@@ -32,7 +32,7 @@ import FormControl from "@mui/material/FormControl";
 import Add from "@mui/icons-material/Add";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import { useReactToPrint } from "react-to-print";
-import { MonnifyConsumer } from "react-monnify";
+// import { MonnifyConsumer } from "react-monnify";
 import PhoneInput from "react-phone-input-2";
 // import houseOfTara from "./HouseOfTara.jpg";
 // import "./Force.css";
@@ -55,11 +55,11 @@ function Sales() {
   const [commentx, setComment] = useState("");
 
   const [emailx, setEmail] = useState("");
-  const currencyx = "NGN";
+  // const currencyx = "NGN";
   const [pnox, setPno] = useState("");
-  const [indiName, setIndiName] = useState("");
-  const [referenceSKey, setReferenceSKey] = useState();
-  const [listenn, setListenn] = useState(false);
+  // const [indiName, setIndiName] = useState("");
+  // const [referenceSKey, setReferenceSKey] = useState();
+  // const [listenn, setListenn] = useState(false);
 
   const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
@@ -440,6 +440,7 @@ function Sales() {
   const handleFormChange = (event, index) => {
     console.log(event.target.value, "event");
     console.log(index, "index");
+    console.log(counter);
     const data = [...counter];
     data[index][event.target.name] = event.target.value;
     if (data[index].saleType === "3" && event.target.name === "pricePerUnit") {
@@ -448,7 +449,7 @@ function Sales() {
         parseInt(data[index].quantity, 10) * parseInt(event.target.value, 10) +
         parseInt(data[index].taxAmount, 10);
       // parseInt(event.target.value, 10)
-      const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
+      const zoom = counter.map((item) => item.pricePerUnit * item.quantity + item.taxAmount);
       setSubTotalAmount(eval(zoom.join("+")));
       // eslint-disable-next-line no-eval
     } else if (event.target.name === "quantity") {
@@ -457,12 +458,14 @@ function Sales() {
       data[index].totalAmount =
         parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10) +
         parseInt(data[index].taxAmount, 10);
-      const zoom = counter.map((item) => item.pricePerUnit * item.quantity);
+      const zoom = counter.map((item) => item.pricePerUnit * item.quantity + item.taxAmount);
       setSubTotalAmount(eval(zoom.join("+")));
       // eslint-disable-next-line no-eval
     } else if (event.target.name === "product") {
       console.log(event.target.value);
-      const productObj = JSON.parse(event.target.value);
+      const filteredData = data[index].psArray.filter((item) => item.id === event.target.value);
+      const productObj = filteredData[0];
+      console.log(productObj);
       data[index][event.target.name] = productObj.name;
       data[index].salesID = productObj.id;
       if (data[index].saleType === "1") {
@@ -472,8 +475,14 @@ function Sales() {
       }
     } else if (event.target.name === "taxAmount") {
       data[index].totalAmount = parseInt(data[index].amount, 10) + parseInt(event.target.value, 10);
-      const zoom = counter.map((item) => item.taxAmount);
+      const zoom = counter.map(
+        (item) =>
+          parseInt(item.pricePerUnit, 10) * parseInt(item.quantity, 10) +
+          parseInt(item.taxAmount, 10)
+      );
+      setSubTotalAmount(eval(zoom.join("+")));
       setAllTax(eval(zoom.join("+")));
+      // setSubTotalAmount(eval(zoom.join("+")));
     } else if (event.target.name === "quantity") {
       data[index].totalAmount =
         parseInt(data[index].pricePerUnit, 10) * parseInt(event.target.value, 10);
@@ -761,39 +770,39 @@ function Sales() {
       isMounted = false;
     };
   }, []);
-  useEffect(() => {
-    let isMounted = true;
-    if (isMounted) {
-      setReferenceSKey(`${Math.floor(Math.random() * 1000000000 + 1)}`);
-    }
+  // useEffect(() => {
+  //   let isMounted = true;
+  //   if (isMounted) {
+  //     setReferenceSKey(`${Math.floor(Math.random() * 1000000000 + 1)}`);
+  //   }
 
-    return () => {
-      isMounted = false;
-    };
-  }, [listenn]);
+  //   return () => {
+  //     isMounted = false;
+  //   };
+  // }, [listenn]);
 
-  const honClose = (response) => {
-    setListenn(!listenn);
-    setReferenceSKey(`${Math.floor(Math.random() * 1000000000 + 1)}`);
+  // const honClose = (response) => {
+  //   setListenn(!listenn);
+  //   setReferenceSKey(`${Math.floor(Math.random() * 1000000000 + 1)}`);
 
-    if (response.message === "Transaction Successful" && response.status === "SUCCESS") {
-      // call api after success from monnify
-    }
-  };
+  //   if (response.message === "Transaction Successful" && response.status === "SUCCESS") {
+  //     // call api after success from monnify
+  //   }
+  // };
 
-  const monNey = {
-    onClose: honClose,
-    amount: cardPaymentx,
-    currency: currencyx,
-    reference: referenceSKey,
-    customerFullName: indiName,
-    customerEmail: emailx,
-    customerMobileNumber: pnox,
-    apiKey: `${process.env.REACT_APP_PERSONAL_API_KEY}`,
-    contractCode: `${process.env.REACT_APP_PERSONAL_CONTRACT_KEY}`,
-    paymentDescription: commentx,
-    isTestMode: true,
-  };
+  // const monNey = {
+  //   onClose: honClose,
+  //   amount: cardPaymentx,
+  //   currency: currencyx,
+  //   reference: referenceSKey,
+  //   customerFullName: indiName,
+  //   customerEmail: emailx,
+  //   customerMobileNumber: pnox,
+  //   apiKey: `${process.env.REACT_APP_PERSONAL_API_KEY}`,
+  //   contractCode: `${process.env.REACT_APP_PERSONAL_CONTRACT_KEY}`,
+  //   paymentDescription: commentx,
+  //   isTestMode: true,
+  // };
 
   const handleOnPortfolioKeys = () => {
     if (commentx.length === 0) {
@@ -815,6 +824,8 @@ function Sales() {
       handleClick(e);
     }
   };
+
+  // This  code is kind o madd a little bit
 
   // useEffect(() => {
   //   const headers = miHeaders;
@@ -942,7 +953,7 @@ function Sales() {
         )}
       </div>
       <Card>
-        <MDBox pt={4} pb={3} px={20}>
+        <MDBox pt={4} pb={3} px={2}>
           <MDBox
             variant="gradient"
             borderRadius="lg"
@@ -991,7 +1002,7 @@ function Sales() {
                         setIndi(e.target.value);
                         const { value } = e.target;
                         const fData = individualx.filter((indii) => indii.id === value);
-                        setIndiName(`${fData[0].fname} ${fData[0].lname}`);
+                        // setIndiName(`${fData[0].fname} ${fData[0].lname}`);
                         if (fData[0].email) {
                           setEmail(`${fData[0].email}`);
                         } else {
@@ -1129,7 +1140,7 @@ function Sales() {
                         >
                           <option>Select</option>
                           {form.psArray.map((apis) => (
-                            <option key={apis.id} value={JSON.stringify(apis)}>
+                            <option key={apis.id} value={apis.id}>
                               {apis.name}
                             </option>
                           ))}
@@ -1313,21 +1324,6 @@ function Sales() {
                     <FormControl fullWidth>
                       <TextField
                         id="filled-number"
-                        value={bonusAmountxx}
-                        label="Bonus Amount (NGN) "
-                        placeholder="Bonus Amount (NGN) "
-                        type="number"
-                        onChange={(e) => setBonusAmount(e.target.value)}
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-                <div className="col-sm-3" />
-                <div className="col-sm-3">
-                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
-                    <FormControl fullWidth>
-                      <TextField
-                        id="filled-number"
                         value={subTotalAmountx}
                         label="Total Amount (NGN) "
                         placeholder="Total Amount (NGN) "
@@ -1336,6 +1332,21 @@ function Sales() {
                         InputProps={{
                           readOnly: true,
                         }}
+                      />
+                    </FormControl>
+                  </Box>
+                </div>
+                <div className="col-sm-6" />
+                <div className="col-sm-3">
+                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <FormControl fullWidth>
+                      <TextField
+                        id="filled-number"
+                        value={bonusAmountxx}
+                        label="Bonus Amount (NGN) "
+                        placeholder="Bonus Amount (NGN) "
+                        type="number"
+                        onChange={(e) => setBonusAmount(e.target.value)}
                       />
                     </FormControl>
                   </Box>
@@ -1378,10 +1389,19 @@ function Sales() {
           &nbsp; &nbsp;
           <MDBox>
             {showPayment ? (
-              <Container>
+              // <Container>
+              //   <div className="row">
+              //   </div>
+              //   <div className="row">
+              //   </div>
+              //   <div className="row">
+              //   </div>
+              // </Container>
+
+              <Grid sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
                 <div className="row">
                   <div className="col-sm-3">
-                    <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <Box>
                       <FormControl fullWidth>
                         <MDTypography
                           variant="button"
@@ -1404,10 +1424,8 @@ function Sales() {
                       </FormControl>
                     </Box>
                   </div>
-                </div>
-                <div className="row">
                   <div className="col-sm-3">
-                    <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <Box>
                       <FormControl fullWidth>
                         <MDTypography
                           variant="button"
@@ -1430,10 +1448,8 @@ function Sales() {
                       </FormControl>
                     </Box>
                   </div>
-                </div>
-                <div className="row">
                   <div className="col-sm-3">
-                    <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <Box>
                       <MDTypography
                         variant="button"
                         color="info"
@@ -1453,7 +1469,7 @@ function Sales() {
                           type="number"
                           onChange={(e) => setCardPayment(e.target.value)}
                         />
-                        <div>
+                        {/* <div>
                           <MonnifyConsumer {...monNey} className="btn">
                             {({ initializePayment }) => (
                               // eslint-disable-next-line react/button-has-type
@@ -1467,7 +1483,7 @@ function Sales() {
                               </MDButton>
                             )}
                           </MonnifyConsumer>
-                        </div>
+                        </div> */}
                       </FormControl>
                       {/* <MDBox mt={4} mb={1}>
                       <div>
@@ -1488,10 +1504,8 @@ function Sales() {
                     </MDBox> */}
                     </Box>
                   </div>
-                </div>
-                <div className="row">
                   <div className="col-sm-3">
-                    <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <Box>
                       <FormControl fullWidth>
                         <MDTypography
                           variant="button"
@@ -1515,11 +1529,12 @@ function Sales() {
                     </Box>
                   </div>
                 </div>
-              </Container>
+              </Grid>
             ) : (
               <></>
             )}
-
+            &nbsp;
+            <br />
             <MDBox style={{ paddingTop: "40px", paddingLeft: "400px" }}>
               <Container>
                 <div className="row">
