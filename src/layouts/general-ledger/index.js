@@ -59,7 +59,9 @@ function GeneralLedger() {
 
   useEffect(() => {
     const fetched = JSON.parse(localStorage.getItem("fetched"));
-    const LedgerInfo = JSON.parse(localStorage.getItem("LedgerInfo"));
+    const LedgerInfo = JSON.parse(localStorage.getItem("LedgerInfox"))
+      ? JSON.parse(localStorage.getItem("LedgerInfox"))
+      : [];
     if (fetched) {
       setStart(fetched[0]);
       setEnd(fetched[1]);
@@ -116,7 +118,7 @@ function GeneralLedger() {
             const LedgerInfo = JSON.stringify(result);
             const fetched = JSON.stringify([start, end]);
             localStorage.setItem("fetched", fetched);
-            localStorage.setItem("LedgerInfo", LedgerInfo);
+            localStorage.setItem("LedgerInfox", LedgerInfo);
           }
         })
         .catch((error) => {
