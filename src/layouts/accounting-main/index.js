@@ -404,10 +404,10 @@ function Accounts() {
   const handleClick = (e) => {
     if (
       name === "" ||
-      descrip === "" ||
+      // descrip === "" ||
       type === "" ||
       debitOrCredit === "" ||
-      startTime === "" ||
+      // startTime === "" ||
       startingBalance === ""
     ) {
       showMessage("EMPTY_TEXTFIELDS", "error", "please fill all the fields with asterisks");
@@ -526,10 +526,10 @@ function Accounts() {
   const handleUpdate = (e) => {
     if (
       uName === "" ||
-      uDescrip === "" ||
+      // uDescrip === "" ||
       uType === "" ||
       uDebitOrCredit === "" ||
-      uStartTime === "" ||
+      // uStartTime === "" ||
       uStartingBalance === ""
     ) {
       showMessage("EMPTY_TEXTFIELDS", "error", "please fill all the fields with asterisks");
@@ -929,7 +929,7 @@ function Accounts() {
                         }}
                         aria-label="Default select example"
                       >
-                        <option value="">--Select Type--</option>
+                        <option value="">--select type--</option>
                         {accountTypes.map((each, index) => (
                           <option key={index} value={each.value}>
                             {each.name}
@@ -966,7 +966,7 @@ function Accounts() {
                           value={category || ""}
                           aria-label="Default select example"
                         >
-                          <option value="">--Select Category--</option>
+                          <option value="">--select category--</option>
                           {categories.map((each, index) => (
                             <option key={index} value={each.value}>
                               {each.name}
@@ -1147,7 +1147,7 @@ function Accounts() {
                                 onChange={(e) => setSuperAccountID(e.target.value)}
                                 aria-label="Default select example"
                               >
-                                <option value="">--Select a super acount--</option>
+                                <option value="">--select a super account--</option>
                                 {superAccounts.map((each) => (
                                   <option key={each.id} value={each.id}>
                                     {each.name}
@@ -1455,7 +1455,7 @@ function Accounts() {
                             }}
                             aria-label="Default select example"
                           >
-                            <option value="">--Select Type--</option>
+                            <option value="">--select type--</option>
                             {accountTypes.map((each, index) => (
                               <option key={index} value={each.value}>
                                 {each.name}
@@ -1492,7 +1492,7 @@ function Accounts() {
                               value={uCategory || ""}
                               aria-label="Default select example"
                             >
-                              <option value="">--Select Category--</option>
+                              <option value="">--select category--</option>
                               {categories.map((each, index) => (
                                 <option key={index} value={each.value}>
                                   {each.name}
@@ -1681,7 +1681,7 @@ function Accounts() {
                                     onChange={(e) => setUSuperAccountID(e.target.value)}
                                     aria-label="Default select example"
                                   >
-                                    <option value="">--Select a super acount--</option>
+                                    <option value="">--select a super account--</option>
                                     {superAccounts.map((each) => (
                                       <option key={each.id} value={each.id}>
                                         {each.name}

@@ -7,7 +7,11 @@ import Card from "@mui/material/Card";
 import { Container, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import PageLayout from "examples/LayoutContainers/PageLayout";
+// Authentication layout components
+import CoverLayout from "layouts/authentication/components/CoverLayout";
+
+// Images
+import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -19,6 +23,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function CreateBranch() {
   const MySwal = withReactContent(Swal);
@@ -205,12 +210,13 @@ function CreateBranch() {
   };
 
   return (
-    <PageLayout>
+    <CoverLayout image={bgImage}>
       <Card>
         <MDBox pt={4} pb={3} px={10}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -374,7 +380,13 @@ function CreateBranch() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleValidate}
+                // color="info"
+                style={Styles.buttonSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>
@@ -385,7 +397,7 @@ function CreateBranch() {
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />
       </Backdrop>
-    </PageLayout>
+    </CoverLayout>
   );
 }
 

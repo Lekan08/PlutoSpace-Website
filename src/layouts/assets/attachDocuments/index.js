@@ -667,6 +667,20 @@ function AssetAttachDocument() {
       });
   };
 
+  const changeDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const retDate = date.toDateString();
+    return retDate;
+  };
+
+  const changeSize = (bytes) => {
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+    if (bytes === 0) return "n/a";
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
+    if (i === 0) return `${bytes} ${sizes[i]}`;
+    return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -741,9 +755,10 @@ function AssetAttachDocument() {
               console.log(api);
               console.log(index);
               if (api !== null) {
+                const docName = api.name;
                 const docType = api.type;
-                //  const docSize = api.size;
-                //  const docDate = api.createdTime;
+                const docSize = api.size;
+                const docDate = api.createdTime;
                 let pngType;
                 if (
                   docType === "image/png" ||
@@ -774,6 +789,62 @@ function AssetAttachDocument() {
                     {api !== null ? (
                       <Grid key={api} item xs={12} md={6} lg={3}>
                         <Card style={{ backgroundColor: "#EB5353" }}>
+                          <Grid item xs={6} md={6} lg={6}>
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                // justifyContent: "space-between",
+                                // alignItems: "center",
+                                color: "inherit",
+                              }}
+                            >
+                              <img src={pngType} alt="Icon" width="24" height="24" />
+                              &nbsp; &nbsp;
+                              <span
+                                style={{
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  width: "11rem",
+                                }}
+                              >
+                                <MDTypography
+                                  variant="inherit"
+                                  fontWeight="medium"
+                                  fontSize="100%"
+                                  align="left"
+                                  color="text"
+                                  noWrap
+                                >
+                                  {docName}
+                                </MDTypography>
+                              </span>
+                            </div>
+                          </Grid>
+                          <Grid item xs={3} md={3} lg={3}>
+                            <MDTypography
+                              variant="button"
+                              fontWeight="regular"
+                              fontSize="100%"
+                              align="left"
+                              color="text"
+                              noWrap
+                            >
+                              {changeSize(docSize)}
+                            </MDTypography>
+                          </Grid>
+                          <Grid item xs={3} md={3} lg={3}>
+                            <MDTypography
+                              variant="button"
+                              fontWeight="regular"
+                              fontSize="100%"
+                              align="left"
+                              color="text"
+                              noWrap
+                            >
+                              {changeDate(docDate)}
+                            </MDTypography>
+                          </Grid>
                           <Button
                             id="demo-customized-button"
                             aria-controls="demo-customized-menu"
