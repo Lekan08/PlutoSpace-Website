@@ -51,6 +51,7 @@ function AssetAttachDocument() {
   const [items, setItems] = useState([]);
   // const [docs, setDocs] = useState([]);
   const [imageUrl, setImageUrl] = useState(RollingGif);
+  const [allResult, setAllResult] = useState("");
   // const [showFrame, setShowFrame] = useState(false);
   const [name, setName] = useState([]);
 
@@ -149,6 +150,8 @@ function AssetAttachDocument() {
     // }
   };
 
+  console.log(allResult);
+
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -181,8 +184,47 @@ function AssetAttachDocument() {
           //   console.log(dannyff);
           //   console.log(result);
           if (isMounted) {
-            if (result[0].attachedDocs !== null) {
-              setItems(result[0].attachedDocs);
+            const value = result[0].attachedDocs;
+            if (result.length !== 0) {
+              setAllResult(result);
+              if (result !== "") {
+                if (result[0].attachedDocs !== null) {
+                  const myDocs = [];
+
+                  const data11 = JSON.parse(localStorage.getItem("user1"));
+                  const orgIDs = data11.orgID;
+                  // eslint-disable-next-line array-callback-return
+                  value.map((rolPermi) => {
+                    fetch(
+                      `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${rolPermi}`,
+                      { headers }
+                    )
+                      .then(async (res) => {
+                        const aToken = res.headers.get("token-1");
+                        localStorage.setItem("rexxdex", aToken);
+                        return res.json();
+                      })
+                      .then((resultx) => {
+                        setOpened(false);
+                        if (resultx.message === "Expired Access") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultx.message === "Token Does Not Exist") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultx.message === "Unauthorized Access") {
+                          navigate("/authentication/forbiddenPage");
+                          window.location.reload();
+                        }
+                        console.log(resultx);
+                        myDocs.push(resultx);
+                      });
+                    setItems(myDocs);
+                  });
+                }
+              }
             }
             // }
           }
@@ -667,20 +709,6 @@ function AssetAttachDocument() {
       });
   };
 
-  const changeDate = (timestamp) => {
-    const date = new Date(timestamp);
-    const retDate = date.toDateString();
-    return retDate;
-  };
-
-  const changeSize = (bytes) => {
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
-    if (bytes === 0) return "n/a";
-    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)), 10);
-    if (i === 0) return `${bytes} ${sizes[i]}`;
-    return `${(bytes / 1024 ** i).toFixed(1)} ${sizes[i]}`;
-  };
-
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -755,10 +783,9 @@ function AssetAttachDocument() {
               console.log(api);
               console.log(index);
               if (api !== null) {
-                const docName = api.name;
                 const docType = api.type;
-                const docSize = api.size;
-                const docDate = api.createdTime;
+                //  const docSize = api.size;
+                //  const docDate = api.createdTime;
                 let pngType;
                 if (
                   docType === "image/png" ||
@@ -789,62 +816,7 @@ function AssetAttachDocument() {
                     {api !== null ? (
                       <Grid key={api} item xs={12} md={6} lg={3}>
                         <Card style={{ backgroundColor: "#EB5353" }}>
-                          <Grid item xs={6} md={6} lg={6}>
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                // justifyContent: "space-between",
-                                // alignItems: "center",
-                                color: "inherit",
-                              }}
-                            >
-                              <img src={pngType} alt="Icon" width="24" height="24" />
-                              &nbsp; &nbsp;
-                              <span
-                                style={{
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                  width: "11rem",
-                                }}
-                              >
-                                <MDTypography
-                                  variant="inherit"
-                                  fontWeight="medium"
-                                  fontSize="100%"
-                                  align="left"
-                                  color="text"
-                                  noWrap
-                                >
-                                  {docName}
-                                </MDTypography>
-                              </span>
-                            </div>
-                          </Grid>
-                          <Grid item xs={3} md={3} lg={3}>
-                            <MDTypography
-                              variant="button"
-                              fontWeight="regular"
-                              fontSize="100%"
-                              align="left"
-                              color="text"
-                              noWrap
-                            >
-                              {changeSize(docSize)}
-                            </MDTypography>
-                          </Grid>
-                          <Grid item xs={3} md={3} lg={3}>
-                            <MDTypography
-                              variant="button"
-                              fontWeight="regular"
-                              fontSize="100%"
-                              align="left"
-                              color="text"
-                              noWrap
-                            >
-                              {changeDate(docDate)}
-                            </MDTypography>
-                          </Grid>
+                          {api.displayName}
                           <Button
                             id="demo-customized-button"
                             aria-controls="demo-customized-menu"
