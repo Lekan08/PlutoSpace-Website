@@ -193,6 +193,7 @@ function MakePayment() {
           setAmount(result[0].itemamount);
           setCollectedBy(result[0].itemCollectedBy);
         }
+        console.log(result);
       }, []);
   };
 
@@ -206,6 +207,7 @@ function MakePayment() {
     };
   }, []);
 
+  // Method to change date from timestamp
   const changeDate = (timestamp) => {
     const date = new Date(timestamp);
     const retDate = date.toDateString();
@@ -231,8 +233,8 @@ function MakePayment() {
       align: "left",
     },
     {
-      Header: "Collected Time",
-      accessor: "collectedTime",
+      Header: "Collection Time",
+      accessor: "collectionTime",
       Cell: ({ cell: { value } }) => changeDate(value),
       align: "left",
     },
