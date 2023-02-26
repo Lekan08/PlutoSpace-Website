@@ -104,6 +104,7 @@ function Sales() {
     },
   ]);
   console.log(user);
+  console.log(counter);
 
   useEffect(() => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
