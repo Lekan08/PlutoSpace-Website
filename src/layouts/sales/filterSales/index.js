@@ -44,6 +44,7 @@ function FilterSales() {
   const [flash, setFlash] = useState([]);
   const [showPrint, setShowPrint] = useState(false);
   const [cashierx, setCashier] = useState([]);
+  const [taxAmount, setTaxAmount] = useState([]);
 
   const onBeforeGetContentResolve = useRef();
   <style type="text/css" media="print">
@@ -295,6 +296,10 @@ function FilterSales() {
 
       if (vibes !== []) {
         setFlash(vibes);
+        const zoom = vibes[0].items.map((val) => val.taxAmount);
+        console.log(zoom);
+        // eslint-disable-next-line no-eval
+        setTaxAmount(eval(zoom.join("+")));
         handlePrint();
       }
     }
@@ -445,8 +450,8 @@ function FilterSales() {
                     <tr>
                       Local Sales Tax
                       <td />
-                      {/* <td>{allTax}% Tax:</td>
-                      <td>+N{allTax}.00</td> */}
+                      <td>{taxAmount}% Tax:</td>
+                      <td>+N{taxAmount}.00</td>
                     </tr>
                   </tbody>
                 </table>
@@ -455,7 +460,7 @@ function FilterSales() {
               <div style={{ paddingLeft: "350px" }}>
                 <b>Receipt Total: {flash[0].totalAmount} </b>
               </div>
-              <p align="center">Charges Inclusive of 7.5% VAT</p>
+              <p align="center">Charges Inclusive of {taxAmount}% VAT</p>
               <p align="center">
                 {" "}
                 Thank you for shopping with us, Products purchased in good condition are not
