@@ -18,6 +18,7 @@ import MDButton from "components/MDButton";
 import Footer from "examples/Footer";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import MDInput from "components/MDInput";
 
 function InterviewDate() {
   const MySwal = withReactContent(Swal);
@@ -42,11 +43,11 @@ function InterviewDate() {
   const [reminderTimex, setReminder] = useState("");
   const [deleteFlagx, setDeleteFlag] = useState("");
   const [opened, setOpened] = useState(false);
-
+  const [link, setLink] = useState("");
   // Method to fetch all AppointmentTime
   useEffect(() => {
     const headers = miHeaders;
-
+    setLink(JSON.parse(sessionStorage.getItem("link")));
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
@@ -301,6 +302,12 @@ function InterviewDate() {
                       </div>
                     </Container>
                   </MDBox>
+                  <MDInput
+                    label="videochat link"
+                    value={link}
+                    style={{ width: "80%", marginTop: "30px" }}
+                    disabled
+                  />
                   <MDBox mt={4} mb={1}>
                     <MDButton
                       variant="gradient"
