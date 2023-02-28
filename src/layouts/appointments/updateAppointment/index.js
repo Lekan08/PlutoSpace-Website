@@ -643,7 +643,7 @@ function UpdateCalendar() {
               <MDTypography variant="h5" fontWeight="medium" color="info" mt={8} mb={3}>
                 Generate A Video Call Link For The Appointment
               </MDTypography>
-              <MDInput variant="outlined" disabled style={{ width: "50%" }} value={link} />
+              <MDInput variant="outlined" disabled style={{ width: "60%" }} value={link} />
               <br />
               <MDButton
                 variant="gradient"
