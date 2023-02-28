@@ -200,13 +200,21 @@ function PostTransactions() {
               const newf = JSON.stringify(LedgerInfo);
               localStorage.setItem("LedgerInfox", newf);
             }
-            MySwal.fire({
-              title: resultx.status,
-              type: "success",
-              text: resultx.message,
-            }).then(() => {
-              navigate("/general-ledger");
-            });
+            if (resultx.status === "SUCCESS") {
+              MySwal.fire({
+                title: resultx.status,
+                type: "success",
+                text: resultx.message,
+              }).then(() => {
+                navigate("/general-ledger");
+              });
+            } else {
+              MySwal.fire({
+                title: resultx.status,
+                type: "success",
+                text: resultx.message,
+              });
+            }
           })
           .catch((error) => {
             setOpened(false);

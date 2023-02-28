@@ -67,7 +67,7 @@ function GeneralLedger() {
       setEnd(fetched[1]);
       setGets(true);
       setItems(LedgerInfo);
-      if (LedgerInfo.length > 0) setDisab(true);
+      if (LedgerInfo.length > 0) setDisab(false);
     }
   }, []);
 
