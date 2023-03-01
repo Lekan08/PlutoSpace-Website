@@ -99,6 +99,7 @@ function InterviewSchedule() {
   const [reminder, setReminder] = useState("");
   const [timeZonex, setTimeZonex] = useState("");
   const [offsetx, setOffset] = useState("");
+  const [link, setLink] = useState("");
   const [titlex, setTitle] = useState("");
   const [descriptionx, setDescription] = useState("");
   // const [appointmentParams, setAppointmentParams] = useState("");
@@ -438,6 +439,7 @@ function InterviewSchedule() {
       endTime: endTmex,
       reminderTime: reminderTimex,
       timezone: timeZonex,
+      videoMeetingLink: link,
     });
     console.log(raw);
     const requestOptions = {
@@ -697,7 +699,17 @@ function InterviewSchedule() {
   // const handleScheduledInterrview = (value) => {
   //   navigate(`/interview-Schedule/scheduled-Interview?id=${value}`);
   // };
-
+  const Gen = () => {
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const createdByx = data11.personalID;
+    const code = `${Math.random().toString(32).slice(10)}-${Math.random()
+      .toString(32)
+      .slice(10)}-${Math.random().toString(32).slice(10)}`;
+    const url = `https://cairo-videochat.netlify.app/room.html?room=${code}&adm=${Number(
+      createdByx
+    )}`;
+    setLink(url);
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -997,6 +1009,24 @@ function InterviewSchedule() {
         ) : (
           <MDBox />
         )}
+        <MDBox mt={3} mb={5} textAlign="center">
+          <MDTypography variant="h4" fontWeight="medium" color="info" mt={8} mb={3}>
+            Generate A Video Call Link For The Interview
+          </MDTypography>
+          <MDInput variant="outlined" disabled style={{ width: "50%" }} value={link} />
+          <br />
+          <MDButton
+            variant="gradient"
+            style={{ marginTop: "20px" }}
+            color="info"
+            onClick={() => Gen()}
+            width="50%"
+            align="center"
+            size="small"
+          >
+            Generate
+          </MDButton>
+        </MDBox>
         <Container>
           <div className="row">
             <div align="center">

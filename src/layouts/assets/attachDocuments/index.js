@@ -51,6 +51,7 @@ function AssetAttachDocument() {
   const [items, setItems] = useState([]);
   // const [docs, setDocs] = useState([]);
   const [imageUrl, setImageUrl] = useState(RollingGif);
+  const [allResult, setAllResult] = useState("");
   // const [showFrame, setShowFrame] = useState(false);
   const [name, setName] = useState([]);
 
@@ -149,6 +150,8 @@ function AssetAttachDocument() {
     // }
   };
 
+  console.log(allResult);
+
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -181,8 +184,47 @@ function AssetAttachDocument() {
           //   console.log(dannyff);
           //   console.log(result);
           if (isMounted) {
-            if (result[0].attachedDocs !== null) {
-              setItems(result[0].attachedDocs);
+            const value = result[0].attachedDocs;
+            if (result.length !== 0) {
+              setAllResult(result);
+              if (result !== "") {
+                if (result[0].attachedDocs !== null) {
+                  const myDocs = [];
+
+                  const data11 = JSON.parse(localStorage.getItem("user1"));
+                  const orgIDs = data11.orgID;
+                  // eslint-disable-next-line array-callback-return
+                  value.map((rolPermi) => {
+                    fetch(
+                      `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${rolPermi}`,
+                      { headers }
+                    )
+                      .then(async (res) => {
+                        const aToken = res.headers.get("token-1");
+                        localStorage.setItem("rexxdex", aToken);
+                        return res.json();
+                      })
+                      .then((resultx) => {
+                        setOpened(false);
+                        if (resultx.message === "Expired Access") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultx.message === "Token Does Not Exist") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultx.message === "Unauthorized Access") {
+                          navigate("/authentication/forbiddenPage");
+                          window.location.reload();
+                        }
+                        console.log(resultx);
+                        myDocs.push(resultx);
+                      });
+                    setItems(myDocs);
+                  });
+                }
+              }
             }
             // }
           }
@@ -774,6 +816,7 @@ function AssetAttachDocument() {
                     {api !== null ? (
                       <Grid key={api} item xs={12} md={6} lg={3}>
                         <Card style={{ backgroundColor: "#EB5353" }}>
+                          {api.displayName}
                           <Button
                             id="demo-customized-button"
                             aria-controls="demo-customized-menu"

@@ -53,6 +53,7 @@ function Appointments() {
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
   const [duty, setDutyRelieverx] = useState("");
+  const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
   const [user, setUser] = useState([]);
   const [remind, setRemind] = useState(0);
@@ -228,6 +229,7 @@ function Appointments() {
         startTime: eventTime,
         endTime: endTime,
         timezone: timezone,
+        videoMeetingLink: link,
       });
       console.log(raw);
       const requestOptions = {
@@ -444,6 +446,21 @@ function Appointments() {
       webkitBoxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.1)",
     },
   };
+  const Gen = () => {
+    if (duty !== "") {
+      const code = `${Math.random().toString(32).slice(10)}-${Math.random()
+        .toString(32)
+        .slice(10)}-${Math.random().toString(32).slice(10)}`;
+      const url = `https://cairo-videochat.netlify.app/room.html?room=${code}&adm=${Number(duty)}`;
+      setLink(url);
+    } else {
+      MySwal.fire({
+        title: "Error",
+        type: "error",
+        text: "Please Select Account Owner Before Generating A Link",
+      });
+    }
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -605,7 +622,10 @@ function Appointments() {
                   </MDTypography>
                   <Form.Select
                     value={duty}
-                    onChange={(e) => setDutyRelieverx(e.target.value)}
+                    onChange={(e) => {
+                      setDutyRelieverx(e.target.value);
+                      setLink("");
+                    }}
                     aria-label="Default select example"
                   >
                     <option value="">Select Account Owner</option>
@@ -674,11 +694,12 @@ function Appointments() {
               </Accordion>
             </div>
             <br />
-            <MDBox>
+            <hr />
+            <MDBox mt={3} mb={3}>
               &nbsp;
               <MDBox component="form" role="form">
                 <MDBox variant="gradient" mx={0} mt={-3} p={2} mb={1} textAlign="center">
-                  <MDTypography variant="h4" fontWeight="medium" color="info" mt={1}>
+                  <MDTypography variant="h5" fontWeight="medium" color="info" mt={1}>
                     Add Participants Not In The Organization
                   </MDTypography>
                 </MDBox>
@@ -722,6 +743,25 @@ function Appointments() {
                   </div>
                 </div>
               </Container>
+            </MDBox>
+            <hr />
+            <MDBox>
+              <MDTypography variant="h5" fontWeight="medium" color="info" mt={8} mb={3}>
+                Generate A Video Call Link For The Appointment
+              </MDTypography>
+              <MDInput variant="outlined" disabled style={{ width: "60%" }} value={link} />
+              <br />
+              <MDButton
+                variant="gradient"
+                style={{ marginTop: "20px" }}
+                color="info"
+                onClick={() => Gen()}
+                width="50%"
+                align="center"
+                size="small"
+              >
+                Generate
+              </MDButton>
             </MDBox>
             <br />
             <MDBox mt={2} mb={2}>

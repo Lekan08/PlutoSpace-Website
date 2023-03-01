@@ -104,6 +104,7 @@ function Sales() {
     },
   ]);
   console.log(user);
+  console.log(counter);
 
   useEffect(() => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -939,7 +940,7 @@ function Sales() {
             <div style={{ paddingLeft: "350px" }}>
               <b>Receipt Total: {subTotalAmountx} </b>
             </div>
-            <p align="center">Charges Inclusive of 7.5% VAT</p>
+            <p align="center">Charges Inclusive of {allTax}% VAT</p>
             <p align="center">
               {" "}
               Thank you for shopping with us, Products purchased in good condition are not
