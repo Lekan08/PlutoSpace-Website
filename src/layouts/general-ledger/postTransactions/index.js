@@ -48,14 +48,12 @@ function PostTransactions() {
     boxShadow: 100,
     p: 4,
   };
-  const [particulars, setParticulars] = useState("");
   const [amount, setAmount] = useState("");
   const [all, setAll] = useState([]);
   const [all2, setAll2] = useState([]);
   const [totalDebit, setTotalDebit] = useState(0);
   const [totalCredit, setTotalCredit] = useState(0);
   const [account, setAccount] = useState("");
-  const [particulars2, setParticulars2] = useState("");
   const [amount2, setAmount2] = useState("");
   const [account2, setAccount2] = useState("");
   const [opened, setOpened] = useState(false);
@@ -81,6 +79,7 @@ function PostTransactions() {
       })
       .then((result) => {
         setOpened(false);
+        console.log(result);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -120,7 +119,7 @@ function PostTransactions() {
       }
       const magic = others.map((items) => ({
         accountID: items.account,
-        particulars: items.particulars,
+        particulars: idx[0].particulars ? idx[0].particulars : idx[0].source,
         postedAmount: Number(items.amount),
         debitOrCredit: items.debitOrCredit,
         requestID: idx[0].requestID,
@@ -131,7 +130,7 @@ function PostTransactions() {
       const rawl = [
         {
           accountID: account,
-          particulars: particulars,
+          particulars: idx[0].particulars ? idx[0].particulars : idx[0].source,
           postedAmount: Number(amount),
           debitOrCredit: 0,
           requestID: idx[0].requestID,
@@ -141,7 +140,7 @@ function PostTransactions() {
         },
         {
           accountID: account2,
-          particulars: particulars2,
+          particulars: idx[0].particulars ? idx[0].particulars : idx[0].source,
           postedAmount: Number(amount2),
           debitOrCredit: 1,
           requestID: idx[0].requestID,
@@ -200,13 +199,21 @@ function PostTransactions() {
               const newf = JSON.stringify(LedgerInfo);
               localStorage.setItem("LedgerInfox", newf);
             }
-            MySwal.fire({
-              title: resultx.status,
-              type: "success",
-              text: resultx.message,
-            }).then(() => {
-              navigate("/general-ledger");
-            });
+            if (resultx.status === "SUCCESS") {
+              MySwal.fire({
+                title: resultx.status,
+                type: "success",
+                text: resultx.message,
+              }).then(() => {
+                navigate("/general-ledger");
+              });
+            } else {
+              MySwal.fire({
+                title: resultx.status,
+                type: "success",
+                text: resultx.message,
+              });
+            }
           })
           .catch((error) => {
             setOpened(false);
@@ -341,18 +348,6 @@ function PostTransactions() {
                 </MDBox>
               </div>
               <MDBox mx={1}>
-                <TextField
-                  id="outlined-textarea"
-                  rows={3}
-                  value={particulars || ""}
-                  label="Description"
-                  onChange={(e) => setParticulars(e.target.value)}
-                  sx={{
-                    marginTop: "10px",
-                    width: "30vw",
-                  }}
-                  multiline
-                />
                 <MDInput
                   type="number"
                   label="Amount (NGN) "
@@ -390,35 +385,6 @@ function PostTransactions() {
               {all2.map((items, indx) => (
                 <MDBox mx={1} key={items.usef}>
                   <hr />
-                  <TextField
-                    id="outlined-textarea"
-                    rows={3}
-                    label="Description"
-                    // eslint-disable-next-line no-return-assign
-                    onChange={(e) => {
-                      all2[indx].particulars = e.target.value;
-                      setAll2(all2);
-                    }}
-                    sx={{
-                      marginTop: "10px",
-                      width: "30vw",
-                    }}
-                    multiline
-                  />
-                  <Fab
-                    color="error"
-                    onClick={() => remove2(indx)}
-                    aria-label="add"
-                    style={{
-                      fontSize: "15px",
-                      marginTop: "50px",
-                      marginLeft: "20px",
-                      color: "white",
-                    }}
-                    size="small"
-                  >
-                    x
-                  </Fab>
                   <MDInput
                     type="number"
                     label="Amount (NGN) "
@@ -436,6 +402,20 @@ function PostTransactions() {
                     }}
                     required
                   />
+                  <Fab
+                    color="error"
+                    onClick={() => remove2(indx)}
+                    aria-label="add"
+                    style={{
+                      fontSize: "15px",
+                      marginTop: "50px",
+                      marginLeft: "20px",
+                      color: "white",
+                    }}
+                    size="small"
+                  >
+                    x
+                  </Fab>
                   <Form.Select
                     aria-label="Default select example"
                     style={{
@@ -510,18 +490,6 @@ function PostTransactions() {
                 </MDBox>
               </div>
               <MDBox mx={1}>
-                <TextField
-                  id="outlined-textarea"
-                  rows={3}
-                  value={particulars2 || ""}
-                  label="Description"
-                  onChange={(e) => setParticulars2(e.target.value)}
-                  sx={{
-                    marginTop: "10px",
-                    width: "30vw",
-                  }}
-                  multiline
-                />
                 <MDInput
                   type="number"
                   label="Amount (NGN) "
@@ -559,35 +527,6 @@ function PostTransactions() {
               {all.map((items, indx) => (
                 <MDBox mx={1} key={items.usef}>
                   <hr />
-                  <TextField
-                    id="outlined-textarea"
-                    rows={3}
-                    label="Description"
-                    // eslint-disable-next-line no-return-assign
-                    onChange={(e) => {
-                      all[indx].particulars = e.target.value;
-                      setAll(all);
-                    }}
-                    sx={{
-                      marginTop: "10px",
-                      width: "30vw",
-                    }}
-                    multiline
-                  />
-                  <Fab
-                    color="error"
-                    onClick={() => remove(indx)}
-                    aria-label="add"
-                    style={{
-                      fontSize: "15px",
-                      marginTop: "50px",
-                      marginLeft: "20px",
-                      color: "white",
-                    }}
-                    size="small"
-                  >
-                    x
-                  </Fab>
                   <MDInput
                     type="number"
                     label="Amount (NGN) "
@@ -605,6 +544,20 @@ function PostTransactions() {
                     }}
                     required
                   />
+                  <Fab
+                    color="error"
+                    onClick={() => remove(indx)}
+                    aria-label="add"
+                    style={{
+                      fontSize: "15px",
+                      marginTop: "50px",
+                      marginLeft: "20px",
+                      color: "white",
+                    }}
+                    size="small"
+                  >
+                    x
+                  </Fab>
                   <Form.Select
                     aria-label="Default select example"
                     style={{
