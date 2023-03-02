@@ -1048,7 +1048,7 @@ function Accounts() {
                               color="text"
                             >
                               Description
-                              <span style={{ color: "red" }}>*</span>
+                              {/* <span style={{ color: "red" }}>*</span> */}
                             </MDTypography>
                             <MDInput
                               type="text"
@@ -1278,7 +1278,7 @@ function Accounts() {
                               color="text"
                             >
                               Start Time
-                              <span style={{ color: "red" }}>*</span>
+                              {/* <span style={{ color: "red" }}>*</span> */}
                             </MDTypography>
                             <MDInput
                               id="datetime-local"
@@ -1574,7 +1574,7 @@ function Accounts() {
                                   color="text"
                                 >
                                   Description
-                                  <span style={{ color: "red" }}>*</span>
+                                  {/* <span style={{ color: "red" }}>*</span> */}
                                 </MDTypography>
                                 <MDInput
                                   type="text"
@@ -1817,7 +1817,7 @@ function Accounts() {
                                   color="text"
                                 >
                                   Start Time
-                                  <span style={{ color: "red" }}>*</span>
+                                  {/* <span style={{ color: "red" }}>*</span> */}
                                 </MDTypography>
                                 <MDInput
                                   id="datetime-local"
