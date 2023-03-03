@@ -35,7 +35,9 @@ export default function CBTTable() {
       status: filteredItems.status,
       createdTime: filteredItems.createdTime,
       deleteFlag: filteredItems.deleteFlag,
+      deadline: filteredItems.deadline,
     });
+    console.log(filteredItems);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -408,9 +410,9 @@ export default function CBTTable() {
     navigate(`/cbt/add-questions/?id=${value}`);
   };
 
-  // const handleAddAnswer = (value) => {
-  //   navigate(`/cbt/takeCbt/?id=${value}`);
-  // };
+  const handleInstruction = (value) => {
+    navigate(`/cbt/instruction/?id=${value}`);
+  };
 
   const handleAssignCbtTestToJobPost = (value) => {
     navigate(`/CBT/assign-CBT-To-JobPost/?id=${value}`);
@@ -489,6 +491,7 @@ export default function CBTTable() {
                 <Dropdown.Item onClick={() => handleStatus(value, 1)}>Open</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleStatus(value, 2)}>Close</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item>
+                <Dropdown.Item onClick={() => handleInstruction(value)}>Instruction</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleViewResult(value)}>
                   View CBT Result
                 </Dropdown.Item>
