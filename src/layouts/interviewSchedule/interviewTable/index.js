@@ -15,7 +15,7 @@ export default function InterviewTable() {
   const [items, setItems] = useState([]);
 
   const { allGHeaders: miHeaders } = GHeaders();
-
+  const [uz, setUz] = useState([]);
   const navigate = useNavigate();
   // Method to handle update
   // const handleUpdate = (value) => {
@@ -231,6 +231,7 @@ export default function InterviewTable() {
           });
           console.log(eventList);
           setItems(eventList);
+          setUz(interViewOnly);
         }
       });
     return () => {
@@ -241,6 +242,10 @@ export default function InterviewTable() {
   //   const handleCondition = (value) => {
   //     navigate(`/stage/Stage-Condition?id=${value}`);
   //   };
+  const setInt = (id) => {
+    const filteredData = uz.filter((item) => item.id === id);
+    sessionStorage.setItem("link", JSON.stringify(filteredData[0].videoMeetingLink));
+  };
   // Return table
   return {
     columns: [
@@ -278,7 +283,10 @@ export default function InterviewTable() {
 
               <Dropdown.Menu>
                 <Dropdown.Item
-                  onClick={() => navigate(`/interview-Schedule/interview-Date?id=${value}`)}
+                  onClick={() => {
+                    setInt(value);
+                    navigate(`/interview-Schedule/interview-Date?id=${value}`);
+                  }}
                 >
                   Change Interview Date
                 </Dropdown.Item>

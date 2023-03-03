@@ -59,6 +59,7 @@ function UpdateCalendar() {
   const [timezone, setTimezone] = useState("");
   const [created, setCreated] = useState(0);
   const [idx, setIdx] = useState("");
+  const [link, setLink] = useState("");
   const addEm = (api) => {
     // const applicantr = [];
     const mapper = {
@@ -133,6 +134,7 @@ function UpdateCalendar() {
     setDescription(storedArray.description);
     setCreated(storedArray.createdTime);
     setIdx(storedArray.id);
+    setLink(storedArray.videoMeetingLink);
     setReminde(reminderr);
     // console.log("timezone", `${timeArr[0]}|${timeArr[1]}`);
     setDutyRelieverx(storedArray.createdBy);
@@ -413,6 +415,21 @@ function UpdateCalendar() {
     setNewEvent({ ...newEvent, end: time });
     console.log(time);
   };
+  const Gen = () => {
+    if (duty !== "") {
+      const code = `${Math.random().toString(32).slice(10)}-${Math.random()
+        .toString(32)
+        .slice(10)}-${Math.random().toString(32).slice(10)}`;
+      const url = `https://cairo-videochat.netlify.app/room.html?room=${code}&adm=${Number(duty)}`;
+      setLink(url);
+    } else {
+      MySwal.fire({
+        title: "Error",
+        type: "error",
+        text: "Please Select Account Owner Before Generating A Link",
+      });
+    }
+  };
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -574,7 +591,10 @@ function UpdateCalendar() {
                   </MDTypography>
                   <Form.Select
                     value={duty}
-                    onChange={(e) => setDutyRelieverx(e.target.value)}
+                    onChange={(e) => {
+                      setDutyRelieverx(e.target.value);
+                      setLink("");
+                    }}
                     aria-label="Default select example"
                   >
                     <option value="">Select Account Owner</option>
@@ -618,29 +638,25 @@ function UpdateCalendar() {
               </MDBox>
             </div>
             <br />
-            {/* <div className="col-sm-5">
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>Change Participants</Typography>
-                </AccordionSummary>
-                <Form>
-                  {check.map((api) => (
-                    <div key={api.key} className="mb-3">
-                      <Form.Check.Input
-                        type="checkbox"
-                        defaultChecked={api.checked}
-                        onClick={(e) => applicant(e, api)}
-                      />
-                      <Form.Check.Label>&nbsp;{api.name}</Form.Check.Label>
-                    </div>
-                  ))}
-                </Form>
-              </Accordion>
-            </div> */}
+            <hr />
+            <MDBox>
+              <MDTypography variant="h5" fontWeight="medium" color="info" mt={8} mb={3}>
+                Generate A Video Call Link For The Appointment
+              </MDTypography>
+              <MDInput variant="outlined" disabled style={{ width: "60%" }} value={link} />
+              <br />
+              <MDButton
+                variant="gradient"
+                style={{ marginTop: "20px" }}
+                color="info"
+                onClick={() => Gen()}
+                width="50%"
+                align="center"
+                size="small"
+              >
+                Generate
+              </MDButton>
+            </MDBox>
             <br />
             <MDBox mt={2} mb={2}>
               <MDButton
