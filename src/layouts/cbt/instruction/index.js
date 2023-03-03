@@ -5,23 +5,25 @@ import MDTypography from "components/MDTypography";
 import Card from "@mui/material/Card";
 import MDButton from "components/MDButton";
 
-import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import CoverLayout from "layouts/authentication/components/CoverLayout";
+// import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+// import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
 function WelcomeCbt() {
   const navigate = useNavigate();
 
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const cbtIDs = urlParams.get("id");
   const handleNavigate = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const cbtIDs = urlParams.get("cbtID");
     navigate(`/cbt/takeCbt/?id=${cbtIDs}`);
   };
 
   return (
-    <DashboardLayout>
-      <DashboardNavbar />
+    // <DashboardLayout>
+    <CoverLayout>
+      {/* <DashboardNavbar /> */}
       <Card>
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
@@ -59,7 +61,8 @@ function WelcomeCbt() {
         </MDBox>
       </Card>
       <Footer />
-    </DashboardLayout>
+    </CoverLayout>
+    // </DashboardLayout>
   );
 }
 
