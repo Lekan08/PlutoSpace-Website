@@ -2125,7 +2125,7 @@ function Reports() {
                     component="div"
                     style={{ color: "white", marginTop: "40px" }}
                   >
-                    Asset-List Reports
+                    ASSET-LIST REPORT
                   </Typography>
                 </CardContent>
               </Card>
