@@ -30,7 +30,7 @@ import Time from "layouts/cbt/takeCbt/time";
 import Grid from "@mui/material/Grid";
 
 // eslint-disable-next-line consistent-return
-const TakeCBT = () => {
+function TakeCBT() {
   const MySwal = withReactContent(Swal);
   const [posts, setPosts] = useState([]);
   const [currentPosts, setCurrentPosts] = useState([]);
@@ -70,9 +70,13 @@ const TakeCBT = () => {
   // console.log(optionsxy);
 
   useEffect(() => {
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
+    // const orgIDs = data11.orgID;
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const orgIDs = urlParams.get("orgID");
     const headers = miHeaders;
     let isMounted = true;
     fetch(`${process.env.REACT_APP_RAGA_URL}/questions/gets/${orgIDs}`, { headers })
@@ -200,13 +204,17 @@ const TakeCBT = () => {
 
   useEffect(() => {
     // console.log(answerx);
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
-    // const cbtIDs = data11.ID;
-    const headers = miHeaders;
+    // const orgIDs = data11.orgID;
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
+    const orgIDs = urlParams.get("orgID");
+    // const cbtIDs = data11.ID;
+    const headers = miHeaders;
+    // const queryString = window.location.search;
+    // const urlParams = new URLSearchParams(queryString);
     const cbtIDs = urlParams.get("id");
     let isMounted = true;
     setLoading(true);
@@ -336,9 +344,12 @@ const TakeCBT = () => {
     //   // console.log(Danyflames);
     // }
     // console.log(Danyflames);
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
+    // const orgIDs = data11.orgID;
+    // const queryString = window.location.search;
+    // const urlParams = new URLSearchParams(queryString);
+    const orgIDs = urlParams.get("orgID");
     const Danyflames = [];
 
     // eslint-disable-next-line array-callback-return
@@ -388,8 +399,9 @@ const TakeCBT = () => {
         }
         console.log(result);
         if (result.status === "SUCCESS") {
-          const cbtIDsx = urlParams.get("id");
-          const empID = data11.personalID;
+          const cbtIDsx = urlParams.get("cbtID");
+          // const empID = data11.personalID;
+          const empID = urlParams.get("empID");
           const headers = miHeaders;
           let isMounted = true;
           fetch(`${process.env.REACT_APP_RAGA_URL}/cbt/getCBTResultsForEmp/${cbtIDsx}/${empID}`, {
@@ -720,6 +732,6 @@ const TakeCBT = () => {
       </Backdrop>
     </PageLayout>
   );
-};
+}
 
 export default TakeCBT;
