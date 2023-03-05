@@ -752,8 +752,10 @@ function UserProfile() {
         }
         if (isMounted) {
           console.log(result);
-          if (result.length !== 0) {
-            setItems(result);
+          if (result.statusCode !== 500) {
+            if (result.length !== 0) {
+              setItems(result);
+            }
           }
         }
       })
