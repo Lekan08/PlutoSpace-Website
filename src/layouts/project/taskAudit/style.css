@@ -1,0 +1,17 @@
+.scrollable {
+  min-height: 290px; /* Set the minimum height for the container */
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 6px; /* Set width of the scrollbar */
+}
+
+.scrollable::-webkit-scrollbar-track {
+  background-color: transparent; /* Set track color */
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background-color: #f5f5f5; /* Set thumb color */
+  border-radius: 3px; /* Set border radius of the thumb */
+}

@@ -14,6 +14,7 @@ import GHeaders from "getHeader";
 import MDTypography from "components/MDTypography";
 import Card from "@mui/material/Card";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import "./style.css";
 
 // eslint-disable-next-line react/prop-types
 const TaskAudit = ({ taskId }) => {
@@ -489,7 +490,7 @@ const TaskAudit = ({ taskId }) => {
 
   return (
     <div>
-      <div style={{ overflowY: "scroll", overflowX: "hidden", height: "50vh", left: "10vw" }}>
+      <div className={`container${taskAudits.length > 10 ? " scrollable" : ""}`}>
         <MDTypography variant="h3" textAlign="center" fontWeight="light" color="secondary" mt={1}>
           TASK AUDIT
         </MDTypography>
