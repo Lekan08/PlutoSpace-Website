@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GHeaders from "getHeader";
 import MDTypography from "components/MDTypography";
-// import Card from "@mui/material/Card";
+import "./style.css";
 
 // eslint-disable-next-line react/prop-types
 const SubtaskAudit1 = ({ taskId }) => {
@@ -64,8 +64,8 @@ const SubtaskAudit1 = ({ taskId }) => {
   };
 
   return (
-    <div style={{ overflowY: "scroll", overflowX: "hidden", height: "50vh", left: "10vw" }}>
-      <MDTypography variant="h3" textAlign="center" fontWeight="light" color="secondary" mt={1}>
+    <div className={`container${subtaskAudits.length > 10 ? " scrollable" : ""}`}>
+      <MDTypography variant="h5" textAlign="center" fontWeight="light" color="secondary" mt={1}>
         SUBTASK AUDIT
       </MDTypography>
       {subtaskAudits.map((item) => (
