@@ -817,6 +817,28 @@ function Accounts() {
     //   align: "left",
     // },
     {
+      Header: "Sub/Super Account",
+      accessor: "superAccountID",
+      // eslint-disable-next-line react/prop-types
+      Cell: ({ cell: { value } }) =>
+        value ? (
+          <span
+            className="badge badge-pill"
+            style={{ backgroundColor: "#04D9FF", fontSize: "100%" }}
+          >
+            SUB ACCOUNT
+          </span>
+        ) : (
+          <span
+            className="badge badge-pill"
+            style={{ backgroundColor: "#0165FC", fontSize: "100%" }}
+          >
+            SUPER ACCOUNT
+          </span>
+        ),
+      align: "left",
+    },
+    {
       Header: "Starting Balance",
       accessor: "startingBalance",
       align: "left",
