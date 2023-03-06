@@ -268,6 +268,7 @@ import AttachPlanCheckox from "layouts/insuranceTypes/attachPlan";
 import InsuranceTypes from "layouts/insuranceTypes";
 import InsurancePlans from "layouts/insurancePlans";
 import Insurance from "layouts/insurance";
+import InsuranceDebtors from "layouts/insuranceDebtors";
 import InsuranceUpdate from "layouts/insurance/update";
 import InsuranceView from "layouts/insurance/view";
 import InsuranceContribution from "layouts/insurance/contribution";
@@ -1169,6 +1170,14 @@ const routes = [
     icon: <Icon fontSize="small">book_online</Icon>,
     route: "/insurance/plan",
     component: <InsurancePlans />,
+  },
+  {
+    type: "collapse",
+    name: "Due Insurance",
+    key: "dueInsurance",
+    icon: <Icon fontSize="small">access_time</Icon>,
+    route: "/due-insurance-contributions",
+    component: <InsuranceDebtors />,
   },
   {
     name: "Attach Plan",

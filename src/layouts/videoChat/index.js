@@ -55,9 +55,7 @@ export default function VideoChat() {
         }
         if (isMounted) {
           console.log(result);
-          if (result.length === 0) {
-            setItems([{ id: 0 }, { id: 1 }, { id: 2 }, { id: 5 }]);
-          } else setItems(result);
+          setItems(result);
           setOpened(false);
         }
       });
@@ -179,10 +177,6 @@ export default function VideoChat() {
                 Header: "call link",
                 accessor: "callLink",
                 align: "left",
-                // eslint-disable-next-line react/prop-types
-                // Cell: ({ cell: { value } }) => (
-                //   <p style={{ color: "blue", fontSize: "11px" }}>{value}</p>
-                // ),
               },
               { Header: "other members", accessor: "secondPartyName", align: "left" },
               {
@@ -192,7 +186,7 @@ export default function VideoChat() {
                 align: "left",
               },
               {
-                Header: "Created Date",
+                Header: "time",
                 accessor: "createdTime",
                 Cell: ({ cell: { value } }) => changeDateandTime(value),
                 align: "left",
