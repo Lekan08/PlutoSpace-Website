@@ -273,7 +273,7 @@ function AccountSheet() {
                         style={{ textAlign: "end", border: "1px solid #0f0f0f", color: "black" }}
                       />
                       <td style={{ textAlign: "end", border: "1px solid #0f0f0f", color: "black" }}>
-                        {thousandSeperator(account.startingBalance)}
+                        {thousandSeperator(account.startingBalance || 0)}
                       </td>
                     </tr>
                     {items.map((eachItem) => (
@@ -293,12 +293,14 @@ function AccountSheet() {
                         <td
                           style={{ textAlign: "end", border: "1px solid #0f0f0f", color: "black" }}
                         >
-                          {eachItem.debitOrCredit === 0 && thousandSeperator(eachItem.postedAmount)}
+                          {eachItem.debitOrCredit === 0 &&
+                            thousandSeperator(eachItem.postedAmount || 0)}
                         </td>
                         <td
                           style={{ textAlign: "end", border: "1px solid #0f0f0f", color: "black" }}
                         >
-                          {eachItem.debitOrCredit === 1 && thousandSeperator(eachItem.postedAmount)}
+                          {eachItem.debitOrCredit === 1 &&
+                            thousandSeperator(eachItem.postedAmount || 0)}
                         </td>
                         <td
                           style={{ textAlign: "end", border: "1px solid #0f0f0f", color: "black" }}
@@ -315,7 +317,7 @@ function AccountSheet() {
                         style={{ textAlign: "end", border: "1px solid #0f0f0f", color: "black" }}
                       />
                       <td style={{ textAlign: "end", border: "1px solid #0f0f0f", color: "black" }}>
-                        {thousandSeperator(account.currentBalance)}
+                        {thousandSeperator(account.currentBalance || 0)}
                       </td>
                     </tr>
                   </tbody>
