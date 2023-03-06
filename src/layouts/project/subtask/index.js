@@ -81,7 +81,6 @@ const Subtask = () => {
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-  const [checkedDescription, setCheckedDescription] = useState(false);
 
   const colorName = [deepPurple[500], pink[500], green[500], deepOrange[500], yellow[500]];
 
@@ -99,21 +98,6 @@ const Subtask = () => {
       setCheckedTitle(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("subtaskTitle").innerHTML = " ";
-    }
-  };
-  const handleSubtaskDescription = (valuex) => {
-    console.log(valuex);
-    console.log("working");
-    if (!valuex) {
-      setCheckedDescription(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("subtaskDescription").innerHTML =
-        "Subtask Description is required <br>";
-    }
-    if (valuex) {
-      setCheckedDescription(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("subtaskDescription").innerHTML = " ";
     }
   };
 
@@ -666,9 +650,7 @@ const Subtask = () => {
   };
 
   const handleValidate = (e) => {
-    handleSubtaskTitle(subTaskTitle);
-    handleSubtaskDescription(subtaskDescription);
-    if (checkedTitle && checkedDescription === true) {
+    if (checkedTitle === true) {
       handleCreate(e);
     }
   };
@@ -854,11 +836,10 @@ const Subtask = () => {
                   <div className="col-sm">
                     <TextField
                       id="title"
-                      label="Subtask Description *"
+                      label="Subtask Description"
                       value={subtaskDescription}
                       placeholder="Subask Description"
                       onChange={(e) => setSubtaskDescription(e.target.value)}
-                      onKeyUp={(e) => handleSubtaskDescription(e.target.value)}
                       rows={2}
                       sx={{
                         width: 400,
