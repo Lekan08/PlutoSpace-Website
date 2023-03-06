@@ -8,9 +8,6 @@ import "./style.css";
 const SubtaskAudit1 = ({ taskId }) => {
   const { allGHeaders: miHeaders } = GHeaders();
   const navigate = useNavigate();
-  // const [createdByx, setCreatedByx] = useState("");
-  // const [createdTime, setCreatedTime] = useState("");
-  // const [actionTakenx, setActionTaken] = useState("");
   const [subtaskAudits, setSubTaskAudit] = useState([]);
 
   useEffect(() => {
@@ -45,9 +42,6 @@ const SubtaskAudit1 = ({ taskId }) => {
           if (result.length !== 0) {
             setSubTaskAudit(result);
             console.log(result);
-            // setCreatedByx(result[0].actionByName);
-            // setCreatedTime(result[0].actionOn);
-            // setActionTaken(result[0].actionTaken);
           }
         }
       });
@@ -64,22 +58,24 @@ const SubtaskAudit1 = ({ taskId }) => {
   };
 
   return (
-    <div className={`container${subtaskAudits.length > 10 ? " scrollable" : ""}`}>
+    <div className="scrollable">
       <MDTypography variant="h5" textAlign="center" fontWeight="light" color="secondary" mt={1}>
         SUBTASK AUDIT
       </MDTypography>
-      {subtaskAudits.map((item) => (
-        <MDTypography
-          fontSize="11px"
-          textAlign="center"
-          fontWeight="light"
-          color="secondary"
-          mt={1}
-          key={item.id}
-        >
-          {item.actionByName} {item.actionTaken} {changeDate(item.actionOn)}
-        </MDTypography>
-      ))}
+      {subtaskAudits
+        .sort((a, b) => new Date(b.actionOn) - new Date(a.actionOn))
+        .map((item) => (
+          <MDTypography
+            fontSize="11px"
+            textAlign="center"
+            fontWeight="light"
+            color="secondary"
+            mt={1}
+            key={item.id}
+          >
+            {item.actionByName} {item.actionTaken} {changeDate(item.actionOn)}
+          </MDTypography>
+        ))}
     </div>
   );
 };

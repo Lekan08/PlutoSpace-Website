@@ -6,8 +6,8 @@ import PHeaders from "postHeader";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import "./style.css";
 
-const CommentCard = ({ subTaskaskID }) => {
-  const [subtaskComment, setSUbtaskComment] = useState([]);
+const CommentCardTask = ({ taskId }) => {
+  const [taskComment, setTaskComment] = useState([]);
   const { allGHeaders: miHeaders } = GHeaders();
   const navigate = useNavigate();
   const { allPHeaders: myHeaders } = PHeaders();
@@ -19,12 +19,9 @@ const CommentCard = ({ subTaskaskID }) => {
     const orgIDs = data11.orgID;
 
     let isMounted = true;
-    fetch(
-      `${process.env.REACT_APP_HALIFAX_URL}/taskComment/getForSubTask/${orgIDs}/${subTaskaskID}`,
-      {
-        headers,
-      }
-    )
+    fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/getForTask/${orgIDs}/${taskId}`, {
+      headers,
+    })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -45,7 +42,7 @@ const CommentCard = ({ subTaskaskID }) => {
         }
         if (isMounted) {
           console.log(result);
-          setSUbtaskComment(result);
+          setTaskComment(result);
         }
       });
 
@@ -104,8 +101,8 @@ const CommentCard = ({ subTaskaskID }) => {
         console.log(resx);
         console.log(resx.status);
         if (resx.status === "SUCCESS") {
-          setSUbtaskComment(subtaskComment.filter((comment) => comment.id !== value));
-          const filteredInfo = subtaskComment.filter((comment) => comment.id === value);
+          setTaskComment(taskComment.filter((comment) => comment.id !== value));
+          const filteredInfo = taskComment.filter((comment) => comment.id === value);
           console.log(filteredInfo);
           const data11 = JSON.parse(localStorage.getItem("user1"));
           const createdByx = data11.personalID;
@@ -156,8 +153,8 @@ const CommentCard = ({ subTaskaskID }) => {
   };
 
   return (
-    <div className={`container${subtaskComment.length > 5 ? " scrollable" : ""}`}>
-      {subtaskComment
+    <div className={`container${taskComment.length > 5 ? " scrollable" : ""}`}>
+      {taskComment
         .sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime)) // sort comments in reverse chronological order
         .map((comment) => (
           <div className="dialogbox" key={comment.id}>
@@ -198,4 +195,4 @@ const CommentCard = ({ subTaskaskID }) => {
   );
 };
 
-export default CommentCard;
+export default CommentCardTask;

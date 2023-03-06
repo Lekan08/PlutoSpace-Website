@@ -1,5 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
 .scrollable {
-  min-height: 290px; /* Set the minimum height for the container */
+  min-height: 250px; /* Set the minimum height for the container */
+  max-height: 250px; /* Set the maximun height for the container */
   overflow-y: scroll; /* Enable vertical scrolling */
 }
 

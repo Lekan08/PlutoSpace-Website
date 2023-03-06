@@ -6,7 +6,7 @@ import MDTypography from "components/MDTypography";
 import GHeaders from "getHeader";
 
 import PHeaders from "postHeader";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -85,10 +85,6 @@ const Subtask = () => {
 
   const colorName = [deepPurple[500], pink[500], green[500], deepOrange[500], yellow[500]];
 
-  const messagesEndRef = useRef(null);
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
-  };
   const handleSubtaskTitle = (valuex) => {
     console.log(valuex);
     console.log("working");
@@ -734,7 +730,6 @@ const Subtask = () => {
           setOpened(false);
           setOpen(true);
           setSubtaskComment("");
-          scrollToBottom();
           if (result.message === "Expired Access") {
             navigate("/authentication/sign-in");
             window.location.reload();
@@ -748,6 +743,46 @@ const Subtask = () => {
             window.location.reload();
           }
           console.log(result.status);
+
+          const raww = JSON.stringify({
+            orgID: orgIDs,
+            projectID: projectIDs,
+            subTaskID: subtaskId,
+            actionBy: createdByx,
+            actionTaken: "created a comment on",
+          });
+          console.log(raww);
+          const requestOptionsx = {
+            method: "POST",
+            headers: myHeaders,
+            body: raww,
+            redirect: "follow",
+          };
+          fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultr) => {
+              console.log(resultr);
+              if (resultr.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultr.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultr.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              console.log(resultr.status);
+            })
+            .catch((errorr) => {
+              console.log(errorr.status);
+            });
         })
         .catch((error) => {
           setOpened(false);
@@ -1173,8 +1208,7 @@ const Subtask = () => {
                     cursor: "pointer",
                   }}
                 />
-                <SubtaskAudit1 taskId={subtaskId} /> <br />
-                <br />
+                <SubtaskAudit1 taskId={subtaskId} />
                 <MDInput
                   //   label={updating ? "Updating a comment" : "Add a comment"}
                   label="Add a comment"

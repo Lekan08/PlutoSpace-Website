@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 .scrollable {
-  max-height: 350px; /* Set the maximum height for the container */
+  max-height: 300px; /* Set the maximum height for the container */
   overflow-y: scroll; /* Enable vertical scrolling */
 }
 
