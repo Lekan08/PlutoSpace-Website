@@ -18,22 +18,20 @@ import Box from "@mui/material/Box";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import IconButton from "@mui/material/IconButton";
 // import Divider from "@mui/material/Divider";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+// import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+// import DashboardIcon from "@mui/icons-material/Dashboard";
 import TextField from "@mui/material/TextField";
 import MDButton from "components/MDButton";
 import Swal from "sweetalert2";
-// import Subtask from "layouts/project/subtask";
+import CommentCardTask from "layouts/project/taskComment";
 import withReactContent from "sweetalert2-react-content";
 import Grid from "@mui/material/Grid";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
-// import Button from "@mui/material/Button";
-// import EditIcon from "@mui/icons-material/Edit";
-// import IconButton from "@mui/material/IconButton";
 import Modal from "@mui/material/Modal";
-// import Typography from "@mui/material/Typography";
 import TaskAudit from "layouts/project/taskAudit";
 import SubtaskAvailable from "layouts/project/view-Project/subtaskAvailable";
+import MDInput from "components/MDInput";
+import Icon from "@mui/material/Icon";
 
 export default function Pipeline() {
   const MySwal = withReactContent(Swal);
@@ -62,15 +60,13 @@ export default function Pipeline() {
   const [modalActualEndTime, setModalActualEndTime] = useState();
   const [modalTotalActualCost, setModalTotalActualCost] = useState("");
   const [taskId, setTaskid] = useState("");
-  // const [alreadyComm, setALreadyComm] = useState(false);
   const [items, setItems] = useState([]);
   const [subTask, setSubtask] = useState(false);
   const [expectedStartTime, setExpectedStartTime] = useState("");
   const [expectedEndTime, setExpectedEndTime] = useState("");
   const [modalExpectedEndTime, setModalExpectedEndTime] = useState("");
   const [modalAssignedTox, setModalAssignTo] = useState("");
-  // const [, setShowButton] = useState(false);
-  // const [commentxxx, setCommentxxxx] = useState();
+  const [taskComment, setTaskComment] = useState("");
   const handleClose = () => setOpen(false);
 
   // Method to change date from timestamp
@@ -616,19 +612,7 @@ export default function Pipeline() {
           setProjectGet(result);
           console.log(result);
           setNamex(result[0].name);
-          //   setWorkflowIDx(result[0].workflowID);
-          //   setDescription(result[0].descrip);
-          //   setID(result[0].id);
-          //   setCreatedTimex(result[0].createdTime);
-          //   setDeleteflagx(result[0].deleteFlag);
-          //   setTerminatedByx(result[0].terminatedBy);
-          //   setTerminatedTimex(result[0].terminatedTime);
-          //   setStatusx(result[0].status);
-          //   setActualEndTimex(result[0].actualEndTime);
-          //   setForeCastedEndTime(result[0].forecastedEndTime);
-          //   setStartTime(result[0].startTime);
-          //   setEndedByx(result[0].endedBy);
-          //   setCreatedByx(result[0].createdBy);
+
           fetch(`${process.env.REACT_APP_RAGA_URL}/workflow/gets/${orgIDs}`, { headers })
             .then(async (res) => {
               const aToken = res.headers.get("token-1");
@@ -847,9 +831,6 @@ export default function Pipeline() {
     console.log("This is for modal");
     setTaskid(id);
     setSubtask(id);
-    // setCommentxxxx(id);
-    // updateGetById(id);
-    // handleDelete(id);
     setOpen(true);
     console.log(id);
     const filterFirstedd = taskGet.filter((data) => data.id === id);
@@ -866,7 +847,6 @@ export default function Pipeline() {
     setModalAssignTo(filterFirstedd[0].assignedTo);
   };
 
-  // const handleClick = (e) => {
   //   // handleOnNameKeys();
   //   // if (enabled) {
   //   setOpened(true);
@@ -943,8 +923,107 @@ export default function Pipeline() {
       `/project/subtask?id=${taskId}&workflowID=${projectGet[0].workflowID}&projectId=${projectIDx}`
     );
   };
-  // console.log(currentStageID);
-  // console.log(taskId);
+
+  const handleCommentButton = (e) => {
+    e.preventDefault();
+
+    if (taskComment.length > 0) {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const projectIDs = urlParams.get("id");
+      const data11 = JSON.parse(localStorage.getItem("user1"));
+      const createdByx = data11.personalID;
+
+      const orgIDs = data11.orgID;
+      const raw = JSON.stringify({
+        orgID: orgIDs,
+        projectID: projectIDs,
+        taskID: taskId,
+        comment: taskComment,
+        empID: createdByx,
+      });
+      console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      setOpened(true);
+      setOpen(false);
+      fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/add`, requestOptions)
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          setOpened(false);
+          setOpen(true);
+          setTaskComment("");
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          console.log(result.status);
+
+          const raww = JSON.stringify({
+            orgID: orgIDs,
+            projectID: projectIDs,
+            taskID: taskId,
+            actionBy: createdByx,
+            actionTaken: "created a comment on",
+          });
+          console.log(raww);
+          const requestOptionsx = {
+            method: "POST",
+            headers: myHeaders,
+            body: raww,
+            redirect: "follow",
+          };
+          fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultr) => {
+              console.log(resultr);
+              if (resultr.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultr.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultr.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              console.log(resultr.status);
+            })
+            .catch((errorr) => {
+              console.log(errorr.status);
+            });
+        })
+        .catch((error) => {
+          setOpened(false);
+          setOpen(true);
+
+          console.log(error.status);
+        });
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -957,12 +1036,12 @@ export default function Pipeline() {
                   {namex}
                 </MDTypography>
               </Box>
-              <Box p={1}>
+              {/* <Box p={1}>
                 <FormatListBulletedIcon style={{ cursor: "pointer" }} />
               </Box>
               <Box p={1}>
                 <DashboardIcon style={{ cursor: "pointer" }} />
-              </Box>
+              </Box> */}
             </Box>
 
             <MDTypography
@@ -1159,7 +1238,12 @@ export default function Pipeline() {
                                               // onKeyUp={() => }
                                             >
                                               <Box
-                                                style={{ backgroundColor: "#318CE7" }}
+                                                style={{
+                                                  backgroundColor: snapshots.isDragging
+                                                    ? "#121212"
+                                                    : "#318CE7",
+                                                  minHeight: "30px",
+                                                }}
                                                 onClick={() => openModal(item.id)}
                                               >
                                                 {item.title}
@@ -1459,6 +1543,19 @@ export default function Pipeline() {
                   }}
                 />
                 <TaskAudit taskId={taskId} />
+                <MDInput
+                  //   label={updating ? "Updating a comment" : "Add a comment"}
+                  label="Add a comment"
+                  size="small"
+                  style={{ width: "15rem" }}
+                  value={taskComment}
+                  onChange={(e) => setTaskComment(e.target.value)}
+                />{" "}
+                &nbsp;
+                <MDButton color="info" size="small" onClick={(e) => handleCommentButton(e)}>
+                  <Icon fontSize="small">send</Icon>
+                </MDButton>
+                <CommentCardTask taskId={taskId} />
               </Grid>
             </Grid>
           </Box>

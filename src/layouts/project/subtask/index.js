@@ -34,6 +34,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import MDInput from "components/MDInput";
 
 import CardContent from "@mui/material/CardContent";
 import MDButton from "components/MDButton";
@@ -41,9 +42,9 @@ import Footer from "examples/Footer";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
 import SubtaskAudit1 from "layouts/project/subtaskAud";
-// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-// import IconButton from "@mui/material/IconButton";
+import Icon from "@mui/material/Icon";
 import { deepOrange, deepPurple, green, pink, yellow } from "@mui/material/colors";
+import CommentCard from "./subtaskComment";
 
 // eslint-disable-next-line react/prop-types
 const Subtask = () => {
@@ -76,17 +77,11 @@ const Subtask = () => {
   const [modalCost, setModalCost] = useState(0);
   const [modalTotalActualCost, setModalTotalActualCost] = useState("");
   const [subtaskId, setSubtaskId] = useState("");
-  const [checkedDescription, setCheckedDescription] = useState(false);
+  const [subtaskComment, setSubtaskComment] = useState("");
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
-  // Method to change date from timestamp
-  // const changeDate = (timestamp) => {
-  //   const date = new Date(timestamp);
-  //   const retDate = date.toDateString();
-  //   return retDate;
-  // };
   const colorName = [deepPurple[500], pink[500], green[500], deepOrange[500], yellow[500]];
 
   const handleSubtaskTitle = (valuex) => {
@@ -103,21 +98,6 @@ const Subtask = () => {
       setCheckedTitle(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("subtaskTitle").innerHTML = " ";
-    }
-  };
-  const handleSubtaskDescription = (valuex) => {
-    console.log(valuex);
-    console.log("working");
-    if (!valuex) {
-      setCheckedDescription(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("subtaskDescription").innerHTML =
-        "Subtask Description is required <br>";
-    }
-    if (valuex) {
-      setCheckedDescription(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("subtaskDescription").innerHTML = " ";
     }
   };
 
@@ -670,9 +650,7 @@ const Subtask = () => {
   };
 
   const handleValidate = (e) => {
-    handleSubtaskTitle(subTaskTitle);
-    handleSubtaskDescription(subtaskDescription);
-    if (checkedTitle && checkedDescription === true) {
+    if (checkedTitle === true) {
       handleCreate(e);
     }
   };
@@ -696,6 +674,106 @@ const Subtask = () => {
   };
 
   const colors = ["#00C49F", "#0088FE", "#EB5353", "#187498", "#36AE7C"];
+
+  const handleCommentButton = (e) => {
+    e.preventDefault();
+
+    if (subtaskComment.length > 0) {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const projectIDs = urlParams.get("projectId");
+      const data11 = JSON.parse(localStorage.getItem("user1"));
+      const createdByx = data11.personalID;
+
+      const orgIDs = data11.orgID;
+      const raw = JSON.stringify({
+        orgID: orgIDs,
+        projectID: projectIDs,
+        subTaskID: subtaskId,
+        comment: subtaskComment,
+        empID: createdByx,
+      });
+      console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      setOpened(true);
+      setOpen(false);
+      fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskComment/add`, requestOptions)
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((result) => {
+          setOpened(false);
+          setOpen(true);
+          setSubtaskComment("");
+          if (result.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (result.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+          console.log(result.status);
+
+          const raww = JSON.stringify({
+            orgID: orgIDs,
+            projectID: projectIDs,
+            subTaskID: subtaskId,
+            actionBy: createdByx,
+            actionTaken: "created a comment on",
+          });
+          console.log(raww);
+          const requestOptionsx = {
+            method: "POST",
+            headers: myHeaders,
+            body: raww,
+            redirect: "follow",
+          };
+          fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultr) => {
+              console.log(resultr);
+              if (resultr.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultr.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultr.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              console.log(resultr.status);
+            })
+            .catch((errorr) => {
+              console.log(errorr.status);
+            });
+        })
+        .catch((error) => {
+          setOpened(false);
+          setOpen(true);
+
+          console.log(error.status);
+        });
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -758,11 +836,10 @@ const Subtask = () => {
                   <div className="col-sm">
                     <TextField
                       id="title"
-                      label="Subtask Description *"
+                      label="Subtask Description"
                       value={subtaskDescription}
                       placeholder="Subask Description"
                       onChange={(e) => setSubtaskDescription(e.target.value)}
-                      onKeyUp={(e) => handleSubtaskDescription(e.target.value)}
                       rows={2}
                       sx={{
                         width: 400,
@@ -866,10 +943,15 @@ const Subtask = () => {
                       backgroundColor: colors[i % 5],
                       maxHeight: "170px",
                       minHeight: "170px",
-                      cursor: "grab",
                     }}
                   >
-                    <CardContent onClick={() => handleOpenModal(api.id)}>
+                    <CardContent
+                      style={{
+                        minHeight: "125px",
+                        cursor: "grab",
+                      }}
+                      onClick={() => handleOpenModal(api.id)}
+                    >
                       {/* <Typography sx={{ fontSize: 14 }} style={{ color: "white" }} gutterBottom>
                         Participant
                       </Typography> */}
@@ -1107,29 +1189,20 @@ const Subtask = () => {
                     cursor: "pointer",
                   }}
                 />
-                <SubtaskAudit1 taskId={subtaskId} /> <br />
-                <br />
-                {/* <Container>
-                  <ul className="list-group mb-4">
-                    {items.map((taskID) => (
-                      <li key={taskID.id} className="list-group-item">
-                        <IconButton>
-                          <AccountCircleIcon />
-                        </IconButton>
-                        {taskID.title}&#44; {taskID.descrip}&#44;
-                        {taskID.totalExpectedCost}&#44; {changeDate(taskID.expectedStartTime)}
-                        &#44;
-                        {changeDate(taskID.expectedEndTime)}&#44; {taskID.assignedTo}&#44;
-                         <IconButton onClick={() => handleDisable(taskID.id)}>
-                          <DeleteIcon />
-                        </IconButton>
-                        &nbsp; &nbsp;
-                        <IconButton onClick={() => handleUpdatesub(taskID.id)}>
-                          <BrowserUpdatedIcon />
-                        </IconButton>
-                    ))}
-                  </ul>
-                </Container> */}
+                <SubtaskAudit1 taskId={subtaskId} />
+                <MDInput
+                  //   label={updating ? "Updating a comment" : "Add a comment"}
+                  label="Add a comment"
+                  size="small"
+                  style={{ width: "15rem" }}
+                  value={subtaskComment}
+                  onChange={(e) => setSubtaskComment(e.target.value)}
+                />{" "}
+                &nbsp;
+                <MDButton color="info" size="small" onClick={(e) => handleCommentButton(e)}>
+                  <Icon fontSize="small">send</Icon>
+                </MDButton>
+                <CommentCard subTaskaskID={subtaskId} />
               </Grid>
             </Grid>
           </Box>
