@@ -873,7 +873,7 @@ function Accounts() {
 
             <Dropdown.Menu>
               <Dropdown.Item onClick={() => navigate(`/accounts/account-Sheet?id=${value}`)}>
-                View Sheet
+                View Spreadsheet
               </Dropdown.Item>
               <Dropdown.Item onClick={() => handleShow(items, value)}>Update</Dropdown.Item>
               <Dropdown.Item onClick={() => handleDelete(value)}>Delete</Dropdown.Item>

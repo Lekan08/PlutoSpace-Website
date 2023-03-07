@@ -5,7 +5,7 @@ import MDBox from "components/MDBox";
 import Card from "@mui/material/Card";
 // import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import MDTypography from "components/MDTypography";
+import MDTypography from "components/MDTypography";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -17,6 +17,7 @@ import withReactContent from "sweetalert2-react-content";
 // import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function AccountSheet() {
   const MySwal = withReactContent(Swal);
@@ -194,9 +195,10 @@ function AccountSheet() {
       <DashboardNavbar />
       <Card>
         <MDBox pt={4} pb={3}>
-          {/* <MDBox
+          <MDBox
             variant="gradient"
-            bgColor="info"
+            //   bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -206,9 +208,9 @@ function AccountSheet() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Account Sheet
+              Spreadsheet
             </MDTypography>
-          </MDBox> */}
+          </MDBox>
           <MDBox>
             <div
               style={{
