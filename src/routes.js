@@ -299,6 +299,7 @@ import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/update";
 import Voucher from "./layouts/voucher/index";
+import OnboardingChecklist from "./layouts/onboardingCompany/onboardingChecklist";
 
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
@@ -1418,6 +1419,13 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/company-offboarding/update-Offboarding",
     component: <Updateoffboarding />,
+  },
+  {
+    name: "Onboarding Checklist",
+    key: "onboardingChecklist",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/onboardingChecklist",
+    component: <OnboardingChecklist />,
   },
   {
     type: "divider",

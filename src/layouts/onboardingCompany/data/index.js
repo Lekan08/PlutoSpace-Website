@@ -409,6 +409,106 @@ export default function OnboardingCompanyTable() {
     );
   };
 
+  // const handleAddChecklist = (filteredData, value) => {
+  //   // console.log(value);
+  //   let cbttime = "";
+  //   let filteredItems = [];
+  //   // Avoid filter for empty string
+  //   if (!value) {
+  //     cbttime = "";
+  //     filteredItems = [];
+  //   } else {
+  //     filteredItems = filteredData.filter((item) => item.id === value);
+  //     console.log(filteredItems);
+
+  //     cbttime = new Date(filteredItems[0].deadline);
+  //   }
+
+  //   MySwal.fire({
+  //     title: "Onboarding Checklist",
+  //     html: `<div text-align="left"><b>Description:</b> <textarea rows="4" cols="8" class="form-control" id="descrip">${descripx}</textarea></div>`,
+  //     confirmButtonText: "Save",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     preConfirm: () => {
+  //       const time = Swal.getPopup().querySelector("#time").value;
+  //       if (!time) {
+  //         Swal.showValidationMessage(`Set a Specific Time`);
+  //       } else {
+  //         Swal.resetValidationMessage();
+  //         // console.log(time);
+
+  //         const data11 = JSON.parse(localStorage.getItem("user1"));
+  //         const cbtTimex = new Date(time).getTime();
+  //         // console.log(cbtTimex);
+
+  //         const orgIDs = data11.orgID;
+  //         const raw = JSON.stringify({
+  //           id: filteredItems[0].id,
+  //           title: filteredItems[0].title,
+  //           orgID: orgIDs,
+  //           duration: filteredItems[0].duration,
+  //           descrip: filteredItems[0].descrip,
+  //           status: filteredItems[0].status,
+  //           jobPostID: filteredItems[0].jobPostID,
+  //           deadline: cbtTimex,
+  //           createdTime: filteredItems[0].createdTime,
+  //           deleteFlag: filteredItems[0].deleteFlag,
+  //         });
+
+  //         // console.log(raw);
+  //         const requestOptions = {
+  //           method: "POST",
+  //           headers: myHeaders,
+  //           body: raw,
+  //           redirect: "follow",
+  //         };
+
+  //         fetch(`${process.env.REACT_APP_RAGA_URL}/cbt/update`, requestOptions)
+  //           .then(async (res) => {
+  //             const aToken = res.headers.get("token-1");
+  //             localStorage.setItem("rexxdex", aToken);
+  //             return res.json();
+  //           })
+  //           .then((result) => {
+  //             if (result.message === "Expired Access") {
+  //               navigate("/authentication/sign-in");
+  //               window.location.reload();
+  //             }
+  //             if (result.message === "Token Does Not Exist") {
+  //               navigate("/authentication/sign-in");
+  //               window.location.reload();
+  //             }
+  //             if (result.message === "Unauthorized Access") {
+  //               navigate("/authentication/forbiddenPage");
+  //               window.location.reload();
+  //             }
+  //             MySwal.fire({
+  //               title: result.status,
+  //               type: "success",
+  //               text: result.message,
+  //             }).then(() => {
+  //               window.location.reload();
+  //             });
+  //           })
+  //           .catch((error) => {
+  //             MySwal.fire({
+  //               title: error.status,
+  //               type: "error",
+  //               text: error.message,
+  //             });
+  //           });
+  //       }
+  //     },
+  //   });
+  // };
+
+  const handleAddChecklist = (value) => {
+    console.log(value);
+    navigate(`/onboardingChecklist?id=${value}`);
+  };
+
   return {
     columns: [
       { Header: "CREATED BY ", accessor: "createdByName", align: "left" },
@@ -456,6 +556,9 @@ export default function OnboardingCompanyTable() {
                 <Dropdown.Item onClick={() => handleterminate(value, 2)}>Terminate</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleCOMPLETED(value, 1)}>
                   Mark As Completed
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleAddChecklist(value)}>
+                  Add Checklist
                 </Dropdown.Item>
                 {/* <Dropdown.Item onClick={() => handleCOMPLETED2(value, 2)}>
                   Mark As Not COMPLETED
