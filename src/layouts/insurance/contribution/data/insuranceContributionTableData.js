@@ -372,6 +372,7 @@ export default function InsuranceContributionTableData() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log(result);
           setItems(result);
         }
       });
