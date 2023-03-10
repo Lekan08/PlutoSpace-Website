@@ -17,6 +17,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 // import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Checklist from "../viewOnboardingChecklist";
 // ZINOLEESKY
 
 function OnboardingChecklist() {
@@ -142,6 +143,8 @@ function OnboardingChecklist() {
           </MDBox>
         </MDBox>
       </Card>
+      &nbsp;
+      <Checklist />
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />

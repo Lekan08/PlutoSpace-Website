@@ -40,6 +40,7 @@ import GHeaders from "getHeader";
 import Mentor from "./myMentor";
 import "./index.css";
 import "./App.css";
+// import Checklist from "./viewChecklist";
 
 function OnboardingCompany() {
   const [namex, setName] = useState("");
@@ -442,6 +443,7 @@ function OnboardingCompany() {
       </MDBox> */}
       <br />
       <Mentor />
+      {/* <Checklist /> */}
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />
