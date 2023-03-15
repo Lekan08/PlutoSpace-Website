@@ -302,6 +302,7 @@ import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/upda
 import Voucher from "./layouts/voucher/index";
 import OnboardingChecklist from "./layouts/onboardingCompany/onboardingChecklist";
 import Checklist from "./layouts/myonboarding/viewChecklist";
+import OffboardingChecklist from "./layouts/offboardingCompany/offboardingChecklist";
 
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
@@ -1471,6 +1472,13 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/company-offboarding",
     component: <OffboardingCompany />,
+  },
+  {
+    name: "Offboarding Checklist",
+    key: "offboardingChecklist",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/offboardingChecklist",
+    component: <OffboardingChecklist />,
   },
   {
     type: "collapse",
