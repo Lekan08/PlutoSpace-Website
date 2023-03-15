@@ -17,7 +17,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 // import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
-import Checklist from "../viewOnboardingChecklist";
+// import Checklist from "../viewOnboardingChecklist";
 // ZINOLEESKY
 
 function OnboardingChecklist() {
@@ -43,7 +43,7 @@ function OnboardingChecklist() {
       redirect: "follow",
     };
 
-    fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/addChecklist`, requestOptions)
+    fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/addChecklist`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -144,7 +144,7 @@ function OnboardingChecklist() {
         </MDBox>
       </Card>
       &nbsp;
-      <Checklist />
+      {/* <Checklist /> */}
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />

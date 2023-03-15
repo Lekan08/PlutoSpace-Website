@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { useEffect, useState } from "react";
 // import { Form } from "react-bootstrap";
 // import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -24,6 +25,7 @@ function Checklist() {
   const MySwal = withReactContent(Swal);
   const [itemsx, setItems] = useState([]);
   const [nitemsx, setNItems] = useState([]);
+  //   const [checklist, setChecklist] = useState([]);
 
   // const [createdTimex, setCreatedTime] = useState("");
   // const [deleteFlagx, setDeleteFlag] = useState("");
@@ -136,46 +138,15 @@ function Checklist() {
   //     };
   //   }, []);
   useEffect(() => {
-    setOpened(true);
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-    console.log(data11);
-    const orgIDs = data11.orgID;
-    const headers = miHeaders;
-
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/gets/${orgIDs}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((resultp) => {
-        setOpened(false);
-        if (resultp.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-        }
-        if (resultp.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-        }
-        if (resultp.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-        }
-        if (isMounted) {
-          console.log(resultp);
-        }
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-  useEffect(() => {
-    const headers = miHeaders;
-
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
+    const myid = data11.personalID;
+    const headers = miHeaders;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
+    fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/getMySessions/${orgIDs}/${myid}`, {
+      headers,
+    })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -195,9 +166,41 @@ function Checklist() {
           window.location.reload();
         }
         if (isMounted) {
-          //   setUser(result);
           console.log(result);
-          setOpened(false);
+          if (result.length !== 0) {
+            const resss = [];
+            // setChecklist(result);
+            // const id = result.map((each) => each.id);
+            result.map((each) => {
+              const { checklists } = each;
+              if (checklists) {
+                console.log(checklists);
+                checklists.map((item) => {
+                  resss.push({ ...item, id: each.id });
+                });
+                // resss.push(each.id);
+              } else {
+                console.log("suppppp");
+              }
+            });
+            console.log(resss);
+            // if (resss )
+            // const ebukss = resss.filter((each) => each.done);
+
+            resss.map((value) => {
+              console.log(value);
+              if (value.done === false) {
+                setItems(resss);
+              } else {
+                setNItems(resss);
+              }
+            });
+            // console.log(ebukss);
+            // if (ebukss === false) {
+            //   setItems(resss);
+            // }
+          }
+          //   setTable(result);
         }
       });
     return () => {
@@ -217,60 +220,13 @@ function Checklist() {
   //   setItems((stages) => stages.filter((stage) => stage.id !== check.id));
   //   setNItems((list) => [...list, check]);
   // };
-  const handleRemoveQues = (value) => {
-    const requestOptions = {
-      method: "DELETE",
-      headers: miHeaders,
-    };
-
-    fetch(`${process.env.REACT_APP_RAGA_URL}/cbtQuestion/delete/${value}`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((resx) => {
-        if (resx.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-        }
-        if (resx.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-        }
-        if (resx.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-        }
-        MySwal.fire({
-          title: resx.status,
-          type: "success",
-          text: resx.message,
-        }).then(() => {
-          window.location.reload();
-        });
-      })
-      .catch((error) => {
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
-      });
-  };
-
-  const handleOnClick = (e, value) => {
+  const handleRemoveQues = (e, value) => {
     setOpened(true);
     e.preventDefault();
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const cbtIDs = urlParams.get("id");
-
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    const orgIDs = data11.orgID;
-    // const cbtIDs = data11.personalID;
+    console.log(value);
     const raw = JSON.stringify({
-      orgID: orgIDs,
-      cbtID: cbtIDs,
-      questionID: value,
+      id: value.id,
+      checker: value.checker,
     });
     // console.log(raw);
     const requestOptions = {
@@ -279,7 +235,7 @@ function Checklist() {
       body: raw,
       redirect: "follow",
     };
-    fetch(`${process.env.REACT_APP_RAGA_URL}/cbtQuestion/add`, requestOptions)
+    fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/removeChecklist`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -317,6 +273,68 @@ function Checklist() {
       });
   };
 
+  const handleOnClick = (e, value) => {
+    setOpened(true);
+    e.preventDefault();
+    console.log(value);
+    // const queryString = window.location.search;
+    // const urlParams = new URLSearchParams(queryString);
+    // const cbtIDs = urlParams.get("id");
+
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    // const orgIDs = data11.orgID;
+    // const cbtIDs = data11.personalID;
+    const raw = JSON.stringify({
+      id: value.id,
+      checker: value.checker,
+    });
+    // console.log(raw);
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/markChecklist`, requestOptions)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        setOpened(false);
+        MySwal.fire({
+          title: result.status,
+          type: "success",
+          text: result.message,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+  console.log(itemsx);
+
   return (
     // <DashboardLayout>
     //   <DashboardNavbar />
@@ -340,9 +358,9 @@ function Checklist() {
                   <Grid key={item.id} item xs={12}>
                     <FormControlLabel
                       control={<Checkbox />}
-                      onClick={(e) => handleOnClick(e, item.id)}
+                      onClick={(e) => handleOnClick(e, item)}
                       onKeyUp={() => handleAddQues(item)}
-                      label={item.question}
+                      label={item.checker}
                     />
                   </Grid>
                 ))}
@@ -360,9 +378,9 @@ function Checklist() {
                   <Grid key={item.id} item xs={12}>
                     <FormControlLabel
                       control={<Checkbox defaultChecked />}
-                      onClick={() => handleRemoveQues(item.id)}
+                      onClick={() => handleRemoveQues(item)}
                       // onKeyUp={() => handleRemoveQues(item)}
-                      label={item.name}
+                      label={item.checker}
                     />
                   </Grid>
                 ))}

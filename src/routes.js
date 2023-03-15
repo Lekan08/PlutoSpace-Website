@@ -301,6 +301,7 @@ import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update
 import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/update";
 import Voucher from "./layouts/voucher/index";
 import OnboardingChecklist from "./layouts/onboardingCompany/onboardingChecklist";
+import Checklist from "./layouts/myonboarding/viewChecklist";
 
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
@@ -1380,6 +1381,13 @@ const routes = [
     icon: <Icon fontSize="small">accessibility</Icon>,
     route: "/my-onboarding",
     component: <MyonBoarding />,
+  },
+  {
+    name: "My Onboarding",
+    key: "onboardingchecklist",
+    icon: <Icon fontSize="small">accessibility</Icon>,
+    route: "/myonboarding/viewChecklist",
+    component: <Checklist />,
   },
   {
     type: "collapse",

@@ -188,37 +188,55 @@ function Checklist() {
   //   setItems((stages) => stages.filter((stage) => stage.id !== check.id));
   //   setNItems((list) => [...list, check]);
   // };
-  const handleRemoveQues = (value) => {
-    const requestOptions = {
-      method: "DELETE",
-      headers: miHeaders,
-    };
+  const handleRemoveQues = (e, value) => {
+    console.log(value);
+    setOpened(true);
+    e.preventDefault();
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const ids = urlParams.get("id");
 
-    fetch(`${process.env.REACT_APP_RAGA_URL}/cbtQuestion/delete/${value}`, requestOptions)
+    const raw = JSON.stringify({
+      id: ids,
+      checker: value,
+    });
+    console.log(raw);
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(`${process.env.REACT_APP_RAGA_URL}/onboarding/removeChecklist`, requestOptions)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
         return res.json();
       })
-      .then((resx) => {
-        if (resx.message === "Expired Access") {
+      .then((result) => {
+        if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
+          window.location.reload();
         }
-        if (resx.message === "Token Does Not Exist") {
+        if (result.message === "Token Does Not Exist") {
           navigate("/authentication/sign-in");
+          window.location.reload();
         }
-        if (resx.message === "Unauthorized Access") {
+        if (result.message === "Unauthorized Access") {
           navigate("/authentication/forbiddenPage");
+          window.location.reload();
         }
+        setOpened(false);
         MySwal.fire({
-          title: resx.status,
+          title: result.status,
           type: "success",
-          text: resx.message,
+          text: result.message,
         }).then(() => {
           window.location.reload();
         });
       })
       .catch((error) => {
+        setOpened(false);
         MySwal.fire({
           title: error.status,
           type: "error",
