@@ -78,7 +78,9 @@ function Accounting() {
 
   const [opened, setOpened] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [runAccData, setRunAccData] = useState([]);
+  const [expensesData, setExpensesData] = useState([]);
+  const [incomeData, setIncomeData] = useState([]);
+  const [runAccDataTa, setRunAccDataTa] = useState([]);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalBalance, setTotalBalance] = useState(0);
@@ -128,7 +130,7 @@ function Accounting() {
   };
   // To handle pdf download
   const downloadPdf = (e) => {
-    const itemszx = runAccData.map((val) => ({
+    const itemszx = runAccDataTa.map((val) => ({
       createdTime: changeDatePDF(val.createdTime),
       source: val.source,
       particulars: val.particulars,
@@ -595,7 +597,7 @@ function Accounting() {
           }
         }
       });
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/runAccounts/${orgIDs}/${typex}`, {
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsIncome/${orgIDs}/${typex}`, {
       headers,
     })
       .then(async (res) => {
@@ -603,41 +605,64 @@ function Accounting() {
         localStorage.setItem("rexxdex", aToken);
         return res.json();
       })
-      .then((resultr) => {
+      .then((resultIncome) => {
         setOpened(false);
-        if (resultr.message === "Expired Access") {
+        if (resultIncome.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
         }
-        if (resultr.message === "Token Does Not Exist") {
+        if (resultIncome.message === "Token Does Not Exist") {
           navigate("/authentication/sign-in");
           window.location.reload();
         }
-        if (resultr.message === "Unauthorized Access") {
+        if (resultIncome.message === "Unauthorized Access") {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
         if (isMounted) {
-          if (resultr.length !== 0) {
+          console.log(resultIncome);
+          if (resultIncome.length !== 0) {
             setDisplay(true);
-            setRunAccData(resultr);
-            console.log(resultr);
-            const incomeFIltered = resultr.filter((os) => os.category === "INCOME");
-            const expensesFiltered = resultr.filter((os) => os.category === "EXPENSES");
-            console.log(incomeFIltered);
-            console.log(expensesFiltered);
-            if (incomeFIltered.length !== 0) {
-              const incomeValues = incomeFIltered.map((income) => income.totalAmount);
-              console.log(incomeValues);
-              setTotalIncome(incomeValues.reduce((a, b) => a + b, 0));
-            }
-            if (expensesFiltered.length !== 0) {
-              const expensesValues = expensesFiltered.map((income) => income.totalAmount);
-              console.log(expensesValues);
-              setTotalExpenses(expensesValues.reduce((a, b) => a + b, 0));
-            }
-          } else setNoTransactionsMade(true);
+            setIncomeData(resultIncome);
+            setTotalIncome(resultIncome.reduce((a, b) => a + b.totalAmount, 0));
+            console.log(resultIncome);
+          }
         }
+        fetch(
+          `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`,
+          {
+            headers,
+          }
+        )
+          .then(async (res) => {
+            const aToken = res.headers.get("token-1");
+            localStorage.setItem("rexxdex", aToken);
+            return res.json();
+          })
+          .then((resultExpense) => {
+            setOpened(false);
+            if (resultExpense.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (resultExpense.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (resultExpense.message === "Unauthorized Access") {
+              navigate("/authentication/forbiddenPage");
+              window.location.reload();
+            }
+            if (isMounted) {
+              console.log(resultExpense);
+              if (resultExpense.length !== 0) {
+                setExpensesData(resultExpense);
+                setDisplay(true);
+                setTotalExpenses(resultExpense.reduce((a, b) => a + b.totalAmount, 0));
+                console.log(resultExpense);
+              }
+            }
+          });
       });
 
     return () => {
@@ -646,6 +671,13 @@ function Accounting() {
   };
 
   useEffect(() => {
+    const mergedArray = incomeData.concat(expensesData);
+    setRunAccDataTa(mergedArray);
+
+    if (mergedArray.length === 0) {
+      setNoTransactionsMade(true);
+    }
+    console.log(mergedArray);
     setTotalBalance(totalBalanceValue + totalIncome - totalExpenses);
   }, [totalBalanceValue, totalIncome, totalExpenses]);
 
@@ -863,7 +895,7 @@ function Accounting() {
                   </div>
                   &nbsp; &nbsp;
                   <DataTable
-                    table={{ columns: pColumns, rows: runAccData }}
+                    table={{ columns: pColumns, rows: runAccDataTa }}
                     isSorted
                     entriesPerPage
                     showTotalEntries
