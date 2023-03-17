@@ -504,11 +504,6 @@ export default function OnboardingCompanyTable() {
   //   });
   // };
 
-  const handleAddChecklist = (value) => {
-    console.log(value);
-    navigate(`/onboardingChecklist?id=${value}`);
-  };
-
   return {
     columns: [
       { Header: "CREATED BY ", accessor: "createdByName", align: "left" },
@@ -556,9 +551,6 @@ export default function OnboardingCompanyTable() {
                 <Dropdown.Item onClick={() => handleterminate(value, 2)}>Terminate</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleCOMPLETED(value, 1)}>
                   Mark As Completed
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleAddChecklist(value)}>
-                  Add Checklist
                 </Dropdown.Item>
                 {/* <Dropdown.Item onClick={() => handleCOMPLETED2(value, 2)}>
                   Mark As Not COMPLETED
