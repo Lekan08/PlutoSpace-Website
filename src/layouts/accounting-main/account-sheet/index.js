@@ -290,7 +290,7 @@ function AccountSheet() {
                             textTransform: "uppercase",
                           }}
                         >
-                          {eachItem.particular}
+                          {eachItem.particulars}
                         </td>
                         <td
                           style={{ textAlign: "end", border: "1px solid #0f0f0f", color: "black" }}
