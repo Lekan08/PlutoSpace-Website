@@ -300,6 +300,9 @@ import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/update";
 import Voucher from "./layouts/voucher/index";
+import OnboardingChecklist from "./layouts/onboardingCompany/onboardingChecklist";
+import Checklist from "./layouts/myonboarding/viewChecklist";
+import OffboardingChecklist from "./layouts/offboardingCompany/offboardingChecklist";
 
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
@@ -1381,6 +1384,13 @@ const routes = [
     component: <MyonBoarding />,
   },
   {
+    name: "My Onboarding",
+    key: "onboardingchecklist",
+    icon: <Icon fontSize="small">accessibility</Icon>,
+    route: "/myonboarding/viewChecklist",
+    component: <Checklist />,
+  },
+  {
     type: "collapse",
     name: "Company Onboarding",
     key: "onboardingCompany",
@@ -1429,6 +1439,13 @@ const routes = [
     component: <Updateoffboarding />,
   },
   {
+    name: "Onboarding Checklist",
+    key: "onboardingChecklist",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/onboardingChecklist",
+    component: <OnboardingChecklist />,
+  },
+  {
     type: "divider",
     name: "",
     key: "divdq1",
@@ -1455,6 +1472,13 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/company-offboarding",
     component: <OffboardingCompany />,
+  },
+  {
+    name: "Offboarding Checklist",
+    key: "offboardingChecklist",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/offboardingChecklist",
+    component: <OffboardingChecklist />,
   },
   {
     type: "collapse",

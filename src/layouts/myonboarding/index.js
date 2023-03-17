@@ -40,6 +40,7 @@ import GHeaders from "getHeader";
 import Mentor from "./myMentor";
 import "./index.css";
 import "./App.css";
+import Checklist from "./viewChecklist";
 
 function OnboardingCompany() {
   const [namex, setName] = useState("");
@@ -121,6 +122,7 @@ function OnboardingCompany() {
           navigate("/authentication/forbiddenPage");
         }
         if (isMounted) {
+          console.log(resultp);
           setName(resultp[0].name);
           setEmail(resultp[0].email);
           setStreet(resultp[0].street);
@@ -442,6 +444,7 @@ function OnboardingCompany() {
       </MDBox> */}
       <br />
       <Mentor />
+      <Checklist />
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />

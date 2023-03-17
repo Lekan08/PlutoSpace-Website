@@ -207,6 +207,12 @@ function PostTransactions() {
               }).then(() => {
                 navigate("/general-ledger");
               });
+            } else if (resultx.status === "INVALID_ACTION") {
+              MySwal.fire({
+                title: resultx.status,
+                type: "success",
+                text: "You Cannot Post To The Same Account More Than Once For A Transaction",
+              });
             } else {
               MySwal.fire({
                 title: resultx.status,

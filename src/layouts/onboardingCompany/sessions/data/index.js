@@ -182,6 +182,10 @@ export default function OnboardingSessionTable() {
     window.sessionStorage.setItem("boarding", JSON.stringify(filteredItems[0]));
     navigate(`/onboarding/sessions/update?id=${value}`);
   };
+  const handleAddChecklist = (value) => {
+    console.log(value);
+    navigate(`/onboardingChecklist?id=${value}`);
+  };
 
   return {
     columns: [
@@ -224,6 +228,9 @@ export default function OnboardingSessionTable() {
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => handleUpdate(value)}>Update Session</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleDisable2(value)}>Delete</Dropdown.Item>
+                <Dropdown.Item onClick={() => handleAddChecklist(value)}>
+                  Add Checklist
+                </Dropdown.Item>
                 {/* <Dropdown.Item onClick={() => handleterminate(value)}>Terminate</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleCOMPLETED(value, 1)}>
                   Mark As Completed

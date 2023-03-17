@@ -295,6 +295,11 @@ export default function Mentor() {
   //     });
   //   };
 
+  const handleMarkChecklist = (value) => {
+    console.log(value);
+    navigate(`/myonboarding/viewChecklist?id=${value}`);
+  };
+
   return (
     <MDBox>
       <MDBox component="form" role="form" mx={10}>
@@ -337,36 +342,36 @@ export default function Mentor() {
                 Cell: ({ cell: { value } }) => handleStatus(value),
                 align: "left",
               },
-              // {
-              //   Header: "actions",
-              //   accessor: "id",
-              //   // eslint-disable-next-line react/prop-types
-              //   Cell: ({ cell: { value } }) => (
-              //     <div
-              //       style={{
-              //         width: "100%",
-              //         backgroundColor: "#dadada",
-              //         borderRadius: "2px",
-              //       }}
-              //     >
-              //       <Dropdown>
-              //         <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-              //           <Icon sx={{ fontWeight: "light" }}>settings</Icon>
-              //         </Dropdown.Toggle>
+              {
+                Header: "actions",
+                accessor: "id",
+                // eslint-disable-next-line react/prop-types
+                Cell: ({ cell: { value } }) => (
+                  <div
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#dadada",
+                      borderRadius: "2px",
+                    }}
+                  >
+                    <Dropdown>
+                      <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                        <Icon sx={{ fontWeight: "light" }}>settings</Icon>
+                      </Dropdown.Toggle>
 
-              //         <Dropdown.Menu>
-              //           <Dropdown.Item onClick={() => handleCOMPLETED(value)}>
-              //             Mark As Completed
-              //           </Dropdown.Item>
-              //           <Dropdown.Item onClick={() => handleCOMPLETED2(value)}>
-              //             Mark As Failed
-              //           </Dropdown.Item>
-              //         </Dropdown.Menu>
-              //       </Dropdown>
-              //     </div>
-              //   ),
-              //   align: "left",
-              // },
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={() => handleMarkChecklist(value)}>
+                          Mark Checklist
+                        </Dropdown.Item>
+                        {/* <Dropdown.Item onClick={() => handleCOMPLETED2(value)}>
+                          Mark As Failed
+                        </Dropdown.Item> */}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </div>
+                ),
+                align: "left",
+              },
             ],
             rows: table,
           }}
