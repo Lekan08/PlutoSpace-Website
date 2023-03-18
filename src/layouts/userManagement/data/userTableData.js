@@ -49,6 +49,7 @@ export default function UserData() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log(result);
           setItems(result);
         }
       });
@@ -57,90 +58,90 @@ export default function UserData() {
     };
   }, []);
 
-  const handleDisable = (pIDVal) => {
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+  // const handleDisable = (pIDVal) => {
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
-    const headers = miHeaders;
+  //   const orgIDs = data11.orgID;
+  //   const headers = miHeaders;
 
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/getByPersonalID/${orgIDs}/${pIDVal}`, {
-      headers,
-    })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((resultPC) => {
-        if (resultPC.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-        }
-        if (resultPC.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-        }
-        if (resultPC.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-        }
-        MySwal.fire({
-          title: "Reason For Delete",
-          text: "You won't be able to revert this!",
-          icon: "warning",
-          html: `<div align="center"><select id="reasonForDelete" class="form-control" aria-label="Default select example" style="width:auto;">
-          <option value="">---Reason For Delete---</option>
-          <option value="Retired">Retired</option>
-          <option value="Late">Late</option>
-          <option value="Resigned">Resigned</option>
-          <option value="Sacked">Sacked</option>
-        </select></div>`,
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, delete it!",
-        }).then((resultD) => {
-          if (resultD.isConfirmed) {
-            const modalValue = document.getElementById("reasonForDelete").value;
-            const requestOptions = {
-              method: "DELETE",
-              headers: miHeaders,
-            };
-            fetch(
-              `${process.env.REACT_APP_ZAVE_URL}/personalcompany/delete/${resultPC.id}/${modalValue}`,
-              requestOptions
-            )
-              .then(async (res) => {
-                const aToken = res.headers.get("token-1");
-                localStorage.setItem("rexxdex", aToken);
-                return res.json();
-              })
-              .then((resx) => {
-                if (resx.message === "Expired Access") {
-                  navigate("/authentication/sign-in");
-                }
-                if (resx.message === "Token Does Not Exist") {
-                  navigate("/authentication/sign-in");
-                }
-                if (resx.message === "Unauthorized Access") {
-                  navigate("/authentication/forbiddenPage");
-                }
-                MySwal.fire({
-                  title: resx.status,
-                  type: "success",
-                  text: resx.message,
-                }).then(() => {
-                  window.location.reload();
-                });
-              })
-              .catch((error) => {
-                MySwal.fire({
-                  title: error.status,
-                  type: "error",
-                  text: error.message,
-                });
-              });
-          }
-        });
-      });
-  };
+  //   fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/getByPersonalID/${orgIDs}/${pIDVal}`, {
+  //     headers,
+  //   })
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       return res.json();
+  //     })
+  //     .then((resultPC) => {
+  //       if (resultPC.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //       }
+  //       if (resultPC.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //       }
+  //       if (resultPC.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //       }
+  //       MySwal.fire({
+  //         title: "Reason For Delete",
+  //         text: "You won't be able to revert this!",
+  //         icon: "warning",
+  //         html: `<div align="center"><select id="reasonForDelete" class="form-control" aria-label="Default select example" style="width:auto;">
+  //         <option value="">---Reason For Delete---</option>
+  //         <option value="Retired">Retired</option>
+  //         <option value="Late">Late</option>
+  //         <option value="Resigned">Resigned</option>
+  //         <option value="Sacked">Sacked</option>
+  //       </select></div>`,
+  //         showCancelButton: true,
+  //         confirmButtonColor: "#3085d6",
+  //         cancelButtonColor: "#d33",
+  //         confirmButtonText: "Yes, delete it!",
+  //       }).then((resultD) => {
+  //         if (resultD.isConfirmed) {
+  //           const modalValue = document.getElementById("reasonForDelete").value;
+  //           const requestOptions = {
+  //             method: "DELETE",
+  //             headers: miHeaders,
+  //           };
+  //           fetch(
+  //             `${process.env.REACT_APP_ZAVE_URL}/personalcompany/delete/${resultPC.id}/${modalValue}`,
+  //             requestOptions
+  //           )
+  //             .then(async (res) => {
+  //               const aToken = res.headers.get("token-1");
+  //               localStorage.setItem("rexxdex", aToken);
+  //               return res.json();
+  //             })
+  //             .then((resx) => {
+  //               if (resx.message === "Expired Access") {
+  //                 navigate("/authentication/sign-in");
+  //               }
+  //               if (resx.message === "Token Does Not Exist") {
+  //                 navigate("/authentication/sign-in");
+  //               }
+  //               if (resx.message === "Unauthorized Access") {
+  //                 navigate("/authentication/forbiddenPage");
+  //               }
+  //               MySwal.fire({
+  //                 title: resx.status,
+  //                 type: "success",
+  //                 text: resx.message,
+  //               }).then(() => {
+  //                 window.location.reload();
+  //               });
+  //             })
+  //             .catch((error) => {
+  //               MySwal.fire({
+  //                 title: error.status,
+  //                 type: "error",
+  //                 text: error.message,
+  //               });
+  //             });
+  //         }
+  //       });
+  //     });
+  // };
 
   const handleView = (value) => {
     navigate(`/user-Management/view-User?id=${value}`);
@@ -151,6 +152,12 @@ export default function UserData() {
 
   // Method to change date from timestamp
   const changeDate = (timestamp) => {
+    const date = new Date(timestamp);
+    const retDate = date.toDateString();
+    return retDate;
+  };
+  // Method to change date from timestamp
+  const changeDate2 = (timestamp) => {
     const date = new Date(timestamp);
     const retDate = date.toDateString();
     return retDate;
@@ -238,6 +245,12 @@ export default function UserData() {
         align: "left",
       },
       {
+        Header: "Date Of Employment",
+        accessor: "personalCompany.createdTime",
+        Cell: ({ cell: { value } }) => changeDate2(value),
+        align: "left",
+      },
+      {
         Header: "Actions",
         accessor: "personal.id",
         Cell: ({ cell: { value } }) => (
@@ -258,7 +271,7 @@ export default function UserData() {
                   <Dropdown.Item onClick={() => handleView(value)}>
                     View/Add Office Details
                   </Dropdown.Item>
-                  <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item>
+                  {/* <Dropdown.Item onClick={() => handleDisable(value)}>Disable</Dropdown.Item> */}
                   <Dropdown.Item onClick={() => handleAddTOT(value)}>
                     Add Time Off Type
                   </Dropdown.Item>

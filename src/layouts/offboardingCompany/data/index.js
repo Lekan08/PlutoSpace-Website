@@ -208,6 +208,92 @@ export default function OffboardingCompanyTable() {
     });
   };
 
+  const handleRemoveEmployee = (pIDVal) => {
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    console.log(data11);
+    const headers = miHeaders;
+
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/getByPersonalID/${orgIDs}/${pIDVal}`, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((resultPC) => {
+        if (resultPC.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+        }
+        if (resultPC.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+        }
+        if (resultPC.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+        }
+        MySwal.fire({
+          title: "Reason For Delete",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          html: `<div align="center"><select id="reasonForDelete" class="form-control" aria-label="Default select example" style="width:auto;">
+          <option value="">---Reason For Delete---</option>
+          <option value="Retired">Retired</option>
+          <option value="Late">Late</option>
+          <option value="Resigned">Resigned</option>
+          <option value="Sacked">Sacked</option>
+        </select></div>`,
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((resultD) => {
+          if (resultD.isConfirmed) {
+            const modalValue = document.getElementById("reasonForDelete").value;
+            const requestOptions = {
+              method: "DELETE",
+              headers: miHeaders,
+            };
+            fetch(
+              `${process.env.REACT_APP_ZAVE_URL}/personalcompany/delete/${resultPC.id}/${modalValue}`,
+              requestOptions
+            )
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                return res.json();
+              })
+              .then((resx) => {
+                if (resx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                }
+                if (resx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                }
+                if (resx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                }
+                MySwal.fire({
+                  title: resx.status,
+                  type: "success",
+                  text: resx.message,
+                }).then(() => {
+                  window.location.reload();
+                });
+              })
+              .catch((error) => {
+                MySwal.fire({
+                  title: error.status,
+                  type: "error",
+                  text: error.message,
+                });
+              });
+          }
+        });
+      });
+  };
+
   const handleCOMPLETED = (id) => {
     const filteredData = items.filter((item) => item.id === id);
     console.log(filteredData);
@@ -256,6 +342,10 @@ export default function OffboardingCompanyTable() {
             }
             if (resx.message === "Unauthorized Access") {
               navigate("/authentication/forbiddenPage");
+            }
+            if (resx.status === "SUCCESS") {
+              console.log("enter");
+              handleRemoveEmployee(filteredData[0].empID);
             }
             MySwal.fire({
               title: resx.status,
@@ -372,6 +462,16 @@ export default function OffboardingCompanyTable() {
         if (isMounted) {
           console.log(result);
           setItems(result);
+          // const zoom = result.map((val) => val.status === 2);
+          // const zoom = result.filter((val) => val.status === 2);
+          // console.log(zoom);
+          // if (
+          //   // eslint-disable-next-line array-callback-return
+          //   zoom.map((val) => val.status) === 2
+          // ) {
+          //   console.log("fried");
+          //   handleRemoveEmployee();
+          // }
         }
       });
     return () => {
@@ -399,10 +499,10 @@ export default function OffboardingCompanyTable() {
       `/offboarding/sessions?id=${value}&pid=${filteredItems[0].empID}&stat=${filteredItems[0].status}`
     );
   };
-  const handleAddChecklist = (value) => {
-    console.log(value);
-    navigate(`/offboardingChecklist?id=${value}`);
-  };
+  // const handleAddChecklist = (value) => {
+  //   console.log(value);
+  //   navigate(`/offboardingChecklist?id=${value}`);
+  // };
 
   return {
     columns: [
@@ -454,9 +554,9 @@ export default function OffboardingCompanyTable() {
                 <Dropdown.Item onClick={() => handleCOMPLETED(value, 1)}>
                   Mark As Completed
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleAddChecklist(value)}>
+                {/* <Dropdown.Item onClick={() => handleAddChecklist(value)}>
                   Add Checklist
-                </Dropdown.Item>
+                </Dropdown.Item> */}
                 {/* <Dropdown.Item onClick={() => handleCOMPLETED2(value, 2)}>
                   Mark As Not COMPLETED
                 </Dropdown.Item> */}
