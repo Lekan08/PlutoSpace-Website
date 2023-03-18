@@ -603,10 +603,52 @@ function Accounting() {
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
+        console.log(res);
+        if (res.status === 200) {
+          console.log("SMile for the camera");
+          fetch(
+            `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`,
+            {
+              headers,
+            }
+          )
+            .then(async (ress) => {
+              // const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              console.log("First console");
+              console.log(ress);
+              return ress.json();
+            })
+            .then((resultExpense) => {
+              setOpened(false);
+              if (resultExpense.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultExpense.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultExpense.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              if (isMounted) {
+                console.log("second console");
+                console.log(resultExpense);
+                if (resultExpense.length !== 0) {
+                  setExpensesData(resultExpense);
+                  setDisplay(true);
+                  setTotalExpenses(resultExpense.reduce((a, b) => a + b.totalAmount, 0));
+                  console.log(resultExpense);
+                }
+              }
+            });
+        }
         return res.json();
       })
       .then((resultIncome) => {
-        setOpened(false);
+        // setOpened(false);
         if (resultIncome.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -622,47 +664,12 @@ function Accounting() {
         if (isMounted) {
           console.log(resultIncome);
           if (resultIncome.length !== 0) {
-            setDisplay(true);
+            // setDisplay(true);
             setIncomeData(resultIncome);
             setTotalIncome(resultIncome.reduce((a, b) => a + b.totalAmount, 0));
             console.log(resultIncome);
           }
         }
-        fetch(
-          `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`,
-          {
-            headers,
-          }
-        )
-          .then(async (res) => {
-            const aToken = res.headers.get("token-1");
-            localStorage.setItem("rexxdex", aToken);
-            return res.json();
-          })
-          .then((resultExpense) => {
-            setOpened(false);
-            if (resultExpense.message === "Expired Access") {
-              navigate("/authentication/sign-in");
-              window.location.reload();
-            }
-            if (resultExpense.message === "Token Does Not Exist") {
-              navigate("/authentication/sign-in");
-              window.location.reload();
-            }
-            if (resultExpense.message === "Unauthorized Access") {
-              navigate("/authentication/forbiddenPage");
-              window.location.reload();
-            }
-            if (isMounted) {
-              console.log(resultExpense);
-              if (resultExpense.length !== 0) {
-                setExpensesData(resultExpense);
-                setDisplay(true);
-                setTotalExpenses(resultExpense.reduce((a, b) => a + b.totalAmount, 0));
-                console.log(resultExpense);
-              }
-            }
-          });
       });
 
     return () => {

@@ -391,15 +391,34 @@ function ViewSingleCorporate() {
         }
         if (isMounted) {
           console.log(result);
-          const date = new Date(result);
-          const numOfDays = date.getDate();
-          setLastEngagementTime(numOfDays);
+          setLastEngagementTime(result);
         }
       });
     return () => {
       isMounted = false;
     };
   }, []);
+
+  // Get time code
+  function getTimeCreated(createdAt) {
+    const now = new Date();
+    const created = new Date(createdAt);
+
+    if (created.getDate() === now.getDate()) {
+      // Comment created today
+      const hours = created.getHours();
+      const minutes = created.getMinutes();
+      return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+      // eslint-disable-next-line no-else-return
+    } else if (created.getDate() === now.getDate() - 1) {
+      // Comment created yesterday
+      return "Yesterday";
+    } else {
+      // Comment created more than 2 days ago
+      const daysAgo = Math.floor((now - created) / (1000 * 60 * 60 * 24));
+      return `${daysAgo} days ago`;
+    }
+  }
 
   useEffect(() => {
     const headers = miHeaders;
@@ -1068,7 +1087,7 @@ function ViewSingleCorporate() {
                         textAlign="center"
                         mt={1}
                       >
-                        {lastEngagementTime} day(s) ago.
+                        {getTimeCreated(lastEngagementTime)}
                       </MDTypography>
                     </MDBox>
                   </Paper>
