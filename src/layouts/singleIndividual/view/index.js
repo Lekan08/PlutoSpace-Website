@@ -640,37 +640,26 @@ function ViewSingleIndividual() {
     };
   }, []);
 
-  // const changeDateandTime = (timestamp) => {
-  //   const date = new Date(timestamp);
-  //   const retDate = date.toDateString();
-  //   let hour = "0";
-  //   let minutes = "0";
-  //   let seconds = "0";
+  // Get time code
+  function getTimeCreated(createdAt) {
+    const now = new Date();
+    const created = new Date(createdAt);
 
-  //   if (date.getHours() < 10) {
-  //     hour += date.getHours();
-  //   } else {
-  //     hour = date.getHours();
-  //   }
-
-  //   if (date.getMinutes() < 10) {
-  //     minutes += date.getMinutes();
-  //   } else {
-  //     minutes = date.getMinutes();
-  //   }
-
-  //   if (date.getSeconds() < 10) {
-  //     seconds += date.getSeconds();
-  //   } else {
-  //     seconds = date.getSeconds();
-  //   }
-  //   let newDate = `${retDate} ${hour}:${minutes}:${seconds} AM`;
-  //   if (hour > "12") {
-  //     const nHour = parseInt(hour, 10) - 12;
-  //     newDate = `${retDate} ${nHour}:${minutes}:${seconds} PM`;
-  //   }
-  //   return newDate;
-  // };
+    if (created.getDate() === now.getDate()) {
+      // Comment created today
+      const hours = created.getHours();
+      const minutes = created.getMinutes();
+      return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+      // eslint-disable-next-line no-else-return
+    } else if (created.getDate() === now.getDate() - 1) {
+      // Comment created yesterday
+      return "Yesterday";
+    } else {
+      // Comment created more than 2 days ago
+      const daysAgo = Math.floor((now - created) / (1000 * 60 * 60 * 24));
+      return `${daysAgo} days ago`;
+    }
+  }
 
   useEffect(() => {
     const headers = miHeaders;
@@ -710,9 +699,9 @@ function ViewSingleIndividual() {
         }
         if (isMounted) {
           console.log(result);
-          const date = new Date(result);
-          const numOfDays = date.getDate();
-          setLastEngagementTime(numOfDays);
+          // const date = new Date(result);
+          // const numOfDays = date.getDate();
+          setLastEngagementTime(result);
         }
       });
     return () => {
@@ -982,7 +971,7 @@ function ViewSingleIndividual() {
                         textAlign="center"
                         mt={1}
                       >
-                        {lastEngagementTime} day(s) ago.
+                        {getTimeCreated(lastEngagementTime)}
                       </MDTypography>
                     </MDBox>
                   </Paper>

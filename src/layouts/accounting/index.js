@@ -605,7 +605,7 @@ function Accounting() {
         localStorage.setItem("rexxdex", aToken);
         console.log(res);
         if (res.status === 200) {
-          console.log("SMile for the camera");
+          console.log("SMile for the camera ");
           fetch(
             `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`,
             {
