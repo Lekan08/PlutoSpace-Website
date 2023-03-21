@@ -93,6 +93,9 @@ import ChatApp from "layouts/mattersArising/viewMatter/App";
 import RenewLog from "layouts/authentication/renewSubscription/renewLogin";
 import RenewSub from "layouts/authentication/renewSubscription";
 import SalaryPayment from "layouts/salaryPayment";
+import ResignationLetter from "layouts/resignationLetter";
+import ViewResignationLetter from "layouts/resignationLetter/view";
+import UpdateResignationLetter from "layouts/resignationLetter/update";
 
 import Bonusdeduction from "layouts/bonusdeduction";
 import MyBills from "layouts/my-Bills";
@@ -1444,6 +1447,30 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/onboardingChecklist",
     component: <OnboardingChecklist />,
+  },
+  {
+    type: "collapse",
+    name: "Resignation Letter",
+    key: "resignationLetter",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/resignation-Letter",
+    component: <ResignationLetter />,
+  },
+  {
+    // type: "collapse",
+    name: "View Resignation Letter",
+    key: "viewresignationLetter",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/resignation-Letter/view",
+    component: <ViewResignationLetter />,
+  },
+  {
+    // type: "collapse",
+    name: "update Resignation Letter",
+    key: "updateresignationLetter",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/resignation-Letter/update",
+    component: <UpdateResignationLetter />,
   },
   {
     type: "divider",
