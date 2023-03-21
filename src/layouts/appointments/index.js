@@ -125,7 +125,7 @@ function Appointments() {
     const perso = data11.personalID;
     let isMounted = true;
     fetch(
-      `${process.env.REACT_APP_RAGA_URL}/appointment/getMyCalendar/${orgIDs}/${perso}?startTime=${strt}&endTime=${end}`,
+      `${process.env.REACT_APP_RAGA_URL}/appointment/getMyCalendar/${orgIDs}/${perso}?=${strt}&endTime=${end}`,
       { headers }
     )
       .then(async (res) => {
