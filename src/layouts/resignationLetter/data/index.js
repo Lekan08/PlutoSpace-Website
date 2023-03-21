@@ -43,7 +43,7 @@ export default function ResignationLetterData() {
           headers: miHeaders,
         };
 
-        fetch(`${process.env.REACT_APP_RAGA_URL}/questions/delete/${value}`, requestOptions)
+        fetch(`${process.env.REACT_APP_RAGA_URL}/resignationLetter/delete/${value}`, requestOptions)
           .then(async (res) => {
             const aToken = res.headers.get("token-1");
             localStorage.setItem("rexxdex", aToken);
@@ -238,18 +238,18 @@ export default function ResignationLetterData() {
   };
 
   const handleView = (value) => {
-    navigate(`/test-Questions/view/?id=${value}`);
+    navigate(`/resignation-Letter/view/?id=${value}`);
   };
 
   return {
     columns: [
       {
-        Header: "Question",
+        Header: "Letter",
         accessor: "text",
         Cell: ({ cell: { value } }) => value.substring(0, 8),
         align: "left",
       },
-      { Header: "Image", accessor: "imageUrl", align: "left" },
+      //   { Header: "Image", accessor: "imageUrl", align: "left" },
       {
         Header: "Date Created",
         accessor: "createdTime",
