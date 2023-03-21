@@ -93,6 +93,7 @@ import ChatApp from "layouts/mattersArising/viewMatter/App";
 import RenewLog from "layouts/authentication/renewSubscription/renewLogin";
 import RenewSub from "layouts/authentication/renewSubscription";
 import SalaryPayment from "layouts/salaryPayment";
+import ResignationLetter from "layouts/resignationLetter";
 
 import Bonusdeduction from "layouts/bonusdeduction";
 import MyBills from "layouts/my-Bills";
@@ -1261,6 +1262,14 @@ const routes = [
     icon: <Icon fontSize="small">supervised_user_circle</Icon>,
     route: "/user-Management/user-TimeOff-Type",
     component: <UserTOT />,
+  },
+  {
+    type: "collapse",
+    name: "Resignation Letter",
+    key: "resignationLetter",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/resignation-Letter",
+    component: <ResignationLetter />,
   },
   {
     type: "divider",
