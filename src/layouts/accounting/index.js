@@ -597,7 +597,7 @@ function Accounting() {
           }
         }
       });
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsIncome/${orgIDs}/${typex}`, {
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`, {
       headers,
     })
       .then(async (res) => {
@@ -607,7 +607,7 @@ function Accounting() {
         if (res.status === 200) {
           console.log("SMile for the camera ");
           fetch(
-            `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`,
+            `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsIncome/${orgIDs}/${typex}`,
             {
               headers,
             }
