@@ -679,6 +679,7 @@ function Accounting() {
 
   useEffect(() => {
     const mergedArray = incomeData.concat(expensesData);
+    console.log(mergedArray.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime)));
     setRunAccDataTa(mergedArray);
 
     if (mergedArray.length === 0) {
