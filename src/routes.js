@@ -62,6 +62,8 @@ import UpdateBranch from "layouts/branches/data/updateBranch";
 import CreateBranch from "layouts/authentication/companyRegistration/createBranch";
 import CompanyReg from "layouts/authentication/companyRegistration";
 import SysRoles from "layouts/systemRoles";
+import LoyaltyConiguration from "layouts/loyaltyconifguration";
+import UpdateLoyaltyConiguration from "layouts/loyaltyconifguration/update";
 import RolesAndPerms from "layouts/systemRoles/addRolesAndPerms";
 import TimeOffType from "layouts/timeofftype";
 import UserManagement from "layouts/userManagement";
@@ -1480,7 +1482,7 @@ const routes = [
     name: "Offboarding Checklist",
     key: "offboardingChecklist",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/offboardingChecklist",
+    route: "/offboarding-Checklist",
     component: <OffboardingChecklist />,
   },
   {
@@ -2357,6 +2359,22 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/Company-Roles/Add-Steps",
     component: <Checklists />,
+  },
+  {
+    type: "collapse",
+    name: "Loyalty Coniguration",
+    key: "LoyaltyConfiguration",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/loyalty-configuration",
+    component: <LoyaltyConiguration />,
+  },
+  {
+    // type: "collapse",
+    name: "Loyalty Configuration",
+    key: "LoyaltyConfiguration",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/loyalty-configuration/update",
+    component: <UpdateLoyaltyConiguration />,
   },
   {
     type: "divider",

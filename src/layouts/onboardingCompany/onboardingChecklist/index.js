@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
 // import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
@@ -15,7 +15,7 @@ import withReactContent from "sweetalert2-react-content";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
-// import GHeaders from "getHeader";
+import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 // import Checklist from "../viewOnboardingChecklist";
 // ZINOLEESKY
@@ -28,6 +28,7 @@ function OnboardingChecklist() {
   const [text, setText] = useState("");
   const [opened, setOpened] = useState(false);
   const { allPHeaders: myHeaders } = PHeaders();
+  const { allGHeaders: miHeaders } = GHeaders();
 
   const handleClick = (e) => {
     setOpened(true);
@@ -80,6 +81,77 @@ function OnboardingChecklist() {
         });
       });
   };
+
+  useEffect(() => {
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    const myid = data11.personalID;
+    const headers = miHeaders;
+    let isMounted = true;
+    fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/getMySessions/${orgIDs}/${myid}`, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          console.log(result);
+          // if (result.length !== 0) {
+          //   const resss = [];
+          //   // setChecklist(result);
+          //   // const id = result.map((each) => each.id);
+          //   result.map((each) => {
+          //     const { checklists } = each;
+          //     if (checklists) {
+          //       console.log(checklists);
+          //       checklists.map((item) => {
+          //         resss.push({ ...item, id: each.id });
+          //       });
+          //       // resss.push(each.id);
+          //     } else {
+          //       console.log("suppppp");
+          //     }
+          //   });
+          //   console.log(resss);
+          //   // if (resss )
+          //   // const ebukss = resss.filter((each) => each.done);
+
+          //   resss.map((value) => {
+          //     console.log(value);
+          //     if (value.done === false) {
+          //       setItems(resss);
+          //     } else {
+          //       setNItems(resss);
+          //     }
+          //   });
+          //   // console.log(ebukss);
+          //   // if (ebukss === false) {
+          //   //   setItems(resss);
+          //   // }
+          // }
+          //   setTable(result);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <DashboardLayout>
