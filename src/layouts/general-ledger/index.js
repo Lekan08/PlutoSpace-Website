@@ -80,42 +80,62 @@ function GeneralLedger() {
       const strt = new Date(start).getTime();
       const ends = new Date(end).getTime();
       const orgIDs = data11.orgID;
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const ids = urlParams.get("id");
       let isMounted = true;
-      fetch(
-        `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsBetween/${orgIDs}?startTime=${strt}&endTime=${ends}`,
+
+      const request1 = fetch(
+        `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsBetweenIncome/${orgIDs}?startTime=${strt}&endTime=${ends}`,
         { headers }
-      )
-        .then(async (res) => {
-          const aToken = res.headers.get("token-1");
-          localStorage.setItem("rexxdex", aToken);
-          const resultres = await res.text();
-          if (resultres === null || resultres === undefined || resultres === "") {
-            return {};
-          }
-          return JSON.parse(resultres);
-        })
-        .then((result) => {
-          if (result.message === "Expired Access") {
+      ).then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      });
+
+      const request2 = fetch(
+        `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsBetweenExpense/${orgIDs}?startTime=${strt}&endTime=${ends}`,
+        { headers }
+      ).then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      });
+
+      Promise.all([request1, request2])
+        .then((results) => {
+          const [result1, result2] = results;
+          if (result1.message === "Expired Access" || result2.message === "Expired Access") {
             navigate("/authentication/sign-in");
             window.location.reload();
           }
-          if (result.message === "Token Does Not Exist") {
+          if (
+            result1.message === "Token Does Not Exist" ||
+            result2.message === "Token Does Not Exist"
+          ) {
             navigate("/authentication/sign-in");
             window.location.reload();
           }
-          if (result.message === "Unauthorized Access") {
+          if (
+            result1.message === "Unauthorized Access" ||
+            result2.message === "Unauthorized Access"
+          ) {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
           }
           if (isMounted) {
-            console.log(result);
-            setItems(result);
+            const itemsx = result1.concat(result2);
+            console.log(itemsx);
+            setItems(itemsx);
             setGets(true);
             setOpened(false);
-            const LedgerInfo = JSON.stringify(result);
+            const LedgerInfo = JSON.stringify(items);
             const fetched = JSON.stringify([start, end]);
             localStorage.setItem("fetched", fetched);
             localStorage.setItem("LedgerInfox", LedgerInfo);
@@ -134,6 +154,70 @@ function GeneralLedger() {
       };
     }
   };
+
+  // eslint-disable-next-line consistent-return
+  // const handleGets = () => {
+  //   if (start && end) {
+  //     setOpened(true);
+  //     const headers = miHeaders;
+  //     const data11 = JSON.parse(localStorage.getItem("user1"));
+  //     const strt = new Date(start).getTime();
+  //     const ends = new Date(end).getTime();
+  //     const orgIDs = data11.orgID;
+  //     const queryString = window.location.search;
+  //     const urlParams = new URLSearchParams(queryString);
+  //     const ids = urlParams.get("id");
+  //     let isMounted = true;
+  //     fetch(
+  //       `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsBetweenIncome/${orgIDs}?startTime=${strt}&endTime=${ends}`,
+  //       { headers }
+  //     )
+  //       .then(async (res) => {
+  //         const aToken = res.headers.get("token-1");
+  //         localStorage.setItem("rexxdex", aToken);
+  //         const resultres = await res.text();
+  //         if (resultres === null || resultres === undefined || resultres === "") {
+  //           return {};
+  //         }
+  //         return JSON.parse(resultres);
+  //       })
+  //       .then((result) => {
+  //         if (result.message === "Expired Access") {
+  //           navigate("/authentication/sign-in");
+  //           window.location.reload();
+  //         }
+  //         if (result.message === "Token Does Not Exist") {
+  //           navigate("/authentication/sign-in");
+  //           window.location.reload();
+  //         }
+  //         if (result.message === "Unauthorized Access") {
+  //           navigate("/authentication/forbiddenPage");
+  //           window.location.reload();
+  //         }
+  //         if (isMounted) {
+  //           console.log(result);
+  //           setItems(result);
+  //           setGets(true);
+  //           setOpened(false);
+  //           const LedgerInfo = JSON.stringify(result);
+  //           const fetched = JSON.stringify([start, end]);
+  //           localStorage.setItem("fetched", fetched);
+  //           localStorage.setItem("LedgerInfox", LedgerInfo);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         setOpened(false);
+  //         MySwal.fire({
+  //           title: error.status,
+  //           type: "error",
+  //           text: error.message,
+  //         });
+  //       });
+  //     return () => {
+  //       isMounted = false;
+  //     };
+  //   }
+  // };
   // Method to change date from timestamp
   const changeDateandTime = (timestamp) => {
     const date = new Date(timestamp);

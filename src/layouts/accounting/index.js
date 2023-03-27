@@ -78,8 +78,8 @@ function Accounting() {
 
   const [opened, setOpened] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [expensesData, setExpensesData] = useState([]);
-  const [incomeData, setIncomeData] = useState([]);
+  // const [expensesData, setExpensesData] = useState([]);
+  // const [incomeData, setIncomeData] = useState([]);
   const [runAccDataTa, setRunAccDataTa] = useState([]);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
@@ -597,79 +597,92 @@ function Accounting() {
           }
         }
       });
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`, {
-      headers,
-    })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        console.log(res);
-        if (res.status === 200) {
-          console.log("SMile for the camera ");
-          fetch(
-            `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsIncome/${orgIDs}/${typex}`,
-            {
-              headers,
-            }
-          )
-            .then(async (ress) => {
-              // const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              console.log("First console");
-              console.log(ress);
-              return ress.json();
-            })
-            .then((resultExpense) => {
-              setOpened(false);
-              if (resultExpense.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultExpense.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (resultExpense.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-                window.location.reload();
-              }
-              if (isMounted) {
-                console.log("second console");
-                console.log(resultExpense);
-                if (resultExpense.length !== 0) {
-                  setExpensesData(resultExpense);
-                  setDisplay(true);
-                  setTotalExpenses(resultExpense.reduce((a, b) => a + b.totalAmount, 0));
-                  console.log(resultExpense);
-                }
-              }
-            });
-        }
-        return res.json();
-      })
-      .then((resultIncome) => {
-        // setOpened(false);
-        if (resultIncome.message === "Expired Access") {
+
+    const request1 = fetch(
+      `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`,
+      {
+        headers,
+      }
+    ).then(async (res) => {
+      const aToken = res.headers.get("token-1");
+      localStorage.setItem("rexxdex", aToken);
+      const resultres = await res.text();
+      if (resultres === null || resultres === undefined || resultres === "") {
+        return {};
+      }
+      return JSON.parse(resultres);
+    });
+
+    const request2 = fetch(
+      `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsIncome/${orgIDs}/${typex}`,
+      {
+        headers,
+      }
+    ).then(async (res) => {
+      const aToken = res.headers.get("token-1");
+      localStorage.setItem("rexxdex", aToken);
+      const resultres = await res.text();
+      if (resultres === null || resultres === undefined || resultres === "") {
+        return {};
+      }
+      return JSON.parse(resultres);
+    });
+
+    Promise.all([request1, request2])
+      .then((results) => {
+        const [result1, result2] = results;
+        console.log(results);
+
+        setOpened(false);
+        if (result1.message === "Expired Access" || result2.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
         }
-        if (resultIncome.message === "Token Does Not Exist") {
+        if (
+          result1.message === "Token Does Not Exist" ||
+          result2.message === "Token Does Not Exist"
+        ) {
           navigate("/authentication/sign-in");
           window.location.reload();
         }
-        if (resultIncome.message === "Unauthorized Access") {
+        if (
+          result1.message === "Unauthorized Access" ||
+          result2.message === "Unauthorized Access"
+        ) {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
         if (isMounted) {
-          console.log(resultIncome);
-          if (resultIncome.length !== 0) {
-            // setDisplay(true);
-            setIncomeData(resultIncome);
-            setTotalIncome(resultIncome.reduce((a, b) => a + b.totalAmount, 0));
-            console.log(resultIncome);
+          const mergedArray = result1.concat(result2);
+          if (mergedArray.length === 0) {
+            setNoTransactionsMade(true);
+          }
+          if (mergedArray.length !== 0) {
+            setRunAccDataTa(
+              mergedArray.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime))
+            );
+          }
+          if (result1.length !== 0) {
+            // setExpensesData(result1);
+            setDisplay(true);
+            setTotalExpenses(result1.reduce((a, b) => a + b.totalAmount, 0));
+            console.log(result1);
+          }
+          if (result2.length !== 0) {
+            setDisplay(true);
+            // setIncomeData(result2);
+            setTotalIncome(result2.reduce((a, b) => a + b.totalAmount, 0));
+            console.log(result2);
           }
         }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
       });
 
     return () => {
@@ -678,14 +691,6 @@ function Accounting() {
   };
 
   useEffect(() => {
-    const mergedArray = incomeData.concat(expensesData);
-    console.log(mergedArray.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime)));
-    setRunAccDataTa(mergedArray);
-
-    if (mergedArray.length === 0) {
-      setNoTransactionsMade(true);
-    }
-    console.log(mergedArray);
     setTotalBalance(totalBalanceValue + totalIncome - totalExpenses);
   }, [totalBalanceValue, totalIncome, totalExpenses]);
 
@@ -950,7 +955,15 @@ function Accounting() {
                     width: "35%",
                   }}
                 />
-                {/* <CircularProgress color="info" /> */}
+                <div
+                  className="row"
+                  style={{
+                    position: "absolute",
+                    marginTop: "9rem",
+                  }}
+                >
+                  Please wait, this may take some time...
+                </div>
               </div>
             </>
           </Backdrop>
