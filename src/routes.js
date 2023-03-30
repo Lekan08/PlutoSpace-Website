@@ -62,6 +62,8 @@ import UpdateBranch from "layouts/branches/data/updateBranch";
 import CreateBranch from "layouts/authentication/companyRegistration/createBranch";
 import CompanyReg from "layouts/authentication/companyRegistration";
 import SysRoles from "layouts/systemRoles";
+import LoyaltyConiguration from "layouts/loyaltyconifguration";
+import UpdateLoyaltyConiguration from "layouts/loyaltyconifguration/update";
 import RolesAndPerms from "layouts/systemRoles/addRolesAndPerms";
 import TimeOffType from "layouts/timeofftype";
 import UserManagement from "layouts/userManagement";
@@ -256,6 +258,7 @@ import OtherInflow from "layouts/otherInflow";
 import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
+// import Loyalty from "layouts/loyalty";
 import CreditFacility from "layouts/creditFacility";
 import MakePayment from "layouts/creditFacility/makepayment";
 import ViewCreditFacility from "layouts/creditFacility/view";
@@ -1480,7 +1483,7 @@ const routes = [
     name: "Offboarding Checklist",
     key: "offboardingChecklist",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/offboardingChecklist",
+    route: "/offboarding-Checklist",
     component: <OffboardingChecklist />,
   },
   {
@@ -2079,6 +2082,14 @@ const routes = [
     route: "/coupons/update",
     component: <UpdateCoupons />,
   },
+  // {
+  //   type: "collapse",
+  //   name: "Loyalty",
+  //   key: "loyalty",
+  //   icon: <Icon fontSize="small">point_of_sale</Icon>,
+  //   route: "/loyalty",
+  //   component: <Loyalty />,
+  // },
   {
     type: "divider",
     name: "",
@@ -2357,6 +2368,22 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/Company-Roles/Add-Steps",
     component: <Checklists />,
+  },
+  {
+    type: "collapse",
+    name: "Loyalty Coniguration",
+    key: "LoyaltyConfiguration",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/loyalty-configuration",
+    component: <LoyaltyConiguration />,
+  },
+  {
+    // type: "collapse",
+    name: "Loyalty Configuration",
+    key: "LoyaltyConfiguration",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/loyalty-configuration/update",
+    component: <UpdateLoyaltyConiguration />,
   },
   {
     type: "divider",

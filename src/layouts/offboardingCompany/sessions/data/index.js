@@ -188,7 +188,7 @@ export default function OffboardingSessionTable() {
   };
   const handleAddChecklist = (value) => {
     console.log(value);
-    navigate(`/offboardingChecklist?id=${value}`);
+    navigate(`/offboarding-Checklist?id=${value}`);
   };
 
   return {
