@@ -1,42 +1,29 @@
-/* eslint-disable react/button-has-type */
-/* eslint-disable object-shorthand */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
-import Modal from "@mui/material/Modal";
-import Fade from "@mui/material/Fade";
-import DataTable from "examples/Tables/DataTable";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
-import { Container, Form, Dropdown } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Backdrop from "@mui/material/Backdrop";
-import CircularProgress from "@mui/material/CircularProgress";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import Icon from "@mui/material/Icon";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { Fab, Grid, TextField } from "@mui/material";
+import { Fab, TextField } from "@mui/material";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
-// import InsuranceDamageTable from "layouts/insurance/damage/data/insuranceDamageTableData";
 import Styles from "styles";
 import AddIcon from "@mui/icons-material/Add";
 import accountingLoader from "../accountingLoader.gif";
 
 function PostTransactions() {
   const MySwal = withReactContent(Swal);
-  // const { columns: pColumns, rows: pRows } = InsuranceDamageTable();
   const [accountInfo, setAccountInfo] = React.useState([]);
 
   const [opened, setOpened] = useState(false);
@@ -48,7 +35,6 @@ function PostTransactions() {
 
   useEffect(() => {
     setOpened(true);
-    const transaction = sessionStorage.getItem("transaction");
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
