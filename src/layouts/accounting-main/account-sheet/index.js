@@ -253,7 +253,7 @@ function AccountSheet() {
                           textTransform: "uppercase",
                         }}
                       >
-                        {account.name}
+                        {`${account.name} ${account.debitOrCredit === 0 ? "(Debit)" : "(Credit)"}`}
                       </th>
                     </tr>
                     <tr>
