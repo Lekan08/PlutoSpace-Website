@@ -258,6 +258,7 @@ import OtherInflow from "layouts/otherInflow";
 import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
+// import Loyalty from "layouts/loyalty";
 import CreditFacility from "layouts/creditFacility";
 import MakePayment from "layouts/creditFacility/makepayment";
 import ViewCreditFacility from "layouts/creditFacility/view";
@@ -2081,6 +2082,14 @@ const routes = [
     route: "/coupons/update",
     component: <UpdateCoupons />,
   },
+  // {
+  //   type: "collapse",
+  //   name: "Loyalty",
+  //   key: "loyalty",
+  //   icon: <Icon fontSize="small">point_of_sale</Icon>,
+  //   route: "/loyalty",
+  //   component: <Loyalty />,
+  // },
   {
     type: "divider",
     name: "",

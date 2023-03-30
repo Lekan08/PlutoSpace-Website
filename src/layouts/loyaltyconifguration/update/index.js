@@ -32,6 +32,8 @@ function UpdateLoyaltyConiguration() {
   const [categoryx, setCategory] = useState("");
   const [typex, setType] = useState("");
   const [itemsx, setItems] = useState("");
+  const [noOfCountx, setNoOfCount] = useState("");
+  const [bonusAmountx, setBonusAmount] = useState("");
 
   const [opened, setOpened] = useState(false);
   const { allPHeaders: myHeaders } = PHeaders();
@@ -100,6 +102,8 @@ function UpdateLoyaltyConiguration() {
         setAmount(result[0].amount);
         setType(result[0].type);
         setCategory(result[0].category);
+        setBonusAmount(result[0].thresholdAmount);
+        setNoOfCount(result[0].noOfCounts);
         // handleOnCategory()
         handleOnAmountKeys(result[0].amount);
       });
@@ -127,6 +131,8 @@ function UpdateLoyaltyConiguration() {
       category: categoryx,
       type: typex,
       amount: amountx,
+      thresholdAmount: bonusAmountx,
+      noOfCounts: noOfCountx,
     });
     const requestOptions = {
       method: "POST",
@@ -264,7 +270,39 @@ function UpdateLoyaltyConiguration() {
             <MDBox>
               <Container>
                 <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
+                    <Box sx={{ minWidth: 100 }}>
+                      <FormControl fullWidth>
+                        <TextField
+                          label="Bonus Amount (NGN)"
+                          type="number"
+                          value={bonusAmountx}
+                          //   onKeyUp={(e) => handleOnAmountKeys(e.target.value)}
+                          onChange={(e) => setBonusAmount(e.target.value)}
+                        />
+                      </FormControl>
+                    </Box>
+                  </div>
+                  <div className="col-sm-6">
+                    <Box sx={{ minWidth: 100 }}>
+                      <FormControl fullWidth>
+                        <TextField
+                          label="No Of Count"
+                          type="number"
+                          value={noOfCountx}
+                          //   onKeyUp={(e) => handleOnAmountKeys(e.target.value)}
+                          onChange={(e) => setNoOfCount(e.target.value)}
+                        />
+                      </FormControl>
+                    </Box>
+                  </div>
+                </div>
+              </Container>
+            </MDBox>
+            <MDBox>
+              <Container>
+                <div className="row">
+                  <div className="col-sm-6">
                     <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
                       <FormControl fullWidth>
                         <TextField

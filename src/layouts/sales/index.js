@@ -81,6 +81,9 @@ function Sales() {
   const [receiptNo, setReceiptNo] = useState("");
   // const [showClients, setShowClients] = useState(false);
   const [creditFacilityx, setCreditFacility] = useState("");
+  const [loyaltyConig, setLoyaltyConig] = useState([]);
+  const [loyalBonus, setLoyalBonus] = useState("");
+  const [showCountCost, setShowCountCost] = useState(false);
   const onBeforeGetContentResolve = useRef();
   <style type="text/css" media="print">
     {"\
@@ -133,6 +136,41 @@ function Sales() {
         }
         if (isMounted) {
           setIndividual(result);
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    const headers = miHeaders;
+    let isMounted = true;
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/salesLoyaltiesSettings/gets/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          console.log(result);
+          setLoyaltyConig(result);
         }
       });
     return () => {
@@ -286,6 +324,154 @@ function Sales() {
     color: theme.palette.text.secondary,
   }));
 
+  const handleGetFilter = (view) => {
+    console.log(indix);
+    console.log(view);
+    setOpened(true);
+    // const queryString = window.location.search;
+    // const urlParams = new URLSearchParams(queryString);
+    // const id = urlParams.get("id");
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    // const cType = 1;s
+
+    const headers = miHeaders;
+    let isMounted = true;
+
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/salesLoyalties/getForClient/${orgIDs}/${view}/${1}`, {
+      headers,
+    })
+      .then(async (res) => {
+        console.log(res);
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        // return res.json();
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+        // return new Promise((resolve, reject) => {
+        //   resolve(res ? JSON.parse(res) : {}).catch((error) => {
+        //     reject(error);
+        //   });
+        // });
+      })
+      .then((result) => {
+        setOpened(false);
+        console.log(result);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(result);
+        if (isMounted) {
+          if (result !== {}) {
+            // setTable([result]);
+            // const headers = miHeaders;
+            // let isMounted = true;
+
+            fetch(
+              `${
+                process.env.REACT_APP_LOUGA_URL
+              }/salesLoyalties/setCount/${orgIDs}/${view}/${1}/${1}`,
+              {
+                headers,
+              }
+            )
+              .then(async (res) => {
+                console.log(res);
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                // return res.json();
+                const resultres = await res.text();
+                if (resultres === null || resultres === undefined || resultres === "") {
+                  return {};
+                }
+                return JSON.parse(resultres);
+                // return new Promise((resolve, reject) => {
+                //   resolve(res ? JSON.parse(res) : {}).catch((error) => {
+                //     reject(error);
+                //   });
+                // });
+              })
+              .then((resultx) => {
+                setOpened(false);
+                console.log(resultx);
+                if (resultx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+              });
+          }
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+  };
+
+  const handleChange = (value) => {
+    console.log(value);
+    // console.log(value.category);
+
+    setOpened(true);
+    const headers = miHeaders;
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
+    // const orgIDs = data11.orgID;
+
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/salesLoyaltiesSettings/getByIds/${value}`, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(result);
+        if (result[0].category === 1) {
+          setShowCountCost(true);
+          setLoyalBonus(result[0].thresholdAmount);
+        }
+        // setClient(result);
+      });
+  };
+
   const handleIndividual = (e) => {
     if (pnox !== "") {
       setOpened(true);
@@ -331,6 +517,9 @@ function Sales() {
             window.location.reload();
           }
           setOpened(false);
+          // if (result.status === "SUCCESS")
+          handleGetFilter(result);
+          console.log("apiapi");
           handleClose();
           MySwal.fire({
             title: result.status,
@@ -351,6 +540,10 @@ function Sales() {
     } else {
       alert("Please fill the required input(s)");
     }
+  };
+  const handleOnChangeNationality = (e) => {
+    setIndi(e.target.value);
+    handleGetFilter(e.target.value);
   };
 
   // eslint-disable-next-line consistent-return
@@ -597,6 +790,179 @@ function Sales() {
 
   console.log(handlePrint);
 
+  const handleAddLoyalty = (e) => {
+    setOpened(true);
+    e.preventDefault();
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    const raw = JSON.stringify({
+      orgID: orgIDs,
+      clientID: indix,
+      clientType: 1,
+      salesCount: +1,
+    });
+    console.log(raw);
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/salesLoyalties/add`, requestOptions)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
+        return JSON.parse(result);
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        setOpened(false);
+        MySwal.fire({
+          title: result.status,
+          type: "success",
+          text: result.message,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+
+  const handleAddFreshLoyalty = (e) => {
+    setOpened(true);
+    e.preventDefault();
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    const raw = JSON.stringify({
+      orgID: orgIDs,
+      clientID: indix,
+      clientType: 1,
+      salesCount: 1,
+    });
+    console.log(raw);
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/salesLoyalties/add`, requestOptions)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
+        return JSON.parse(result);
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        setOpened(false);
+        MySwal.fire({
+          title: result.status,
+          type: "success",
+          text: result.message,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+
+  const handleLoyalty = () => {
+    // console.log(value);
+    // console.log(value.category);
+
+    setOpened(true);
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+
+    fetch(
+      `${process.env.REACT_APP_LOUGA_URL}/salesLoyalties/getForClient/${orgIDs}/${indix}/${1}`,
+      {
+        headers,
+      }
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      })
+      .then((result) => {
+        setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(result);
+        if (result[0].category === 1) {
+          setLoyalBonus(result[0].thresholdAmount);
+        }
+        if (result !== {}) {
+          handleAddLoyalty();
+        } else {
+          handleAddFreshLoyalty();
+        }
+        // setClient(result);
+      });
+  };
+
   const handleClick = (e) => {
     if (Payment === 0) {
       setOpened(true);
@@ -653,6 +1019,7 @@ function Sales() {
           // }
           if (result.status === "SUCCESS") {
             setReceiptNo(result.data.receiptNo);
+            handleLoyalty();
             handlePrint();
             if (creditFacilityx > 0) {
               const allResult = result.data;
@@ -1000,7 +1367,8 @@ function Sales() {
                       value={indix || ""}
                       aria-label="Default select example"
                       onChange={(e) => {
-                        setIndi(e.target.value);
+                        // setIndi(e.target.value);
+                        handleOnChangeNationality(e);
                         const { value } = e.target;
                         const fData = individualx.filter((indii) => indii.id === value);
                         // setIndiName(`${fData[0].fname} ${fData[0].lname}`);
@@ -1320,6 +1688,91 @@ function Sales() {
           <MDBox>
             <Container>
               <div className="row">
+                <div className="col-sm-3" style={{ paddingTop: "10px" }}>
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    fontSize="80%"
+                    align="left"
+                    color="text"
+                    mt={0}
+                  >
+                    Category
+                  </MDTypography>
+                  <MDBox textAlign="right">
+                    <Form.Select
+                      // onChange={(e) => setCategory(e.target.value)}
+                      onChange={(e) => handleChange(e.target.value)}
+                      // value={categoryx || ""}
+                      aria-label="Default select example"
+                    >
+                      <option value="">--Select Category--</option>
+                      {loyaltyConig.map((api) => (
+                        <option key={api.id} value={api.id}>
+                          {api.category}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </MDBox>
+                </div>
+                <div className="col-sm-3">
+                  <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
+                    <FormControl fullWidth>
+                      {showCountCost ? (
+                        <TextField
+                          id="filled-number"
+                          value={loyalBonus}
+                          label="Amount (NGN)"
+                          placeholder="Amount (NGN)"
+                          type="number"
+                          // name="totalAmount"
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                        />
+                      ) : (
+                        <TextField
+                          id="filled-number"
+                          value={loyalBonus}
+                          label="Count"
+                          placeholder="Count"
+                          type="number"
+                          // name="totalAmount"
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                        />
+                      )}
+                    </FormControl>
+                  </Box>
+                </div>
+                {/* <div className="col-sm-3">
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    fontSize="80%"
+                    align="left"
+                    color="text"
+                    mt={0}
+                  >
+                    Type
+                  </MDTypography>
+                  <MDBox textAlign="right" style={{ paddingTop: "40px" }}>
+                    <Form.Select
+                      // onChange={(e) => setCategory(e.target.value)}
+                      onChange={(e) => handleChange(e.target.value)}
+                      // value={typex || ""}
+                      aria-label="Default select example"
+                    >
+                      <option value="">--Select Type--</option>
+                      {loyaltyConig.map((api) => (
+                        <option key={api.id} value={api.id}>
+                          {api.type}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </MDBox>
+                </div> */}
                 <div className="col-sm-3">
                   <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
                     <FormControl fullWidth>
@@ -1337,13 +1790,13 @@ function Sales() {
                     </FormControl>
                   </Box>
                 </div>
-                <div className="col-sm-6" />
+                {/* <div className="col-sm-3" /> */}
                 <div className="col-sm-3">
                   <Box sx={{ minWidth: 100 }} style={{ paddingTop: "40px" }}>
                     <FormControl fullWidth>
                       <TextField
                         id="filled-number"
-                        value={bonusAmountxx}
+                        value={bonusAmountxx || loyalBonus}
                         label="Bonus Amount (NGN) "
                         placeholder="Bonus Amount (NGN) "
                         type="number"
