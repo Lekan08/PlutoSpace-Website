@@ -200,7 +200,7 @@ function PostTransactions() {
                 placeholder="Amount (NGN) "
                 onChange={(event) => handleInputChange(field.id, event)}
                 sx={{
-                  width: "20vw",
+                  width: "15vw",
                 }}
                 required
               />

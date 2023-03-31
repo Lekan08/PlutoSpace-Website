@@ -59,9 +59,11 @@ function GeneralLedger() {
 
   useEffect(() => {
     const fetched = JSON.parse(localStorage.getItem("fetched"));
+    console.log(fetched);
     const LedgerInfo = JSON.parse(localStorage.getItem("LedgerInfox"))
       ? JSON.parse(localStorage.getItem("LedgerInfox"))
       : [];
+    console.log(LedgerInfo);
     if (fetched) {
       setStart(fetched[0]);
       setEnd(fetched[1]);
