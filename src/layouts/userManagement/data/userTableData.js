@@ -225,6 +225,9 @@ export default function UserData() {
   const handleUpdateSystemRole = (value) => {
     navigate(`/update-system-role?id=${value}`);
   };
+  const handleterminate = (value) => {
+    navigate(`/layouts/offboardingCompany?id=${value}`);
+  };
 
   const handlePension = (value, tablex) => {
     const filteredItems = tablex.filter((item) => item.personal.id === value);
@@ -276,6 +279,7 @@ export default function UserData() {
                     Add Time Off Type
                   </Dropdown.Item>
                   <Dropdown.Item onClick={() => handleAddsalary(value)}>User Salary</Dropdown.Item>
+                  <Dropdown.Item onClick={() => handleterminate(value, 2)}>Terminate</Dropdown.Item>
                   <Dropdown.Item onClick={() => handlePension(value, items)}>
                     User Pension Settings
                   </Dropdown.Item>

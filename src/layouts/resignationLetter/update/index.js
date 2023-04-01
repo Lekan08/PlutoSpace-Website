@@ -31,6 +31,7 @@ function UpdateResignationLetter() {
   const [textx, setText] = useState("");
   const [files, setFiles] = useState("");
   const [items, setItems] = useState([]);
+  const [imageurlx, setImage] = useState("");
 
   //   const [checkedName, setCheckedName] = useState("");
   //   const [enabled, setEnabled] = useState("");
@@ -79,6 +80,7 @@ function UpdateResignationLetter() {
         console.log(result);
         if (isMounted) {
           setItems(result);
+          setImage(result[0].externalUrl);
           // callRight();
         }
       });
@@ -86,6 +88,72 @@ function UpdateResignationLetter() {
       isMounted = false;
     };
   }, []);
+
+  const handleUpdate2 = (e) => {
+    e.preventDefault();
+    // const dateQ = new Date().getTime();
+    // const cbtKey = `QuesImg${1 * 2 + 3 + dateQ}`;
+    // setCbtKey(cbtKey);
+    const x = Date();
+    const decisionTimex = new Date(x).getTime();
+    const raw = JSON.stringify({
+      id: items[0].id,
+      orgID: items[0].orgID,
+      externalUrl: imageurlx,
+      text: textx,
+      empID: items[0].empID,
+      status: items[0].status,
+      createdTime: items[0].createdTime,
+      deleteFlag: items[0].deleteFlag,
+      decisionBy: items[0].empIDx,
+      decisionTime: decisionTimex,
+      withdrawalTime: items[0].withdrawalTime,
+    });
+    console.log(raw);
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+
+    fetch(`${process.env.REACT_APP_RAGA_URL}/questions/update`, requestOptions)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        // setOpened(false);
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        MySwal.fire({
+          title: result.status,
+          type: "success",
+          text: result.message,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        // setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
 
   //   const handleClick = (e, externalUrlx) => {
   //     setOpened(true);
@@ -167,14 +235,25 @@ function UpdateResignationLetter() {
       //   imageKey: imageKeyx,
       //   deleteFlag: items[0].deleteFlag,
       //   createdTime: items[0].createdTime,
-
+      id: items[0].id,
       orgID: items[0].orgID,
       externalUrl: externalUrlx,
       text: textx,
-      empID: items[0].empIDx,
-      // status: 0,
+      empID: items[0].empID,
+      status: items[0].status,
+      createdTime: items[0].createdTime,
+      deleteFlag: items[0].deleteFlag,
       decisionBy: items[0].empIDx,
       decisionTime: decisionTimex,
+      withdrawalTime: items[0].withdrawalTime,
+
+      // orgID: items[0].orgID,
+      // externalUrl: externalUrlx,
+      // text: textx,
+      // empID: items[0].empIDx,
+      // // status: 0,
+      // decisionBy: items[0].empIDx,
+      // decisionTime: decisionTimex,
     });
     console.log(raw);
     const requestOptions = {
@@ -352,6 +431,23 @@ function UpdateResignationLetter() {
       handleClick(e);
     }
   };
+  const callRight = (e) => {
+    if (imageurlx !== "") {
+      console.log(imageurlx);
+      // joshRichwayz(e);
+      console.log(files);
+      if (files === "") {
+        handleUpdate2(e);
+      } else {
+        handleImageUpload(e);
+      }
+      // handleUpdate2(e);
+      // handleImageUpload(e);
+    } else if (imageurlx === "") {
+      // handleUpdate2(e);
+      handleImageUpload(e);
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -425,7 +521,7 @@ function UpdateResignationLetter() {
             <MDBox mt={4} mb={1}>
               <MDButton
                 variant="gradient"
-                onClick={handleImageUpload}
+                onClick={callRight}
                 // color="info"
                 width="50%"
                 align="left"

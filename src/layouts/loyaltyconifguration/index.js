@@ -230,7 +230,7 @@ function LoyaltyConiguration() {
                     <Box sx={{ minWidth: 100 }}>
                       <FormControl fullWidth>
                         <TextField
-                          label="No Of Count"
+                          label="Threshold Amount"
                           type="number"
                           value={noOfCountx}
                           //   onKeyUp={(e) => handleOnAmountKeys(e.target.value)}

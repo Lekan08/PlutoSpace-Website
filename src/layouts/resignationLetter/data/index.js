@@ -85,9 +85,108 @@ export default function ResignationLetterData() {
     return retDate;
   };
 
-  const handleUpdate = (value) => {
-    navigate(`/update?id=${value}`);
-  };
+  //   const handleUpdate = (value) => {
+  //     navigate(`/update?id=${value}`);
+  //   };
+
+  // const handleUpdate = (titlex, descripx, duration, filteredItems) => {
+  //     const data11 = JSON.parse(localStorage.getItem("user1"));
+
+  //     const orgIDs = data11.orgID;
+  //     const durationx = duration * 60 * 1000;
+  //     const raw = JSON.stringify({
+  //       id: filteredItems.id,
+  //       title: titlex,
+  //       orgID: orgIDs,
+  //       duration: durationx,
+  //       descrip: descripx,
+  //       status: filteredItems.status,
+  //       createdTime: filteredItems.createdTime,
+  //       deleteFlag: filteredItems.deleteFlag,
+  //       deadline: filteredItems.deadline,
+  //     });
+  //     console.log(filteredItems);
+  //     const requestOptions = {
+  //       method: "POST",
+  //       headers: myHeaders,
+  //       body: raw,
+  //       redirect: "follow",
+  //     };
+
+  //     fetch(`${process.env.REACT_APP_RAGA_URL}/cbt/update`, requestOptions)
+  //       .then(async (res) => {
+  //         const aToken = res.headers.get("token-1");
+  //         localStorage.setItem("rexxdex", aToken);
+  //         return res.json();
+  //       })
+  //       .then((result) => {
+  //         if (result.message === "Expired Access") {
+  //           navigate("/authentication/sign-in");
+  //           window.location.reload();
+  //         }
+  //         if (result.message === "Token Does Not Exist") {
+  //           navigate("/authentication/sign-in");
+  //           window.location.reload();
+  //         }
+  //         if (result.message === "Unauthorized Access") {
+  //           navigate("/authentication/forbiddenPage");
+  //           window.location.reload();
+  //         }
+  //         MySwal.fire({
+  //           title: result.status,
+  //           type: "success",
+  //           text: result.message,
+  //         }).then(() => {
+  //           window.location.reload();
+  //         });
+  //       })
+  //       .catch((error) => {
+  //         MySwal.fire({
+  //           title: error.status,
+  //           type: "error",
+  //           text: error.message,
+  //         });
+  //       });
+  //   };
+
+  //   const handleShow = (filteredData, value) => {
+  //     let texr = "";
+  //     let filteredItems = [];
+  //     // Avoid filter for empty string
+  //     if (!value) {
+  //       text = "";
+  //       filteredItems = [];
+  //     } else {
+  //       filteredItems = filteredData.filter((item) => item.id === value);
+
+  //       text = filteredItems[0].text;
+  //     }
+  //     const BiGZzzz = duration / 60000;
+  //     // console.log(BiGZzzz);
+
+  //     MySwal.fire({
+  //       title: "Update CBT",
+  //       html: `<div text-align="left"><b>Title:</b> <input type="text" id="title" value="${titlex}" class="form-control">\
+  //             <div text-align="left"><b>Time in Minutes:</b> <input type="text" id="minutes" value="${BiGZzzz}" class="form-control">\
+  //            <b>Description:</b> <textarea rows="4" cols="8" class="form-control" id="descrip">${descripx}</textarea></div>`,
+  //       confirmButtonText: "Save",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       preConfirm: () => {
+  //         const title = Swal.getPopup().querySelector("#title").value;
+  //         const descrip = Swal.getPopup().querySelector("#descrip").value;
+  //         const minutesx = Swal.getPopup().querySelector("#minutes").value;
+  //         if (!title) {
+  //           Swal.showValidationMessage(`Error In Input For Title`);
+  //         } else {
+  //           Swal.resetValidationMessage();
+  //           handleUpdate(title, descrip, minutesx, filteredItems[0]);
+  //         }
+  //       },
+  //     });
+  //     // console.log(duration);
+  //   };
 
   // Method to fetch all Data
   useEffect(() => {
@@ -241,6 +340,23 @@ export default function ResignationLetterData() {
     navigate(`/resignation-Letter/view/?id=${value}`);
   };
 
+  const handleUpdate = (value) => {
+    navigate(`/resignation-Letter/update/?id=${value}`);
+  };
+
+  // eslint-disable-next-line consistent-return
+  const handleOnType = (clientType) => {
+    if (clientType === 0) {
+      return "Pending";
+    }
+    if (clientType === 1) {
+      return "Approved";
+    }
+    if (clientType === 2) {
+      return "Disapproved";
+    }
+  };
+
   return {
     columns: [
       {
@@ -249,11 +365,17 @@ export default function ResignationLetterData() {
         Cell: ({ cell: { value } }) => value.substring(0, 8),
         align: "left",
       },
-      //   { Header: "Image", accessor: "imageUrl", align: "left" },
+      { Header: "Document", accessor: "externalUrl", align: "left" },
       {
         Header: "Date Created",
         accessor: "createdTime",
         Cell: ({ cell: { value } }) => changeDate(value),
+        align: "left",
+      },
+      {
+        Header: "Type",
+        accessor: "status",
+        Cell: ({ cell: { value } }) => handleOnType(value),
         align: "left",
       },
       {
