@@ -1300,7 +1300,7 @@ function Accounts() {
                               color="text"
                             >
                               Start Time
-                              {/* <span style={{ color: "red" }}>*</span> */}
+                              <span style={{ color: "red" }}>*</span>
                             </MDTypography>
                             <MDInput
                               id="datetime-local"
@@ -1839,7 +1839,7 @@ function Accounts() {
                                   color="text"
                                 >
                                   Start Time
-                                  {/* <span style={{ color: "red" }}>*</span> */}
+                                  <span style={{ color: "red" }}>*</span>
                                 </MDTypography>
                                 <MDInput
                                   id="datetime-local"
