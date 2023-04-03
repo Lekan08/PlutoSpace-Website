@@ -301,6 +301,7 @@ import AppraisalHistory from "layouts/appraisal/appraisalHistory";
 import MultiSession from "layouts/onboardingCompany/sessions/multisession";
 import Accounts from "layouts/accounting-main";
 import AccountSheet from "layouts/accounting-main/account-sheet";
+import AccountReport from "layouts/accounting-main/account-Report";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
@@ -485,6 +486,14 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/accounting",
     component: <Accounting />,
+  },
+  {
+    type: "collapse",
+    name: "Report",
+    key: "account-Report",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/accounts/account-Report",
+    component: <AccountReport />,
   },
   {
     type: "collapse",
