@@ -185,10 +185,16 @@ function Checklist() {
             });
             console.log(resss);
             // if (resss )
-            // const ebukss = resss.filter((each) => each.done);
+            const ebukss = resss.filter((each) => each.done === true);
+            console.log(ebukss);
 
             resss.map((value) => {
               console.log(value);
+
+              console.log(resss);
+              if (value.done === false && value === resss.length) {
+                console.log("werey");
+              }
               if (value.done === false) {
                 setItems(resss);
               } else {
