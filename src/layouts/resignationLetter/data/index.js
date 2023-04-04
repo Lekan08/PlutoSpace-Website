@@ -373,7 +373,7 @@ export default function ResignationLetterData() {
         align: "left",
       },
       {
-        Header: "Type",
+        Header: "Status",
         accessor: "status",
         Cell: ({ cell: { value } }) => handleOnType(value),
         align: "left",
