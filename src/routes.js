@@ -1448,7 +1448,7 @@ const routes = [
     name: "Onboarding Checklist",
     key: "onboardingChecklist",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/onboardingChecklist",
+    route: "/onboarding-Checklist",
     component: <OnboardingChecklist />,
   },
   {
