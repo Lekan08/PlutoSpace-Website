@@ -362,7 +362,7 @@ export default function ResignationLetterData() {
       {
         Header: "Letter",
         accessor: "text",
-        Cell: ({ cell: { value } }) => value.substring(0, 8),
+        Cell: ({ cell: { value } }) => value.substring(0, 5),
         align: "left",
       },
       { Header: "Document", accessor: "externalUrl", align: "left" },
@@ -373,7 +373,7 @@ export default function ResignationLetterData() {
         align: "left",
       },
       {
-        Header: "Type",
+        Header: "Status",
         accessor: "status",
         Cell: ({ cell: { value } }) => handleOnType(value),
         align: "left",

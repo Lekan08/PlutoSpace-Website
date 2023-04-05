@@ -184,7 +184,7 @@ export default function OnboardingSessionTable() {
   };
   const handleAddChecklist = (value) => {
     console.log(value);
-    navigate(`/onboardingChecklist?id=${value}`);
+    navigate(`/onboarding-Checklist?id=${value}`);
   };
 
   return {
