@@ -6,7 +6,7 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions, Grid, Card, CardContent } from "@mui/material";
+import { CardActionArea, CardActions, Grid, Card, CardContent } from "@mui/material";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -24,6 +24,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Styles from "styles";
 import accountingLoader from "./accountingLoader.gif";
 import IncomeReport from "./incomeReport.jpg";
+import BalanceSheet from "./balanceSheet.jpg";
 
 // import { Grid } from "@mui/material";
 // import CardContent from "assets/theme/components/card/cardContent";
@@ -600,40 +601,36 @@ function AccountReport() {
               </Card>
             </Grid>
             <Grid item xs={6} md={6}>
-              <Card
-                style={{
-                  backgroundColor: "#d9534f",
-
-                  minHeight: "30vw",
-                  marginTop: "20px",
-                  marginBottom: "20px",
-                }}
-              >
-                <Typography
-                  style={{ color: "white" }}
-                  sx={{ fontSize: 20, fontWeight: 800, textAlign: "center", paddingTop: "5vw" }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  Balance Sheet Report
-                </Typography>
-                <Button variant="contained" sx={{ color: "fff" }}>
-                  Contained
-                </Button>
+              <Card>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="290"
+                    image={BalanceSheet}
+                    alt="Balance Sheet Image"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Balance Sheet Report
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <MDBox mt={4} mb={1}>
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleClick}
+                      style={Styles.buttonSx}
+                      // color="info"
+                      width="50%"
+                      align="center"
+                    >
+                      Run Report
+                    </MDButton>
+                  </MDBox>
+                </CardActions>
               </Card>
             </Grid>
-            {/* <Grid
-              item
-              xs={6}
-              style={{
-                // display: "flex",
-                // marginLeft: "auto",
-                // marginRight: "auto",
-                borderRight: "#f96d02 solid 3px",
-              }}
-            ></Grid>
-
-            <Grid item xs={6} style={{ paddingLeft: "2vw" }}></Grid> */}
           </Grid>
         </MDBox>
       </Card>
