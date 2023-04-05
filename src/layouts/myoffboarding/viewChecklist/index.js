@@ -185,9 +185,14 @@ function Checklist() {
             });
             console.log(resss);
             // if (resss )
-            const ebukss = resss.filter((each) => each.done === true);
+            const ebukss = resss.filter((each) => each.done === false);
             console.log(ebukss);
+            if (ebukss === []) {
+              // call terminate api
+            }
 
+            const rightCheck = [];
+            const leftCheck = [];
             resss.map((value) => {
               console.log(value);
 
@@ -196,10 +201,22 @@ function Checklist() {
                 console.log("werey");
               }
               if (value.done === false) {
-                setItems(resss);
+                // setItems(resss);
+                rightCheck.push(value);
               } else {
-                setNItems(resss);
+                leftCheck.push(value);
+                // setNItems(resss);
               }
+            });
+            rightCheck.map((val) => {
+              console.log(val);
+              setItems(rightCheck);
+            });
+            console.log(rightCheck);
+
+            leftCheck.map((val) => {
+              console.log(val);
+              setNItems(leftCheck);
             });
             // console.log(ebukss);
             // if (ebukss === false) {
@@ -226,58 +243,58 @@ function Checklist() {
   //   setItems((stages) => stages.filter((stage) => stage.id !== check.id));
   //   setNItems((list) => [...list, check]);
   // };
-  const handleRemoveQues = (e, value) => {
-    setOpened(true);
-    e.preventDefault();
-    console.log(value);
-    const raw = JSON.stringify({
-      id: value.id,
-      checker: value.checker,
-    });
-    // console.log(raw);
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    fetch(`${process.env.REACT_APP_RAGA_URL}/offboardingSession/removeChecklist`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        setOpened(false);
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          window.location.reload();
-        });
-      })
-      .catch((error) => {
-        setOpened(false);
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
-      });
-  };
+  // const handleRemoveQues = (e, value) => {
+  //   setOpened(true);
+  //   e.preventDefault();
+  //   console.log(value);
+  //   const raw = JSON.stringify({
+  //     id: value.id,
+  //     checker: value.checker,
+  //   });
+  //   // console.log(raw);
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: raw,
+  //     redirect: "follow",
+  //   };
+  //   fetch(`${process.env.REACT_APP_RAGA_URL}/offboardingSession/removeChecklist`, requestOptions)
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
+  //       setOpened(false);
+  //       MySwal.fire({
+  //         title: result.status,
+  //         type: "success",
+  //         text: result.message,
+  //       }).then(() => {
+  //         window.location.reload();
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       setOpened(false);
+  //       MySwal.fire({
+  //         title: error.status,
+  //         type: "error",
+  //         text: error.message,
+  //       });
+  //     });
+  // };
 
   const handleOnClick = (e, value) => {
     setOpened(true);
@@ -384,7 +401,7 @@ function Checklist() {
                   <Grid key={item.id} item xs={12}>
                     <FormControlLabel
                       control={<Checkbox defaultChecked />}
-                      onClick={() => handleRemoveQues(item)}
+                      onClick={(e) => handleOnClick(e, item)}
                       // onKeyUp={() => handleRemoveQues(item)}
                       label={item.checker}
                     />
