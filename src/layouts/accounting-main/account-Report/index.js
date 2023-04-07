@@ -6,7 +6,7 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions, Grid, Card, CardContent } from "@mui/material";
+import { CardActionArea, CardActions, Grid, Card, CardContent } from "@mui/material";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -22,8 +22,10 @@ import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CardMedia from "@mui/material/CardMedia";
 import Styles from "styles";
+// import Accounting from "layouts/accounting";
 import accountingLoader from "./accountingLoader.gif";
 import IncomeReport from "./incomeReport.jpg";
+import BalanceSheet from "./balanceSheet.jpg";
 
 // import { Grid } from "@mui/material";
 // import CardContent from "assets/theme/components/card/cardContent";
@@ -44,12 +46,15 @@ function AccountReport() {
   const navigate = useNavigate();
 
   const showMessage = (alertTitle, alertType, alertText) => {
+    setOpened(false);
     MySwal.fire({
       title: alertTitle,
       type: alertType,
       text: alertText,
     });
   };
+
+  const toNumber = (value) => Number(value);
 
   useEffect(() => {
     const headers = miHeaders;
@@ -145,7 +150,7 @@ function AccountReport() {
     };
   }, []);
 
-  const handleClick = () => {
+  const handleIncomeStatementReport = () => {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
@@ -197,14 +202,14 @@ function AccountReport() {
               // eslint-disable-next-line no-unneeded-ternary
               profilePic: userProfile ? userProfile : "https://i.ibb.co/5FG72RG/defaulto.png",
             },
-            incomeTotal: result.incomeTotal.toLocaleString(undefined),
-            incomeTotalNumber: result.incomeTotalNumber.toLocaleString(undefined),
-            costOfGoodsTotal: result.costOfGoodsTotal.toLocaleString(undefined),
-            costOfGoodsTotalNumber: Number(result.costOfGoodsTotalNumber),
-            operatingCostTotal: result.operatingCostTotal.toLocaleString(undefined),
-            operatingCostTotalNumber: Number(result.operatingCostTotalNumber),
-            nonOperatingCostTotal: result.nonOperatingCostTotal.toLocaleString(undefined),
-            nonOperatingCostTotalnumber: Number(result.costOfGoodsTotalNumber),
+            incomeTotal: toNumber(result.incomeTotal).toLocaleString(undefined),
+            incomeTotalNumber: toNumber(result.incomeTotalNumber),
+            costOfGoodsTotal: toNumber(result.costOfGoodsTotal).toLocaleString(undefined),
+            costOfGoodsTotalNumber: toNumber(result.costOfGoodsTotalNumber),
+            operatingCostTotal: toNumber(result.operatingCostTotal).toLocaleString(undefined),
+            operatingCostTotalNumber: toNumber(result.operatingCostTotalNumber),
+            nonOperatingCostTotal: toNumber(result.nonOperatingCostTotal).toLocaleString(undefined),
+            nonOperatingCostTotalNumber: toNumber(result.costOfGoodsTotalNumber),
             incomeItems: result.incomeItems,
             costOfGoodsItems: result.costOfGoodsItems,
             operatingCostItems: result.operatingCostItems,
@@ -308,243 +313,285 @@ function AccountReport() {
     };
   };
 
-  //   const handleRunCal = () => {
-  //     console.log(typex);
-  //     setTypexx(typex);
-  //     const headers = miHeaders;
-  //     const data11 = JSON.parse(localStorage.getItem("user1"));
+  const handleBalanceSheetReport = () => {
+    const headers = miHeaders;
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    const orgIDs = data11.orgID;
+    let isMounted = true;
+    setOpened(true);
+    const getIncomeStatementAPI = `${process.env.REACT_APP_LOUGA_URL}/accounts/getIncomeStatement/${orgIDs}`;
+    const checkEquity = `${process.env.REACT_APP_LOUGA_URL}/accounts/checkForEquityAccount/${orgIDs}`;
+    const getBalanceSheetAPI = `${process.env.REACT_APP_LOUGA_URL}/accounts/getBalanceSheet/${orgIDs}`;
+    const balanceSheetPDF = `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/balance-sheet`;
+    fetch(checkEquity, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
 
-  //     const orgIDs = data11.orgID;
-  //     const IncomeStatementAPI = `${process.env.REACT_APP_LOUGA_URL}/accounts/getIncomeStatement/${orgIDs}`;
-  //     const apiUrl2 = "https://api.example.com/api2";
-  //     let isMounted = true;
-  //     setOpened(true);
-  //     fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/getLast/${orgIDs}/${typex}`, { headers })
-  //       .then(async (res) => {
-  //         const aToken = res.headers.get("token-1");
-  //         localStorage.setItem("rexxdex", aToken);
-  //         return res.json();
-  //       })
-  //       .then((result) => {
-  //         if (result.message === "Expired Access") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Token Does Not Exist") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Unauthorized Access") {
-  //           navigate("/authentication/forbiddenPage");
-  //           window.location.reload();
-  //         }
-  //         if (isMounted) {
-  //           if (result.length !== 0) {
-  //             setTotalBalanceValue(result.closingBalance);
-  //             console.log(result);
-  //           }
-  //         }
-  //       });
+        return JSON.parse(result);
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          console.log(result);
+          if (result.status === "NO_ACCOUNT") {
+            showMessage(result.status, "error", result.message);
+          } else {
+            fetch(getIncomeStatementAPI, {
+              headers,
+            })
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                const result = await res.text();
+                if (result === null || result === undefined || result === "") {
+                  return {};
+                }
 
-  //     const request1 = fetch(
-  //       `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`,
-  //       {
-  //         headers,
-  //       }
-  //     ).then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       const resultres = await res.text();
-  //       if (resultres === null || resultres === undefined || resultres === "") {
-  //         return {};
-  //       }
-  //       return JSON.parse(resultres);
-  //     });
+                return JSON.parse(result);
+              })
+              .then((result) => {
+                if (result.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (result.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (result.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+                if (isMounted) {
+                  if (
+                    result.incomeItems !== [] ||
+                    result.costOfGoodsItems !== null ||
+                    result.operatingCostItems !== [] ||
+                    result.nonOperatingCostItems !== []
+                  ) {
+                    console.log(result.incomeItems);
+                    console.log(result.costOfGoodsItems);
+                    console.log(result.operatingCostItems);
+                    console.log(result.nonOperatingCostItems);
 
-  //     const request2 = fetch(
-  //       `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsIncome/${orgIDs}/${typex}`,
-  //       {
-  //         headers,
-  //       }
-  //     ).then(async (res) => {
-  //       const aToken = res.headers.get("token-1");
-  //       localStorage.setItem("rexxdex", aToken);
-  //       const resultres = await res.text();
-  //       if (resultres === null || resultres === undefined || resultres === "") {
-  //         return {};
-  //       }
-  //       return JSON.parse(resultres);
-  //     });
+                    const netIncome =
+                      result.incomeTotalNumber -
+                      result.costOfGoodsTotalNumber -
+                      result.operatingCostTotalNumber -
+                      result.nonOperatingCostTotalNumber;
+                    console.log(netIncome);
+                    showMessage("Error", "error", "Income Statement hasn't been created yet");
+                  } else {
+                    const netIncome =
+                      result.incomeTotalNumber -
+                      result.costOfGoodsTotalNumber -
+                      result.operatingCostTotalNumber -
+                      result.nonOperatingCostTotalNumber;
+                    console.log(netIncome);
+                    fetch(getBalanceSheetAPI, {
+                      headers,
+                    })
+                      .then(async (res) => {
+                        const aToken = res.headers.get("token-1");
+                        localStorage.setItem("rexxdex", aToken);
+                        const result = await res.text();
+                        if (result === null || result === undefined || result === "") {
+                          return {};
+                        }
 
-  //     Promise.all([request1, request2])
-  //       .then((results) => {
-  //         const [result1, result2] = results;
-  //         console.log(results);
+                        return JSON.parse(result);
+                      })
+                      .then((resultBalanceSheeetGet) => {
+                        if (resultBalanceSheeetGet.message === "Expired Access") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultBalanceSheeetGet.message === "Token Does Not Exist") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultBalanceSheeetGet.message === "Unauthorized Access") {
+                          navigate("/authentication/forbiddenPage");
+                          window.location.reload();
+                        }
+                        if (isMounted) {
+                          const raw = JSON.stringify({
+                            company: {
+                              id: companyDetails[0].id,
+                              name: companyDetails[0].name,
+                              street: companyDetails[0].street,
+                              city: companyDetails[0].city,
+                              state: companyDetails[0].state,
+                              country: companyDetails[0].country,
+                              pno: companyDetails[0].pno,
+                              email: companyDetails[0].email,
+                              // eslint-disable-next-line no-unneeded-ternary
+                              profilePic: userProfile
+                                ? userProfile
+                                : "https://i.ibb.co/5FG72RG/defaulto.png",
+                            },
+                            currentAssetTotal: toNumber(
+                              resultBalanceSheeetGet.currentAssetTotal
+                            ).toLocaleString(undefined),
+                            currentAssetTotalNumber: toNumber(
+                              resultBalanceSheeetGet.currentAssetTotalNumber
+                            ),
+                            fixedAssetTotal: toNumber(
+                              resultBalanceSheeetGet.fixedAssetTotal
+                            ).toLocaleString(undefined),
+                            fixedAssetTotalNumber: toNumber(
+                              resultBalanceSheeetGet.fixedAssetTotalNumber
+                            ),
+                            currentLiabilityTotal: toNumber(
+                              resultBalanceSheeetGet.currentLiabilityTotal
+                            ).toLocaleString(undefined),
+                            currentLiabilityTotalNumber: toNumber(
+                              resultBalanceSheeetGet.currentLiabilityTotalNumber
+                            ),
+                            longTermLiabilityTotal: toNumber(
+                              resultBalanceSheeetGet.longTermLiabilityTotal
+                            ).toLocaleString(undefined),
+                            longTermLiabilityTotalNumber: toNumber(
+                              resultBalanceSheeetGet.longTermLiabilityTotalNumber
+                            ),
+                            openingBalance: resultBalanceSheeetGet.openingBalance,
+                            openingBalanceNumber: resultBalanceSheeetGet.openingBalanceNumber,
+                            netIncome: toNumber(netIncome).toLocaleString(undefined),
+                            netIncomeNumber: toNumber(netIncome),
+                            currentAssetItems: resultBalanceSheeetGet.currentAssetItems,
+                            fixedAssetItems: resultBalanceSheeetGet.fixedAssetItems,
+                            currentLiabilityItems: resultBalanceSheeetGet.currentLiabilityItems,
+                            longTermLiabilityItems: resultBalanceSheeetGet.longTermLiabilityItems,
+                            equityItems: resultBalanceSheeetGet.equityItems,
+                          });
+                          console.log(raw);
+                          const requestOptions = {
+                            method: "POST",
+                            headers: myHeaders,
+                            body: raw,
+                            redirect: "follow",
+                          };
+                          fetch(balanceSheetPDF, requestOptions)
+                            .then(async (res) => {
+                              const aToken = res.headers.get("token-1");
+                              localStorage.setItem("rexxdex", aToken);
+                              const result = await res.text();
+                              if (result === null || result === undefined || result === "") {
+                                return {};
+                              }
 
-  //         setOpened(false);
-  //         if (result1.message === "Expired Access" || result2.message === "Expired Access") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (
-  //           result1.message === "Token Does Not Exist" ||
-  //           result2.message === "Token Does Not Exist"
-  //         ) {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (
-  //           result1.message === "Unauthorized Access" ||
-  //           result2.message === "Unauthorized Access"
-  //         ) {
-  //           navigate("/authentication/forbiddenPage");
-  //           window.location.reload();
-  //         }
-  //         if (isMounted) {
-  //           const mergedArray = result1.concat(result2);
-  //           if (mergedArray.length === 0) {
-  //             setNoTransactionsMade(true);
-  //           }
-  //           if (mergedArray.length !== 0) {
-  //             setRunAccDataTa(
-  //               mergedArray.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime))
-  //             );
-  //           }
-  //           if (result1.length !== 0) {
-  //             // setExpensesData(result1);
-  //             setDisplay(true);
-  //             setTotalExpenses(result1.reduce((a, b) => a + b.totalAmount, 0));
-  //             console.log(result1);
-  //           }
-  //           if (result2.length !== 0) {
-  //             setDisplay(true);
-  //             // setIncomeData(result2);
-  //             setTotalIncome(result2.reduce((a, b) => a + b.totalAmount, 0));
-  //             console.log(result2);
-  //           }
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         setOpened(false);
-  //         MySwal.fire({
-  //           title: error.status,
-  //           type: "error",
-  //           text: error.message,
-  //         });
-  //       });
+                              return JSON.parse(result);
+                            })
+                            .then((result) => {
+                              setOpened(false);
+                              if (result.message === "Expired Access") {
+                                navigate("/authentication/sign-in");
+                                window.location.reload();
+                              }
+                              if (result.message === "Token Does Not Exist") {
+                                navigate("/authentication/sign-in");
+                                window.location.reload();
+                              }
+                              if (result.message === "Unauthorized Access") {
+                                navigate("/authentication/forbiddenPage");
+                                window.location.reload();
+                              }
 
-  //     return () => {
-  //       isMounted = false;
-  //     };
-  //   };
+                              if (isMounted) {
+                                if (result.status === "SUCCESS") {
+                                  fetch(
+                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.data.name}`,
+                                    {
+                                      headers,
+                                    }
+                                  )
+                                    .then(async (res) => {
+                                      const aToken = res.headers.get("token-1");
+                                      localStorage.setItem("rexxdex", aToken);
+                                      return res.json();
+                                    })
+                                    .then((resultxme2) => {
+                                      if (resultxme2.message === "Expired Access") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Token Does Not Exist") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Unauthorized Access") {
+                                        navigate("/authentication/forbiddenPage");
+                                        window.location.reload();
+                                      }
 
-  //   const handleGets = () => {
-  //     const data11 = JSON.parse(localStorage.getItem("user1"));
+                                      // if (isMounted) {
+                                      console.log(`link [${resultxme2[0]}]`);
+                                      const url = resultxme2[0];
+                                      if (url !== "") {
+                                        const objectURL = url;
+                                        console.log(objectURL);
 
-  //     const orgIDs = data11.orgID;
-  //     setOpened(true);
-  //     const headers = miHeaders;
-  //     fetch(`${process.env.REACT_APP_LOUGA_URL}/accounts/gets/${orgIDs}`, {
-  //       headers,
-  //     })
-  //       .then(async (res) => {
-  //         const aToken = res.headers.get("token-1");
-  //         localStorage.setItem("rexxdex", aToken);
-  //         const resultres = await res.text();
-  //         if (resultres === null || resultres === undefined || resultres === "") {
-  //           return {};
-  //         }
-  //         return JSON.parse(resultres);
-  //       })
-  //       .then((result) => {
-  //         if (result.message === "Expired Access") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Token Does Not Exist") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Unauthorized Access") {
-  //           navigate("/authentication/forbiddenPage");
-  //           window.location.reload();
-  //         }
-  //         console.log(result);
-  //         if (result.status !== 500) {
-  //           // if (Object.keys(result).length !== 0) {
-  //           if (result.length !== 0) {
-  //             setItems(result);
-  //           } else {
-  //             setItems([]);
-  //           }
-  //           // }
-  //         }
+                                        // (C2) TO "FORCE DOWNLOAD"
+                                        const anchor = document.createElement("a");
+                                        anchor.href = objectURL;
+                                        anchor.download = result.data.name;
+                                        anchor.click();
 
-  //         setOpened(false);
-  //       })
-  //       .catch((error) => {
-  //         setOpened(false);
-  //         MySwal.fire({
-  //           title: error.status,
-  //           type: "error",
-  //           text: error.message,
-  //         });
-  //       });
-  //   };
+                                        // (C3) CLEAN UP
+                                        window.URL.revokeObjectURL(objectURL);
+                                      }
+                                    })
+                                    .catch((error) => {
+                                      showMessage(error.status, "error", error.message);
+                                    });
+                                } else if (result.status === "FAILURE") {
+                                  showMessage(result.status, "error", result.message);
+                                }
+                              }
+                            })
+                            .catch((error) => {
+                              showMessage(error.status, "error", error.message);
+                            });
+                        }
+                      })
+                      .catch((error) => {
+                        showMessage(error.status, "error", error.message);
+                      });
+                  }
+                }
+              })
+              .catch((error) => {
+                showMessage(error.status, "error", error.message);
+              });
+          }
+        }
+      })
+      .catch((error) => {
+        showMessage(error.status, "error", error.message);
+      });
 
-  //   const handleGetSuperAccount = () => {
-  //     const data11 = JSON.parse(localStorage.getItem("user1"));
-
-  //     const orgIDs = data11.orgID;
-  //     setOpened(true);
-  //     const headers = miHeaders;
-  //     fetch(`${process.env.REACT_APP_LOUGA_URL}/accounts/getSuperAccounts/${orgIDs}`, {
-  //       headers,
-  //     })
-  //       .then(async (res) => {
-  //         const aToken = res.headers.get("token-1");
-  //         localStorage.setItem("rexxdex", aToken);
-  //         const resultres = await res.text();
-  //         if (resultres === null || resultres === undefined || resultres === "") {
-  //           return {};
-  //         }
-  //         return JSON.parse(resultres);
-  //       })
-  //       .then((result) => {
-  //         if (result.message === "Expired Access") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Token Does Not Exist") {
-  //           navigate("/authentication/sign-in");
-  //           window.location.reload();
-  //         }
-  //         if (result.message === "Unauthorized Access") {
-  //           navigate("/authentication/forbiddenPage");
-  //           window.location.reload();
-  //         }
-  //         console.log(result);
-  //         if (result.status !== 500) {
-  //           // if (Object.keys(result).length !== 0) {
-  //           if (result.length !== 0) {
-  //             setSuperAccounts(result);
-  //           } else {
-  //             setSuperAccounts([]);
-  //           }
-  //           // }
-  //         }
-
-  //         setOpened(false);
-  //       })
-  //       .catch((error) => {
-  //         setOpened(false);
-  //         MySwal.fire({
-  //           title: error.status,
-  //           type: "error",
-  //           text: error.message,
-  //         });
-  //       });
-  //   };
+    return () => {
+      isMounted = false;
+    };
+  };
 
   return (
     <DashboardLayout>
@@ -587,7 +634,7 @@ function AccountReport() {
                   <MDBox mt={4} mb={1}>
                     <MDButton
                       variant="gradient"
-                      onClick={handleClick}
+                      onClick={handleIncomeStatementReport}
                       style={Styles.buttonSx}
                       // color="info"
                       width="50%"
@@ -600,40 +647,36 @@ function AccountReport() {
               </Card>
             </Grid>
             <Grid item xs={6} md={6}>
-              <Card
-                style={{
-                  backgroundColor: "#d9534f",
-
-                  minHeight: "30vw",
-                  marginTop: "20px",
-                  marginBottom: "20px",
-                }}
-              >
-                <Typography
-                  style={{ color: "white" }}
-                  sx={{ fontSize: 20, fontWeight: 800, textAlign: "center", paddingTop: "5vw" }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  Balance Sheet Report
-                </Typography>
-                <Button variant="contained" sx={{ color: "fff" }}>
-                  Contained
-                </Button>
+              <Card>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="290"
+                    image={BalanceSheet}
+                    alt="Balance Sheet Image"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Balance Sheet Report
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <MDBox mt={4} mb={1}>
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleBalanceSheetReport}
+                      style={Styles.buttonSx}
+                      // color="info"
+                      width="50%"
+                      align="center"
+                    >
+                      Run Report
+                    </MDButton>
+                  </MDBox>
+                </CardActions>
               </Card>
             </Grid>
-            {/* <Grid
-              item
-              xs={6}
-              style={{
-                // display: "flex",
-                // marginLeft: "auto",
-                // marginRight: "auto",
-                borderRight: "#f96d02 solid 3px",
-              }}
-            ></Grid>
-
-            <Grid item xs={6} style={{ paddingLeft: "2vw" }}></Grid> */}
           </Grid>
         </MDBox>
       </Card>
