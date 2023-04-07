@@ -63,6 +63,7 @@ function GeneralLedger() {
     const LedgerInfo = JSON.parse(localStorage.getItem("LedgerInfox"))
       ? JSON.parse(localStorage.getItem("LedgerInfox"))
       : [];
+    console.log(JSON.parse(localStorage.getItem("LedgerInfox")));
     console.log(LedgerInfo);
     if (fetched) {
       setStart(fetched[0]);
@@ -133,14 +134,18 @@ function GeneralLedger() {
           }
           if (isMounted) {
             const itemsx = result1.concat(result2);
+            const filteredArray = itemsx.filter((obj) => Object.keys(obj).length !== 0);
             console.log(itemsx);
-            setItems(itemsx);
+            console.log(filteredArray);
+            setItems(filteredArray);
             setGets(true);
             setOpened(false);
             const LedgerInfo = JSON.stringify(items);
             const fetched = JSON.stringify([start, end]);
             localStorage.setItem("fetched", fetched);
             localStorage.setItem("LedgerInfox", LedgerInfo);
+            console.log(LedgerInfo);
+            console.log(fetched);
           }
         })
         .catch((error) => {
