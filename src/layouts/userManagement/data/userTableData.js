@@ -226,7 +226,7 @@ export default function UserData() {
     navigate(`/update-system-role?id=${value}`);
   };
   const handleterminate = (value) => {
-    navigate(`/layouts/offboardingCompany?id=${value}`);
+    navigate(`/company-offboarding?id=${value}`);
   };
 
   const handlePension = (value, tablex) => {
