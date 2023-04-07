@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CardMedia from "@mui/material/CardMedia";
 import Styles from "styles";
+// import Accounting from "layouts/accounting";
 import accountingLoader from "./accountingLoader.gif";
 import IncomeReport from "./incomeReport.jpg";
 import BalanceSheet from "./balanceSheet.jpg";
@@ -319,10 +320,10 @@ function AccountReport() {
     let isMounted = true;
     setOpened(true);
     const getIncomeStatementAPI = `${process.env.REACT_APP_LOUGA_URL}/accounts/getIncomeStatement/${orgIDs}`;
+    const checkEquity = `${process.env.REACT_APP_LOUGA_URL}/accounts/checkForEquityAccount/${orgIDs}`;
     const getBalanceSheetAPI = `${process.env.REACT_APP_LOUGA_URL}/accounts/getBalanceSheet/${orgIDs}`;
     const balanceSheetPDF = `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/balance-sheet`;
-
-    fetch(getIncomeStatementAPI, {
+    fetch(checkEquity, {
       headers,
     })
       .then(async (res) => {
@@ -349,32 +350,11 @@ function AccountReport() {
           window.location.reload();
         }
         if (isMounted) {
-          if (
-            result.incomeItems !== [] ||
-            result.costOfGoodsItems !== null ||
-            result.operatingCostItems !== [] ||
-            result.nonOperatingCostItems !== []
-          ) {
-            console.log(result.incomeItems);
-            console.log(result.costOfGoodsItems);
-            console.log(result.operatingCostItems);
-            console.log(result.nonOperatingCostItems);
-
-            const netIncome =
-              result.incomeTotalNumber -
-              result.costOfGoodsTotalNumber -
-              result.operatingCostTotalNumber -
-              result.nonOperatingCostTotalNumber;
-            console.log(netIncome);
-            showMessage("Error", "error", "Income Statement hasn't been created yet");
+          console.log(result);
+          if (result.status === "NO_ACCOUNT") {
+            showMessage(result.status, "error", result.message);
           } else {
-            const netIncome =
-              result.incomeTotalNumber -
-              result.costOfGoodsTotalNumber -
-              result.operatingCostTotalNumber -
-              result.nonOperatingCostTotalNumber;
-            console.log(netIncome);
-            fetch(getBalanceSheetAPI, {
+            fetch(getIncomeStatementAPI, {
               headers,
             })
               .then(async (res) => {
@@ -387,155 +367,215 @@ function AccountReport() {
 
                 return JSON.parse(result);
               })
-              .then((resultBalanceSheeetGet) => {
-                if (resultBalanceSheeetGet.message === "Expired Access") {
+              .then((result) => {
+                if (result.message === "Expired Access") {
                   navigate("/authentication/sign-in");
                   window.location.reload();
                 }
-                if (resultBalanceSheeetGet.message === "Token Does Not Exist") {
+                if (result.message === "Token Does Not Exist") {
                   navigate("/authentication/sign-in");
                   window.location.reload();
                 }
-                if (resultBalanceSheeetGet.message === "Unauthorized Access") {
+                if (result.message === "Unauthorized Access") {
                   navigate("/authentication/forbiddenPage");
                   window.location.reload();
                 }
                 if (isMounted) {
-                  const raw = JSON.stringify({
-                    company: {
-                      id: companyDetails[0].id,
-                      name: companyDetails[0].name,
-                      street: companyDetails[0].street,
-                      city: companyDetails[0].city,
-                      state: companyDetails[0].state,
-                      country: companyDetails[0].country,
-                      pno: companyDetails[0].pno,
-                      email: companyDetails[0].email,
-                      // eslint-disable-next-line no-unneeded-ternary
-                      profilePic: userProfile
-                        ? userProfile
-                        : "https://i.ibb.co/5FG72RG/defaulto.png",
-                    },
-                    currentAssetTotal: toNumber(
-                      resultBalanceSheeetGet.currentAssetTotal
-                    ).toLocaleString(undefined),
-                    currentAssetTotalNumber: toNumber(
-                      resultBalanceSheeetGet.currentAssetTotalNumber
-                    ),
-                    fixedAssetTotal: toNumber(
-                      resultBalanceSheeetGet.fixedAssetTotal
-                    ).toLocaleString(undefined),
-                    fixedAssetTotalNumber: toNumber(resultBalanceSheeetGet.fixedAssetTotalNumber),
-                    currentLiabilityTotal: toNumber(
-                      resultBalanceSheeetGet.currentLiabilityTotal
-                    ).toLocaleString(undefined),
-                    currentLiabilityTotalNumber: toNumber(
-                      resultBalanceSheeetGet.currentLiabilityTotalNumber
-                    ),
-                    longTermLiabilityTotal: toNumber(
-                      resultBalanceSheeetGet.longTermLiabilityTotal
-                    ).toLocaleString(undefined),
-                    longTermLiabilityTotalNumber: toNumber(
-                      resultBalanceSheeetGet.longTermLiabilityTotalNumber
-                    ),
-                    openingBalance: resultBalanceSheeetGet.openingBalance,
-                    openingBalanceNumber: resultBalanceSheeetGet.openingBalanceNumber,
-                    netIncome: toNumber(netIncome).toLocaleString(undefined),
-                    netIncomeNumber: toNumber(netIncome),
-                    currentAssetItems: resultBalanceSheeetGet.currentAssetItems,
-                    fixedAssetItems: resultBalanceSheeetGet.fixedAssetItems,
-                    currentLiabilityItems: resultBalanceSheeetGet.currentLiabilityItems,
-                    longTermLiabilityItems: resultBalanceSheeetGet.longTermLiabilityItems,
-                    equityItems: resultBalanceSheeetGet.equityItems,
-                  });
-                  console.log(raw);
-                  const requestOptions = {
-                    method: "POST",
-                    headers: myHeaders,
-                    body: raw,
-                    redirect: "follow",
-                  };
-                  fetch(balanceSheetPDF, requestOptions)
-                    .then(async (res) => {
-                      const aToken = res.headers.get("token-1");
-                      localStorage.setItem("rexxdex", aToken);
-                      const result = await res.text();
-                      if (result === null || result === undefined || result === "") {
-                        return {};
-                      }
+                  if (
+                    result.incomeItems !== [] ||
+                    result.costOfGoodsItems !== null ||
+                    result.operatingCostItems !== [] ||
+                    result.nonOperatingCostItems !== []
+                  ) {
+                    console.log(result.incomeItems);
+                    console.log(result.costOfGoodsItems);
+                    console.log(result.operatingCostItems);
+                    console.log(result.nonOperatingCostItems);
 
-                      return JSON.parse(result);
+                    const netIncome =
+                      result.incomeTotalNumber -
+                      result.costOfGoodsTotalNumber -
+                      result.operatingCostTotalNumber -
+                      result.nonOperatingCostTotalNumber;
+                    console.log(netIncome);
+                    showMessage("Error", "error", "Income Statement hasn't been created yet");
+                  } else {
+                    const netIncome =
+                      result.incomeTotalNumber -
+                      result.costOfGoodsTotalNumber -
+                      result.operatingCostTotalNumber -
+                      result.nonOperatingCostTotalNumber;
+                    console.log(netIncome);
+                    fetch(getBalanceSheetAPI, {
+                      headers,
                     })
-                    .then((result) => {
-                      setOpened(false);
-                      if (result.message === "Expired Access") {
-                        navigate("/authentication/sign-in");
-                        window.location.reload();
-                      }
-                      if (result.message === "Token Does Not Exist") {
-                        navigate("/authentication/sign-in");
-                        window.location.reload();
-                      }
-                      if (result.message === "Unauthorized Access") {
-                        navigate("/authentication/forbiddenPage");
-                        window.location.reload();
-                      }
+                      .then(async (res) => {
+                        const aToken = res.headers.get("token-1");
+                        localStorage.setItem("rexxdex", aToken);
+                        const result = await res.text();
+                        if (result === null || result === undefined || result === "") {
+                          return {};
+                        }
 
-                      if (isMounted) {
-                        if (result.status === "SUCCESS") {
-                          fetch(
-                            `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.data.name}`,
-                            {
-                              headers,
-                            }
-                          )
+                        return JSON.parse(result);
+                      })
+                      .then((resultBalanceSheeetGet) => {
+                        if (resultBalanceSheeetGet.message === "Expired Access") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultBalanceSheeetGet.message === "Token Does Not Exist") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultBalanceSheeetGet.message === "Unauthorized Access") {
+                          navigate("/authentication/forbiddenPage");
+                          window.location.reload();
+                        }
+                        if (isMounted) {
+                          const raw = JSON.stringify({
+                            company: {
+                              id: companyDetails[0].id,
+                              name: companyDetails[0].name,
+                              street: companyDetails[0].street,
+                              city: companyDetails[0].city,
+                              state: companyDetails[0].state,
+                              country: companyDetails[0].country,
+                              pno: companyDetails[0].pno,
+                              email: companyDetails[0].email,
+                              // eslint-disable-next-line no-unneeded-ternary
+                              profilePic: userProfile
+                                ? userProfile
+                                : "https://i.ibb.co/5FG72RG/defaulto.png",
+                            },
+                            currentAssetTotal: toNumber(
+                              resultBalanceSheeetGet.currentAssetTotal
+                            ).toLocaleString(undefined),
+                            currentAssetTotalNumber: toNumber(
+                              resultBalanceSheeetGet.currentAssetTotalNumber
+                            ),
+                            fixedAssetTotal: toNumber(
+                              resultBalanceSheeetGet.fixedAssetTotal
+                            ).toLocaleString(undefined),
+                            fixedAssetTotalNumber: toNumber(
+                              resultBalanceSheeetGet.fixedAssetTotalNumber
+                            ),
+                            currentLiabilityTotal: toNumber(
+                              resultBalanceSheeetGet.currentLiabilityTotal
+                            ).toLocaleString(undefined),
+                            currentLiabilityTotalNumber: toNumber(
+                              resultBalanceSheeetGet.currentLiabilityTotalNumber
+                            ),
+                            longTermLiabilityTotal: toNumber(
+                              resultBalanceSheeetGet.longTermLiabilityTotal
+                            ).toLocaleString(undefined),
+                            longTermLiabilityTotalNumber: toNumber(
+                              resultBalanceSheeetGet.longTermLiabilityTotalNumber
+                            ),
+                            openingBalance: resultBalanceSheeetGet.openingBalance,
+                            openingBalanceNumber: resultBalanceSheeetGet.openingBalanceNumber,
+                            netIncome: toNumber(netIncome).toLocaleString(undefined),
+                            netIncomeNumber: toNumber(netIncome),
+                            currentAssetItems: resultBalanceSheeetGet.currentAssetItems,
+                            fixedAssetItems: resultBalanceSheeetGet.fixedAssetItems,
+                            currentLiabilityItems: resultBalanceSheeetGet.currentLiabilityItems,
+                            longTermLiabilityItems: resultBalanceSheeetGet.longTermLiabilityItems,
+                            equityItems: resultBalanceSheeetGet.equityItems,
+                          });
+                          console.log(raw);
+                          const requestOptions = {
+                            method: "POST",
+                            headers: myHeaders,
+                            body: raw,
+                            redirect: "follow",
+                          };
+                          fetch(balanceSheetPDF, requestOptions)
                             .then(async (res) => {
                               const aToken = res.headers.get("token-1");
                               localStorage.setItem("rexxdex", aToken);
-                              return res.json();
+                              const result = await res.text();
+                              if (result === null || result === undefined || result === "") {
+                                return {};
+                              }
+
+                              return JSON.parse(result);
                             })
-                            .then((resultxme2) => {
-                              if (resultxme2.message === "Expired Access") {
+                            .then((result) => {
+                              setOpened(false);
+                              if (result.message === "Expired Access") {
                                 navigate("/authentication/sign-in");
                                 window.location.reload();
                               }
-                              if (resultxme2.message === "Token Does Not Exist") {
+                              if (result.message === "Token Does Not Exist") {
                                 navigate("/authentication/sign-in");
                                 window.location.reload();
                               }
-                              if (resultxme2.message === "Unauthorized Access") {
+                              if (result.message === "Unauthorized Access") {
                                 navigate("/authentication/forbiddenPage");
                                 window.location.reload();
                               }
 
-                              // if (isMounted) {
-                              console.log(`link [${resultxme2[0]}]`);
-                              const url = resultxme2[0];
-                              if (url !== "") {
-                                const objectURL = url;
-                                console.log(objectURL);
+                              if (isMounted) {
+                                if (result.status === "SUCCESS") {
+                                  fetch(
+                                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.data.name}`,
+                                    {
+                                      headers,
+                                    }
+                                  )
+                                    .then(async (res) => {
+                                      const aToken = res.headers.get("token-1");
+                                      localStorage.setItem("rexxdex", aToken);
+                                      return res.json();
+                                    })
+                                    .then((resultxme2) => {
+                                      if (resultxme2.message === "Expired Access") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Token Does Not Exist") {
+                                        navigate("/authentication/sign-in");
+                                        window.location.reload();
+                                      }
+                                      if (resultxme2.message === "Unauthorized Access") {
+                                        navigate("/authentication/forbiddenPage");
+                                        window.location.reload();
+                                      }
 
-                                // (C2) TO "FORCE DOWNLOAD"
-                                const anchor = document.createElement("a");
-                                anchor.href = objectURL;
-                                anchor.download = result.data.name;
-                                anchor.click();
+                                      // if (isMounted) {
+                                      console.log(`link [${resultxme2[0]}]`);
+                                      const url = resultxme2[0];
+                                      if (url !== "") {
+                                        const objectURL = url;
+                                        console.log(objectURL);
 
-                                // (C3) CLEAN UP
-                                window.URL.revokeObjectURL(objectURL);
+                                        // (C2) TO "FORCE DOWNLOAD"
+                                        const anchor = document.createElement("a");
+                                        anchor.href = objectURL;
+                                        anchor.download = result.data.name;
+                                        anchor.click();
+
+                                        // (C3) CLEAN UP
+                                        window.URL.revokeObjectURL(objectURL);
+                                      }
+                                    })
+                                    .catch((error) => {
+                                      showMessage(error.status, "error", error.message);
+                                    });
+                                } else if (result.status === "FAILURE") {
+                                  showMessage(result.status, "error", result.message);
+                                }
                               }
                             })
                             .catch((error) => {
                               showMessage(error.status, "error", error.message);
                             });
-                        } else if (result.status === "FAILURE") {
-                          showMessage(result.status, "error", result.message);
                         }
-                      }
-                    })
-                    .catch((error) => {
-                      showMessage(error.status, "error", error.message);
-                    });
+                      })
+                      .catch((error) => {
+                        showMessage(error.status, "error", error.message);
+                      });
+                  }
                 }
               })
               .catch((error) => {
@@ -547,6 +587,7 @@ function AccountReport() {
       .catch((error) => {
         showMessage(error.status, "error", error.message);
       });
+
     return () => {
       isMounted = false;
     };
