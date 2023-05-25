@@ -89,9 +89,14 @@ export default function productsBranchTable() {
           method: "DELETE",
           headers: miHeaders,
         };
+        const data11 = JSON.parse(localStorage.getItem("user1"));
+        const personalIDs = data11.personalID;
 
         // eslint-disable-next-line no-irregular-whitespace
-        fetch(`${process.env.REACT_APP_LOUGA_URL}/productBranch/delete/${value}`, requestOptions)
+        fetch(
+          `${process.env.REACT_APP_LOUGA_URL}/productBranch/delete/${value}/${personalIDs}`,
+          requestOptions
+        )
           .then(async (res) => {
             const aToken = res.headers.get("token-1");
             localStorage.setItem("rexxdex", aToken);
