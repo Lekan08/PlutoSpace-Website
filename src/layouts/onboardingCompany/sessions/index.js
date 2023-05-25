@@ -168,7 +168,7 @@ function OnboardingSession() {
         return res.json();
       })
       .then((result) => {
-        setOpened(false);
+        // setOpened(false);
         console.log(result);
         // setAppID(result.data.id);
         if (result.message === "Expired Access") {
@@ -235,7 +235,7 @@ function OnboardingSession() {
               })
               .then((resultx) => {
                 console.log(resultx);
-                // setOpened(false);
+                setOpened(false);
                 if (resultx.message === "Expired Access") {
                   navigate("/authentication/sign-in");
                   window.location.reload();
