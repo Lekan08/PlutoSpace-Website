@@ -402,6 +402,7 @@ function MyBills() {
   useEffect(() => {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
+    console.log(data11);
     const orgIDs = data11.orgID;
     const empID = data11.personalID;
     console.log(empID);
