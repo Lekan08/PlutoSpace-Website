@@ -146,6 +146,7 @@ function Tax() {
         if (isMounted) {
           console.log(result);
           setTax(result);
+          setValue(result.value);
         }
       });
     return () => {
@@ -266,6 +267,7 @@ function Tax() {
       },
     });
   };
+  console.log(valuex);
 
   return (
     <DashboardLayout>
