@@ -31,7 +31,7 @@ function UpdateTreasuryType() {
   const [descripx, setDescrip] = useState("");
   const [timesx, setTimes] = useState("");
   const [recurringTypex, setRecurringType] = useState("");
-  const [showRecurringType, setShowRecurringType] = useState(false);
+  // const [showRecurringType, setShowRecurringType] = useState(false);
 
   const [opened, setOpened] = useState(false);
   const [checkedName, setCheckedName] = useState("");
@@ -161,9 +161,9 @@ function UpdateTreasuryType() {
     const callClientType = value.toString();
     setTimes(callClientType);
     if (callClientType === "0") {
-      setShowRecurringType(false);
+      // setShowRecurringType(false);
     } else if (callClientType === "1") {
-      setShowRecurringType(true);
+      // setShowRecurringType(true);
     }
     setOpened(false);
   };
@@ -266,7 +266,7 @@ function UpdateTreasuryType() {
                       >
                         Reurring Type *
                       </MDTypography>{" "}
-                      {showRecurringType ? (
+                      {/* {showRecurringType ? (
                         <Form.Select
                           //   value={recurringTypex}
                           //   onChange={(e) => setRecurringType(e.target.value)}
@@ -274,21 +274,21 @@ function UpdateTreasuryType() {
                         >
                           {/* <option>--No Of Times--</option>
                           <option value="0">One-Time</option>
-                          <option value="1">Recurring</option> */}
+                          <option value="1">Recurring</option> 
                         </Form.Select>
-                      ) : (
-                        <Form.Select
-                          value={recurringTypex}
-                          onChange={(e) => setRecurringType(e.target.value)}
-                          aria-label="Default select example"
-                        >
-                          <option>--Recurring Type--</option>
-                          <option value="Daily">Daily</option>
-                          <option value="Weekly">Weekly</option>
-                          <option value="Monthly">Monthly</option>
-                          <option value="Yearly">Yearly</option>
-                        </Form.Select>
-                      )}
+                      ) : ( */}
+                      <Form.Select
+                        value={recurringTypex}
+                        onChange={(e) => setRecurringType(e.target.value)}
+                        aria-label="Default select example"
+                      >
+                        <option>--Recurring Type--</option>
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Yearly">Yearly</option>
+                      </Form.Select>
+                      {/* )} */}
                       <br />
                     </MDBox>
                   </div>
