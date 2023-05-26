@@ -41,7 +41,7 @@ function InviteUser() {
 
   const [idx, setId] = useState(0);
   const [orgIDx, setOrgID] = useState("");
-  const [roleIDx, setRoleID] = useState(0);
+  // const [roleIDx, setRoleID] = useState(0);
   const [fnamex, setFname] = useState("");
   const [lnamex, setLname] = useState("");
   const [onamex, setOname] = useState("");
@@ -343,19 +343,19 @@ function InviteUser() {
     const lnameu = urlParams.get("lname");
     const emailu = urlParams.get("email");
     const orgIDu = urlParams.get("orgID");
-    const roleIDu = urlParams.get("role");
+    // const roleIDu = urlParams.get("role");
     console.log(fnameu);
     console.log(lnameu);
     console.log(emailu);
     console.log(orgIDu);
-    console.log(roleIDu);
+    // console.log(roleIDu);
     let isMounted = true;
     if (isMounted) {
       setFname(fnameu);
       setLname(lnameu);
       setOemail(emailu);
       setOrgID(orgIDu);
-      setRoleID(roleIDu);
+      // setRoleID(roleIDu);
 
       handleOnFirstKeys(fnameu);
       handleOnLastKeys(lnameu);
@@ -449,11 +449,15 @@ function InviteUser() {
       .then((res) => res.json())
       .then((result) => {
         localStorage.setItem("personalInfo", JSON.stringify(result.data));
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const orgIDs = urlParams.get("orgID");
+        const roleIDs = urlParams.get("role");
         const raw1 = JSON.stringify({
-          orgID: orgIDx,
+          orgID: orgIDs,
           personalID: result.data.id,
           email: emaily,
-          roleID: roleIDx,
+          roleID: roleIDs,
         });
         const requestOptions1 = {
           method: "POST",
@@ -467,8 +471,12 @@ function InviteUser() {
           .then((resultx) => {
             console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
             localStorage.setItem("company", JSON.stringify(resultx.data));
+            // const queryString = window.location.search;
+            // const urlParams = new URLSearchParams(queryString);
+
+            const orgIDu = urlParams.get("orgID");
             const raw2 = JSON.stringify({
-              orgID: orgIDx,
+              orgID: orgIDu,
               empID: result.data.id,
               username: emailx,
               password: passwordx,

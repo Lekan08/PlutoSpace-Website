@@ -145,6 +145,7 @@ function Tax() {
         }
         if (isMounted) {
           console.log(result);
+          // const newTaxId = Number(result.id);
           setTax(result);
           setValue(result.value);
         }
@@ -267,7 +268,7 @@ function Tax() {
       },
     });
   };
-  console.log(valuex);
+  console.log(tax);
 
   return (
     <DashboardLayout>
@@ -358,7 +359,7 @@ function Tax() {
           canSearch
         />
       </MDBox> */}
-      {tax.id > 0 && (
+      {tax.id !== 0 && (
         <MDBox pt={3}>
           <Card
             style={{
