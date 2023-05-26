@@ -432,6 +432,7 @@ function IconView({ items, groups, level }) {
                   });
                 }
               } else {
+                setViewDoc(false);
                 MySwal.fire({
                   title: "DOCUMENT_NON_EXIST",
                   type: "error",
@@ -440,6 +441,7 @@ function IconView({ items, groups, level }) {
               }
             });
         } else {
+          setViewDoc(false);
           MySwal.fire({
             title: "DOCUMENT_NON_EXIST",
             type: "error",

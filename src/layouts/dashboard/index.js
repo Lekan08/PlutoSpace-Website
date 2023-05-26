@@ -1037,7 +1037,7 @@ function Dashboard() {
               <ComplexStatisticsCard
                 color="dark"
                 icon="payments"
-                title="Amount Spent By User"
+                title="Amount Spent By User(₦)"
                 count={amountx}
               />
             </MDBox>

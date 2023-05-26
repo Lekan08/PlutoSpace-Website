@@ -110,7 +110,11 @@ function UserAudit() {
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
-        return res.json();
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
       })
       .then((result) => {
         setOpened(false);
@@ -143,7 +147,11 @@ function UserAudit() {
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
-        return res.json();
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
       })
       .then((resultapi) => {
         setOpened(false);
@@ -184,7 +192,11 @@ function UserAudit() {
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
-        return res.json();
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
       })
       .then((resulta) => {
         setOpened(false);
@@ -261,7 +273,11 @@ function UserAudit() {
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
-        return res.json();
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
       })
       .then((result) => {
         setOpened(false);
