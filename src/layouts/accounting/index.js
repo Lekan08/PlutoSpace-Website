@@ -78,7 +78,9 @@ function Accounting() {
 
   const [opened, setOpened] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [runAccData, setRunAccData] = useState([]);
+  // const [expensesData, setExpensesData] = useState([]);
+  // const [incomeData, setIncomeData] = useState([]);
+  const [runAccDataTa, setRunAccDataTa] = useState([]);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpenses, setTotalExpenses] = useState(0);
   const [totalBalance, setTotalBalance] = useState(0);
@@ -128,7 +130,7 @@ function Accounting() {
   };
   // To handle pdf download
   const downloadPdf = (e) => {
-    const itemszx = runAccData.map((val) => ({
+    const itemszx = runAccDataTa.map((val) => ({
       createdTime: changeDatePDF(val.createdTime),
       source: val.source,
       particulars: val.particulars,
@@ -595,49 +597,92 @@ function Accounting() {
           }
         }
       });
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/accounting/runAccounts/${orgIDs}/${typex}`, {
-      headers,
-    })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((resultr) => {
+
+    const request1 = fetch(
+      `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsExpense/${orgIDs}/${typex}`,
+      {
+        headers,
+      }
+    ).then(async (res) => {
+      const aToken = res.headers.get("token-1");
+      localStorage.setItem("rexxdex", aToken);
+      const resultres = await res.text();
+      if (resultres === null || resultres === undefined || resultres === "") {
+        return {};
+      }
+      return JSON.parse(resultres);
+    });
+
+    const request2 = fetch(
+      `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsIncome/${orgIDs}/${typex}`,
+      {
+        headers,
+      }
+    ).then(async (res) => {
+      const aToken = res.headers.get("token-1");
+      localStorage.setItem("rexxdex", aToken);
+      const resultres = await res.text();
+      if (resultres === null || resultres === undefined || resultres === "") {
+        return {};
+      }
+      return JSON.parse(resultres);
+    });
+
+    Promise.all([request1, request2])
+      .then((results) => {
+        const [result1, result2] = results;
+        console.log(results);
+
         setOpened(false);
-        if (resultr.message === "Expired Access") {
+        if (result1.message === "Expired Access" || result2.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
         }
-        if (resultr.message === "Token Does Not Exist") {
+        if (
+          result1.message === "Token Does Not Exist" ||
+          result2.message === "Token Does Not Exist"
+        ) {
           navigate("/authentication/sign-in");
           window.location.reload();
         }
-        if (resultr.message === "Unauthorized Access") {
+        if (
+          result1.message === "Unauthorized Access" ||
+          result2.message === "Unauthorized Access"
+        ) {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
         if (isMounted) {
-          if (resultr.length !== 0) {
+          const mergedArray = result1.concat(result2);
+          if (mergedArray.length === 0) {
+            setNoTransactionsMade(true);
+          }
+          if (mergedArray.length !== 0) {
+            setRunAccDataTa(
+              mergedArray.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime))
+            );
+          }
+          if (result1.length !== 0) {
+            // setExpensesData(result1);
             setDisplay(true);
-            setRunAccData(resultr);
-            console.log(resultr);
-            const incomeFIltered = resultr.filter((os) => os.category === "INCOME");
-            const expensesFiltered = resultr.filter((os) => os.category === "EXPENSES");
-            console.log(incomeFIltered);
-            console.log(expensesFiltered);
-            if (incomeFIltered.length !== 0) {
-              const incomeValues = incomeFIltered.map((income) => income.totalAmount);
-              console.log(incomeValues);
-              setTotalIncome(incomeValues.reduce((a, b) => a + b, 0));
-            }
-            if (expensesFiltered.length !== 0) {
-              const expensesValues = expensesFiltered.map((income) => income.totalAmount);
-              console.log(expensesValues);
-              setTotalExpenses(expensesValues.reduce((a, b) => a + b, 0));
-            }
-          } else setNoTransactionsMade(true);
+            setTotalExpenses(result1.reduce((a, b) => a + b.totalAmount, 0));
+            console.log(result1);
+          }
+          if (result2.length !== 0) {
+            setDisplay(true);
+            // setIncomeData(result2);
+            setTotalIncome(result2.reduce((a, b) => a + b.totalAmount, 0));
+            console.log(result2);
+          }
         }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
       });
 
     return () => {
@@ -863,7 +908,7 @@ function Accounting() {
                   </div>
                   &nbsp; &nbsp;
                   <DataTable
-                    table={{ columns: pColumns, rows: runAccData }}
+                    table={{ columns: pColumns, rows: runAccDataTa }}
                     isSorted
                     entriesPerPage
                     showTotalEntries
@@ -910,7 +955,15 @@ function Accounting() {
                     width: "35%",
                   }}
                 />
-                {/* <CircularProgress color="info" /> */}
+                <div
+                  className="row"
+                  style={{
+                    position: "absolute",
+                    marginTop: "9rem",
+                  }}
+                >
+                  Please wait, this may take some time...
+                </div>
               </div>
             </>
           </Backdrop>

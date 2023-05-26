@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 
 // @mui material components
@@ -11,9 +13,9 @@ import Icon from "@mui/material/Icon";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import GHeaders from "getHeader";
-// import PHeaders from "postHeader";
-import { useNavigate } from "react-router-dom";
 import PHeaders from "postHeader";
+import { useNavigate } from "react-router-dom";
+// import PHeaders from "postHeader";
 // import TextWrapper from "react-text-wrapper";
 
 export default function OnboardingCompanyTable() {
@@ -219,6 +221,7 @@ export default function OnboardingCompanyTable() {
 
   const handleCOMPLETED = (id) => {
     const filteredData = items.filter((item) => item.id === id);
+    console.log(id);
     console.log(filteredData);
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
@@ -284,6 +287,219 @@ export default function OnboardingCompanyTable() {
       }
     });
   };
+
+  const handleGetFilter = (value) => {
+    // setOpened(true);
+    // const queryString = window.location.search;
+    // const urlParams = new URLSearchParams(queryString);
+    // const id = urlParams.get("id");
+    console.log(value);
+    const filteredItems = items.filter((item) => item.id === value);
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+    // if (data11.roleID === "0") {
+    // setShow(true);
+    const orgIDs = data11.orgID;
+    // const myid = data11.personalID;
+    const headers = miHeaders;
+    let isMounted = true;
+    fetch(
+      `${process.env.REACT_APP_RAGA_URL}/onboardingSession/getMySessions/${orgIDs}/${filteredItems[0].empID}`,
+      {
+        headers,
+      }
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        if (isMounted) {
+          console.log(result);
+          const queryString = window.location.search;
+          const urlParams = new URLSearchParams(queryString);
+          const idx = urlParams.get("id");
+          const particularChecklist = result.filter((val) => val.id === idx);
+          console.log(particularChecklist);
+          const final = [];
+          result.map((val) => {
+            const { checklists } = val;
+
+            if (checklists !== null) {
+              console.log("fire");
+              checklists.map((valuex) => {
+                console.log(valuex);
+                // valuex.done;
+                if (valuex.done === false) {
+                  final.push({ ...valuex });
+                } else {
+                  console.log("final");
+                }
+                if (final === []) {
+                  handleCOMPLETED(value, 1);
+                } else {
+                  console.log("abeeegggworkkk");
+                  MySwal.fire({
+                    title: "Invalid_Input",
+                    type: "error",
+                    text: "All Onboarding are not completed",
+                  });
+                }
+                console.log(final);
+              });
+            }
+          });
+          // if (particularChecklist.length !== 0) {
+          //   const resss = [];
+          //   // setChecklist(result);
+          //   // const id = result.map((each) => each.id);
+          //   // eslint-disable-next-line array-callback-return
+          //   particularChecklist.map((each) => {
+          //     const { checklists } = each;
+          //     if (checklists) {
+          //       console.log(checklists);
+          //       checklists.map((item) => {
+          //         resss.push({ ...item, id: each.id });
+          //       });
+          //       // resss.push(each.id);
+          //     } else {
+          //       console.log("suppppp");
+          //     }
+          //   });
+          //   console.log(resss);
+          //   // if (resss )
+          //   // const ebukss = resss.filter((each) => each.done);
+
+          //   const rightCheck = [];
+          //   const leftCheck = [];
+          //   resss.map((value) => {
+          //     console.log(value);
+          //     if (value.done === false) {
+          //       // setItems(resss);
+          //       rightCheck.push(value);
+          //     } else {
+          //       leftCheck.push(value);
+          //       // setNItems(resss);
+          //     }
+          //   });
+          //   rightCheck.map((val) => {
+          //     console.log(val);
+          //     setItems(rightCheck);
+          //   });
+          //   console.log(rightCheck);
+
+          //   leftCheck.map((val) => {
+          //     console.log(val);
+          //     setNItems(leftCheck);
+          //   });
+          // }
+        }
+      });
+    return () => {
+      isMounted = false;
+    };
+    // }
+  };
+  // useEffect(() => {
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
+  //   console.log(data11);
+  //   if (data11.roleID === "0") {
+  //     setShow(true);
+  //     const orgIDs = data11.orgID;
+  //     const myid = data11.personalID;
+  //     const headers = miHeaders;
+  //     let isMounted = true;
+  //     fetch(`${process.env.REACT_APP_RAGA_URL}/onboardingSession/getMySessions/${orgIDs}/${myid}`, {
+  //       headers,
+  //     })
+  //       .then(async (res) => {
+  //         const aToken = res.headers.get("token-1");
+  //         localStorage.setItem("rexxdex", aToken);
+  //         return res.json();
+  //       })
+  //       .then((result) => {
+  //         if (result.message === "Expired Access") {
+  //           navigate("/authentication/sign-in");
+  //           window.location.reload();
+  //         }
+  //         if (result.message === "Token Does Not Exist") {
+  //           navigate("/authentication/sign-in");
+  //           window.location.reload();
+  //         }
+  //         if (result.message === "Unauthorized Access") {
+  //           navigate("/authentication/forbiddenPage");
+  //           window.location.reload();
+  //         }
+  //         if (isMounted) {
+  //           console.log(result);
+  //           const queryString = window.location.search;
+  //           const urlParams = new URLSearchParams(queryString);
+  //           const idx = urlParams.get("id");
+  //           const particularChecklist = result.filter((val) => val.id === idx);
+  //           console.log(particularChecklist);
+  //           if (particularChecklist.length !== 0) {
+  //             const resss = [];
+  //             // setChecklist(result);
+  //             // const id = result.map((each) => each.id);
+  //             // eslint-disable-next-line array-callback-return
+  //             particularChecklist.map((each) => {
+  //               const { checklists } = each;
+  //               if (checklists) {
+  //                 console.log(checklists);
+  //                 checklists.map((item) => {
+  //                   resss.push({ ...item, id: each.id });
+  //                 });
+  //                 // resss.push(each.id);
+  //               } else {
+  //                 console.log("suppppp");
+  //               }
+  //             });
+  //             console.log(resss);
+  //             // if (resss )
+  //             // const ebukss = resss.filter((each) => each.done);
+
+  //             const rightCheck = [];
+  //             const leftCheck = [];
+  //             resss.map((value) => {
+  //               console.log(value);
+  //               if (value.done === false) {
+  //                 // setItems(resss);
+  //                 rightCheck.push(value);
+  //               } else {
+  //                 leftCheck.push(value);
+  //                 // setNItems(resss);
+  //               }
+  //             });
+  //             rightCheck.map((val) => {
+  //               console.log(val);
+  //               setItems(rightCheck);
+  //             });
+  //             console.log(rightCheck);
+
+  //             leftCheck.map((val) => {
+  //               console.log(val);
+  //               setNItems(leftCheck);
+  //             });
+  //           }
+  //         }
+  //       });
+  //     return () => {
+  //       isMounted = false;
+  //     };
+  //   }
+  // }, []);
 
   // const handleCOMPLETED2 = (id) => {
   //   const filteredData = items.filter((item) => item.id === id);
@@ -355,6 +571,7 @@ export default function OnboardingCompanyTable() {
 
   useEffect(() => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
+    console.log(data11);
 
     const orgIDs = data11.orgID;
     const headers = miHeaders;
@@ -409,6 +626,101 @@ export default function OnboardingCompanyTable() {
     );
   };
 
+  // const handleAddChecklist = (filteredData, value) => {
+  //   // console.log(value);
+  //   let cbttime = "";
+  //   let filteredItems = [];
+  //   // Avoid filter for empty string
+  //   if (!value) {
+  //     cbttime = "";
+  //     filteredItems = [];
+  //   } else {
+  //     filteredItems = filteredData.filter((item) => item.id === value);
+  //     console.log(filteredItems);
+
+  //     cbttime = new Date(filteredItems[0].deadline);
+  //   }
+
+  //   MySwal.fire({
+  //     title: "Onboarding Checklist",
+  //     html: `<div text-align="left"><b>Description:</b> <textarea rows="4" cols="8" class="form-control" id="descrip">${descripx}</textarea></div>`,
+  //     confirmButtonText: "Save",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     preConfirm: () => {
+  //       const time = Swal.getPopup().querySelector("#time").value;
+  //       if (!time) {
+  //         Swal.showValidationMessage(`Set a Specific Time`);
+  //       } else {
+  //         Swal.resetValidationMessage();
+  //         // console.log(time);
+
+  //         const data11 = JSON.parse(localStorage.getItem("user1"));
+  //         const cbtTimex = new Date(time).getTime();
+  //         // console.log(cbtTimex);
+
+  //         const orgIDs = data11.orgID;
+  //         const raw = JSON.stringify({
+  //           id: filteredItems[0].id,
+  //           title: filteredItems[0].title,
+  //           orgID: orgIDs,
+  //           duration: filteredItems[0].duration,
+  //           descrip: filteredItems[0].descrip,
+  //           status: filteredItems[0].status,
+  //           jobPostID: filteredItems[0].jobPostID,
+  //           deadline: cbtTimex,
+  //           createdTime: filteredItems[0].createdTime,
+  //           deleteFlag: filteredItems[0].deleteFlag,
+  //         });
+
+  //         // console.log(raw);
+  //         const requestOptions = {
+  //           method: "POST",
+  //           headers: myHeaders,
+  //           body: raw,
+  //           redirect: "follow",
+  //         };
+
+  //         fetch(`${process.env.REACT_APP_RAGA_URL}/cbt/update`, requestOptions)
+  //           .then(async (res) => {
+  //             const aToken = res.headers.get("token-1");
+  //             localStorage.setItem("rexxdex", aToken);
+  //             return res.json();
+  //           })
+  //           .then((result) => {
+  //             if (result.message === "Expired Access") {
+  //               navigate("/authentication/sign-in");
+  //               window.location.reload();
+  //             }
+  //             if (result.message === "Token Does Not Exist") {
+  //               navigate("/authentication/sign-in");
+  //               window.location.reload();
+  //             }
+  //             if (result.message === "Unauthorized Access") {
+  //               navigate("/authentication/forbiddenPage");
+  //               window.location.reload();
+  //             }
+  //             MySwal.fire({
+  //               title: result.status,
+  //               type: "success",
+  //               text: result.message,
+  //             }).then(() => {
+  //               window.location.reload();
+  //             });
+  //           })
+  //           .catch((error) => {
+  //             MySwal.fire({
+  //               title: error.status,
+  //               type: "error",
+  //               text: error.message,
+  //             });
+  //           });
+  //       }
+  //     },
+  //   });
+  // };
+
   return {
     columns: [
       { Header: "CREATED BY ", accessor: "createdByName", align: "left" },
@@ -454,7 +766,7 @@ export default function OnboardingCompanyTable() {
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleUpdate(value)}>Update Onboarding</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleterminate(value, 2)}>Terminate</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleCOMPLETED(value, 1)}>
+                <Dropdown.Item onClick={() => handleGetFilter(value)}>
                   Mark As Completed
                 </Dropdown.Item>
                 {/* <Dropdown.Item onClick={() => handleCOMPLETED2(value, 2)}>

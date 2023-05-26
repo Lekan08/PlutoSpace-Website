@@ -62,6 +62,8 @@ import UpdateBranch from "layouts/branches/data/updateBranch";
 import CreateBranch from "layouts/authentication/companyRegistration/createBranch";
 import CompanyReg from "layouts/authentication/companyRegistration";
 import SysRoles from "layouts/systemRoles";
+import LoyaltyConiguration from "layouts/loyaltyconifguration";
+import UpdateLoyaltyConiguration from "layouts/loyaltyconifguration/update";
 import RolesAndPerms from "layouts/systemRoles/addRolesAndPerms";
 import TimeOffType from "layouts/timeofftype";
 import UserManagement from "layouts/userManagement";
@@ -93,6 +95,9 @@ import ChatApp from "layouts/mattersArising/viewMatter/App";
 import RenewLog from "layouts/authentication/renewSubscription/renewLogin";
 import RenewSub from "layouts/authentication/renewSubscription";
 import SalaryPayment from "layouts/salaryPayment";
+import ResignationLetter from "layouts/resignationLetter";
+import ViewResignationLetter from "layouts/resignationLetter/view";
+import UpdateResignationLetter from "layouts/resignationLetter/update";
 
 import Bonusdeduction from "layouts/bonusdeduction";
 import MyBills from "layouts/my-Bills";
@@ -253,6 +258,7 @@ import OtherInflow from "layouts/otherInflow";
 import UpdateOtherInflow from "layouts/otherInflow/update";
 import FilterOtherInflow from "layouts/otherInflow/filterOtherInflow";
 import Sales from "layouts/sales";
+// import Loyalty from "layouts/loyalty";
 import CreditFacility from "layouts/creditFacility";
 import MakePayment from "layouts/creditFacility/makepayment";
 import ViewCreditFacility from "layouts/creditFacility/view";
@@ -295,11 +301,15 @@ import AppraisalHistory from "layouts/appraisal/appraisalHistory";
 import MultiSession from "layouts/onboardingCompany/sessions/multisession";
 import Accounts from "layouts/accounting-main";
 import AccountSheet from "layouts/accounting-main/account-sheet";
+import AccountReport from "layouts/accounting-main/account-Report";
 import OnboardingCompany from "./layouts/onboardingCompany";
 import OffboardingCompany from "./layouts/offboardingCompany";
 import UpdateOnboardingSession from "./layouts/onboardingCompany/sessions/update";
 import UpdateOffboardingSession from "./layouts/offboardingCompany/sessions/update";
 import Voucher from "./layouts/voucher/index";
+import OnboardingChecklist from "./layouts/onboardingCompany/onboardingChecklist";
+import Checklist from "./layouts/myonboarding/viewChecklist";
+import OffboardingChecklist from "./layouts/offboardingCompany/offboardingChecklist";
 
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
@@ -476,6 +486,14 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/accounting",
     component: <Accounting />,
+  },
+  {
+    type: "collapse",
+    name: "Report",
+    key: "account-Report",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/accounts/account-Report",
+    component: <AccountReport />,
   },
   {
     type: "collapse",
@@ -1381,6 +1399,13 @@ const routes = [
     component: <MyonBoarding />,
   },
   {
+    name: "My Onboarding",
+    key: "onboardingchecklist",
+    icon: <Icon fontSize="small">accessibility</Icon>,
+    route: "/myonboarding/viewChecklist",
+    component: <Checklist />,
+  },
+  {
     type: "collapse",
     name: "Company Onboarding",
     key: "onboardingCompany",
@@ -1429,6 +1454,13 @@ const routes = [
     component: <Updateoffboarding />,
   },
   {
+    name: "Onboarding Checklist",
+    key: "onboardingChecklist",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/onboarding-Checklist",
+    component: <OnboardingChecklist />,
+  },
+  {
     type: "divider",
     name: "",
     key: "divdq1",
@@ -1455,6 +1487,13 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/company-offboarding",
     component: <OffboardingCompany />,
+  },
+  {
+    name: "Offboarding Checklist",
+    key: "offboardingChecklist",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/offboarding-Checklist",
+    component: <OffboardingChecklist />,
   },
   {
     type: "collapse",
@@ -1487,6 +1526,30 @@ const routes = [
     key: "updateOffboardingSession",
     route: "/offboarding/sessions/update",
     component: <UpdateOffboardingSession />,
+  },
+  {
+    type: "collapse",
+    name: "Resignation Letter",
+    key: "resignationLetter",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/resignation-Letter",
+    component: <ResignationLetter />,
+  },
+  {
+    // type: "collapse",
+    name: "View Resignation Letter",
+    key: "viewresignationLetter",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/resignation-Letter/view",
+    component: <ViewResignationLetter />,
+  },
+  {
+    // type: "collapse",
+    name: "update Resignation Letter",
+    key: "updateresignationLetter",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/resignation-Letter/update",
+    component: <UpdateResignationLetter />,
   },
   {
     type: "divider",
@@ -2028,6 +2091,14 @@ const routes = [
     route: "/coupons/update",
     component: <UpdateCoupons />,
   },
+  // {
+  //   type: "collapse",
+  //   name: "Loyalty",
+  //   key: "loyalty",
+  //   icon: <Icon fontSize="small">point_of_sale</Icon>,
+  //   route: "/loyalty",
+  //   component: <Loyalty />,
+  // },
   {
     type: "divider",
     name: "",
@@ -2306,6 +2377,22 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/Company-Roles/Add-Steps",
     component: <Checklists />,
+  },
+  {
+    type: "collapse",
+    name: "Loyalty Coniguration",
+    key: "LoyaltyConfiguration",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/loyalty-configuration",
+    component: <LoyaltyConiguration />,
+  },
+  {
+    // type: "collapse",
+    name: "Loyalty Configuration",
+    key: "LoyaltyConfiguration",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/loyalty-configuration/update",
+    component: <UpdateLoyaltyConiguration />,
   },
   {
     type: "divider",

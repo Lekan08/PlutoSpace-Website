@@ -151,7 +151,7 @@ function MyBills() {
     const currentlyLogegdIn = data11.personalID;
     const raw = JSON.stringify({
       orgID: orgIDs,
-      empID: Number(assignedTox),
+      empID: assignedTox,
       createdBy: currentlyLogegdIn,
       amount: amountx,
       taxAmount: Number(taxAmountx),
@@ -159,7 +159,7 @@ function MyBills() {
       paidAmount: Number(paidAmountx),
       purpose: purposex,
       extraInformation: extraInfox,
-      approverID: Number(approverx),
+      approverID: approverx,
     });
     console.log(raw);
     const requestOptions = {
@@ -402,8 +402,10 @@ function MyBills() {
   useEffect(() => {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
+    console.log(data11);
     const orgIDs = data11.orgID;
     const empID = data11.personalID;
+    console.log(empID);
     let isMounted = true;
     fetch(`${process.env.REACT_APP_LOUGA_URL}/bills/getForEmp/${orgIDs}/${empID}`, {
       headers,

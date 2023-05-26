@@ -36,9 +36,9 @@ function RolesAndPerms() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get("id");
-    const idVal = JSON.parse([id]);
+    // const idVal = JSON.parse([id]);
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/roles/get/${idVal}`, { headers })
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/roles/get/${id}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
