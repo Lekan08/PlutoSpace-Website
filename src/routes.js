@@ -313,6 +313,7 @@ import OffboardingChecklist from "./layouts/offboardingCompany/offboardingCheckl
 
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
+import AccountingCSV from "layouts/general-ledger/csv";
 
 const routes = [
   {
@@ -509,6 +510,13 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/general-ledger/post-transaction",
     component: <PostTransactions />,
+  },
+  {
+    name: "Post Transaction",
+    key: "generalLedger",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/general-ledger/csv",
+    component: <AccountingCSV />,
   },
   {
     type: "divider",
