@@ -23,7 +23,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { TextField } from "@mui/material";
+import { Paper, TextField } from "@mui/material";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
@@ -61,96 +61,212 @@ function AccountingCSV() {
   const { allGHeaders: miHeaders } = GHeaders();
   const [file, setFile] = useState([]);
   const [document, setDocument] = useState("");
-
   const handlePost = () => {
-    const raw = JSON.stringify(file);
-    console.log(raw);
-    console.log(document);
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    setOpened(true);
-    fetch(`${process.env.REACT_APP_LOUGAx_URL}/accounts/postTransactionThroughFile`, requestOptions)
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((resultx) => {
-        if (resultx.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (resultx.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (resultx.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        setOpened(false);
-        if (resultx.status === "SUCCESS") {
-          MySwal.fire({
-            title: resultx.status,
-            type: "success",
-            text: resultx.message,
-          }).then(() => {
-            navigate("/general-ledger");
-          });
-        } else if (resultx.status === "INVALID_ACTION") {
-          MySwal.fire({
-            title: resultx.status,
-            type: "success",
-            text: "You Cannot Post To The Same Account More Than Once For A Transaction",
-          });
-        } else {
-          MySwal.fire({
-            title: resultx.status,
-            type: "success",
-            text: resultx.message,
-          });
-        }
-      })
-      .catch((error) => {
-        setOpened(false);
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
+    console.log(file);
+    if (file.length > 0) {
+      // Headers for upload image
+      const GenToken = localStorage.getItem("rexxdex1");
+      const apiiToken = localStorage.getItem("rexxdex");
+
+      if (apiiToken !== "null" && apiiToken !== null) {
+        localStorage.setItem("rexxdex1", apiiToken);
+      }
+      const iiHeaders = new Headers();
+      iiHeaders.append("Token-1", GenToken);
+
+      const data11 = JSON.parse(localStorage.getItem("user1"));
+      console.log(data11);
+      const personalIDs = data11.personalID;
+      const orgIDs = data11.orgID;
+
+      const mOrgID = orgIDs;
+
+      setOpened(true);
+      const rawDL = JSON.stringify({
+        orgID: orgIDs,
+        empID: personalIDs,
+        accessLevel: 2,
+        type: document[0].type,
+        size: document[0].size,
+        name: document[0].name,
       });
+      const requestOptionsDL = {
+        method: "POST",
+        headers: myHeaders,
+        body: rawDL,
+        redirect: "follow",
+      };
+
+      fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/documentLibrary/add`, requestOptionsDL)
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((resultDL) => {
+          if (resultDL.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (resultDL.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+            window.location.reload();
+          }
+          if (resultDL.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+            window.location.reload();
+          }
+
+          const upFileData = resultDL.data;
+          const formData = new FormData();
+          formData.append("file", document[0]);
+          formData.append("orgID", mOrgID);
+          formData.append("key", upFileData.key);
+          formData.append("type", document[0].type);
+
+          const raw2 = formData;
+          console.log(raw2);
+          const requestOptions2 = {
+            method: "POST",
+            headers: iiHeaders,
+            body: raw2,
+            redirect: "follow",
+          };
+          fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions2)
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((result) => {
+              setOpened(false);
+              if (result.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (result.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (result.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              console.log(result);
+              console.log(`STATUS - ${result.status} - - - - - - MESSAGE - ${result.message}`);
+              if (result.status === "SUCCESS") {
+                const raw = JSON.stringify(file);
+                console.log(raw);
+                const requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: "follow",
+                };
+                setOpened(true);
+                fetch(
+                  `${process.env.REACT_APP_LOUGA_URL}/accounts/postTransactionThroughFile`,
+                  requestOptions
+                )
+                  .then(async (res) => {
+                    const aToken = res.headers.get("token-1");
+                    localStorage.setItem("rexxdex", aToken);
+                    return res.json();
+                  })
+                  .then((resultx) => {
+                    if (resultx.message === "Expired Access") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultx.message === "Token Does Not Exist") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultx.message === "Unauthorized Access") {
+                      navigate("/authentication/forbiddenPage");
+                      window.location.reload();
+                    }
+                    setOpened(false);
+                    if (resultx.status === "SUCCESS") {
+                      MySwal.fire({
+                        title: resultx.status,
+                        type: "success",
+                        text: resultx.message,
+                      }).then(() => {
+                        navigate("/general-ledger");
+                      });
+                    } else if (resultx.status === "INVALID_ACTION") {
+                      MySwal.fire({
+                        title: resultx.status,
+                        type: "success",
+                        text: "You Cannot Post To The Same Account More Than Once For A Transaction",
+                      });
+                    } else {
+                      MySwal.fire({
+                        title: resultx.status,
+                        type: "success",
+                        text: resultx.message,
+                      });
+                    }
+                  })
+                  .catch((error) => {
+                    setOpened(false);
+                    MySwal.fire({
+                      title: error.status,
+                      type: "error",
+                      text: error.message,
+                    });
+                  });
+              }
+            })
+            .catch((error) => {
+              setOpened(false);
+              MySwal.fire({
+                title: error.status,
+                type: "error",
+                text: error.message,
+              });
+            });
+        })
+        .catch((error) => {
+          setOpened(false);
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
+        });
+    }
   };
 
   const changeHandler = (event) => {
-    setDocument(event.target.files[0]);
+    setDocument(event.target.files);
     // Passing file data (event.target.files[0]) to parse using Papa.parse
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const createdBy = data11.personalID;
     console.log(event.target.files);
-    Papa.parse(event.target.files[0], {
-      header: true,
-      skipEmptyLines: true,
-      complete(results) {
-        const obj = results.data;
-        const transactions = obj.map((r) => ({
-          accountID: r.accountNumber,
-          particulars: r.particulars,
-          calculationType: r.calculationType === "to" ? "+" : "-",
-          source: r.source.toUpperCase(),
-          requestID: event.target.files[0].name,
-          linkingPostKey: event.target.files[0].name,
-          postedBy: createdBy,
-          postedAmount: Number(r.amount),
-          debitOrCredit: Number(r.amount) > 0 ? 1 : 0,
-        }));
-        console.log(obj);
-        setFile(transactions);
-      },
-    });
+    if (event.target.files[0]) {
+      Papa.parse(event.target.files[0], {
+        header: true,
+        skipEmptyLines: true,
+        complete(results) {
+          const obj = results.data;
+          const transactions = obj.map((r) => ({
+            accountID: r.accountNumber,
+            particulars: r.particulars,
+            calculationType: r.calculationType === "to" ? "+" : "-",
+            source: r.source.toUpperCase(),
+            requestID: event.target.files[0].name,
+            linkingPostKey: event.target.files[0].name,
+            postedBy: createdBy,
+            postedAmount: Math.abs(Number(r.amount)),
+            debitOrCredit: Number(r.amount) > 0 ? 1 : 0,
+          }));
+          console.log(obj);
+          setFile(transactions);
+        },
+      });
+    } else setFile([]);
   };
   return (
     <DashboardLayout>
@@ -202,8 +318,8 @@ function AccountingCSV() {
                     should be corresponding to the content of the first row (i.e under
                     &apos;accountNumber&apos; you should have bank account details e.t.c...). Debits
                     should be negative numbers while Credits should be positive numbers and there
-                    should be no space at the headers. The Unique code for the file is automatically
-                    the name of the file and can be found in the Document Library
+                    should be no space at the headers. The Unique code for the file is the name of
+                    the file and can be found in the Document Library (organisation).
                     <br />
                   </MDTypography>
                 </MDBox>
@@ -234,7 +350,55 @@ function AccountingCSV() {
               </MDTypography>
             </MDBox>
           </div>
-
+          {document && (
+            <Paper elevation={5}>
+              <MDBox
+                variant="gradient"
+                // bgColor="info"
+                borderRadius="lg"
+                style={{ backgroundColor: "#f96d02" }}
+                textAlign="center"
+              >
+                <MDTypography variant="h6" color="white" mt={1}>
+                  File Preview
+                </MDTypography>
+              </MDBox>
+              <DataTable
+                table={{
+                  columns: [
+                    { Header: "account number", accessor: "accountID", align: "left" },
+                    { Header: "particulars", accessor: "particulars", align: "left" },
+                    { Header: "amount", accessor: "postedAmount", align: "left" },
+                    { Header: "Source", accessor: "source", align: "left" },
+                    {
+                      Header: "Debit/Credit",
+                      accessor: "debitOrCredit",
+                      Cell: ({ cell: { value } }) => {
+                        if (value === 0) return "Debit";
+                        return "Credit";
+                      },
+                      align: "left",
+                    },
+                    {
+                      Header: "calculation type",
+                      accessor: "calculationType",
+                      Cell: ({ cell: { value } }) => {
+                        if (value === "+") return "To";
+                        return "From";
+                      },
+                      align: "left",
+                    },
+                  ],
+                  rows: file,
+                }}
+                isSorted
+                entriesPerPage
+                showTotalEntries
+                noEndBorder
+                canSearch
+              />
+            </Paper>
+          )}
           <MDBox mt={4} mb={1}>
             <MDButton
               variant="gradient"
