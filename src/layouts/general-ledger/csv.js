@@ -316,10 +316,11 @@ function AccountingCSV() {
                     necessary. The first row order does not matter, in essence, you may have name or
                     state or city at any position you want) and your further details in each row
                     should be corresponding to the content of the first row (i.e under
-                    &apos;accountNumber&apos; you should have bank account details e.t.c...). Debits
-                    should be negative numbers while Credits should be positive numbers and there
-                    should be no space at the headers. The Unique code for the file is the name of
-                    the file and can be found in the Document Library (organisation).
+                    &apos;accountNumber&apos; you should have the number registered with the account
+                    e.t.c...). Debits should be negative numbers while Credits should be positive
+                    numbers and there should be no space at the headers. The Unique code for the
+                    file is the name of the file and can be found in the Document Library
+                    (organisation).
                     <br />
                   </MDTypography>
                 </MDBox>
