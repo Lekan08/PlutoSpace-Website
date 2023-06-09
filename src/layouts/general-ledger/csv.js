@@ -313,7 +313,7 @@ function AccountingCSV() {
                   >
                     &nbsp;&nbsp;&nbsp;&nbsp;The first line/row in your csv file must be exactly the
                     same as the words in the image below in row 1 A - E (should be camelCase when
-                    necessary. The first row order does not matter, in essence, you may have accountNumver or
+                    necessary. The first row order does not matter, in essence, you may have accountNumber or
                     particulars or source at any position you want) and your further details in each row
                     should be corresponding to the content of the first row (i.e under
                     &apos;accountNumber&apos; you should have the number registered with the account
