@@ -656,6 +656,7 @@ function Accounting() {
           if (result1.statusCode === 500 || result2.statusCode === 500) {
             setNoTransactionsMade(true);
           } else {
+            // eslint-disable-next-line no-lonely-if
             if (result1.length !== 0 && result2.length !== 0) {
               const mergedArray = result1.concat(result2);
               if (mergedArray.length === 0) {

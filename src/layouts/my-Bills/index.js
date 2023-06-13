@@ -25,6 +25,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import BillJourney from "./bill-Progress";
 
 function MyBills() {
   const { allGHeaders: miHeaders } = GHeaders();
@@ -34,7 +35,7 @@ function MyBills() {
   const [extraInfox, setExtraInfox] = useState("");
   const [paidAmountx, setPaidAmountx] = useState("");
   const [approverx, setApproverx] = useState("");
-  //   const [totalAmountx, setTotalAmountx] = useState("");
+  const [openBJ, setOpenBJ] = useState(false);
   const [taxAmountx, setTaxAmountx] = useState("");
   const [amountx, setAmountx] = useState("");
   const [userInfox, setUserInfo] = useState([]);
@@ -42,6 +43,7 @@ function MyBills() {
   const [purposex, setPurposex] = useState("");
   const [files, setFiles] = useState("");
   const [billID, setBillID] = useState("");
+  const [carryBJID, setCarryBJID] = useState("");
   const [open, setOpen] = useState(false);
   const handleCloseModal = () => setOpen(false);
 
@@ -191,6 +193,43 @@ function MyBills() {
         if (result.message === "Unauthorized Access") {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
+        }
+        if (result.status === "SUCCESS") {
+          const rawBJ = JSON.stringify({
+            billID: result.data.id,
+            actionBy: currentlyLogegdIn,
+          });
+          console.log(raw);
+          const requestOptionsBJ = {
+            method: "POST",
+            headers: myHeaders,
+            body: rawBJ,
+            redirect: "follow",
+          };
+          console.log(requestOptionsBJ);
+          fetch(`${process.env.REACT_APP_LOUGA_URL}/billsJourney/add`, requestOptionsBJ)
+            .then(async (res) => {
+              const aToken = res.headers.get("token-1");
+              localStorage.setItem("rexxdex", aToken);
+              return res.json();
+            })
+            .then((resultBJ) => {
+              console.log(resultBJ);
+              setOpened(false);
+              if (resultBJ.message === "Expired Access") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultBJ.message === "Token Does Not Exist") {
+                navigate("/authentication/sign-in");
+                window.location.reload();
+              }
+              if (resultBJ.message === "Unauthorized Access") {
+                navigate("/authentication/forbiddenPage");
+                window.location.reload();
+              }
+              console.log(result.message);
+            });
         }
         MySwal.fire({
           title: result.status,
@@ -711,6 +750,13 @@ function MyBills() {
     },
   };
 
+  const handleOpenBJ = (value) => {
+    setCarryBJID(value);
+    setOpenBJ(true);
+  };
+  const handleCloseModalBJ = () => {
+    setOpenBJ(false);
+  };
   // Table for Data
 
   const pColumns = [
@@ -788,6 +834,7 @@ function MyBills() {
                 Update
               </Dropdown.Item>
               <Dropdown.Item onClick={() => handleOpenModal(value)}>Attach Document</Dropdown.Item>
+              <Dropdown.Item onClick={() => handleOpenBJ(value)}>Bill Journey</Dropdown.Item>
               <Dropdown.Item onClick={() => handledeleteBillDoc(value)}>
                 Delete Attached Document
               </Dropdown.Item>
@@ -1083,6 +1130,15 @@ function MyBills() {
               </Grid>
             </Grid>
           </Box>
+        </Modal>
+
+        <Modal
+          open={openBJ}
+          onClose={handleCloseModalBJ}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <BillJourney id={carryBJID} />
         </Modal>
         <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
           <CircularProgress color="info" />

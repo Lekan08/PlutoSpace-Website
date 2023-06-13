@@ -106,6 +106,7 @@ import MySubscription from "layouts/subscription";
 import GeneralBills from "layouts/general-Bill";
 import GeneralSubscription from "layouts/general-Subscription";
 import UpdateMyBills from "layouts/my-Bills/update-My-Bills/index";
+import BillJourney from "layouts/my-Bills/bill-Progress";
 import UpdateMySubscription from "layouts/subscription/update-Subscription/index";
 import CloneBonusDeduction from "layouts/bonusdeduction/clone";
 import UpdateBonusOrDeduction from "layouts/bonusdeduction/update";
@@ -775,6 +776,13 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/my-Bills/update-My-Bills",
     component: <UpdateMyBills />,
+  },
+  {
+    name: "Bill Journey",
+    key: "billJourney",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/my-Bills/bill-Progress",
+    component: <BillJourney />,
   },
   {
     type: "divider",

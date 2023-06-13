@@ -366,6 +366,7 @@ function GeneralBills() {
         confirmButtonText: "Yes",
         denyButtonText: "No",
       }).then((result) => {
+        console.log(result);
         if (result.isDenied === true) {
           handleClose();
           const headers = miHeaders;
@@ -395,6 +396,44 @@ function GeneralBills() {
               if (resultx.message === "Unauthorized Access") {
                 navigate("/authentication/forbiddenPage");
                 window.location.reload();
+              }
+              if (resultx.status === "SUCCESS") {
+                const currentlyLogegdIn = data11.personalID;
+                const rawBJ = JSON.stringify({
+                  billID: uid,
+                  actionBy: currentlyLogegdIn,
+                });
+                console.log(rawBJ);
+                const requestOptionsBJ = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: rawBJ,
+                  redirect: "follow",
+                };
+                console.log(requestOptionsBJ);
+                fetch(`${process.env.REACT_APP_LOUGA_URL}/billsJourney/add`, requestOptionsBJ)
+                  .then(async (res) => {
+                    const aToken = res.headers.get("token-1");
+                    localStorage.setItem("rexxdex", aToken);
+                    return res.json();
+                  })
+                  .then((resultBJ) => {
+                    console.log(resultBJ);
+                    setOpened(false);
+                    if (resultBJ.message === "Expired Access") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultBJ.message === "Token Does Not Exist") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultBJ.message === "Unauthorized Access") {
+                      navigate("/authentication/forbiddenPage");
+                      window.location.reload();
+                    }
+                    console.log(result.message);
+                  });
               }
               handleClose();
               setOpened(false);
@@ -445,6 +484,45 @@ function GeneralBills() {
               if (resultx.message === "Unauthorized Access") {
                 navigate("/authentication/forbiddenPage");
                 window.location.reload();
+              }
+              if (resultx.status === "SUCCESS") {
+                const data11 = JSON.parse(localStorage.getItem("user1"));
+                const currentlyLogegdIn = data11.personalID;
+                const rawBJ = JSON.stringify({
+                  billID: uid,
+                  actionBy: currentlyLogegdIn,
+                });
+                console.log(rawBJ);
+                const requestOptionsBJ = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: rawBJ,
+                  redirect: "follow",
+                };
+                console.log(requestOptionsBJ);
+                fetch(`${process.env.REACT_APP_LOUGA_URL}/billsJourney/add`, requestOptionsBJ)
+                  .then(async (res) => {
+                    const aToken = res.headers.get("token-1");
+                    localStorage.setItem("rexxdex", aToken);
+                    return res.json();
+                  })
+                  .then((resultBJ) => {
+                    console.log(resultBJ);
+                    setOpened(false);
+                    if (resultBJ.message === "Expired Access") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultBJ.message === "Token Does Not Exist") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultBJ.message === "Unauthorized Access") {
+                      navigate("/authentication/forbiddenPage");
+                      window.location.reload();
+                    }
+                    console.log(result.message);
+                  });
               }
               handleClose();
               setOpened(false);

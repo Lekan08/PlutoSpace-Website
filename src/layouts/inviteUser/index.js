@@ -333,7 +333,88 @@ function InviteUser() {
     }
   };
 
+  // Checking if the person is in the organisation via email.
+  // If he/she is, will just pick the data and add them to the organisation
+
+  const checkPersonal = () => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const emailpersonal = urlParams.get("email");
+    const rolex = urlParams.get("role");
+    const orgIDD = urlParams.get("orgID");
+    if (emailpersonal.length !== 0) {
+      const rawp = JSON.stringify({
+        username: emailpersonal,
+      });
+      const requestOptionsp = {
+        method: "POST",
+        headers: myHeaders,
+        body: rawp,
+        redirect: "follow",
+      };
+      console.log(emailpersonal.length);
+      fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/getByEmail`, requestOptionsp)
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          const result = await res.text();
+          if (result === null || result === undefined || result === "") {
+            return {};
+          }
+          return JSON.parse(result);
+        })
+        .then((result) => {
+          console.log(result);
+          if (Object.keys(result).length !== 0) {
+            MySwal.fire({
+              title: "Do you wish to join this Organisation?",
+              text: "You won't be able to revert this!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Yes, Join!",
+            }).then((resulty) => {
+              if (resulty.isConfirmed) {
+                const raw = JSON.stringify({
+                  orgID: orgIDD,
+                  personalID: result.id,
+                  email: emailpersonal,
+                  roleID: rolex,
+                });
+                const requestOptions = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: raw,
+                  redirect: "follow",
+                };
+
+                fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/add`, requestOptions)
+                  .then((res) => res.json())
+                  .then((resultx) => {
+                    console.log(resultx);
+                    MySwal.fire({
+                      title: resultx.status,
+                      type: "success",
+                      text: resultx.message,
+                    }).then(() => {
+                      navigate("/authentication/sign-in", { replace: true });
+                    });
+                  });
+              }
+            });
+          } else {
+            // Do nothing
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
   useEffect(() => {
+    checkPersonal();
     /* if (idx === 0) {
       setPassEnabled(true);
     } */
@@ -394,6 +475,7 @@ function InviteUser() {
       maritalStatus: maritalStatusx,
       sex: sexx,
     });
+    console.log(araw);
     const uraw = JSON.stringify({
       id: idx,
       fname: fnamex,
@@ -444,7 +526,7 @@ function InviteUser() {
       body: raw,
       redirect: "follow",
     };
-
+    console.log(endpoint);
     fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/${endpoint}`, requestOptions)
       .then((res) => res.json())
       .then((result) => {
@@ -465,52 +547,59 @@ function InviteUser() {
           body: raw1,
           redirect: "follow",
         };
+        console.log(result);
+        if (result.status === "SUCCESS") {
+          console.log("lorem");
+          fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/${endpointPC}`, requestOptions1)
+            .then((res) => res.json())
+            .then((resultx) => {
+              console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
+              localStorage.setItem("company", JSON.stringify(resultx.data));
+              // const queryString = window.location.search;
+              // const urlParams = new URLSearchParams(queryString);
 
-        fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/${endpointPC}`, requestOptions1)
-          .then((res) => res.json())
-          .then((resultx) => {
-            console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
-            localStorage.setItem("company", JSON.stringify(resultx.data));
-            // const queryString = window.location.search;
-            // const urlParams = new URLSearchParams(queryString);
+              const orgIDu = urlParams.get("orgID");
+              const raw2 = JSON.stringify({
+                orgID: orgIDu,
+                empID: result.data.id,
+                username: emailx,
+                password: passwordx,
+              });
 
-            const orgIDu = urlParams.get("orgID");
-            const raw2 = JSON.stringify({
-              orgID: orgIDu,
-              empID: result.data.id,
-              username: emailx,
-              password: passwordx,
-            });
-
-            let requestOptions2 = {
-              method: methodLUO,
-              headers: myHeaders,
-              body: raw2,
-              redirect: "follow",
-            };
-            if (methodLUO === "GET") {
-              requestOptions2 = {
+              let requestOptions2 = {
                 method: methodLUO,
                 headers: myHeaders,
+                body: raw2,
+                redirect: "follow",
               };
-              console.log("GET");
-            }
-            fetch(`${process.env.REACT_APP_ZAVE_URL}/login/${endpointL}`, requestOptions2)
-              .then((res) => res.json())
-              .then((resultLog) => {
-                console.log(
-                  `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
-                );
-                setOpened(false);
-                MySwal.fire({
-                  title: result.status,
-                  type: "success",
-                  text: result.message,
-                }).then(() => {
-                  navigate("/authentication/sign-in", { replace: true });
-                });
-              });
-          });
+              if (methodLUO === "GET") {
+                requestOptions2 = {
+                  method: methodLUO,
+                  headers: myHeaders,
+                };
+                console.log("GET");
+              }
+              console.log(resultx);
+              if (resultx.status === "SUCCESS") {
+                console.log("ipsum");
+                fetch(`${process.env.REACT_APP_ZAVE_URL}/login/${endpointL}`, requestOptions2)
+                  .then((res) => res.json())
+                  .then((resultLog) => {
+                    console.log(
+                      `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
+                    );
+                    setOpened(false);
+                    MySwal.fire({
+                      title: resultx.status,
+                      type: "success",
+                      text: resultx.message,
+                    }).then(() => {
+                      navigate("/authentication/sign-in", { replace: true });
+                    });
+                  });
+              }
+            });
+        }
       })
       .catch((error) => {
         setOpened(false);
