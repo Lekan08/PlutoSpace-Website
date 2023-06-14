@@ -653,35 +653,30 @@ function Accounting() {
           window.location.reload();
         }
         if (isMounted) {
-          if (result1.statusCode === 500 || result2.statusCode === 500) {
-            setNoTransactionsMade(true);
-          } else {
-            // eslint-disable-next-line no-lonely-if
-            if (result1.length !== 0 && result2.length !== 0) {
-              const mergedArray = result1.concat(result2);
-              if (mergedArray.length === 0) {
-                setNoTransactionsMade(true);
-              }
-              if (mergedArray.length !== 0) {
-                setRunAccDataTa(
-                  mergedArray.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime))
-                );
-              }
-              if (result1.length !== 0) {
-                // setExpensesData(result1);
-                setDisplay(true);
-                setTotalExpenses(result1.reduce((a, b) => a + b.totalAmount, 0));
-                console.log(result1);
-              }
-              if (result2.length !== 0) {
-                setDisplay(true);
-                // setIncomeData(result2);
-                setTotalIncome(result2.reduce((a, b) => a + b.totalAmount, 0));
-                console.log(result2);
-              }
-            } else {
+          if (result1.length !== 0 && result2.length !== 0) {
+            const mergedArray = result1.concat(result2);
+            if (mergedArray.length === 0) {
               setNoTransactionsMade(true);
             }
+            if (mergedArray.length !== 0) {
+              setRunAccDataTa(
+                mergedArray.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime))
+              );
+            }
+            if (result1.length !== 0) {
+              // setExpensesData(result1);
+              setDisplay(true);
+              setTotalExpenses(result1.reduce((a, b) => a + b.totalAmount, 0));
+              console.log(result1);
+            }
+            if (result2.length !== 0) {
+              setDisplay(true);
+              // setIncomeData(result2);
+              setTotalIncome(result2.reduce((a, b) => a + b.totalAmount, 0));
+              console.log(result2);
+            }
+          } else {
+            setNoTransactionsMade(true);
           }
         }
       })
