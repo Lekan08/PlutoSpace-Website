@@ -710,6 +710,11 @@ function GeneralBills() {
                         <Dropdown.Item onClick={() => handleForwardDecision(value)}>
                           Forward Approval
                         </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => navigate(`/general-Bill/view_download_Doc?dz=${value}`)}
+                        >
+                          View/Download Attached Document
+                        </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>

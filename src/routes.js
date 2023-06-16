@@ -104,6 +104,7 @@ import MyBills from "layouts/my-Bills";
 import Accounting from "layouts/accounting";
 import MySubscription from "layouts/subscription";
 import GeneralBills from "layouts/general-Bill";
+import ViewDownloadDoc from "layouts/general-Bill/view_download_Doc";
 import GeneralSubscription from "layouts/general-Subscription";
 import UpdateMyBills from "layouts/my-Bills/update-My-Bills/index";
 import BillJourney from "layouts/my-Bills/bill-Progress";
@@ -769,6 +770,13 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/Bills-Attention",
     component: <GeneralBills />,
+  },
+  {
+    name: "View Attached Doc",
+    key: "viewAttachedDoc",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/general-Bill/view_download_Doc",
+    component: <ViewDownloadDoc />,
   },
   {
     type: "collapse",
