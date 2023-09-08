@@ -49,6 +49,7 @@ function UpdateCoupons() {
   const { allGHeaders: miHeaders } = GHeaders();
 
   const handleOnAmountKeys = (value) => {
+    setAmount(value);
     if (value.length === 0) {
       setCheckedAmount(false);
       // eslint-disable-next-line no-unused-expressions
@@ -59,6 +60,7 @@ function UpdateCoupons() {
     }
   };
   const handleOnFrequencyKeys = (value) => {
+    setFrequency(value);
     if (value.length === 0) {
       setCheckedFrequency(false);
       // eslint-disable-next-line no-unused-expressions
@@ -70,6 +72,7 @@ function UpdateCoupons() {
   };
 
   const handleOnLeftUsageKeys = (value) => {
+    setLeftUsage(value);
     if (value.length === 0) {
       setCheckedLeftUsage(false);
       // eslint-disable-next-line no-unused-expressions
@@ -116,7 +119,7 @@ function UpdateCoupons() {
         setType(result[0].type);
         setFrequency(result[0].frequency);
         setLeftUsage(result[0].leftUsage);
-        const date = new Date(result[0].expireTime);
+        const date = result[0].expireTime;
         setExpireTime(date);
         // setTimezone(`${storedArray.timezone.split("|")[0]}|${storedArray.timezone.split("|")[1]}`);
         // setNewEvent({
@@ -147,6 +150,8 @@ function UpdateCoupons() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
+
+    const expires = new Date(expireTimex).getTime();
     const raw = JSON.stringify({
       id: idx,
       orgID: orgIDs,
@@ -156,7 +161,7 @@ function UpdateCoupons() {
       frequency: frequencyx,
       leftUsage: leftUsagex,
       createdBy: itemsx[0].createdBy,
-      expireTime: itemsx[0].expireTime,
+      expireTime: expires,
       status: itemsx[0].status,
       createdTime: itemsx[0].createdTime,
       terminatedBy: itemsx[0].terminatedBy,
@@ -264,12 +269,12 @@ function UpdateCoupons() {
                       <TextField
                         id="filled-number"
                         value={frequencyx}
-                        onKeyUp={handleOnFrequencyKeys}
+                        // onKeyUp={handleOnFrequencyKeys}
                         label="Frequency"
                         placeholder="Frequency "
                         size="small"
                         type="number"
-                        onChange={(e) => setFrequency(e.target.value)}
+                        onChange={(e) => handleOnFrequencyKeys(e.target.value)}
                         required
                       />
                     </FormControl>
@@ -300,10 +305,10 @@ function UpdateCoupons() {
                         value={amountx}
                         label="Amount (NGN)"
                         placeholder="Amount (NGN)*"
-                        onKeyUp={handleOnAmountKeys}
+                        // onKeyUp={handleOnAmountKeys}
                         size="small"
                         type="number"
-                        onChange={(e) => setAmount(e.target.value)}
+                        onChange={(e) => handleOnAmountKeys(e.target.value)}
                         required
                       />
                     </FormControl>
@@ -316,11 +321,11 @@ function UpdateCoupons() {
                         id="filled-number"
                         value={leftUsagex}
                         label="Left Usage"
-                        onKeyUp={handleOnLeftUsageKeys}
+                        // onKeyUp={handleOnLeftUsageKeys}
                         placeholder="Left Usage "
                         size="small"
                         type="number"
-                        onChange={(e) => setLeftUsage(e.target.value)}
+                        onChange={(e) => handleOnLeftUsageKeys(e.target.value)}
                         required
                       />
                     </FormControl>

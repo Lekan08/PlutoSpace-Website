@@ -44,6 +44,7 @@ function UserManagement() {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDz = data11.orgID;
+    console.log(orgIDz);
     let isMounted = true;
     fetch(`${process.env.REACT_APP_KUBU_URL}/company/get/${orgIDz}`, { headers })
       .then(async (res) => {
@@ -66,6 +67,7 @@ function UserManagement() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log(result);
           setCompany(result);
         }
       });
@@ -124,6 +126,7 @@ function UserManagement() {
     }
   };
 
+  console.log(company);
   // eslint-disable-next-line consistent-return
   const handleClick = (e) => {
     setOpened(true);

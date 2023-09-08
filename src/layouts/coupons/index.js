@@ -70,39 +70,47 @@ function Coupons() {
   //   }
   // };
   const handleOnAmountKeys = (value) => {
+    console.log(value);
+    setAmount(value);
     if (value.length === 0) {
       setCheckedAmount(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("amount").innerHTML = "Amount is required<br>";
     }
     if (value.length !== 0) {
+      console.log("raw");
       setCheckedAmount(true);
     }
   };
   const handleOnFrequencyKeys = (value) => {
+    setFrequency(value);
     if (value.length === 0) {
       setCheckedFrequency(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("frequency").innerHTML = "Amount is required<br>";
     }
     if (value.length !== 0) {
+      console.log("raw");
       setCheckedFrequency(true);
     }
   };
 
   const handleOnLeftUsageKeys = (value) => {
+    setLeftUsage(value);
     if (value.length === 0) {
       setCheckedLeftUsage(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("leftUsage").innerHTML = "Left Usage is required<br>";
     }
     if (value.length !== 0) {
+      console.log("raw");
       setCheckedLeftUsage(true);
     }
   };
 
   // eslint-disable-next-line consistent-return
   const handleClick = (e) => {
+    console.log("raw");
     setOpened(true);
     e.preventDefault();
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -110,9 +118,10 @@ function Coupons() {
     const orgIDs = data11.orgID;
     const idx = data11.personalID;
 
-    const start = new Date(expireTimex.time);
+    // const start = new Date(expireTimex.time);
 
-    const expires = start.getTime();
+    // const expires = start.getTime();
+    const expires = new Date(expireTimex).getTime();
 
     const raw = JSON.stringify({
       orgID: orgIDs,
@@ -225,12 +234,12 @@ function Coupons() {
                       <TextField
                         id="filled-number"
                         value={frequencyx}
-                        onKeyUp={handleOnFrequencyKeys}
+                        // onKeyUp={handleOnFrequencyKeys}
                         label="Frequency"
                         placeholder="Frequency "
                         size="small"
                         type="number"
-                        onChange={(e) => setFrequency(e.target.value)}
+                        onChange={(e) => handleOnFrequencyKeys(e.target.value)}
                         required
                       />
                     </FormControl>
@@ -261,10 +270,10 @@ function Coupons() {
                         value={amountx}
                         label="Amount (NGN)"
                         placeholder="Amount (NGN) *"
-                        onKeyUp={handleOnAmountKeys}
+                        // onKeyUp={handleOnAmountKeys}
                         size="small"
                         type="number"
-                        onChange={(e) => setAmount(e.target.value)}
+                        onChange={(e) => handleOnAmountKeys(e.target.value)}
                         required
                       />
                     </FormControl>
@@ -277,11 +286,11 @@ function Coupons() {
                         id="filled-number"
                         value={leftUsagex}
                         label="Left Usage"
-                        onKeyUp={handleOnLeftUsageKeys}
+                        // onKeyUp={handleOnLeftUsageKeys}
                         placeholder="Left Usage "
                         size="small"
                         type="number"
-                        onChange={(e) => setLeftUsage(e.target.value)}
+                        onChange={(e) => handleOnLeftUsageKeys(e.target.value)}
                         required
                       />
                     </FormControl>
