@@ -114,6 +114,7 @@ function GeneralLedger() {
       Promise.all([request1, request2])
         .then((results) => {
           const [result1, result2] = results;
+          console.log(result1, result2);
           if (result1.message === "Expired Access" || result2.message === "Expired Access") {
             navigate("/authentication/sign-in");
             window.location.reload();
@@ -334,6 +335,16 @@ function GeneralLedger() {
               please post all transactions before generating new transactions
             </i>
           )}
+          <MDBox mt={4} mb={1}>
+            <MDButton
+              variant="gradient"
+              onClick={() => navigate("/general-ledger/csv")}
+              style={Styles.buttonSx}
+              disabled={disab}
+            >
+              Post Multiple Transactions (CSV)
+            </MDButton>
+          </MDBox>
           <MDBox mt={4} mb={1}>
             <MDButton
               variant="gradient"

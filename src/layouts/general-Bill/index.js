@@ -21,6 +21,7 @@ import GHeaders from "getHeader";
 import TextField from "@mui/material/TextField";
 import DataTable from "examples/Tables/DataTable";
 import MDInput from "components/MDInput";
+import AttachSignedDoc from "./attached_signed_Doc";
 
 function GeneralBills() {
   const style = {
@@ -50,6 +51,34 @@ function GeneralBills() {
     px: 4,
     pb: 3,
   };
+
+  // MODAL STYLE
+  const modalStyle = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 550,
+    bgcolor: "#ffffff",
+    border: "3px solid #5F9DF7",
+    borderRadius: 5,
+    boxShadow: 24,
+    p: 4,
+    overflow: "auto",
+    height: "50%",
+    display: "flex",
+    "&::-webkit-scrollbar": {
+      width: 20,
+    },
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: "white",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "#f5f5f5",
+      borderRadius: 10,
+    },
+  };
+
   const MySwal = withReactContent(Swal);
   const [opened, setOpened] = useState(false);
   const [items, setItems] = useState([]);
@@ -66,6 +95,8 @@ function GeneralBills() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
+  const [open3, setOpen3] = useState(false);
+  const [billIDvvv, setBillIDvvv] = useState("");
   const handleOpen = () => {
     setOpen(true);
   };
@@ -77,6 +108,13 @@ function GeneralBills() {
   };
   const handleClose2 = () => {
     setOpen2(false);
+  };
+  const handleOpen3 = (id) => {
+    setBillIDvvv(id);
+    setOpen3(true);
+  };
+  const handleClose3 = () => {
+    setOpen3(false);
   };
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
@@ -366,6 +404,7 @@ function GeneralBills() {
         confirmButtonText: "Yes",
         denyButtonText: "No",
       }).then((result) => {
+        console.log(result);
         if (result.isDenied === true) {
           handleClose();
           const headers = miHeaders;
@@ -395,6 +434,44 @@ function GeneralBills() {
               if (resultx.message === "Unauthorized Access") {
                 navigate("/authentication/forbiddenPage");
                 window.location.reload();
+              }
+              if (resultx.status === "SUCCESS") {
+                const currentlyLogegdIn = data11.personalID;
+                const rawBJ = JSON.stringify({
+                  billID: uid,
+                  actionBy: currentlyLogegdIn,
+                });
+                console.log(rawBJ);
+                const requestOptionsBJ = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: rawBJ,
+                  redirect: "follow",
+                };
+                console.log(requestOptionsBJ);
+                fetch(`${process.env.REACT_APP_LOUGA_URL}/billsJourney/add`, requestOptionsBJ)
+                  .then(async (res) => {
+                    const aToken = res.headers.get("token-1");
+                    localStorage.setItem("rexxdex", aToken);
+                    return res.json();
+                  })
+                  .then((resultBJ) => {
+                    console.log(resultBJ);
+                    setOpened(false);
+                    if (resultBJ.message === "Expired Access") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultBJ.message === "Token Does Not Exist") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultBJ.message === "Unauthorized Access") {
+                      navigate("/authentication/forbiddenPage");
+                      window.location.reload();
+                    }
+                    console.log(result.message);
+                  });
               }
               handleClose();
               setOpened(false);
@@ -445,6 +522,45 @@ function GeneralBills() {
               if (resultx.message === "Unauthorized Access") {
                 navigate("/authentication/forbiddenPage");
                 window.location.reload();
+              }
+              if (resultx.status === "SUCCESS") {
+                const data11 = JSON.parse(localStorage.getItem("user1"));
+                const currentlyLogegdIn = data11.personalID;
+                const rawBJ = JSON.stringify({
+                  billID: uid,
+                  actionBy: currentlyLogegdIn,
+                });
+                console.log(rawBJ);
+                const requestOptionsBJ = {
+                  method: "POST",
+                  headers: myHeaders,
+                  body: rawBJ,
+                  redirect: "follow",
+                };
+                console.log(requestOptionsBJ);
+                fetch(`${process.env.REACT_APP_LOUGA_URL}/billsJourney/add`, requestOptionsBJ)
+                  .then(async (res) => {
+                    const aToken = res.headers.get("token-1");
+                    localStorage.setItem("rexxdex", aToken);
+                    return res.json();
+                  })
+                  .then((resultBJ) => {
+                    console.log(resultBJ);
+                    setOpened(false);
+                    if (resultBJ.message === "Expired Access") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultBJ.message === "Token Does Not Exist") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultBJ.message === "Unauthorized Access") {
+                      navigate("/authentication/forbiddenPage");
+                      window.location.reload();
+                    }
+                    console.log(result.message);
+                  });
               }
               handleClose();
               setOpened(false);
@@ -631,6 +747,14 @@ function GeneralBills() {
                         </Dropdown.Item>
                         <Dropdown.Item onClick={() => handleForwardDecision(value)}>
                           Forward Approval
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => navigate(`/general-Bill/view_download_Doc?dz=${value}`)}
+                        >
+                          View/Download Attached Doc.
+                        </Dropdown.Item>
+                        <Dropdown.Item onClick={() => handleOpen3(value)}>
+                          Attach Signed Doc.
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -823,6 +947,16 @@ function GeneralBills() {
               Cancel
             </MDButton>
           </div>
+        </Box>
+      </Modal>
+      <Modal
+        open={open3}
+        onClose={handleClose3}
+        aria-labelledby="child-modal-title"
+        aria-describedby="child-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <AttachSignedDoc billId={billIDvvv} />
         </Box>
       </Modal>
     </DashboardLayout>

@@ -104,8 +104,10 @@ import MyBills from "layouts/my-Bills";
 import Accounting from "layouts/accounting";
 import MySubscription from "layouts/subscription";
 import GeneralBills from "layouts/general-Bill";
+import ViewDownloadDoc from "layouts/general-Bill/view_download_Doc";
 import GeneralSubscription from "layouts/general-Subscription";
 import UpdateMyBills from "layouts/my-Bills/update-My-Bills/index";
+import BillJourney from "layouts/my-Bills/bill-Progress";
 import UpdateMySubscription from "layouts/subscription/update-Subscription/index";
 import CloneBonusDeduction from "layouts/bonusdeduction/clone";
 import UpdateBonusOrDeduction from "layouts/bonusdeduction/update";
@@ -313,6 +315,7 @@ import OffboardingChecklist from "./layouts/offboardingCompany/offboardingCheckl
 
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
+import AccountingCSV from "layouts/general-ledger/csv";
 
 const routes = [
   {
@@ -509,6 +512,13 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/general-ledger/post-transaction",
     component: <PostTransactions />,
+  },
+  {
+    name: "Post Transaction",
+    key: "generalLedger",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/general-ledger/csv",
+    component: <AccountingCSV />,
   },
   {
     type: "divider",
@@ -762,6 +772,13 @@ const routes = [
     component: <GeneralBills />,
   },
   {
+    name: "View Attached Doc",
+    key: "viewAttachedDoc",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/general-Bill/view_download_Doc",
+    component: <ViewDownloadDoc />,
+  },
+  {
     type: "collapse",
     name: "Voucher Attention",
     key: "voucherAttention",
@@ -775,6 +792,13 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/my-Bills/update-My-Bills",
     component: <UpdateMyBills />,
+  },
+  {
+    name: "Bill Journey",
+    key: "billJourney",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/my-Bills/bill-Progress",
+    component: <BillJourney />,
   },
   {
     type: "divider",
