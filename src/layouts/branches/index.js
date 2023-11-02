@@ -306,7 +306,7 @@ function Branches() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                       Country
                     </MDTypography>
@@ -325,11 +325,7 @@ function Branches() {
                       </Form.Select>
                     </MDBox>
                   </div>
-                </div>
-              </Container>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                       State
                     </MDTypography>

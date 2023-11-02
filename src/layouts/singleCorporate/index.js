@@ -763,7 +763,7 @@ function SingleCorporate() {
                       <div className="row">
                         <div className="col-sm-12">
                           <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
-                            <Form.Label style={{ fontSize: 14 }}>portfolio(Optional)</Form.Label>
+                            <Form.Label style={{ fontSize: 14 }}>Portfolio (Optional)</Form.Label>
                             <Form.Control
                               as="textarea"
                               value={portfoliox || ""}

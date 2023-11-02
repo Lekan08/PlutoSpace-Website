@@ -805,7 +805,7 @@ function TicketSettings() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Ticket Settings
+              Ticket Settings Client
             </MDTypography>
           </MDBox>
           <MDBox
@@ -889,7 +889,7 @@ function TicketSettings() {
                     <MDBox>
                       <MDInput
                         type="text"
-                        label="Twitter Accounts(Usernames) *"
+                        label="Twitter Accounts (Usernames) *"
                         value={twitValue || ""}
                         onChange={(e) => setTwitValue(e.target.value)}
                         onKeyDown={(e) => handleKeyDown(e, 1)}
@@ -927,7 +927,7 @@ function TicketSettings() {
                     <MDBox>
                       <MDInput
                         type="text"
-                        label="WhatsApp Accounts(Phone Numbers) *"
+                        label="WhatsApp Accounts (Phone Numbers) *"
                         value={whatsValue || ""}
                         onChange={(e) => setWhatsValue(e.target.value)}
                         onKeyDown={(e) => handleKeyDown(e, 2)}
@@ -1003,7 +1003,7 @@ function TicketSettings() {
                     <MDBox>
                       <MDInput
                         type="text"
-                        label="Email Account(Email) *"
+                        label="Email Account (Email) *"
                         value={emailValue || ""}
                         onChange={(e) => setEmailValue(e.target.value)}
                         variant="standard"

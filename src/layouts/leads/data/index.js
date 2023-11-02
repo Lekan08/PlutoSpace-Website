@@ -112,9 +112,9 @@ export default function LeadTable() {
   const handleView = (value) => {
     navigate(`/leads/view?id=${value}`);
   };
-  const handleWorkflow = (value) => {
-    navigate(`/leads/workflow?id=${value}`);
-  };
+  // const handleWorkflow = (value) => {
+  //   navigate(`/leads/workflow?id=${value}`);
+  // };
   const changeDateandTime = (timestamp) => {
     const date = new Date(timestamp);
     const retDate = date.toDateString();
@@ -173,7 +173,7 @@ export default function LeadTable() {
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => handleView(value)}>View</Dropdown.Item>
                 <Dropdown.Item onClick={() => handleUpdate(value)}>Update</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleWorkflow(value)}>Workflow</Dropdown.Item>
+                {/* <Dropdown.Item onClick={() => handleWorkflow(value)}>Workflow</Dropdown.Item> */}
                 <Dropdown.Item onClick={() => handleDisable2(value)}>Delete</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

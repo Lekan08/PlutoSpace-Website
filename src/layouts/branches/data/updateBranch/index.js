@@ -247,7 +247,8 @@ function UpdateBranch() {
           type: "success",
           text: result.message,
         }).then(() => {
-          window.location.reload();
+          navigate("/branches");
+          // window.location.reload();
         });
       })
       .catch((error) => {
@@ -373,7 +374,7 @@ function UpdateBranch() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                       Country
                     </MDTypography>
@@ -392,11 +393,7 @@ function UpdateBranch() {
                       </Form.Select>
                     </MDBox>
                   </div>
-                </div>
-              </Container>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                       State
                     </MDTypography>

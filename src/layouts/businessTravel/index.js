@@ -93,12 +93,11 @@ function BusinessTravel() {
     }
   };
   const handleOnAddressKeys = (value) => {
-    const letters = /^[a-zA-Z ]+$/;
+    const letters = /^[a-zA-Z0-9 ]+$/;
     if (!value.match(letters)) {
       setCheckedAddress(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("address").innerHTML =
-        "Address - input only capital and small letters<br>";
+      document.getElementById("address").innerHTML = "Address - input only numbers and letters<br>";
     }
     if (value.match(letters)) {
       setCheckedAddress(true);
