@@ -10,12 +10,14 @@ import { Container, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Styles from "styles";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
@@ -151,95 +153,112 @@ function ProductsBranch() {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
-      <Card>
-        <MDBox pt={4} pb={3} px={20}>
-          <MDBox
-            variant="gradient"
-            bgColor="info"
-            borderRadius="lg"
-            coloredShadow="info"
-            mx={2}
-            mt={-3}
-            p={2}
-            mb={1}
-            textAlign="center"
-          >
-            <MDTypography variant="h4" fontWeight="medium" color="RED" mt={1}>
-              Add Branch To Product
-            </MDTypography>
+      <>
+        <DashboardNavbar />
+        <Card>
+          <MDBox pt={4} pb={3} px={20}>
+            <MDBox
+              variant="gradient"
+              // bgColor="info"
+              style={{ backgroundColor: "#f96d02" }}
+              borderRadius="lg"
+              coloredShadow="info"
+              mx={2}
+              mt={-3}
+              p={2}
+              mb={1}
+              textAlign="center"
+            >
+              <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                Add Branch To Product
+              </MDTypography>
+            </MDBox>
+            <MDBox
+              variant="gradient"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+              borderRadius="lg"
+              coloredShadow="success"
+              mx={3}
+              mt={1}
+              p={1}
+              mb={1}
+              textAlign="center"
+            >
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="quantity">
+                {" "}
+              </MDTypography>
+            </MDBox>
           </MDBox>
-          <MDBox
-            variant="gradient"
-            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-            borderRadius="lg"
-            coloredShadow="success"
-            mx={3}
-            mt={1}
-            p={1}
-            mb={1}
-            textAlign="center"
-          >
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="quantity">
-              {" "}
+          <Container>
+            <MDTypography
+              variant="button"
+              fontWeight="regular"
+              fontSize="80%"
+              textAlign="center"
+              color="text"
+            >
+              Products Branch
             </MDTypography>
-          </MDBox>
+            <br />
+            <Grid container justifyContent="center" spacing={2}>
+              <Grid item xs={8}>
+                <Form.Select
+                  value={branchIDx}
+                  onChange={(e) => setBranchIDx(e.target.value)}
+                  aria-label="Default select example"
+                >
+                  <option value="">Select Branch</option>
+                  {branches.map((api) => (
+                    <option key={api.id} value={api.id}>
+                      {api.name}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Grid>
+              <Grid item xs={8}>
+                <MDInput
+                  type="text"
+                  value={quantityx || ""}
+                  onKeyUp={handleOnQuantityKeys}
+                  onChange={(e) => setQuantityx(e.target.value)}
+                  label="Quantity *"
+                  variant="standard"
+                  fullWidth
+                />
+              </Grid>{" "}
+              <Grid item xs={8}>
+                <MDBox mt={1} mb={1}>
+                  <MDButton
+                    variant="gradient"
+                    onClick={handleClick}
+                    //  color="info"
+                    style={Styles.buttonSx}
+                    width="50%"
+                    align="left"
+                  >
+                    Save
+                  </MDButton>
+                </MDBox>
+              </Grid>
+            </Grid>
+          </Container>
+        </Card>
+
+        <MDBox pt={3}>
+          <DataTable
+            table={{ columns: pColumns, rows: pRows }}
+            isSorted
+            entriesPerPage
+            showTotalEntries
+            noEndBorder
+            canSearch
+          />
         </MDBox>
-      </Card>
-      <Container>
-        <MDTypography
-          variant="button"
-          fontWeight="regular"
-          fontSize="80%"
-          textAlign="center"
-          color="text"
-        >
-          Products Branch
-        </MDTypography>
-        <br />
-        <Form.Select
-          value={branchIDx}
-          onChange={(e) => setBranchIDx(e.target.value)}
-          aria-label="Default select example"
-        >
-          <option value="">Select Branch</option>
-          {branches.map((api) => (
-            <option key={api.id} value={api.id}>
-              {api.name}
-            </option>
-          ))}
-        </Form.Select>
-      </Container>
-      <div className="col-sm-6">
-        <MDInput
-          type="text"
-          value={quantityx || ""}
-          onKeyUp={handleOnQuantityKeys}
-          onChange={(e) => setQuantityx(e.target.value)}
-          label="Quantity *"
-          variant="standard"
-          fullWidth
-        />
-      </div>
-      <MDBox mt={4} mb={1}>
-        <MDButton variant="gradient" onClick={handleClick} color="info" width="50%" align="left">
-          Save
-        </MDButton>
-      </MDBox>
-      <MDBox pt={3}>
-        <DataTable
-          table={{ columns: pColumns, rows: pRows }}
-          isSorted
-          entriesPerPage
-          showTotalEntries
-          noEndBorder
-          canSearch
-        />
-      </MDBox>
-      <Footer />
-      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
-        <CircularProgress color="info" />
-      </Backdrop>
+        <Footer />
+        <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
+          <CircularProgress color="info" />
+        </Backdrop>
+      </>
     </DashboardLayout>
   );
 }
