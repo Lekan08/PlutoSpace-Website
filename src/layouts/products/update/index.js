@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 import GHeaders from "getHeader";
 import PHeaders from "postHeader";
 // import DatePicker from "react-datepicker";
@@ -321,9 +322,9 @@ function Updateproducts() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={{ backgroundColor: "#f96d02" }}
             mx={2}
             mt={-3}
             p={2}
@@ -331,7 +332,7 @@ function Updateproducts() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Update products
+              Update Products
             </MDTypography>
           </MDBox>
           <MDBox
@@ -392,7 +393,7 @@ function Updateproducts() {
               <MDButton
                 variant="gradient"
                 onClick={handleUpdate}
-                color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >
