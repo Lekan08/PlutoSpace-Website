@@ -353,10 +353,10 @@ function ViewUser() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get("id");
-    const idVal = JSON.parse([id]);
+    // const idVal = JSON.parse(id);
     const headers = miHeaders;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/getByPersonalID/${orgIDs}/${idVal}`, {
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/getByPersonalID/${orgIDs}/${id}`, {
       headers,
     })
       .then(async (res) => {
@@ -485,10 +485,10 @@ function ViewUser() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get("id");
-    const idVal = JSON.parse([id]);
+    // const idVal = JSON.parse([id]);
     const headers = miHeaders;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/get/${idVal}`, { headers })
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/get/${id}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -737,7 +737,7 @@ function ViewUser() {
                 <MDBox mb={2}>
                   <Container>
                     <div className="row">
-                      <div className="col-sm-8">
+                      <div className="col-sm-6">
                         <MDInput
                           type="text"
                           label="Other Name"
@@ -748,13 +748,7 @@ function ViewUser() {
                           fullWidth
                         />
                       </div>
-                    </div>
-                  </Container>
-                </MDBox>
-                <MDBox mb={2}>
-                  <Container>
-                    <div className="row">
-                      <div className="col-sm-8">
+                      <div className="col-sm-6">
                         <MDInput
                           type="email"
                           label="Personal Email"
@@ -771,7 +765,7 @@ function ViewUser() {
                 <MDBox mb={2} mx={0}>
                   <Container>
                     <div className="row">
-                      <div className="col-sm-8">
+                      <div className="col-sm-6">
                         <MDInput
                           type="number"
                           label="Phone Number"
@@ -782,13 +776,7 @@ function ViewUser() {
                           fullWidth
                         />
                       </div>
-                    </div>
-                  </Container>
-                </MDBox>
-                <MDBox mb={2}>
-                  <Container>
-                    <div className="row">
-                      <div className="col-sm-8">
+                      <div className="col-sm-6">
                         <MDInput
                           type="text"
                           label="Marital Status"
@@ -802,68 +790,65 @@ function ViewUser() {
                     </div>
                   </Container>
                 </MDBox>
-                <Container>
-                  <div className="row">
-                    <div className="col-sm-8">
-                      <MDBox mb={0} mt={0} textAlign="left">
-                        <MDTypography
-                          variant="button"
-                          fontWeight="regular"
-                          color="text"
-                          mt={1}
-                          textAlign="left"
-                        >
-                          Date Of Birth
-                        </MDTypography>
-                      </MDBox>
-                      <MDBox mb={4} mt={0} textAlign="left">
-                        <div>
-                          <style>
-                            {`.date-picker input {
-                              width: 50%
-                              align: left
-                            }`}
-                          </style>
-                          <DatePicker
-                            date={startDate}
-                            wrapperClassName="date-picker"
-                            placeholder="Select Birth Date"
-                            disabled
-                            dateFormat="MM/dd/yyyy"
-                            confirmBtnText="Confirm"
-                            showCancelButton="true"
-                            customStyles={{
-                              placeholderText: {
-                                fontSize: 5,
-                              },
-                              dateIcon: {
-                                height: 0,
-                                width: 0,
-                              },
-                              dateText: {
-                                color: "#b3b4b5",
-                                fontSize: 16,
-                              },
-                              dateInput: {
-                                borderWidth: 0,
-                              },
-                            }}
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                            peekNextMonth
-                            showMonthDropdown
-                            showYearDropdown
-                            dropdownMode="select"
-                          />
-                        </div>
-                      </MDBox>
-                    </div>
-                  </div>
-                </Container>
                 <MDBox mb={2}>
                   <Container>
                     <div className="row">
-                      <div className="col-sm-8">
+                      <div className="col-sm-6">
+                        <MDBox mb={1} mt={0} textAlign="left">
+                          {/* <MDTypography
+                            variant="button"
+                            fontWeight="regular"
+                            color="text"
+                            mt={1}
+                            mb={6}
+                            textAlign="left"
+                          >
+                            Date Of Birth
+                          </MDTypography> */}
+                        </MDBox>
+                        <MDBox mb={2} mt={0} textAlign="left">
+                          <div>
+                            <style>
+                              {`.date-picker input {
+                              width: 50%
+                              align: left
+                            }`}
+                            </style>
+                            <DatePicker
+                              date={startDate}
+                              wrapperClassName="date-picker"
+                              placeholder="Select Birth Date"
+                              disabled
+                              dateFormat="MM/dd/yyyy"
+                              confirmBtnText="Confirm"
+                              showCancelButton="true"
+                              customStyles={{
+                                placeholderText: {
+                                  fontSize: 5,
+                                },
+                                dateIcon: {
+                                  height: 0,
+                                  width: 0,
+                                },
+                                dateText: {
+                                  color: "#b3b4b5",
+                                  fontSize: 16,
+                                },
+                                dateInput: {
+                                  borderWidth: 0,
+                                },
+                              }}
+                              selected={startDate}
+                              onChange={(date) => setStartDate(date)}
+                              peekNextMonth
+                              showMonthDropdown
+                              showYearDropdown
+                              dropdownMode="select"
+                            />
+                          </div>
+                        </MDBox>
+                      </div>
+                      <div className="col-sm-6">
                         <MDInput
                           type="text"
                           label="Nationality"
@@ -1302,7 +1287,7 @@ function ViewUser() {
                   <MDBox mb={2}>
                     <Container>
                       <div className="row">
-                        <div className="col-sm-8">
+                        <div className="col-sm-6">
                           <MDInput
                             type="email"
                             label="Country"
@@ -1313,13 +1298,7 @@ function ViewUser() {
                             fullWidth
                           />
                         </div>
-                      </div>
-                    </Container>
-                  </MDBox>
-                  <MDBox mb={2}>
-                    <Container>
-                      <div className="row">
-                        <div className="col-sm-8">
+                        <div className="col-sm-6">
                           <MDInput
                             type="email"
                             label="State"
