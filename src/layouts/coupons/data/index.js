@@ -245,6 +245,28 @@ export default function CuponsData() {
   }
 
   // eslint-disable-next-line consistent-return
+  const changeStatus = (value) => {
+    if (value === 0) {
+      return "Created";
+    }
+    if (value === 1) {
+      return "Terminated";
+    }
+  };
+
+  //  1 created 0 not terminated
+
+  // eslint-disable-next-line consistent-return
+  const changeStatusCol = (value) => {
+    if (value === 0) {
+      return "#0000ff";
+    }
+    if (value === 1) {
+      return "#FF0000";
+    }
+  };
+
+  // eslint-disable-next-line consistent-return
   // const handleOnClientType = (clientType) => {
   //   if (clientType === 1) {
   //     return "Type";
@@ -283,6 +305,17 @@ export default function CuponsData() {
         Header: "Date Created",
         accessor: "createdTime",
         Cell: ({ cell: { value } }) => changeDate(value),
+        align: "left",
+      },
+      {
+        Header: "Status",
+        accessor: "status",
+        // eslint-disable-next-line react/prop-types
+        Cell: ({ cell: { value } }) => (
+          <span className="badge badge-pill" style={{ backgroundColor: changeStatusCol(value) }}>
+            {changeStatus(value)}
+          </span>
+        ),
         align: "left",
       },
       {
