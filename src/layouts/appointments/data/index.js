@@ -64,6 +64,9 @@ export default function CalendarData() {
     const orgIDs = data11.orgID;
     const perso = data11.personalID;
     let isMounted = true;
+    console.log(
+      `${process.env.REACT_APP_RAGA_URL}/appointment/getMyCalendar/${orgIDs}/${perso}?startTime=${strt}&endTime=${end}`
+    );
     fetch(
       `${process.env.REACT_APP_RAGA_URL}/appointment/getMyCalendar/${orgIDs}/${perso}?startTime=${strt}&endTime=${end}`,
       { headers }
