@@ -15,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import DataTable from "examples/Tables/DataTable";
 import Backdrop from "@mui/material/Backdrop";
+import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
 import Footer from "examples/Footer";
 import GHeaders from "getHeader";
@@ -254,7 +255,17 @@ function OtherInflow() {
               Other Inflow
             </MDTypography>
           </MDBox>
-          <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <MDBox
+            variant="gradient"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            borderRadius="lg"
+            coloredShadow="success"
+            mx={3}
+            mt={1}
+            p={1}
+            mb={1}
+            textAlign="center"
+          >
             <MDTypography variant="gradient" fontSize="60%" color="error" id="amount">
               {" "}
             </MDTypography>
@@ -263,45 +274,44 @@ function OtherInflow() {
             </MDTypography>
           </MDBox>
           <MDBox component="form" role="form">
-            <MDBox mb={2}>
+            <MDBox mb={2} mt={4}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <TextField
                       label="Amount (NGN)*"
                       type="number"
+                      style={{ width: "100%", height: "100%" }}
                       value={amountx}
                       onKeyUp={(e) => handleOnAmountKeys(e.target.value)}
                       onChange={(e) => setAmount(e.target.value)}
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <TextField
                       label="Tax Amount (NGN)*"
                       type="number"
                       value={taxAmountx}
+                      style={{ width: "100%", height: "100%" }}
                       onKeyUp={(e) => handleOnTaxAmountKeys(e.target.value)}
                       onChange={(e) => setTaxAmount(e.target.value)}
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-read-only-input"
                       label="Total Amount (NGN)"
                       value={TotalAmountx}
+                      style={{ width: "100%", height: "100%" }}
                       InputProps={{
                         readOnly: true,
                       }}
                       type="number"
-                    />
-                  </div>
-                  <div className="col-sm-6">
+                    />{" "}
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDBox textAlign="right">
                       <Form.Select
                         value={otherInflowTypex || ""}
@@ -316,14 +326,9 @@ function OtherInflow() {
                         ))}
                       </Form.Select>
                     </MDBox>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -345,8 +350,9 @@ function OtherInflow() {
                         <option value="2">Corporate</option>
                       </Form.Select>
                     </MDBox>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDBox mt={0}>
                       <MDTypography
                         variant="button"
@@ -384,16 +390,10 @@ function OtherInflow() {
                           ))}
                         </Form.Select>
                       )}
-                      <br />
                     </MDBox>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-12">
+                  </Grid>
+
+                  <Grid item xs={10}>
                     <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
                       <Form.Label style={{ fontSize: 14 }}>Particulars *</Form.Label>
                       <Form.Control
@@ -404,21 +404,28 @@ function OtherInflow() {
                         rows={2}
                       />
                     </Form.Group>
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    {" "}
+                    <MDBox mt={4} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleValidate}
+                        // color="info"
+                        width="50%"
+                        align="left"
+                        style={Styles.buttonSx}
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>{" "}
+                  </Grid>
+                  <Grid item xs={5}>
+                    <></>{" "}
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleValidate}
-                // color="info"
-                width="50%"
-                align="left"
-                style={Styles.buttonSx}
-              >
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>
