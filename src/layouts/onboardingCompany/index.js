@@ -100,7 +100,7 @@ function OnboardingCompany() {
         empID: r.empID,
         startTime: r.startTime,
         endTime: r.endTime,
-        createdBy: Number(createdByx),
+        createdBy: createdByx,
       }));
     const raw = JSON.stringify(filt);
     const requestOptions = {

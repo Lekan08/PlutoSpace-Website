@@ -206,7 +206,7 @@ function OffboardingSession() {
     const ClosingDate = new Date(end).getTime();
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const [filteredItems] = userxx.filter((item) => item.personal.id === Number(mentorx));
+    const [filteredItems] = userxx.filter((item) => item.personal.id === mentorx);
     const [filteredItemsEmp] = userxx.filter((item) => item.personal.id === data[0].empID);
     console.log(appID);
     console.log("freshly adding");
@@ -261,7 +261,7 @@ function OffboardingSession() {
             appointmentID: result.data.id,
             name: `${filteredItems.personal.fname} ${filteredItems.personal.lname}`,
             email: filteredItems.personal.email,
-            personalID: Number(mentorx),
+            personalID: mentorx,
             appointmentTime: OpeningDate,
           },
         ]);
@@ -282,7 +282,7 @@ function OffboardingSession() {
             console.log(resultr);
             const raw = JSON.stringify({
               orgID: orgIDs,
-              mentorID: Number(mentorx),
+              mentorID: mentorx,
               offboardingID: data[0].id,
               appointmentID: result.data.id,
             });
