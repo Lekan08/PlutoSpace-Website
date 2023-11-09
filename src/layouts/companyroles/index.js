@@ -12,6 +12,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Styles from "styles";
+import Grid from "@mui/material/Grid";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import MDTypography from "components/MDTypography";
@@ -153,8 +154,8 @@ function Roles() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={8}>
                     <MDInput
                       type="text"
                       label="Name *"
@@ -164,8 +165,8 @@ function Roles() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={8}>
                     <MDInput
                       type="text"
                       value={descripx || ""}
@@ -174,21 +175,23 @@ function Roles() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleClick}
+                        style={Styles.buttonSx}
+                        // color="info"
+                        width="50%"
+                        align="left"
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleClick}
-                style={Styles.buttonSx}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>

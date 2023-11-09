@@ -156,7 +156,7 @@ function ProductsBranch() {
       <>
         <DashboardNavbar />
         <Card>
-          <MDBox pt={4} pb={3} px={20}>
+          <MDBox pt={4} pb={3}>
             <MDBox
               variant="gradient"
               // bgColor="info"
