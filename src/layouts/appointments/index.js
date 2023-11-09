@@ -123,7 +123,7 @@ function Appointments() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const perso = data11.personalID;
-    console.log(data11);
+    // console.log(data11);
     let isMounted = true;
     fetch(
       `${process.env.REACT_APP_RAGA_URL}/appointment/getMyCalendar/${orgIDs}/${perso}?startTime=${strt}&endTime=${end}`,
@@ -470,7 +470,7 @@ function Appointments() {
         <MDBox component="form" role="form">
           <MDBox
             variant="gradient"
-            bgColor="info"
+            bgColor="warning"
             borderRadius="lg"
             coloredShadow="info"
             mx={0}
