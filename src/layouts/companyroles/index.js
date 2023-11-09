@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Styles from "styles";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import MDTypography from "components/MDTypography";
@@ -117,10 +118,11 @@ function Roles() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -180,6 +182,7 @@ function Roles() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
+                style={Styles.buttonSx}
                 color="info"
                 width="50%"
                 align="left"

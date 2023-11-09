@@ -160,7 +160,7 @@ function ProductsBranch() {
             <MDBox
               variant="gradient"
               // bgColor="info"
-              style={{ backgroundColor: "#f96d02" }}
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="info"
               mx={2}
