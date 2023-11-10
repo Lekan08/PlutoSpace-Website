@@ -173,16 +173,16 @@ export default function VideoChat() {
             columns: [
               // { Header: "Source", accessor: "source", align: "left" },
               // { Header: "Total Amount", accessor: "totalAmount", align: "left" },
-              {
-                Header: "call link",
-                accessor: "callLink",
-                align: "left",
-              },
               { Header: "other members", accessor: "secondPartyName", align: "left" },
               {
                 accessor: "status",
                 // eslint-disable-next-line react/prop-types, no-unused-vars
                 Cell: ({ cell: { value } }) => handleIcon(value),
+                align: "left",
+              },
+              {
+                Header: "call link",
+                accessor: "callLink",
                 align: "left",
               },
               {

@@ -13,6 +13,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
+import Styles from "styles";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
@@ -328,7 +329,13 @@ function Products() {
       <Csv />
       &nbsp;
       <MDBox mt={4} mb={1}>
-        <MDButton variant="gradient" onClick={exportPDF} color="info" width="50%" align="center">
+        <MDButton
+          variant="gradient"
+          onClick={exportPDF}
+          style={Styles.buttonSx}
+          width="50%"
+          align="center"
+        >
           Export pdf
         </MDButton>
       </MDBox>

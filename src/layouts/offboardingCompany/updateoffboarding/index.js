@@ -140,12 +140,12 @@ function Updateoffboarding() {
     const raw = JSON.stringify({
       orgID: orgIDs,
       id: idx,
-      empID: Number(onboardingx),
+      empID: onboardingx,
       startTime: OpeningDate,
       endTime: ClosingDate,
       // eslint-disable-next-line object-shorthand
       status: status,
-      createdBy: Number(createdByxx),
+      createdBy: createdByxx,
       deleteFlag: deleteFlagx,
       terminatedBy: terminatedByx,
       terminatedTime: terminatedTimex,

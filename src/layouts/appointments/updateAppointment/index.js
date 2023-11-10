@@ -297,7 +297,7 @@ function UpdateCalendar() {
             id: idx,
             orgID: orgIDs,
             title: eventName,
-            createdBy: Number(duty),
+            createdBy: duty,
             description: description,
             purpose: purpose,
             reminderTime: timezoneConverter2(remind),
@@ -420,7 +420,7 @@ function UpdateCalendar() {
       const code = `${Math.random().toString(32).slice(10)}-${Math.random()
         .toString(32)
         .slice(10)}-${Math.random().toString(32).slice(10)}`;
-      const url = `https://cairo-videochat.netlify.app/room.html?room=${code}&adm=${Number(duty)}`;
+      const url = `https://cairo-videochat.netlify.app/room.html?room=${code}&adm=${duty}`;
       setLink(url);
     } else {
       MySwal.fire({
@@ -438,7 +438,7 @@ function UpdateCalendar() {
         <MDBox component="form" role="form">
           <MDBox
             variant="gradient"
-            bgColor="info"
+            bgColor="warning"
             borderRadius="lg"
             coloredShadow="info"
             mx={0}

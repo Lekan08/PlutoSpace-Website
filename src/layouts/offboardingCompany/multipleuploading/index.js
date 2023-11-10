@@ -109,7 +109,7 @@ function MultipleUpload() {
         const data11 = JSON.parse(localStorage.getItem("user1"));
         const orgIDs = data11.orgID;
         const personalIDs = data11.personalID;
-        const dutyx = Number(duty);
+        const dutyx = duty;
         // const date = new Date(start);
         // const startx = start;
         // const endx = end;
