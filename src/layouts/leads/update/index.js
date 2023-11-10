@@ -314,6 +314,7 @@ export default function UpdateLeads() {
                     size="large"
                   >
                     <MenuItem value="Facebook">Facebook</MenuItem>
+                    <MenuItem value="Email">Email</MenuItem>
                     <MenuItem value="Youtube">YouTube</MenuItem>
                     <MenuItem value="WhatsApp">WhatsApp</MenuItem>
                     <MenuItem value="Instagram">Instagram</MenuItem>

@@ -25,6 +25,7 @@ import AllCountriesAndStates from "countries-states-master/countries";
 
 import Accordion from "react-bootstrap/Accordion";
 import Paper from "@mui/material/Paper";
+import Styles from "styles";
 
 import SingleCorporateTable from "./data";
 import Csv from "./csv";
@@ -505,7 +506,7 @@ function SingleCorporate() {
               <MDBox pt={4} pb={3} px={30}>
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  // bgColor="info"
                   borderRadius="lg"
                   coloredShadow="info"
                   mx={2}
@@ -513,6 +514,7 @@ function SingleCorporate() {
                   p={2}
                   mb={1}
                   textAlign="center"
+                  style={Styles.boxSx}
                 >
                   <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
                     Add Corporate
