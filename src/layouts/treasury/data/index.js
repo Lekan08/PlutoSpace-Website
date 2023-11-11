@@ -127,6 +127,16 @@ export default function TreasuryTable() {
     }
   };
 
+  const changeStatus = (value) => {
+    if (value === 1) {
+      return "Approved";
+      // eslint-disable-next-line no-else-return
+    } else if (value === 2) {
+      return "Declined";
+    }
+    return "No Decision Made";
+  };
+
   const handleTreasuryContribution = (value, amount) => {
     console.log(amount);
     // const amountxx = amount.filter(items.id === value);
@@ -201,8 +211,12 @@ export default function TreasuryTable() {
         Cell: ({ cell: { value } }) => handleOnClientType(value),
         align: "left",
       },
-      //   { Header: "Description", accessor: "descrip", align: "left" },
-      //   { Header: "No Of Times", accessor: "times", align: "left" },
+      {
+        Header: "Status",
+        accessor: "clientType",
+        Cell: ({ cell: { value } }) => changeStatus(value),
+        align: "left",
+      },
       {
         Header: "Date Created",
         accessor: "createdTime",
