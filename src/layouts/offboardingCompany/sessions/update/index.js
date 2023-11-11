@@ -161,6 +161,7 @@ function UpdateOffboardingSession() {
       alert("no changes made");
     else {
       console.log("updating");
+      setOpened(true);
       const requestOptions = {
         method: "DELETE",
         headers: miHeaders,
@@ -214,7 +215,7 @@ function UpdateOffboardingSession() {
           return res.json();
         })
         .then((result) => {
-          setOpened(false);
+          // setOpened(false);
           console.log(result);
           // setAppID(result.data.id);
           if (result.message === "Expired Access") {
@@ -283,7 +284,7 @@ function UpdateOffboardingSession() {
                 })
                 .then((resultx) => {
                   console.log(resultx);
-                  // setOpened(false);
+                  setOpened(false);
                   if (resultx.message === "Expired Access") {
                     navigate("/authentication/sign-in");
                     window.location.reload();
@@ -301,7 +302,7 @@ function UpdateOffboardingSession() {
                     type: "success",
                     text: resultx.message,
                   }).then(() => {
-                    window.location.reload();
+                    navigate(-1);
                   });
                 })
                 .catch((error) => {
@@ -316,13 +317,6 @@ function UpdateOffboardingSession() {
             .catch((error) => {
               console.log(error);
             });
-          MySwal.fire({
-            title: result.status,
-            type: "success",
-            text: result.message,
-          }).then(() => {
-            window.location.reload();
-          });
         })
         .catch((error) => {
           setOpened(false);
@@ -343,7 +337,7 @@ function UpdateOffboardingSession() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}

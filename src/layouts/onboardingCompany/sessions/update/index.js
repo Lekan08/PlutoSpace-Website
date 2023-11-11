@@ -262,7 +262,7 @@ function UpdateOnboardingSession() {
               console.log(resultr);
               const raw = JSON.stringify({
                 orgID: orgIDs,
-                mentorID: Number(mentorx),
+                mentorID: mentorx,
                 id: storedArray.id,
                 onboardingID: storedArray.onboardingID,
                 appointmentID: result.data.id,
@@ -302,7 +302,7 @@ function UpdateOnboardingSession() {
                     type: "success",
                     text: resultx.message,
                   }).then(() => {
-                    window.location.reload();
+                    navigate(-1);
                   });
                 })
                 .catch((error) => {
@@ -337,7 +337,7 @@ function UpdateOnboardingSession() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}

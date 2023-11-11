@@ -700,7 +700,7 @@ function Appointments() {
               &nbsp;
               <MDBox component="form" role="form">
                 <MDBox variant="gradient" mx={0} mt={-3} p={2} mb={1} textAlign="center">
-                  <MDTypography variant="h5" fontWeight="medium" color="info" mt={1}>
+                  <MDTypography variant="h5" fontWeight="medium" color="warning" mt={1}>
                     Add Participants Not In The Organization
                   </MDTypography>
                 </MDBox>
@@ -722,7 +722,7 @@ function Appointments() {
                       <MDButton
                         variant="gradient"
                         onClick={() => AddChipData(1)}
-                        color="info"
+                        color="warning"
                         width="50%"
                         align="center"
                         size="small"
@@ -747,7 +747,7 @@ function Appointments() {
             </MDBox>
             <hr />
             <MDBox>
-              <MDTypography variant="h5" fontWeight="medium" color="info" mt={8} mb={3}>
+              <MDTypography variant="h5" fontWeight="medium" color="warning" mt={8} mb={3}>
                 Generate A Video Call Link For The Appointment
               </MDTypography>
               <MDInput variant="outlined" disabled style={{ width: "90%" }} value={link} />
@@ -755,7 +755,7 @@ function Appointments() {
               <MDButton
                 variant="gradient"
                 style={{ marginTop: "20px" }}
-                color="info"
+                color="warning"
                 onClick={() => Gen()}
                 width="50%"
                 align="center"
@@ -769,7 +769,7 @@ function Appointments() {
               <MDButton
                 variant="gradient"
                 onClick={handleValidate}
-                color="info"
+                color="warning"
                 width="50%"
                 align="left"
               >
@@ -792,7 +792,7 @@ function Appointments() {
       </MDBox>
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
-        <CircularProgress color="info" />
+        <CircularProgress color="warning" />
       </Backdrop>
     </DashboardLayout>
   );
