@@ -103,7 +103,7 @@ function OffboardingCompany() {
         empID: r.empID,
         startTime: r.startTime,
         endTime: r.endTime,
-        createdBy: Number(createdByx),
+        createdBy: createdByx,
       }));
     const raw = JSON.stringify(filt);
     console.log(raw);
