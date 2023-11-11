@@ -1319,7 +1319,7 @@ const routes = [
     name: "Other Inflow",
     key: "otherinflow",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
-    route: "/other-inflow",
+    route: "/other-Inflow",
     component: <OtherInflow />,
   },
   {
@@ -1327,7 +1327,7 @@ const routes = [
     name: "Update Other Inflow",
     key: "otherinflowupdate",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
-    route: "/other-inflow/update",
+    route: "/otherinflow/update",
     component: <UpdateOtherInflow />,
   },
   {
