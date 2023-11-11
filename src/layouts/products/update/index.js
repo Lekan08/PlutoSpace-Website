@@ -8,6 +8,7 @@ import { Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Grid from "@mui/material/Grid";
 import { useNavigate } from "react-router-dom";
 import Styles from "styles";
 import GHeaders from "getHeader";
@@ -319,7 +320,7 @@ function Updateproducts() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"
@@ -353,8 +354,8 @@ function Updateproducts() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={8}>
                     <MDInput
                       type="text"
                       label="Name *"
@@ -365,8 +366,8 @@ function Updateproducts() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={8}>
                     <MDInput
                       type="text"
                       value={descriptionx || ""}
@@ -375,8 +376,8 @@ function Updateproducts() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={8}>
                     <MDInput
                       type="text"
                       value={pricePerQuantityx || ""}
@@ -385,20 +386,27 @@ function Updateproducts() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={8}>
+                    {" "}
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleUpdate}
+                        style={Styles.buttonSx}
+                        width="50%"
+                        align="left"
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={8}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleUpdate}
-                style={Styles.buttonSx}
-                width="50%"
-                align="left"
-              >
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>

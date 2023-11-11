@@ -15,6 +15,8 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
@@ -556,10 +558,11 @@ function Demand() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={20}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -605,8 +608,8 @@ function Demand() {
           <MDBox component="form" role="form">
             <MDBox mb={0}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       label="Title *"
@@ -616,9 +619,9 @@ function Demand() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
+                  </Grid>
 
-                  <div className="col-sm-6">
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={quantityx || ""}
@@ -628,15 +631,9 @@ function Demand() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDBox textAlign="center">
                       <MDTypography
                         variant="button"
@@ -654,8 +651,9 @@ function Demand() {
                         <option value="2">Corporate</option>
                       </Form.Select>
                     </MDBox>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={bonusAmountx || ""}
@@ -665,14 +663,10 @@ function Demand() {
                       onKeyUp={(e) => handleOnBonusAmountKeys(e.target.value)}
                       onChange={(e) => setBonusAmount(e.target.value)}
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    {" "}
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -695,8 +689,9 @@ function Demand() {
                         </option>
                       ))}
                     </Form.Select>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -719,13 +714,9 @@ function Demand() {
                         </option>
                       ))}
                     </Form.Select>
-                  </div>
-                </div>
-              </Container>
-              &nbsp;
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={pricePQ}
@@ -736,8 +727,8 @@ function Demand() {
                       fullWidth
                       disabled
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={totalAmountx || ""}
@@ -747,15 +738,10 @@ function Demand() {
                       fullWidth
                       disabled
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    {" "}
                     <MDInput
                       type="text"
                       value={vatAmountx || ""}
@@ -766,8 +752,9 @@ function Demand() {
                       fullWidth
                       disabled
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={payAmountx || ""}
@@ -778,20 +765,28 @@ function Demand() {
                       fullWidth
                       disabled
                     />
-                  </div>
-                </div>
+                  </Grid>
+                  <Grid item xs={5}>
+                    {" "}
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleValidate}
+                        // color="info"
+                        style={Styles.buttonSx}
+                        width="50%"
+                        align="left"
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleValidate}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>
