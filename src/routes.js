@@ -295,6 +295,7 @@ import AppointmentOffboardingSession from "layouts/assignedOffboarding/appointme
 import TreasuryType from "layouts/treasuryType";
 import UpdateTreasuryType from "layouts/treasuryType/update";
 import Treasury from "layouts/treasury";
+import UpdateTreasury from "layouts/treasury/update";
 import TreasuryContribution from "layouts/treasury/treasuryContribution";
 import UpdateTreasuryContribution from "layouts/treasury/treasuryContribution/update";
 import TreasuryDebtors from "layouts/treasury/treasuryGetDebtors";
@@ -1379,6 +1380,13 @@ const routes = [
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury",
     component: <Treasury />,
+  },
+  {
+    name: "Update Treasury ",
+    key: "updateTreasury",
+    icon: <Icon fontSize="small">volunteer_activism</Icon>,
+    route: "/treasury/update",
+    component: <UpdateTreasury />,
   },
   {
     name: "Treasury Contribution",
