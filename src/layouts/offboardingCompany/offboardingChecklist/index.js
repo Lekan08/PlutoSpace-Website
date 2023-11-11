@@ -197,7 +197,7 @@ function OffboardingChecklist() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            bgColor="warning"
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
