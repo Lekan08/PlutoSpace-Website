@@ -213,10 +213,11 @@ export default function TreasuryTable() {
       },
       {
         Header: "Status",
-        accessor: "clientType",
+        accessor: "status",
         Cell: ({ cell: { value } }) => changeStatus(value),
         align: "left",
       },
+
       {
         Header: "Date Created",
         accessor: "createdTime",

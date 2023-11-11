@@ -1370,7 +1370,7 @@ const routes = [
     name: "Update Treasury Type",
     key: "updatetreasuryType",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
-    route: "/treasury-Type/update",
+    route: "/treasuryType/update",
     component: <UpdateTreasuryType />,
   },
   {
