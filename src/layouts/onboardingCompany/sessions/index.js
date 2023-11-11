@@ -161,6 +161,7 @@ function OnboardingSession() {
       body: raw3,
       redirect: "follow",
     };
+    setOpened(true);
     fetch(`${process.env.REACT_APP_RAGA_URL}/appointment/add`, requestOptions3)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -268,13 +269,6 @@ function OnboardingSession() {
           .catch((error) => {
             console.log(error);
           });
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          window.location.reload();
-        });
       })
       .catch((error) => {
         setOpened(false);

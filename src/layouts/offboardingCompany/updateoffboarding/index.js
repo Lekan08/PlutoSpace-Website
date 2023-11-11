@@ -166,7 +166,7 @@ function Updateoffboarding() {
         return res.json();
       })
       .then((result) => {
-        setOpened(false);
+        // setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();

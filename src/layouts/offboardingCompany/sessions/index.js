@@ -202,6 +202,7 @@ function OffboardingSession() {
   // };
   const handleCreate = () => {
     console.log(data[0]);
+    setOpened(true);
     const OpeningDate = new Date(start).getTime();
     const ClosingDate = new Date(end).getTime();
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -235,7 +236,7 @@ function OffboardingSession() {
         return res.json();
       })
       .then((result) => {
-        setOpened(false);
+        // setOpened(false);
         console.log(result);
         // setAppID(result.data.id);
         if (result.message === "Expired Access") {
@@ -302,7 +303,7 @@ function OffboardingSession() {
               })
               .then((resultx) => {
                 console.log(resultx);
-                // setOpened(false);
+                setOpened(false);
                 if (resultx.message === "Expired Access") {
                   navigate("/authentication/sign-in");
                   window.location.reload();
@@ -335,13 +336,6 @@ function OffboardingSession() {
           .catch((error) => {
             console.log(error);
           });
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          window.location.reload();
-        });
       })
       .catch((error) => {
         setOpened(false);

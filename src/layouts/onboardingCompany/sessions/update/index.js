@@ -165,6 +165,7 @@ function UpdateOnboardingSession() {
         method: "DELETE",
         headers: miHeaders,
       };
+      setOpened(true);
       fetch(
         `${process.env.REACT_APP_RAGA_URL}/appointment/cancel/${storedArray.appointmentID}`,
         requestOptions
@@ -214,7 +215,7 @@ function UpdateOnboardingSession() {
           return res.json();
         })
         .then((result) => {
-          setOpened(false);
+          // setOpened(false);
           console.log(result);
           // setAppID(result.data.id);
           if (result.message === "Expired Access") {
@@ -283,7 +284,7 @@ function UpdateOnboardingSession() {
                 })
                 .then((resultx) => {
                   console.log(resultx);
-                  // setOpened(false);
+                  setOpened(false);
                   if (resultx.message === "Expired Access") {
                     navigate("/authentication/sign-in");
                     window.location.reload();
@@ -316,13 +317,6 @@ function UpdateOnboardingSession() {
             .catch((error) => {
               console.log(error);
             });
-          MySwal.fire({
-            title: result.status,
-            type: "success",
-            text: result.message,
-          }).then(() => {
-            window.location.reload();
-          });
         })
         .catch((error) => {
           setOpened(false);
