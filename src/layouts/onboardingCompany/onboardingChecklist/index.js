@@ -275,7 +275,7 @@ function OnboardingChecklist() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton variant="gradient" onClick={handleClick} color="warning" width="50%">
                 Save
               </MDButton>
             </MDBox>
