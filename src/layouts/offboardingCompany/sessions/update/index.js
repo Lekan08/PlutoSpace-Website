@@ -284,7 +284,7 @@ function UpdateOffboardingSession() {
                 })
                 .then((resultx) => {
                   console.log(resultx);
-                  // setOpened(false);
+                  setOpened(false);
                   if (resultx.message === "Expired Access") {
                     navigate("/authentication/sign-in");
                     window.location.reload();
