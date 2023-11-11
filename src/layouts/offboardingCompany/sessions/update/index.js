@@ -161,6 +161,7 @@ function UpdateOffboardingSession() {
       alert("no changes made");
     else {
       console.log("updating");
+      setOpened(true);
       const requestOptions = {
         method: "DELETE",
         headers: miHeaders,
@@ -214,7 +215,7 @@ function UpdateOffboardingSession() {
           return res.json();
         })
         .then((result) => {
-          setOpened(false);
+          // setOpened(false);
           console.log(result);
           // setAppID(result.data.id);
           if (result.message === "Expired Access") {
@@ -316,13 +317,6 @@ function UpdateOffboardingSession() {
             .catch((error) => {
               console.log(error);
             });
-          MySwal.fire({
-            title: result.status,
-            type: "success",
-            text: result.message,
-          }).then(() => {
-            window.location.reload();
-          });
         })
         .catch((error) => {
           setOpened(false);
