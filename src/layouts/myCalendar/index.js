@@ -129,7 +129,7 @@ function MyCalendar() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="warning"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}

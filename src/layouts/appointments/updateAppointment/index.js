@@ -640,7 +640,7 @@ function UpdateCalendar() {
             <br />
             <hr />
             <MDBox>
-              <MDTypography variant="h5" fontWeight="medium" color="info" mt={8} mb={3}>
+              <MDTypography variant="h5" fontWeight="medium" color="warning" mt={8} mb={3}>
                 Generate A Video Call Link For The Appointment
               </MDTypography>
               <MDInput variant="outlined" disabled style={{ width: "60%" }} value={link} />
@@ -648,7 +648,7 @@ function UpdateCalendar() {
               <MDButton
                 variant="gradient"
                 style={{ marginTop: "20px" }}
-                color="info"
+                color="warning"
                 onClick={() => Gen()}
                 width="50%"
                 align="center"
@@ -662,7 +662,7 @@ function UpdateCalendar() {
               <MDButton
                 variant="gradient"
                 onClick={handleAddEvent}
-                color="info"
+                color="warning"
                 width="50%"
                 align="left"
               >
@@ -675,7 +675,7 @@ function UpdateCalendar() {
       &nbsp;
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
-        <CircularProgress color="info" />
+        <CircularProgress color="warning" />
       </Backdrop>
     </DashboardLayout>
   );
