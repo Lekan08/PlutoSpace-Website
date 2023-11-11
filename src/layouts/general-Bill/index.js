@@ -13,6 +13,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
+import Styles from "styles";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
@@ -651,12 +652,12 @@ function GeneralBills() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"
             borderRadius="lg"
-            style={{ backgroundColor: "#f96d02" }}
+            style={Styles.boxSx}
             mx={2}
             mt={-3}
             p={2}
