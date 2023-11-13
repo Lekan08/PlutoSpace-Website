@@ -141,20 +141,20 @@ function UpdateOnboardingSession() {
     const ClosingDate = new Date(end).getTime();
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const [filteredItems] = userxx.filter((item) => item.personal.id === Number(mentorx));
+    const [filteredItems] = userxx.filter((item) => item.personal.id === mentorx);
     const [filteredItemsEmp] = userxx.filter(
-      (item) => item.personal.id === Number(storedArray.onboardingDTO.empID)
+      (item) => item.personal.id === storedArray.onboardingDTO.empID
     );
     console.log(
       storedArray.mentorID,
-      Number(mentorx),
+      mentorx,
       storedArray.appointment.startTime,
       start.getTime(),
       storedArray.appointment.endTime,
       end.getTime()
     );
     if (
-      storedArray.mentorID === Number(mentorx) &&
+      storedArray.mentorID === mentorx &&
       storedArray.appointment.startTime === start.getTime() &&
       storedArray.appointment.endTime === end.getTime()
     )
@@ -165,6 +165,7 @@ function UpdateOnboardingSession() {
         method: "DELETE",
         headers: miHeaders,
       };
+      setOpened(true);
       fetch(
         `${process.env.REACT_APP_RAGA_URL}/appointment/cancel/${storedArray.appointmentID}`,
         requestOptions
@@ -214,7 +215,7 @@ function UpdateOnboardingSession() {
           return res.json();
         })
         .then((result) => {
-          setOpened(false);
+          // setOpened(false);
           console.log(result);
           // setAppID(result.data.id);
           if (result.message === "Expired Access") {
@@ -240,7 +241,7 @@ function UpdateOnboardingSession() {
               appointmentID: result.data.id,
               name: `${filteredItems.personal.fname} ${filteredItems.personal.lname}`,
               email: filteredItems.personal.email,
-              personalID: Number(mentorx),
+              personalID: mentorx,
               appointmentTime: OpeningDate,
             },
           ]);
@@ -261,7 +262,7 @@ function UpdateOnboardingSession() {
               console.log(resultr);
               const raw = JSON.stringify({
                 orgID: orgIDs,
-                mentorID: Number(mentorx),
+                mentorID: mentorx,
                 id: storedArray.id,
                 onboardingID: storedArray.onboardingID,
                 appointmentID: result.data.id,
@@ -283,7 +284,7 @@ function UpdateOnboardingSession() {
                 })
                 .then((resultx) => {
                   console.log(resultx);
-                  // setOpened(false);
+                  setOpened(false);
                   if (resultx.message === "Expired Access") {
                     navigate("/authentication/sign-in");
                     window.location.reload();
@@ -301,7 +302,7 @@ function UpdateOnboardingSession() {
                     type: "success",
                     text: resultx.message,
                   }).then(() => {
-                    window.location.reload();
+                    navigate(-1);
                   });
                 })
                 .catch((error) => {
@@ -316,13 +317,6 @@ function UpdateOnboardingSession() {
             .catch((error) => {
               console.log(error);
             });
-          MySwal.fire({
-            title: result.status,
-            type: "success",
-            text: result.message,
-          }).then(() => {
-            window.location.reload();
-          });
         })
         .catch((error) => {
           setOpened(false);
@@ -343,7 +337,7 @@ function UpdateOnboardingSession() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}

@@ -139,7 +139,7 @@ function OnboardingSession() {
     const ClosingDate = new Date(end).getTime();
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const [filteredItems] = userxx.filter((item) => item.personal.id === Number(mentorx));
+    const [filteredItems] = userxx.filter((item) => item.personal.id === mentorx);
     const [filteredItemsEmp] = userxx.filter((item) => item.personal.id === data[0].empID);
     console.log(appID);
     console.log("freshly adding");
@@ -161,6 +161,7 @@ function OnboardingSession() {
       body: raw3,
       redirect: "follow",
     };
+    setOpened(true);
     fetch(`${process.env.REACT_APP_RAGA_URL}/appointment/add`, requestOptions3)
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -194,7 +195,7 @@ function OnboardingSession() {
             appointmentID: result.data.id,
             name: `${filteredItems.personal.fname} ${filteredItems.personal.lname}`,
             email: filteredItems.personal.email,
-            personalID: Number(mentorx),
+            personalID: mentorx,
             appointmentTime: OpeningDate,
           },
         ]);
@@ -215,7 +216,7 @@ function OnboardingSession() {
             console.log(resultr);
             const raw = JSON.stringify({
               orgID: orgIDs,
-              mentorID: Number(mentorx),
+              mentorID: mentorx,
               onboardingID: data[0].id,
               appointmentID: result.data.id,
             });
@@ -268,13 +269,6 @@ function OnboardingSession() {
           .catch((error) => {
             console.log(error);
           });
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          window.location.reload();
-        });
       })
       .catch((error) => {
         setOpened(false);
@@ -294,7 +288,7 @@ function OnboardingSession() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}

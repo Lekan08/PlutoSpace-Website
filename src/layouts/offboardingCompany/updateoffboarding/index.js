@@ -140,12 +140,12 @@ function Updateoffboarding() {
     const raw = JSON.stringify({
       orgID: orgIDs,
       id: idx,
-      empID: Number(onboardingx),
+      empID: onboardingx,
       startTime: OpeningDate,
       endTime: ClosingDate,
       // eslint-disable-next-line object-shorthand
       status: status,
-      createdBy: Number(createdByxx),
+      createdBy: createdByxx,
       deleteFlag: deleteFlagx,
       terminatedBy: terminatedByx,
       terminatedTime: terminatedTimex,
@@ -166,7 +166,7 @@ function Updateoffboarding() {
         return res.json();
       })
       .then((result) => {
-        setOpened(false);
+        // setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -207,7 +207,7 @@ function Updateoffboarding() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}

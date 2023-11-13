@@ -15,6 +15,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Footer from "examples/Footer";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Grid from "@mui/material/Grid";
 import withReactContent from "sweetalert2-react-content";
 import DataTable from "examples/Tables/DataTable";
 import TreasuryTypeTable from "./data";
@@ -137,7 +138,7 @@ function TreasuryType() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"
@@ -154,7 +155,17 @@ function TreasuryType() {
               Treasury Type
             </MDTypography>
           </MDBox>
-          <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <MDBox
+            variant="gradient"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            borderRadius="lg"
+            coloredShadow="success"
+            mx={3}
+            mt={1}
+            p={1}
+            mb={1}
+            textAlign="center"
+          >
             <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
               {" "}
             </MDTypography>
@@ -162,8 +173,8 @@ function TreasuryType() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       label="Name *"
@@ -174,8 +185,8 @@ function TreasuryType() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={descripx || ""}
@@ -184,14 +195,9 @@ function TreasuryType() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDTypography
                       variant="p"
                       textAlign="center"
@@ -213,8 +219,9 @@ function TreasuryType() {
                         <option value="1">Recurring</option>
                       </Form.Select>
                     </MDBox>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDBox mt={0}>
                       <MDTypography
                         variant="button"
@@ -238,20 +245,28 @@ function TreasuryType() {
                       </Form.Select>
                       <br />
                     </MDBox>
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleValidate}
+                        width="50%"
+                        align="left"
+                        style={Styles.buttonSx}
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    {" "}
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleValidate}
-                width="50%"
-                align="left"
-                style={Styles.buttonSx}
-              >
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>

@@ -261,14 +261,6 @@ export default function DemandTable() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
 
-    // const startTime = new Date(timestamp);
-    // // console.log(startTime);
-    // // const startTimex = startTime(timestamp);
-    // // console.log(startTimex);
-    // const endTime = new Date(timestamp);
-    // console.log(endTime);
-    // const endTimex = endTime(timestamp);
-    // console.log(endTimex);
     let isMounted = true;
     fetch(`${process.env.REACT_APP_LOUGA_URL}/demands/gets/${orgIDs}`, {
       headers,

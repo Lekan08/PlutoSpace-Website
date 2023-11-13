@@ -141,26 +141,27 @@ function UpdateOffboardingSession() {
     const ClosingDate = new Date(end).getTime();
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
-    const [filteredItems] = userxx.filter((item) => item.personal.id === Number(mentorx));
+    const [filteredItems] = userxx.filter((item) => item.personal.id === mentorx);
     const [filteredItemsEmp] = userxx.filter(
-      (item) => item.personal.id === Number(storedArray.offboardingDTO.empID)
+      (item) => item.personal.id === storedArray.offboardingDTO.empID
     );
     console.log(
       storedArray.mentorID,
-      Number(mentorx),
+      mentorx,
       storedArray.appointment.startTime,
       start.getTime(),
       storedArray.appointment.endTime,
       end.getTime()
     );
     if (
-      storedArray.mentorID === Number(mentorx) &&
+      storedArray.mentorID === mentorx &&
       storedArray.appointment.startTime === start.getTime() &&
       storedArray.appointment.endTime === end.getTime()
     )
       alert("no changes made");
     else {
       console.log("updating");
+      setOpened(true);
       const requestOptions = {
         method: "DELETE",
         headers: miHeaders,
@@ -214,7 +215,7 @@ function UpdateOffboardingSession() {
           return res.json();
         })
         .then((result) => {
-          setOpened(false);
+          // setOpened(false);
           console.log(result);
           // setAppID(result.data.id);
           if (result.message === "Expired Access") {
@@ -240,7 +241,7 @@ function UpdateOffboardingSession() {
               appointmentID: result.data.id,
               name: `${filteredItems.personal.fname} ${filteredItems.personal.lname}`,
               email: filteredItems.personal.email,
-              personalID: Number(mentorx),
+              personalID: mentorx,
               appointmentTime: OpeningDate,
             },
           ]);
@@ -261,7 +262,7 @@ function UpdateOffboardingSession() {
               console.log(resultr);
               const raw = JSON.stringify({
                 orgID: orgIDs,
-                mentorID: Number(mentorx),
+                mentorID: mentorx,
                 id: storedArray.id,
                 offboardingID: storedArray.offboardingID,
                 appointmentID: result.data.id,
@@ -283,7 +284,7 @@ function UpdateOffboardingSession() {
                 })
                 .then((resultx) => {
                   console.log(resultx);
-                  // setOpened(false);
+                  setOpened(false);
                   if (resultx.message === "Expired Access") {
                     navigate("/authentication/sign-in");
                     window.location.reload();
@@ -301,7 +302,7 @@ function UpdateOffboardingSession() {
                     type: "success",
                     text: resultx.message,
                   }).then(() => {
-                    window.location.reload();
+                    navigate(-1);
                   });
                 })
                 .catch((error) => {
@@ -316,13 +317,6 @@ function UpdateOffboardingSession() {
             .catch((error) => {
               console.log(error);
             });
-          MySwal.fire({
-            title: result.status,
-            type: "success",
-            text: result.message,
-          }).then(() => {
-            window.location.reload();
-          });
         })
         .catch((error) => {
           setOpened(false);
@@ -343,7 +337,7 @@ function UpdateOffboardingSession() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}

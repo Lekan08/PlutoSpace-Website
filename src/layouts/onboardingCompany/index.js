@@ -100,7 +100,7 @@ function OnboardingCompany() {
         empID: r.empID,
         startTime: r.startTime,
         endTime: r.endTime,
-        createdBy: Number(createdByx),
+        createdBy: createdByx,
       }));
     const raw = JSON.stringify(filt);
     const requestOptions = {
@@ -185,7 +185,7 @@ function OnboardingCompany() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}

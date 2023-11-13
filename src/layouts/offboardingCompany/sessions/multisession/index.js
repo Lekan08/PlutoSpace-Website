@@ -121,7 +121,7 @@ export default function MultiSessionOffboarding() {
     };
   }, []);
   const handleCreate = () => {
-    if (Number(mentorx) > 0) {
+    if (mentorx.length > 0) {
       const data11 = JSON.parse(localStorage.getItem("user1"));
       const orgIDs = data11.orgID;
       const raw3 = JSON.stringify({
@@ -163,11 +163,11 @@ export default function MultiSessionOffboarding() {
           filtTick.push({
             orgID: data11.orgID,
             appointmentID: result.data.id,
-            name: `${userxx.find((z) => z.personal.id === Number(mentorx)).personal.fname} ${
-              userxx.find((z) => z.personal.id === Number(mentorx)).personal.lname
+            name: `${userxx.find((z) => z.personal.id === mentorx).personal.fname} ${
+              userxx.find((z) => z.personal.id === mentorx).personal.lname
             }`,
-            email: userxx.find((z) => z.personal.id === Number(mentorx)).personal.email,
-            personalID: Number(mentorx),
+            email: userxx.find((z) => z.personal.id === mentorx).personal.email,
+            personalID: mentorx,
             appointmentTime: opening,
             rc: true,
           });
@@ -205,7 +205,7 @@ export default function MultiSessionOffboarding() {
               const raw = JSON.stringify(
                 filtTick.map((r) => ({
                   orgID: orgIDs,
-                  mentorID: Number(mentorx),
+                  mentorID: mentorx,
                   offboardingID: r.offboardingID,
                   appointmentID: result.data.id,
                 }))
@@ -306,7 +306,7 @@ export default function MultiSessionOffboarding() {
         <div style={{ paddingTop: "20px" }} />
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="warning"
           borderRadius="lg"
           coloredShadow="info"
           mx={20}

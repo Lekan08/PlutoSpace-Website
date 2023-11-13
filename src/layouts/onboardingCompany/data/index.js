@@ -737,7 +737,7 @@ export default function OnboardingCompanyTable() {
         Cell: ({ cell: { value } }) => changeDateandTime(value),
         align: "left",
       },
-      { Header: "TERMINATED BY ", accessor: "terminatedBy", align: "left" },
+      { Header: "TERMINATED BY ", accessor: "terminatedByName", align: "left" },
       {
         Header: "Status",
         accessor: "status",

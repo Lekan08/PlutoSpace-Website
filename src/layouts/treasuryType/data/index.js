@@ -113,7 +113,7 @@ export default function TreasuryTypeTable() {
   };
 
   const handleShow = (value) => {
-    navigate(`/treasury-Type/update?id=${value}`);
+    navigate(`/treasuryType/update?id=${value}`);
   };
 
   return {

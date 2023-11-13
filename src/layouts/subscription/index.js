@@ -20,6 +20,7 @@ import GHeaders from "getHeader";
 import TextField from "@mui/material/TextField";
 import DataTable from "examples/Tables/DataTable";
 import Styles from "styles";
+import Grid from "@mui/material/Grid";
 
 function MySubscription() {
   const { allGHeaders: miHeaders } = GHeaders();
@@ -535,12 +536,12 @@ function MySubscription() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"
             borderRadius="lg"
-            style={{ backgroundColor: "#f96d02" }}
+            style={Styles.boxSx}
             mx={2}
             mt={-3}
             p={2}
@@ -582,10 +583,10 @@ function MySubscription() {
             </MDTypography>
           </MDBox>
           <MDBox component="form" role="form">
-            <MDBox mb={2}>
+            <MDBox mb={3}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-5">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-number"
                       value={amountx || ""}
@@ -594,16 +595,11 @@ function MySubscription() {
                       type="number"
                       onChange={(e) => setAmountx(e.target.value)}
                       onKeyUp={(e) => handleAmount(e.target.value)}
-                      sx={{
-                        width: 250,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                       required
                     />
-                  </div>
-                  <div className="col-sm-2">
-                    <></>
-                  </div>
-                  <div className="col-sm-5">
+                  </Grid>
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-number"
                       value={taxAmountx || ""}
@@ -612,16 +608,12 @@ function MySubscription() {
                       type="number"
                       onChange={(e) => setTaxAmountx(e.target.value)}
                       onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                      sx={{
-                        width: 250,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                       required
                     />
-                  </div>
-                </div>
-                &nbsp; &nbsp;
-                <div className="row">
-                  <div className="col-sm-5">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-read-only-input"
                       label="Total Amount of Subscription (NGN)"
@@ -629,15 +621,11 @@ function MySubscription() {
                       InputProps={{
                         readOnly: true,
                       }}
-                      sx={{
-                        width: 250,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                     />
-                  </div>
-                  <div className="col-sm-2">
-                    <></>
-                  </div>
-                  <div className="col-sm-5">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-number"
                       value={paidAmountx || ""}
@@ -646,33 +634,27 @@ function MySubscription() {
                       type="number"
                       onChange={(e) => setPaidAmountx(e.target.value)}
                       onKeyUp={(e) => handlePaidAmountx(e.target.value)}
-                      sx={{
-                        width: 250,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                       required
                     />
-                  </div>
-                </div>
-                &nbsp; &nbsp;
-                <div className="col-sm-12">
-                  <TextField
-                    id="outlined-textarea"
-                    rows={2}
-                    value={particularsx || ""}
-                    label="Description "
-                    placeholder="Description "
-                    onChange={(e) => setParticularsx(e.target.value)}
-                    onKeyUp={(e) => handleParticulars(e.target.value)}
-                    sx={{
-                      width: 600,
-                    }}
-                    multiline
-                    required
-                  />
-                </div>
-                &nbsp; &nbsp;
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={10}>
+                    <TextField
+                      id="outlined-textarea"
+                      rows={2}
+                      value={particularsx || ""}
+                      label="Description "
+                      placeholder="Description "
+                      onChange={(e) => setParticularsx(e.target.value)}
+                      onKeyUp={(e) => handleParticulars(e.target.value)}
+                      style={{ width: "100%", height: "100%" }}
+                      multiline
+                      required
+                    />
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <Form.Select
                       value={typex}
                       aria-label="Default select example"
@@ -685,9 +667,9 @@ function MySubscription() {
                       <option value="monthly">Monthly</option>
                       <option value="yearly">Yearly</option>
                     </Form.Select>
-                  </div>
+                  </Grid>
 
-                  <div className="col-sm-6">
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-number"
                       value={frequencyx || ""}
@@ -696,31 +678,26 @@ function MySubscription() {
                       type="number"
                       onChange={(e) => setFrequency(e.target.value)}
                       onKeyUp={(e) => handleFrequencyTime(e.target.value)}
-                      sx={{
-                        width: 300,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                       required
                     />
-                  </div>
-                </div>
-                &nbsp; &nbsp;
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-number"
                       value={pricePerUnitx || ""}
-                      label="Price per Period (NGN) "
+                      label="Price Per Period (NGN) "
                       placeholder="Amount to be paid for each period "
                       type="number"
                       onChange={(e) => setPricePerUnit(e.target.value)}
                       onKeyUp={(e) => handlePricePerUnit(e.target.value)}
-                      sx={{
-                        width: 250,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                       required
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <Form.Select
                       value={assignedTox}
                       aria-label="Default select example"
@@ -734,23 +711,30 @@ function MySubscription() {
                         </option>
                       ))}
                     </Form.Select>
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <MDBox mt={1} mb={1}>
+                      <MDBox mt={4} mb={1}>
+                        <MDButton
+                          variant="gradient"
+                          onClick={handleValidate}
+                          //   color="info"
+                          style={Styles.buttonSx}
+                          width="50%"
+                          align="left"
+                        >
+                          Save
+                        </MDButton>
+                      </MDBox>
+                    </MDBox>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDBox mt={4} mb={1}>
-                <MDButton
-                  variant="gradient"
-                  onClick={handleValidate}
-                  //   color="info"
-                  style={Styles.buttonSx}
-                  width="50%"
-                  align="left"
-                >
-                  Save
-                </MDButton>
-              </MDBox>
             </MDBox>
           </MDBox>
         </MDBox>
