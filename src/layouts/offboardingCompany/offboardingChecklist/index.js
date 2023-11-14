@@ -197,7 +197,7 @@ function OffboardingChecklist() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            bgColor="warning"
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -245,7 +245,7 @@ function OffboardingChecklist() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton variant="gradient" onClick={handleClick} color="warning" width="50%">
                 Save
               </MDButton>
             </MDBox>

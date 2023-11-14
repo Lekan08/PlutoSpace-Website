@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 // zinoleesky wrote this part of d code called treasuryTpe
 
-function Treasury() {
+function UpdateTreasury() {
   const MySwal = withReactContent(Swal);
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
@@ -165,6 +165,7 @@ function Treasury() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log(result);
           setItems(result);
           setTreasureTypex(result[0].treasuryTypeID);
           setAmount(result[0].amoount);
@@ -307,7 +308,7 @@ function Treasury() {
                       color="text"
                       mt={0}
                     >
-                      Client Type
+                      Client Type *
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -330,7 +331,7 @@ function Treasury() {
                         align="left"
                         color="text"
                       >
-                        Client
+                        Client *
                       </MDTypography>{" "}
                       {showClients ? (
                         <Form.Select
@@ -374,6 +375,7 @@ function Treasury() {
                           label="Amount (NGN)"
                           placeholder="Amount (NGN)"
                           type="number"
+                          required
                         />
                       </FormControl>
                     </Box>
@@ -396,7 +398,7 @@ function Treasury() {
                         onChange={(e) => setTreasureTypex(e.target.value)}
                         aria-label="Default select example"
                       >
-                        <option value="">--Select Treasury Type--</option>
+                        <option value="">--Select Treasury Type *--</option>
                         {treasureType.map((api) => (
                           <option key={api.id} value={api.id}>
                             {api.name}
@@ -436,4 +438,4 @@ function Treasury() {
     </DashboardLayout>
   );
 }
-export default Treasury;
+export default UpdateTreasury;

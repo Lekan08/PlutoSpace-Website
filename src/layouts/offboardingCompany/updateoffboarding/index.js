@@ -166,7 +166,7 @@ function Updateoffboarding() {
         return res.json();
       })
       .then((result) => {
-        setOpened(false);
+        // setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -207,7 +207,7 @@ function Updateoffboarding() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}

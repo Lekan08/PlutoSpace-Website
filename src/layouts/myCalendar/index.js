@@ -129,7 +129,11 @@ function MyCalendar() {
       <Card>
         <MDBox
           variant="gradient"
+<<<<<<< HEAD
           style={{ backgroundColor: "#f96d02" }}
+=======
+          bgColor="warning"
+>>>>>>> f574790b6b1013db910ba12185b307f6b7ba39da
           borderRadius="lg"
           coloredShadow="info"
           mx={2}

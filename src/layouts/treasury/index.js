@@ -261,7 +261,7 @@ function Treasury() {
                       color="text"
                       mt={0}
                     >
-                      Client Type
+                      Client Type *
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -284,7 +284,7 @@ function Treasury() {
                         align="left"
                         color="text"
                       >
-                        Client
+                        Client *
                       </MDTypography>{" "}
                       {showClients ? (
                         <Form.Select
@@ -334,7 +334,7 @@ function Treasury() {
                         onChange={(e) => setTreasureTypex(e.target.value)}
                         aria-label="Default select example"
                       >
-                        <option value="">--Select Treasury Type--</option>
+                        <option value="">--Select Treasury Type *--</option>
                         {treasureType.map((api) => (
                           <option key={api.id} value={api.id}>
                             {api.name}
@@ -355,6 +355,7 @@ function Treasury() {
                           label="Amount (NGN)"
                           placeholder="Amount (NGN)"
                           type="number"
+                          required
                         />
                       </FormControl>
                     </Box>
