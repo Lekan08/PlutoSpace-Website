@@ -6,7 +6,7 @@ import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
 import { Container, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import Styles from "styles";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -274,9 +274,8 @@ function UpdateBranch() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
-            coloredShadow="info"
             mx={2}
             mt={-3}
             p={2}
@@ -321,7 +320,7 @@ function UpdateBranch() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Name"
+                      label="Name*"
                       value={namex || ""}
                       onKeyUp={(e) => handleOnNameKeys(e.target.value)}
                       onChange={(e) => setName(e.target.value)}
@@ -335,7 +334,7 @@ function UpdateBranch() {
                       value={emailx || ""}
                       onKeyUp={(e) => handleOnEmailKeys(e.target.value)}
                       onChange={(e) => setEmail(e.target.value)}
-                      label="Email"
+                      label="Email*"
                       variant="standard"
                       fullWidth
                     />
@@ -352,7 +351,7 @@ function UpdateBranch() {
                       value={streetx || ""}
                       onKeyUp={(e) => handleOnStreetKeys(e.target.value)}
                       onChange={(e) => setStreet(e.target.value)}
-                      label="Street"
+                      label="Street*"
                       variant="standard"
                       fullWidth
                     />
@@ -363,7 +362,7 @@ function UpdateBranch() {
                       value={cityx || ""}
                       onKeyUp={(e) => handleOnCityKeys(e.target.value)}
                       onChange={(e) => setCity(e.target.value)}
-                      label="City"
+                      label="City*"
                       variant="standard"
                       fullWidth
                     />
@@ -376,7 +375,7 @@ function UpdateBranch() {
                 <div className="row">
                   <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      Country
+                      Country*
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -395,7 +394,7 @@ function UpdateBranch() {
                   </div>
                   <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      State
+                      State*
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -420,7 +419,7 @@ function UpdateBranch() {
                 <div className="row">
                   <div className="col-sm-8">
                     <MDTypography variant="button" fontWeight="regular" color="text">
-                      Phone Number
+                      Phone Number*
                     </MDTypography>
                     <PhoneInput
                       value={pnox}
@@ -434,7 +433,12 @@ function UpdateBranch() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" width="50%">
+              <MDButton
+                style={Styles.buttonSx}
+                variant="gradient"
+                onClick={handleValidate}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

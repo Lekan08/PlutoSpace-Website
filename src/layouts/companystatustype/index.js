@@ -7,7 +7,6 @@ import Card from "@mui/material/Card";
 import { Container } from "react-bootstrap";
 import companyStatustype from "layouts/companystatustype/data/companystatustype";
 import MDButton from "components/MDButton";
-
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -17,6 +16,7 @@ import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 
 function Status() {
   const MySwal = withReactContent(Swal);
@@ -115,7 +115,7 @@ function Status() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -185,7 +185,12 @@ function Status() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                style={Styles.buttonSx}
+                onClick={handleClick}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

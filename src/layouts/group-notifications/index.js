@@ -8,6 +8,7 @@ import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import "bootstrap/dist/css/bootstrap.min.css";
 import PHeaders from "postHeader";
+import Styles from "styles";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import GHeaders from "getHeader";
@@ -423,7 +424,7 @@ function GroupNotifications() {
         <Container>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -503,7 +504,7 @@ function GroupNotifications() {
                   <MDButton
                     align="center"
                     textAlign="center"
-                    color="info"
+                    style={Styles.buttonSx}
                     variant="gradient"
                     width={5}
                     onClick={handleOnButton}
