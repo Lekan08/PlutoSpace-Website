@@ -186,13 +186,19 @@ function Loyalty() {
             p={2}
             mb={1}
             textAlign="center"
-            style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Loyalty
             </MDTypography>
           </MDBox>
-          <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <MDBox sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+           borderRadius="lg"
+           coloredShadow="success"
+           mx={3}
+           mt={1}
+           p={1}
+           mb={1}
+           textAlign="center">
             <MDTypography variant="gradient" fontSize="60%" color="error" id="salesCount">
               {" "}
             </MDTypography>

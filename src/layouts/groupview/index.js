@@ -203,8 +203,8 @@ function Checkbox() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
           borderRadius="lg"
+          style={{ backgroundColor: "#f96d02" }}
           coloredShadow="success"
           mx={30}
           mt={2}

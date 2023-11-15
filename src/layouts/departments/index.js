@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import MDTypography from "components/MDTypography";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import Styles from "styles";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -114,10 +114,10 @@ function Departments() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -145,7 +145,7 @@ function Departments() {
               {" "}
             </MDTypography>
           </MDBox>
-          <MDBox component="form" role="form">
+          <MDBox component="form" role="form" name="form1">
             <MDBox mb={2}>
               <Container>
                 <div className="row">
@@ -161,6 +161,7 @@ function Departments() {
                       fullWidth
                     />
                   </div>
+
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
@@ -174,11 +175,12 @@ function Departments() {
                 </div>
               </Container>
             </MDBox>
+
             <MDBox mt={4} mb={1}>
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >

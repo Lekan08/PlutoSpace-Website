@@ -10,7 +10,7 @@ import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import Styles from "styles";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -118,23 +118,22 @@ function SysRoles() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={{ backgroundColor: "#f96d02" }}
             mx={2}
             mt={-3}
             p={2}
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            <MDTypography variant="h4" fontWeight="medium" color="white" mt={2}>
               Add System Roles
             </MDTypography>
           </MDBox>
           <MDBox
             variant="gradient"
             sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-            borderRadius="lg"
+            borderRadius="md"
             coloredShadow="success"
             mx={3}
             mt={1}
@@ -142,7 +141,7 @@ function SysRoles() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
+            <MDTypography variant="gradient" fontSize="50%" color="error" id="name">
               {" "}
             </MDTypography>
           </MDBox>
@@ -153,7 +152,7 @@ function SysRoles() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Name"
+                      label="Name *"
                       name="name"
                       value={namex || ""}
                       onKeyUp={handleOnNameKeys}
@@ -180,7 +179,7 @@ function SysRoles() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >

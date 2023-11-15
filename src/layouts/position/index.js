@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function Positions() {
   const MySwal = withReactContent(Swal);
@@ -114,8 +115,8 @@ function Positions() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
             borderRadius="lg"
+            style={{ backgroundColor: "#f96d02" }}
             coloredShadow="info"
             mx={2}
             mt={-3}
@@ -184,7 +185,12 @@ function Positions() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                style={Styles.buttonSx}
+                onClick={handleClick}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>
