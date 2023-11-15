@@ -6,6 +6,8 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { Container, Form } from "react-bootstrap";
 import MDInput from "components/MDInput";
+
+import Styles from "styles";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
@@ -187,7 +189,7 @@ function MattersArising() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -317,7 +319,7 @@ function MattersArising() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="center"
               >

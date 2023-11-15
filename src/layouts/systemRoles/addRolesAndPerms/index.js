@@ -334,7 +334,7 @@ function RolesAndPerms() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          style={{ backgroundColor: "#f96d02" }}
           borderRadius="lg"
           coloredShadow="success"
           mx={30}

@@ -144,7 +144,7 @@ function Accessor() {
       const raw = JSON.stringify({
         orgID: orgIDs,
         accessor: perso,
-        grantedFor: Number(e.target.value),
+        grantedFor: e.target.value,
       });
       console.log(raw);
       const requestOptions = {
@@ -221,12 +221,12 @@ function Accessor() {
     <DashboardLayout>
       <DashboardNavbar />
       <br />
-      <MDBox mx={20}>
-        <Card style={{ width: "700px" }}>
+      <MDBox pt={4} pb={3} px={3}>
+        <Card>
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              style={{ backgroundColor: "#f96d02" }}
               borderRadius="lg"
               coloredShadow="info"
               mx={0}

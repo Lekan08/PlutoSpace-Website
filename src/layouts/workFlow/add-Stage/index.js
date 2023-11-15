@@ -21,17 +21,14 @@ import { useNavigate } from "react-router-dom";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 // import Divider from "@mui/material/Divider";
-// import DownloadDoneSharpIcon from "@mui/icons-material/DownloadDoneSharp";
-
 import Grid from "@mui/material/Grid";
-// import { styled } from "@mui/material/styles";
 // import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import PHeaders from "postHeader";
+import Styles from "styles";
 // import Chip from "@mui/material/Chip";
 // import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 // import ClearSharpIcon from "@mui/icons-material/ClearSharp";
@@ -281,7 +278,7 @@ function AddStage() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -302,7 +299,7 @@ function AddStage() {
               <MDButton
                 onClick={handleClick}
                 variant="gradient"
-                color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >
