@@ -950,7 +950,8 @@ function PaymentHis() {
           <MDBox pt={4} pb={3} px={30}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={1}

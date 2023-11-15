@@ -349,7 +349,7 @@ function UpdateMyBills() {
             variant="gradient"
             // bgColor="info"
             borderRadius="lg"
-            style={{ backgroundColor: "#f96d02" }}
+            style={Styles.boxSx}
             mx={2}
             mt={-3}
             p={2}
