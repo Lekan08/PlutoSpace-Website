@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import GHeaders from "getHeader";
 import TextField from "@mui/material/TextField";
 import Styles from "styles";
+import Grid from "@mui/material/Grid";
 
 function UpdateMyBills() {
   const { allGHeaders: miHeaders } = GHeaders();
@@ -343,12 +344,12 @@ function UpdateMyBills() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"
             borderRadius="lg"
-            style={{ backgroundColor: "#f96d02" }}
+            style={Styles.boxSx}
             mx={2}
             mt={-3}
             p={2}
@@ -383,8 +384,8 @@ function UpdateMyBills() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-5">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-number"
                       value={amountx || ""}
@@ -393,16 +394,11 @@ function UpdateMyBills() {
                       type="number"
                       onChange={(e) => setAmountx(e.target.value)}
                       onKeyUp={(e) => handleAmount(e.target.value)}
-                      sx={{
-                        width: 250,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                       required
                     />
-                  </div>
-                  <div className="col-sm-2">
-                    <></>
-                  </div>
-                  <div className="col-sm-5">
+                  </Grid>
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-number"
                       value={taxAmountx || ""}
@@ -411,16 +407,12 @@ function UpdateMyBills() {
                       type="number"
                       onChange={(e) => setTaxAmountx(e.target.value)}
                       onKeyUp={(e) => handleTaxAmount(e.target.value)}
-                      sx={{
-                        width: 250,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                       required
                     />
-                  </div>
-                </div>
-                &nbsp; &nbsp;
-                <div className="row">
-                  <div className="col-sm-5">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-read-only-input"
                       label="Total Amount (NGN)"
@@ -428,15 +420,11 @@ function UpdateMyBills() {
                       InputProps={{
                         readOnly: true,
                       }}
-                      sx={{
-                        width: 250,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                     />
-                  </div>
-                  <div className="col-sm-2">
-                    <></>
-                  </div>
-                  <div className="col-sm-5">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <TextField
                       id="filled-number"
                       value={paidAmountx || ""}
@@ -445,48 +433,40 @@ function UpdateMyBills() {
                       type="number"
                       onChange={(e) => setPaidAmountx(e.target.value)}
                       onKeyUp={(e) => handlePaidAmountx(e.target.value)}
-                      sx={{
-                        width: 250,
-                      }}
+                      style={{ width: "100%", height: "100%" }}
                       required
                     />
-                  </div>
-                </div>
-                &nbsp; &nbsp;
-                <div className="col-sm-12">
-                  <TextField
-                    id="outlined-textarea"
-                    rows={2}
-                    value={purposex || ""}
-                    label="Purpose "
-                    placeholder="Purpose "
-                    onChange={(e) => setPurposex(e.target.value)}
-                    onKeyUp={(e) => handlePurpose(e.target.value)}
-                    sx={{
-                      width: 587,
-                    }}
-                    multiline
-                    required
-                  />
-                </div>
-                &nbsp; &nbsp;
-                <div className="col-sm-12">
-                  <TextField
-                    id="outlined-textarea"
-                    rows={2}
-                    value={extraInfox || ""}
-                    label="Extra Informaton "
-                    placeholder="Extra Informaton "
-                    onChange={(e) => setExtraInfox(e.target.value)}
-                    sx={{
-                      width: 587,
-                    }}
-                    multiline
-                  />
-                </div>
-                &nbsp; &nbsp;
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={10}>
+                    <TextField
+                      id="outlined-textarea"
+                      rows={2}
+                      value={purposex || ""}
+                      label="Purpose "
+                      placeholder="Purpose "
+                      onChange={(e) => setPurposex(e.target.value)}
+                      onKeyUp={(e) => handlePurpose(e.target.value)}
+                      style={{ width: "100%", height: "100%" }}
+                      multiline
+                      required
+                    />
+                  </Grid>
+
+                  <Grid item xs={10}>
+                    <TextField
+                      id="outlined-textarea"
+                      rows={2}
+                      value={extraInfox || ""}
+                      label="Extra Informaton "
+                      placeholder="Extra Informaton "
+                      onChange={(e) => setExtraInfox(e.target.value)}
+                      style={{ width: "100%", height: "100%" }}
+                      multiline
+                    />
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <Form.Select
                       value={assignedTox}
                       aria-label="Default select example"
@@ -500,8 +480,9 @@ function UpdateMyBills() {
                         </option>
                       ))}
                     </Form.Select>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <Form.Select
                       value={approverx}
                       aria-label="Default select example"
@@ -515,23 +496,30 @@ function UpdateMyBills() {
                         </option>
                       ))}
                     </Form.Select>
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <MDBox mt={1} mb={1}>
+                      <MDBox mt={4} mb={1}>
+                        <MDButton
+                          variant="gradient"
+                          onClick={handleValidate}
+                          //   color="info"
+                          style={Styles.buttonSx}
+                          width="50%"
+                          align="left"
+                        >
+                          Update
+                        </MDButton>
+                      </MDBox>
+                    </MDBox>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDBox mt={4} mb={1}>
-                <MDButton
-                  variant="gradient"
-                  onClick={handleValidate}
-                  //   color="info"
-                  style={Styles.buttonSx}
-                  width="50%"
-                  align="left"
-                >
-                  Update
-                </MDButton>
-              </MDBox>
             </MDBox>
           </MDBox>
         </MDBox>
