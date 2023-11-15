@@ -17,6 +17,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Styles from "styles";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import DatePicker from "react-datepicker";
@@ -752,7 +753,8 @@ function PaymentHis() {
             <Card>
               <MDBox
                 variant="gradient"
-                bgColor="info"
+                // bgColor="info"
+                style={Styles.boxSx}
                 borderRadius="lg"
                 coloredShadow="success"
                 mt={2}
@@ -792,7 +794,8 @@ function PaymentHis() {
               <MDBox pt={4} pb={3} px={3}>
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  // bgColor="info"
+                  style={Styles.boxSx}
                   borderRadius="lg"
                   coloredShadow="info"
                   mx={2}
@@ -839,7 +842,7 @@ function PaymentHis() {
                         <div className="col-sm-6">
                           <MDInput
                             type="text"
-                            label="Name(name on receipt) *"
+                            label="Name( name on receipt) *"
                             value={namex || ""}
                             onKeyUp={handleOnNameKeys}
                             onChange={(e) => setName(e.target.value)}
@@ -927,7 +930,8 @@ function PaymentHis() {
                           <MDButton
                             variant="gradient"
                             onClick={() => initializePayment()}
-                            color="info"
+                            // color="info"
+                            style={Styles.buttonSx}
                             width="50%"
                           >
                             Pay
@@ -1037,7 +1041,8 @@ function PaymentHis() {
                       <MDButton
                         variant="gradient"
                         onClick={handleClick}
-                        color="info"
+                        // color="info"
+                        style={Styles.buttonSx}
                         width="50%"
                         align="center"
                       >

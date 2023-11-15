@@ -50,6 +50,8 @@ function DemandUpdate() {
   const [terminatedByx, setTerminatedBy] = useState("");
   const [terminatedTimex, setTerminatedTime] = useState("");
   const [createdTimex, setcreatedTime] = useState("");
+  const [orgIDss, setOrgIDss] = useState("");
+  const [createdBys, setCreatedBYs] = useState("");
 
   const [showClients, setShowClients] = useState(false);
   const [uclientIDx, setUClientIDx] = useState("");
@@ -247,10 +249,11 @@ function DemandUpdate() {
             setTitle(result[0].title);
             setQuantity(result[0].quantity);
             setPPQuantity(result[0].pricePerQuantity);
-            // setIndividual(result[0].clientType);
+            setOrgIDss(result[0].orgID);
             setUClientTypex(result[0].clientType);
             setUClientIDx(result[0].clientID);
             setProductID(result[0].productID);
+            setCreatedBYs(result[0].createdBy);
             handleChangeClient(result[0].clientType);
             setVatAmount(result[0].vatAmount);
             setBonusAmount(result[0].bonusAmount);
@@ -334,16 +337,13 @@ function DemandUpdate() {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-    const orgIDs = data11.orgID;
-    const idxx = data11.id;
 
     const raw = JSON.stringify({
       id: idx,
       title: titlex,
       clientID: uclientIDx,
       clientType: uclientTypex,
-      orgID: orgIDs,
+      orgID: orgIDss,
       productID: productIDx,
       quantity: quantityx,
       pricePerQuantity: ppQuantityx,
@@ -351,7 +351,7 @@ function DemandUpdate() {
       payingAmount: payAmountx,
       vatAmount: vatAmountx,
       bonusAmount: bonusAmountx,
-      createdBy: idxx,
+      createdBy: createdBys,
       createdTime: createdTimex,
       terminatedTime: terminatedTimex,
       terminatedBy: terminatedByx,
@@ -360,6 +360,7 @@ function DemandUpdate() {
       approvedBy: approvedByx,
       deleteFlag: deleteFlagx,
     });
+    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
