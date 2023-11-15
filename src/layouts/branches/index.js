@@ -204,7 +204,7 @@ function Branches() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
             style={{ backgroundColor: "#f96d02" }}
@@ -308,7 +308,7 @@ function Branches() {
                 <div className="row">
                   <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                      Country
+                      Country*
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
