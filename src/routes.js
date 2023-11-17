@@ -2415,7 +2415,7 @@ const routes = [
     name: "Loyalty Coniguration",
     key: "LoyaltyConfiguration",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/loyalty-configuration",
+    route: "/loyalty configuration",
     component: <LoyaltyConiguration />,
   },
   {
