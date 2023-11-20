@@ -478,7 +478,6 @@ function Demand() {
     })
       .then(async (res) => {
         const result = await res.text();
-        console.log(res);
         if (result === null || result === undefined || result === "") {
           return {};
         }

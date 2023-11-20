@@ -18,6 +18,8 @@ import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import SupplyTable from "layouts/supply/supplytable.js";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 // Zinoleesky
 
 function supply() {
@@ -421,10 +423,11 @@ function supply() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={20}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -433,7 +436,7 @@ function supply() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="h4" fontWeight="medium" color="RED" mt={1}>
+            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Add Supply
             </MDTypography>
           </MDBox>
@@ -467,8 +470,8 @@ function supply() {
           <MDBox component="form" role="form">
             <MDBox mb={0}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       label="Title *"
@@ -478,9 +481,9 @@ function supply() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
+                  </Grid>
 
-                  <div className="col-sm-6">
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={quantityx || ""}
@@ -490,15 +493,9 @@ function supply() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -520,8 +517,9 @@ function supply() {
                         <option value="2">Corporate</option>
                       </Form.Select>
                     </MDBox>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDBox mt={0}>
                       <MDTypography
                         variant="button"
@@ -561,15 +559,9 @@ function supply() {
                       )}
                       <br />
                     </MDBox>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -594,9 +586,9 @@ function supply() {
                         ))}
                       </Form.Select>
                     </MDBox>
-                  </div>
+                  </Grid>
 
-                  <div className="col-sm-6">
+                  <Grid item xs={5}>
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -619,15 +611,9 @@ function supply() {
                         </option>
                       ))}
                     </Form.Select>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={bonusAmountx || ""}
@@ -636,9 +622,9 @@ function supply() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
+                  </Grid>
 
-                  <div className="col-sm-6">
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={pricePQ || ""}
@@ -648,15 +634,9 @@ function supply() {
                       fullWidth
                       disabled
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={ans || ""}
@@ -665,8 +645,9 @@ function supply() {
                       fullWidth
                       disabled
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={vatAmountx || ""}
@@ -675,15 +656,9 @@ function supply() {
                       fullWidth
                       disabled
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={payAmountx || ""}
@@ -692,27 +667,45 @@ function supply() {
                       fullWidth
                       disabled
                     />
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleClick}
+                        // color="info"
+                        style={Styles.buttonSx}
+                        width="50%"
+                        align="left"
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleClick}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>
       </Card>
       &nbsp;
       <MDBox mt={4} mb={1}>
-        <MDButton variant="gradient" onClick={exportPDF} color="info" width="50%" align="center">
+        <MDButton
+          variant="gradient"
+          onClick={exportPDF}
+          // color="info"
+          style={Styles.buttonSx}
+          width="50%"
+          align="center"
+        >
           Export pdf
         </MDButton>
       </MDBox>

@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import { Container } from "react-bootstrap";
 import Groups from "layouts/groups/data/gRoup";
 import MDButton from "components/MDButton";
-
+import Styles from "styles";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
@@ -110,7 +110,7 @@ function GrouPs() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -169,7 +169,12 @@ function GrouPs() {
             </MDBox>
 
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                style={Styles.buttonSx}
+                onClick={handleClick}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

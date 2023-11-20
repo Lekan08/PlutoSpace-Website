@@ -28,6 +28,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Styles from "styles";
 
 function BusinessTravel() {
   const MySwal = withReactContent(Swal);
@@ -372,10 +373,10 @@ function BusinessTravel() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -669,7 +670,12 @@ function BusinessTravel() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                style={Styles.buttonSx}
+                onClick={handleValidate}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

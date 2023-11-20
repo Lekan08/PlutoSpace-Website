@@ -18,6 +18,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function StageCondition() {
   const MySwal = withReactContent(Swal);
@@ -123,10 +124,10 @@ function StageCondition() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -187,7 +188,7 @@ function StageCondition() {
               <MDButton
                 variant="gradient"
                 onClick={handleCreateCondition}
-                color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >

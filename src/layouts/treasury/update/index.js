@@ -44,6 +44,14 @@ function UpdateTreasury() {
   const [checkedAmount, setCheckedAmount] = useState("");
 
   const handleOnAmountKeys = (value) => {
+    console.log(value);
+
+    // Check if value is a string
+    if (typeof value !== "string") {
+      setCheckedAmount(true);
+      return; // exit the function early to avoid further errors
+    }
+
     const letters = /^[0-9 ]+$/;
     if (!value.match(letters)) {
       setCheckedAmount(false);
@@ -143,9 +151,10 @@ function UpdateTreasury() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
+    console.log(ids);
     const headers = miHeaders;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/treasuryTypes/getByIds/${ids}`, { headers })
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/treasury/getByIds/${ids}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -168,7 +177,7 @@ function UpdateTreasury() {
           console.log(result);
           setItems(result);
           setTreasureTypex(result[0].treasuryTypeID);
-          setAmount(result[0].amoount);
+          setAmount(result[0].amount);
           setUClientTypex(result[0].clientType);
           setUClientIDx(result[0].clientID);
           handleChangeClient(result[0].clientType);
@@ -183,19 +192,16 @@ function UpdateTreasury() {
   const handleUpdate = (e) => {
     setOpened(true);
     e.preventDefault();
-    const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
-    const idx = data11.personalID;
     const raw = JSON.stringify({
       id: items[0].id,
-      orgID: orgIDs,
+      orgID: items[0].orgID,
       clientID: uclientIDx,
       clientType: uclientTypex,
       treasuryTypeID: treasureTypex,
       amount: amountx,
       lastContributionTime: items[0].lastContributionTime,
-      createdBy: idx,
+      createdBy: items[0].createdBy,
       createdTime: items[0].createdTime,
       status: items[0].status,
       approvedBy: items[0].approvedBy,

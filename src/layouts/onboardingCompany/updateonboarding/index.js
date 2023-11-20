@@ -183,7 +183,8 @@ function Updateonboarding() {
           type: "success",
           text: result.message,
         }).then(() => {
-          window.location.reload();
+          // window.location.reload();
+          navigate(-1);
         });
         console.log(result);
       })
@@ -206,7 +207,7 @@ function Updateonboarding() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}
