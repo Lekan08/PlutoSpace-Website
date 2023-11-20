@@ -6,6 +6,7 @@ import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
 import { Container, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Styles from "styles";
 import MDTypography from "components/MDTypography";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -320,10 +321,11 @@ function ProjectUpdate() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
+            // bgColor="info"
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -346,6 +348,7 @@ function ProjectUpdate() {
             p={1}
             mb={1}
             textAlign="center"
+            marginBottom={2.5}
           >
             <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
               {" "}
@@ -364,71 +367,52 @@ function ProjectUpdate() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-12">
+                  <div className="col-sm-3">
+                    <TextField
+                      id="datetime-local"
+                      label="Start Time *"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      value={changeDateandTime(startTimexx)}
+                      onChange={(e) => setStartTime(e.target.value)}
+                    />
+                  </div>
+                  <div className="col-sm-6">
+                    <></>
+                  </div>
+                  <div className="col-sm-3">
+                    <TextField
+                      id="datetime-local"
+                      label="Forecasted End Time *"
+                      type="datetime-local"
+                      InputLabelProps={{
+                        shrink: true,
+                      }}
+                      value={changeDateandTime(foreCastedEndTimexx)}
+                      onChange={(e) => setForeCastedEndTime(e.target.value)}
+                    />
+                  </div>
+                </div>{" "}
+                &nbsp; &nbsp;
+                <div className="row">
+                  <div className="col-sm-6">
                     <TextField
                       id="outlined-textarea"
-                      rows={2}
+                      rows={1}
                       value={namex || ""}
                       onKeyUp={(e) => handleOnNameKeys(e.target.value)}
                       label="Title *"
                       placeholder="Project Title"
                       onChange={(e) => setNamex(e.target.value)}
                       sx={{
-                        width: 550,
+                        width: 400,
                       }}
                       multiline
                     />
                   </div>
-                  &nbsp; &nbsp;
-                  <div className="col-sm-12">
-                    <TextField
-                      id="outlined-textarea"
-                      rows={2}
-                      value={descriptionx}
-                      label="Description"
-                      placeholder="Project Description"
-                      onChange={(e) => setDescription(e.target.value)}
-                      sx={{
-                        width: 550,
-                      }}
-                      multiline
-                    />
-                    &nbsp; &nbsp;
-                    <div className="row">
-                      <div className="col-sm-5">
-                        <TextField
-                          id="datetime-local"
-                          label="Start Time *"
-                          type="datetime-local"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          value={changeDateandTime(startTimexx)}
-                          onChange={(e) => setStartTime(e.target.value)}
-                        />
-                      </div>
-                      <div className="col-sm-2">
-                        <></>
-                      </div>
-                      <div className="col-sm-5">
-                        <TextField
-                          id="datetime-local"
-                          label="Forecasted End Time *"
-                          type="datetime-local"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          value={changeDateandTime(foreCastedEndTimexx)}
-                          onChange={(e) => setForeCastedEndTime(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-1">
-                    <></>
-                  </div>
-                  <div className="col-sm-10">
-                    &nbsp; &nbsp;
+                  <div className="col-sm-6">
                     <Form.Select
                       value={workflowIDx}
                       aria-label="Default select example"
@@ -442,8 +426,21 @@ function ProjectUpdate() {
                       ))}
                     </Form.Select>
                   </div>
-                  <div className="col-sm-1">
-                    <></>
+                  &nbsp; &nbsp;
+                  <div className="col-sm-12">
+                    <TextField
+                      id="outlined-textarea"
+                      rows={1}
+                      value={descriptionx}
+                      label="Description"
+                      placeholder="Project Description"
+                      onChange={(e) => setDescription(e.target.value)}
+                      sx={{
+                        width: 950,
+                      }}
+                      multiline
+                    />
+                    &nbsp; &nbsp;
                   </div>
                   {/* <div className="col-sm-6">
                     <MDInput
@@ -462,7 +459,8 @@ function ProjectUpdate() {
               <MDButton
                 variant="gradient"
                 onClick={handleValidate}
-                color="info"
+                // color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >
