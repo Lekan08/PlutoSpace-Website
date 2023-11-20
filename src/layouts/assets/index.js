@@ -345,6 +345,9 @@ function Assets() {
   }, []);
 
   const handleChangeClient = (value) => {
+    console.log(value);
+    // Check if value is a string
+
     const callClientType = value.toString();
     setClientTypex(callClientType);
     let clientTyppe = "";
@@ -354,6 +357,9 @@ function Assets() {
     } else if (callClientType === "2") {
       setShowClients(false);
       clientTyppe = "corporate";
+    } else if (value === "--Select Client Type--") {
+      setClient([]);
+      return; // exit the function early to avoid further errors
     }
     setOpened(true);
     const headers = miHeaders;
