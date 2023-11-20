@@ -110,7 +110,6 @@ function Treasury() {
       clientType: uclientTypex,
       treasuryTypeID: treasureTypex,
       amount: amountx,
-      //   lastContributionTime: 0,
       createdBy: idx,
     });
     const requestOptions = {
