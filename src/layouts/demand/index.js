@@ -497,6 +497,7 @@ function Demand() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log(result);
           setValue(result);
         }
       });

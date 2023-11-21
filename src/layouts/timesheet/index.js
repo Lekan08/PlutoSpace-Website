@@ -616,7 +616,11 @@ function TimeSheetManual() {
           </MDBox>
           <MDBox
             variant="gradient"
-            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -624,6 +628,7 @@ function TimeSheetManual() {
             p={1}
             mb={1}
             textAlign="center"
+            marginBottom={2.5}
           >
             <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
               {" "}
