@@ -122,8 +122,7 @@ function Roles() {
         <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            // bgColor="info"
-            style={Styles.boxSx}
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
