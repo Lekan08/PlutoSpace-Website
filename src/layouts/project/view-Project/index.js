@@ -5,6 +5,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
+import Styles from "styles";
 import Card from "@mui/material/Card";
 import { Container, Form } from "react-bootstrap";
 import GHeaders from "getHeader";
@@ -1141,7 +1142,14 @@ export default function Pipeline() {
             </div>
           </div>
           <MDBox mt={4} mb={1}>
-            <MDButton variant="gradient" onClick={addTask} color="info" width="50%" align="left">
+            <MDButton
+              variant="gradient"
+              onClick={addTask}
+              //  color="info"
+              width="50%"
+              align="left"
+              style={Styles.buttonSx}
+            >
               Save
             </MDButton>
           </MDBox>
