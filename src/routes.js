@@ -2412,18 +2412,18 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Loyalty Coniguration",
+    name: "Loyalty-Configuration",
     key: "LoyaltyConfiguration",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/loyalty configuration",
+    route: "/loyalty-Configuration",
     component: <LoyaltyConiguration />,
   },
   {
     // type: "collapse",
-    name: "Loyalty Configuration",
+    name: "Loyalty-Configuration",
     key: "LoyaltyConfiguration",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/loyalty-configuration/update",
+    route: "/loyalty-Configuration/update",
     component: <UpdateLoyaltyConiguration />,
   },
   {

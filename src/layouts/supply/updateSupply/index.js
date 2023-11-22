@@ -25,8 +25,8 @@ function SupplyUpdate() {
 
   const [idx, setIdx] = useState("");
   const [checkedTitle, setCheckedTitle] = useState("");
-  const [ceatedByx, setOrgID] = useState("");
-  const [OrgIdx, setCreatedBy] = useState("");
+  const [ceatedByx, setCreatedBy] = useState("");
+  const [OrgIdx, setOrgID] = useState("");
   const [checkedQuantity, setCheckedQuantity] = useState("");
   const [checkedPPQuantity, setCheckedPPQuantity] = useState("");
   const [checkedVatAmount, setCheckedVatAmount] = useState("");
@@ -48,6 +48,14 @@ function SupplyUpdate() {
   const [product, setProduct] = useState([]);
   const [productIDx, setProductID] = useState("");
   const [pricePQ, setpricePQ] = useState("");
+
+  const [createdTimex, setCreatedTimex] = useState("");
+  const [statusx, setStatusx] = useState("");
+  const [approvedByx, setApprovedByx] = useState("");
+  const [approvedTimex, setApprovedTimex] = useState("");
+  const [terminatedByx, setTerminatedByx] = useState("");
+  const [terminatedTimex, setTerminatedTimex] = useState("");
+  const [demandIdx, setDemandID] = useState("");
 
   const [opened, setOpened] = useState(false);
   console.log(opened);
@@ -211,6 +219,7 @@ function SupplyUpdate() {
         if (isMounted) {
           // eslint-disable-next-line eqeqeq
           if (result.length != 0) {
+            console.log(result);
             setIdx(result[0].id);
             setOrgID(result[0].orgID);
             setCreatedBy(result[0].createdBy);
@@ -225,6 +234,13 @@ function SupplyUpdate() {
             setBonusAmount(result[0].bonusAmount);
             setProductID(result[0].productID);
             setSupplyingBranchID(result[0].supplyingBranchID);
+            setDemandID(result[0].demandID);
+            setTerminatedTimex(result[0].terminatedTime);
+            setTerminatedByx(result[0].terminatedBy);
+            setApprovedTimex(result[0].approvedTime);
+            setApprovedByx(result[0].approvedBy);
+            setStatusx(result[0].status);
+            setCreatedTimex(result[0].createdTime);
           } else {
             setIdx(null);
           }
@@ -353,6 +369,7 @@ function SupplyUpdate() {
         orgID: OrgIdx,
         clientID: uclientIDx,
         clientType: uclientTypex,
+        productID: productIDx,
         supplyingBranchID: supplyingBranchIDx,
         quantity: quantityx,
         pricePerQuantity: pricePQ,
@@ -361,8 +378,15 @@ function SupplyUpdate() {
         payingAmount: payAmountx,
         bonusAmount: bonusAmountx,
         createdBy: ceatedByx,
-        productID: productIDx,
+        createdTime: createdTimex,
+        status: statusx,
+        approvedBy: approvedByx,
+        approvedTime: approvedTimex,
+        terminatedBy: terminatedByx,
+        terminatedTime: terminatedTimex,
+        demandID: demandIdx,
       });
+      console.log(raw);
       const requestOptions = {
         method: "POST",
         headers: myHeaders,

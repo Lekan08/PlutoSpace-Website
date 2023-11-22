@@ -221,7 +221,7 @@ export default function ComRole() {
           <div
             style={{
               width: "100%",
-              backgroundColor: "#dadada",
+              backgroundColor: "#f96d02",
               borderRadius: "2px",
             }}
           >

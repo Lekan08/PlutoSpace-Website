@@ -25,6 +25,7 @@ import Box from "@mui/material/Box";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import DatePicker from "react-datepicker";
 import Chip from "@mui/material/Chip";
+import Grid from "@mui/material/Grid";
 
 function UpdateAssets() {
   const MySwal = withReactContent(Swal);
@@ -265,6 +266,9 @@ function UpdateAssets() {
     } else if (callClientType === "2") {
       setShowClients(false);
       clientTyppe = "corporate";
+    } else if (value === "--Select Client Type--") {
+      setClient([]);
+      return; // exit the function early to avoid further errors
     }
     setOpened(true);
     const headers = miHeaders;
@@ -532,7 +536,7 @@ function UpdateAssets() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
             borderRadius="lg"
@@ -572,8 +576,8 @@ function UpdateAssets() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       label="Item *"
@@ -583,8 +587,8 @@ function UpdateAssets() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -609,14 +613,9 @@ function UpdateAssets() {
                         ))}
                       </Form.Select>
                     </MDBox>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -638,8 +637,8 @@ function UpdateAssets() {
                         <option value="2">Corporate</option>
                       </Form.Select>
                     </MDBox>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDBox mt={0}>
                       <MDTypography
                         variant="button"
@@ -679,14 +678,8 @@ function UpdateAssets() {
                       )}
                       <br />
                     </MDBox>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <Box sx={{ minWidth: 100 }}>
                       <FormControl fullWidth>
                         <TextField
@@ -702,8 +695,8 @@ function UpdateAssets() {
                         />
                       </FormControl>
                     </Box>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDBox>
                       <Form.Select
                         value={branchx}
@@ -719,25 +712,8 @@ function UpdateAssets() {
                         ))}
                       </Form.Select>
                     </MDBox>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox>
-              <Container>
-                <div className="row">
-                  {/* <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      label="Serial Number"
-                      value={serialNox || ""}
-                      // onKeyUp={(e) => handleOnItemKeys(e.target.value)}
-                      onChange={(e) => setSerialNo(e.target.value)}
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div> */}
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <Box sx={{ minWidth: 100 }}>
                       <FormControl fullWidth>
                         <TextField
@@ -752,8 +728,8 @@ function UpdateAssets() {
                         />
                       </FormControl>
                     </Box>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       label="Manufacturer"
@@ -769,14 +745,8 @@ function UpdateAssets() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDBox mt={2}>
                       <MDTypography
                         variant="button"
@@ -798,8 +768,8 @@ function UpdateAssets() {
                         onChange={(boughtdate) => setItemBoughtDate(boughtdate)}
                       />{" "}
                     </MDBox>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDBox mt={2}>
                       <MDTypography
                         variant="button"
@@ -821,15 +791,8 @@ function UpdateAssets() {
                         onChange={(warrantydate) => setItemWarrantyDate(warrantydate)}
                       />{" "}
                     </MDBox>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            &nbsp; &nbsp;
-            <MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDBox>
                       <Form.Select
                         value={assignedTox}
@@ -845,8 +808,8 @@ function UpdateAssets() {
                         ))}
                       </Form.Select>
                     </MDBox>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDTypography variant="p" fontWeight="regular" color="secondary" fontSize="90%">
                       {/* <i className="optional"> (optional) </i>
                       <br />
@@ -874,19 +837,24 @@ function UpdateAssets() {
                       ))}
                       <br /> <br />
                     </MDTypography>
-                  </div>
-                </div>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleValidate}
+                        style={Styles.buttonSx}
+                        width="50%"
+                      >
+                        Update
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleValidate}
-                style={Styles.buttonSx}
-                width="50%"
-              >
-                Update
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>

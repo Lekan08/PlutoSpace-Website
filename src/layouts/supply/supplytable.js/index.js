@@ -232,6 +232,7 @@ export default function SupplyTable() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log(result);
           setItems(result);
         }
       });
