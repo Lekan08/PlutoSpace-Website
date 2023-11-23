@@ -329,6 +329,8 @@ function IconView({ items, groups, level }) {
     console.log(value);
     console.log(filteredItems);
     const docKey = filteredItems[0].key;
+    console.log(docKey);
+    console.log("docKey");
     // const docKey = "DOC-1664892565964-ORG-62bb21f6266f37394be3a183";
     handleClose();
     setOpened(true);
@@ -343,12 +345,15 @@ function IconView({ items, groups, level }) {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
         const result = await res.text();
+        console.log(result);
         if (result === null || result === undefined || result === "") {
           return {};
         }
         return JSON.parse(result);
       })
       .then((result) => {
+        setOpened(false);
+        console.log(result);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();

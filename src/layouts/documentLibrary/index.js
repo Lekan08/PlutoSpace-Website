@@ -841,7 +841,7 @@ function DocumentLibrary() {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem onClick={() => handleCloseUserMenu(1)}>
-                  <Typography textAlign="center">Content</Typography>
+                  <Typography textAlign="center">List</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => handleCloseUserMenu(2)}>
                   <Typography textAlign="center">Icon</Typography>
