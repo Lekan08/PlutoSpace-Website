@@ -326,9 +326,12 @@ function ContentView({ items, groups, level }) {
 
   const handleView = (value) => {
     const filteredItems = items.filter((item) => item.id === value);
+    console.log("docKey");
     console.log(value);
     console.log(filteredItems);
     const docKey = filteredItems[0].key;
+    console.log(docKey);
+    console.log("docKey");
     // const docKey = "DOC-1664892565964-ORG-62bb21f6266f37394be3a183";
     handleClose();
     setOpened(true);
@@ -349,6 +352,7 @@ function ContentView({ items, groups, level }) {
         return JSON.parse(result);
       })
       .then((result) => {
+        console.log(result);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -361,6 +365,7 @@ function ContentView({ items, groups, level }) {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        setOpened(false);
         if (result.name) {
           fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.name}`, {
             headers,
@@ -432,6 +437,7 @@ function ContentView({ items, groups, level }) {
                   });
                 }
               } else {
+                setOpened(false);
                 setViewDoc(false);
                 MySwal.fire({
                   title: "DOCUMENT_NON_EXIST",
@@ -441,6 +447,7 @@ function ContentView({ items, groups, level }) {
               }
             });
         } else {
+          setOpened(false);
           setViewDoc(false);
           MySwal.fire({
             title: "DOCUMENT_NON_EXIST",

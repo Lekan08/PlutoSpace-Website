@@ -14,7 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import MDButton from "components/MDButton";
 
 function updatesystemrole() {
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState([]);
   const [lists, setLists] = useState([]);
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
@@ -32,7 +32,8 @@ function updatesystemrole() {
     const orgIDs = data11.orgID;
 
     const id = urlParams.get("id");
-    const idVal = JSON.parse([id]);
+    console.log(id);
+    const idVal = id;
 
     let isMounted = true;
     fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/getByPersonalID/${orgIDs}/${idVal}`, {
@@ -57,6 +58,7 @@ function updatesystemrole() {
         if (isMounted) {
           if (resultg.roleID === null) setRoleID("0");
           else setRoleID(resultg.roleID);
+          console.log(resultg);
           setUsers(resultg);
         }
       });
