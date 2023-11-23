@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import GHeaders from "getHeader";
 import PHeaders from "postHeader";
 import MDButton from "components/MDButton";
+import Grid from "@mui/material/Grid";
+import Styles from "styles";
 
 function SupplyUpdate() {
   const MySwal = withReactContent(Swal);
@@ -23,6 +25,8 @@ function SupplyUpdate() {
 
   const [idx, setIdx] = useState("");
   const [checkedTitle, setCheckedTitle] = useState("");
+  const [ceatedByx, setCreatedBy] = useState("");
+  const [OrgIdx, setOrgID] = useState("");
   const [checkedQuantity, setCheckedQuantity] = useState("");
   const [checkedPPQuantity, setCheckedPPQuantity] = useState("");
   const [checkedVatAmount, setCheckedVatAmount] = useState("");
@@ -44,6 +48,14 @@ function SupplyUpdate() {
   const [product, setProduct] = useState([]);
   const [productIDx, setProductID] = useState("");
   const [pricePQ, setpricePQ] = useState("");
+
+  const [createdTimex, setCreatedTimex] = useState("");
+  const [statusx, setStatusx] = useState("");
+  const [approvedByx, setApprovedByx] = useState("");
+  const [approvedTimex, setApprovedTimex] = useState("");
+  const [terminatedByx, setTerminatedByx] = useState("");
+  const [terminatedTimex, setTerminatedTimex] = useState("");
+  const [demandIdx, setDemandID] = useState("");
 
   const [opened, setOpened] = useState(false);
   console.log(opened);
@@ -207,7 +219,10 @@ function SupplyUpdate() {
         if (isMounted) {
           // eslint-disable-next-line eqeqeq
           if (result.length != 0) {
+            console.log(result);
             setIdx(result[0].id);
+            setOrgID(result[0].orgID);
+            setCreatedBy(result[0].createdBy);
             setTitle(result[0].title);
             setQuantity(result[0].quantity);
             setpricePQ(result[0].pricePerQuantity);
@@ -219,6 +234,13 @@ function SupplyUpdate() {
             setBonusAmount(result[0].bonusAmount);
             setProductID(result[0].productID);
             setSupplyingBranchID(result[0].supplyingBranchID);
+            setDemandID(result[0].demandID);
+            setTerminatedTimex(result[0].terminatedTime);
+            setTerminatedByx(result[0].terminatedBy);
+            setApprovedTimex(result[0].approvedTime);
+            setApprovedByx(result[0].approvedBy);
+            setStatusx(result[0].status);
+            setCreatedTimex(result[0].createdTime);
           } else {
             setIdx(null);
           }
@@ -340,16 +362,14 @@ function SupplyUpdate() {
     handleOnBonusAmountKeys();
     if (enabled) {
       e.preventDefault();
-      const data11 = JSON.parse(localStorage.getItem("user1"));
-      const orgIDs = data11.orgID;
-      const idxx = data11.personalID;
 
       const raw = JSON.stringify({
         id: idx,
         title: titlex,
-        orgID: orgIDs,
+        orgID: OrgIdx,
         clientID: uclientIDx,
         clientType: uclientTypex,
+        productID: productIDx,
         supplyingBranchID: supplyingBranchIDx,
         quantity: quantityx,
         pricePerQuantity: pricePQ,
@@ -357,9 +377,16 @@ function SupplyUpdate() {
         vatAmount: vatAmountx,
         payingAmount: payAmountx,
         bonusAmount: bonusAmountx,
-        createdBy: idxx,
-        productID: productIDx,
+        createdBy: ceatedByx,
+        createdTime: createdTimex,
+        status: statusx,
+        approvedBy: approvedByx,
+        approvedTime: approvedTimex,
+        terminatedBy: terminatedByx,
+        terminatedTime: terminatedTimex,
+        demandID: demandIdx,
       });
+      console.log(raw);
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -392,7 +419,7 @@ function SupplyUpdate() {
             type: "success",
             text: result.message,
           }).then(() => {
-            window.location.reload();
+            navigate("/supply");
           });
         })
         .catch((error) => {
@@ -408,303 +435,286 @@ function SupplyUpdate() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      <div className="row">
-        <div className="col-sm-2">&nbsp;</div>
-        <div className="col-sm-8" align="center">
-          <Card>
-            <MDBox pt={4} pb={3} px={3}>
-              <MDBox component="form" role="form">
-                <MDBox
-                  variant="gradient"
-                  bgColor="info"
-                  borderRadius="lg"
-                  coloredShadow="success"
-                  mx={2}
-                  mt={-6}
-                  p={3}
-                  mb={1}
-                  textAlign="center"
-                >
-                  <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
-                    Update Supply
-                  </MDTypography>
-                </MDBox>
-                <MDBox
-                  variant="gradient"
-                  sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-                  borderRadius="lg"
-                  coloredShadow="success"
-                  mx={3}
-                  mt={1}
-                  p={1}
-                  mb={1}
-                  textAlign="center"
-                >
-                  <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
-                    {" "}
-                  </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="error" id="quantity">
-                    {" "}
-                  </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="error" id="ppquantity">
-                    {" "}
-                  </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="error" id="vatamount">
-                    {" "}
-                  </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="error" id="totalamount">
-                    {" "}
-                  </MDTypography>
-                  <MDTypography variant="gradient" fontSize="60%" color="error" id="bonusamount">
-                    {" "}
-                  </MDTypography>
-                </MDBox>
-                <MDBox component="form" role="form">
-                  <MDBox mb={0}>
-                    <Container>
-                      <div className="row">
-                        <div className="col-sm-6">
-                          <MDInput
-                            type="text"
-                            label="Title"
-                            value={titlex || ""}
-                            onKeyUp={handleOnTitleKeys}
-                            onChange={(e) => setTitle(e.target.value)}
-                            variant="standard"
-                            fullWidth
-                          />
-                        </div>
+      <Card>
+        <MDBox pt={4} pb={3}>
+          <MDBox component="form" role="form">
+            <MDBox
+              variant="gradient"
+              // bgColor="info"
+              style={Styles.boxSx}
+              borderRadius="lg"
+              coloredShadow="success"
+              mx={2}
+              mt={-6}
+              p={3}
+              mb={1}
+              textAlign="center"
+            >
+              <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
+                Update Supply
+              </MDTypography>
+            </MDBox>
+            <MDBox
+              variant="gradient"
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+              borderRadius="lg"
+              coloredShadow="success"
+              mx={3}
+              mt={1}
+              p={1}
+              mb={1}
+              textAlign="center"
+            >
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="title">
+                {" "}
+              </MDTypography>
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="quantity">
+                {" "}
+              </MDTypography>
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="ppquantity">
+                {" "}
+              </MDTypography>
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="vatamount">
+                {" "}
+              </MDTypography>
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="totalamount">
+                {" "}
+              </MDTypography>
+              <MDTypography variant="gradient" fontSize="60%" color="error" id="bonusamount">
+                {" "}
+              </MDTypography>
+            </MDBox>
+            <MDBox component="form" role="form">
+              <MDBox mb={0}>
+                <Container>
+                  <Grid container justifyContent="center" spacing={2}>
+                    <Grid item xs={5}>
+                      <MDInput
+                        type="text"
+                        label="Title"
+                        value={titlex || ""}
+                        onKeyUp={handleOnTitleKeys}
+                        onChange={(e) => setTitle(e.target.value)}
+                        variant="standard"
+                        fullWidth
+                      />
+                    </Grid>
 
-                        <div className="col-sm-6">
-                          <MDInput
-                            type="text"
-                            value={quantityx || ""}
-                            onKeyUp={handleOnQuantityKeys}
-                            onChange={(e) => setQuantity(e.target.value)}
-                            label="Quantity"
-                            variant="standard"
-                            fullWidth
-                          />
-                        </div>
-                      </div>
-                    </Container>
-                  </MDBox>
-                  &nbsp;
-                  <MDBox>
-                    <Container>
-                      <div className="row">
-                        <div className="col-sm-6">
-                          <MDTypography
-                            variant="button"
-                            fontWeight="regular"
-                            fontSize="80%"
-                            align="left"
-                            color="text"
-                            mt={0}
-                          >
-                            Client Type
-                          </MDTypography>
-                          <MDBox textAlign="right">
-                            <Form.Select
-                              onChange={(e) => handleChangeClient(e.target.value)}
-                              value={uclientTypex || ""}
-                              aria-label="Default select example"
-                            >
-                              <option>---Select Client Type---</option>
-                              <option value="1">Individual</option>
-                              <option value="2">Corperate</option>
-                            </Form.Select>
-                          </MDBox>
-                        </div>
-                        <div className="col-sm-6">
-                          <MDBox mt={0}>
-                            <MDTypography
-                              variant="button"
-                              fontWeight="regular"
-                              fontSize="80%"
-                              align="left"
-                              color="text"
-                            >
-                              Client
-                            </MDTypography>{" "}
-                            {showClients ? (
-                              <Form.Select
-                                value={uclientIDx}
-                                onChange={(e) => setUClientIDx(e.target.value)}
-                                aria-label="Default select example"
-                              >
-                                <option value="">--Select User--</option>
-                                {clientx.map((api) => (
-                                  <option key={api.id} value={api.id}>
-                                    {api.title} {api.fname} {api.lname}
-                                  </option>
-                                ))}
-                              </Form.Select>
-                            ) : (
-                              <Form.Select
-                                value={uclientIDx}
-                                onChange={(e) => setUClientIDx(e.target.value)}
-                                aria-label="Default select example"
-                              >
-                                <option value="">--Select User--</option>
-                                {clientx.map((api) => (
-                                  <option key={api.id} value={api.id}>
-                                    {api.name}
-                                  </option>
-                                ))}
-                              </Form.Select>
-                            )}
-                            <br />
-                          </MDBox>
-                        </div>
-                      </div>
-                    </Container>
-                  </MDBox>
-                  <MDBox>
-                    <Container>
-                      <div className="row">
-                        <div className="col-sm-6">
-                          <MDBox mb={2}>
-                            <MDTypography variant="button" fontWeight="regular" color="text">
-                              Supplying Branch
-                            </MDTypography>
-                            <Form.Select
-                              value={supplyingBranchName || ""}
-                              onChange={(e) => setSupplyingBranchName(e.target.value)}
-                              aria-label="Default select example"
-                            >
-                              <option value="">Supplying Branch</option>
-                              {supplybranx.map((api) => (
-                                <option key={api.id} value={api.id}>
-                                  {api.name}
-                                </option>
-                              ))}
-                            </Form.Select>
-                            <br />
-                          </MDBox>
-                        </div>
+                    <Grid item xs={5}>
+                      <MDInput
+                        type="text"
+                        value={quantityx || ""}
+                        onKeyUp={handleOnQuantityKeys}
+                        onChange={(e) => setQuantity(e.target.value)}
+                        label="Quantity"
+                        variant="standard"
+                        fullWidth
+                      />
+                    </Grid>
 
-                        <div className="col-sm-6">
-                          <MDTypography
-                            variant="button"
-                            fontWeight="regular"
-                            fontSize="80%"
-                            textAlign="center"
-                            color="text"
-                          >
-                            Product Type *
-                          </MDTypography>
-                          <br />
+                    <Grid item xs={5}>
+                      <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        fontSize="80%"
+                        align="left"
+                        color="text"
+                        mt={0}
+                      >
+                        Client Type
+                      </MDTypography>
+                      <MDBox textAlign="right">
+                        <Form.Select
+                          onChange={(e) => handleChangeClient(e.target.value)}
+                          value={uclientTypex || ""}
+                          aria-label="Default select example"
+                        >
+                          <option>---Select Client Type---</option>
+                          <option value="1">Individual</option>
+                          <option value="2">Corperate</option>
+                        </Form.Select>
+                      </MDBox>
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDBox mt={0}>
+                        <MDTypography
+                          variant="button"
+                          fontWeight="regular"
+                          fontSize="80%"
+                          align="left"
+                          color="text"
+                        >
+                          Client
+                        </MDTypography>{" "}
+                        {showClients ? (
                           <Form.Select
-                            value={productIDx}
-                            onChange={(e) => handlepricePQ(e)}
+                            value={uclientIDx}
+                            onChange={(e) => setUClientIDx(e.target.value)}
                             aria-label="Default select example"
                           >
-                            <option value="">--Product Type--</option>
-                            {product.map((api) => (
+                            <option value="">--Select User--</option>
+                            {clientx.map((api) => (
                               <option key={api.id} value={api.id}>
-                                {api.name} ({api.description})
+                                {api.title} {api.fname} {api.lname}
                               </option>
                             ))}
                           </Form.Select>
-                        </div>
-                      </div>
-                    </Container>
-                  </MDBox>
-                  <MDBox>
-                    <Container>
-                      <div className="row">
-                        <div className="col-sm-6">
-                          <MDInput
-                            type="text"
-                            value={bonusAmountx || ""}
-                            onKeyUp={handleOnBonusAmountKeys}
-                            onChange={(e) => setBonusAmount(e.target.value)}
-                            label="Bonus Amount (NGN)"
-                            variant="standard"
-                            fullWidth
-                          />
-                        </div>
-                        <div className="col-sm-6">
-                          <MDInput
-                            type="text"
-                            value={pricePQ || ""}
-                            onKeyUp={handleOnPPQuantityKeys}
-                            onChange={(e) => setpricePQ(e.target.value)}
-                            label="Price Per Quantity (NGN)"
-                            variant="standard"
-                            fullWidth
-                            disabled
-                          />
-                        </div>
-                      </div>
-                    </Container>
-                  </MDBox>
-                  &nbsp;
-                  <MDBox>
-                    <Container>
-                      <div className="row">
-                        <div className="col-sm-6">
-                          <MDInput
-                            type="text"
-                            value={ans || ""}
-                            label="Total Amount (NGN)"
-                            variant="standard"
-                            fullWidth
-                            disabled
-                          />
-                        </div>
+                        ) : (
+                          <Form.Select
+                            value={uclientIDx}
+                            onChange={(e) => setUClientIDx(e.target.value)}
+                            aria-label="Default select example"
+                          >
+                            <option value="">--Select User--</option>
+                            {clientx.map((api) => (
+                              <option key={api.id} value={api.id}>
+                                {api.name}
+                              </option>
+                            ))}
+                          </Form.Select>
+                        )}
+                        <br />
+                      </MDBox>
+                    </Grid>
 
-                        <div className="col-sm-6">
-                          <MDInput
-                            type="text"
-                            value={vatAmountx || ""}
-                            onKeyUp={handleOnVatAmountKeys}
-                            onChange={(e) => setVatAmount(e.target.value)}
-                            label="V.A.T Amount (NGN)"
-                            variant="standard"
-                            fullWidth
-                            disabled
-                          />
-                        </div>
-                      </div>
-                    </Container>
-                  </MDBox>
-                  &nbsp;
-                  <MDBox>
-                    <Container>
-                      <div className="row">
-                        <div className="col-sm-6">
-                          <MDInput
-                            type="text"
-                            value={payAmountx || ""}
-                            label="Paying Amount (NGN)"
-                            variant="standard"
-                            fullWidth
-                            disabled
-                          />
-                        </div>
-                      </div>
-                    </Container>
-                  </MDBox>
-                  <MDBox mt={4} mb={1}>
-                    <MDButton
-                      variant="gradient"
-                      onClick={handleUpdate}
-                      // disabled={!enabled}
-                      color="info"
-                      width="50%"
-                      align="center"
-                    >
-                      Update
-                    </MDButton>
-                  </MDBox>
-                </MDBox>
+                    <Grid item xs={5}>
+                      <MDBox mb={2}>
+                        <MDTypography variant="button" fontWeight="regular" color="text">
+                          Supplying Branch
+                        </MDTypography>
+                        <Form.Select
+                          value={supplyingBranchName || ""}
+                          onChange={(e) => setSupplyingBranchName(e.target.value)}
+                          aria-label="Default select example"
+                        >
+                          <option value="">Supplying Branch</option>
+                          {supplybranx.map((api) => (
+                            <option key={api.id} value={api.id}>
+                              {api.name}
+                            </option>
+                          ))}
+                        </Form.Select>
+                        <br />
+                      </MDBox>
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        fontSize="80%"
+                        textAlign="center"
+                        color="text"
+                      >
+                        Product Type *
+                      </MDTypography>
+
+                      <Form.Select
+                        value={productIDx}
+                        onChange={(e) => handlepricePQ(e)}
+                        aria-label="Default select example"
+                      >
+                        <option value="">--Product Type--</option>
+                        {product.map((api) => (
+                          <option key={api.id} value={api.id}>
+                            {api.name} ({api.description})
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDInput
+                        type="text"
+                        value={bonusAmountx || ""}
+                        onKeyUp={handleOnBonusAmountKeys}
+                        onChange={(e) => setBonusAmount(e.target.value)}
+                        label="Bonus Amount (NGN)"
+                        variant="standard"
+                        fullWidth
+                      />
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDInput
+                        type="text"
+                        value={pricePQ || ""}
+                        onKeyUp={handleOnPPQuantityKeys}
+                        onChange={(e) => setpricePQ(e.target.value)}
+                        label="Price Per Quantity (NGN)"
+                        variant="standard"
+                        fullWidth
+                        disabled
+                      />
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDInput
+                        type="text"
+                        value={ans || ""}
+                        label="Total Amount (NGN)"
+                        variant="standard"
+                        fullWidth
+                        disabled
+                      />
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDInput
+                        type="text"
+                        value={vatAmountx || ""}
+                        onKeyUp={handleOnVatAmountKeys}
+                        onChange={(e) => setVatAmount(e.target.value)}
+                        label="V.A.T Amount (NGN)"
+                        variant="standard"
+                        fullWidth
+                        disabled
+                      />
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDInput
+                        type="text"
+                        value={payAmountx || ""}
+                        label="Paying Amount (NGN)"
+                        variant="standard"
+                        fullWidth
+                        disabled
+                      />
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <></>
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      {" "}
+                      <MDBox mt={1} mb={1}>
+                        <MDButton
+                          variant="gradient"
+                          onClick={handleUpdate}
+                          // disabled={!enabled}
+                          // color="info"
+                          style={Styles.buttonSx}
+                          width="50%"
+                          align="center"
+                        >
+                          Update
+                        </MDButton>
+                      </MDBox>
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <></>
+                    </Grid>
+                  </Grid>
+                </Container>
               </MDBox>
             </MDBox>
-          </Card>
-        </div>
-      </div>
+          </MDBox>
+        </MDBox>
+      </Card>
     </DashboardLayout>
   );
 }

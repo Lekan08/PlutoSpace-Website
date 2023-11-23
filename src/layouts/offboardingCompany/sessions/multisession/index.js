@@ -306,7 +306,7 @@ export default function MultiSessionOffboarding() {
         <div style={{ paddingTop: "20px" }} />
         <MDBox
           variant="gradient"
-          bgColor="info"
+          bgColor="warning"
           borderRadius="lg"
           coloredShadow="info"
           mx={20}

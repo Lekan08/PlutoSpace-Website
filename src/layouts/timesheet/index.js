@@ -60,6 +60,7 @@ import Styles from "styles";
 // import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import DataTable from "examples/Tables/DataTable";
+// import { Typography } from "@mui/material";
 
 function TimeSheetManual() {
   const { allGHeaders: miHeaders } = GHeaders();
@@ -596,7 +597,7 @@ function TimeSheetManual() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"
@@ -607,15 +608,27 @@ function TimeSheetManual() {
             p={2}
             mb={1}
             textAlign="center"
+            coloredShadow="info"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Timesheet
             </MDTypography>
           </MDBox>
           <MDBox
-            mt={2}
-            mb={2}
-            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            variant="gradient"
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+            borderRadius="lg"
+            coloredShadow="success"
+            mx={3}
+            mt={1}
+            p={1}
+            mb={1}
+            textAlign="center"
+            marginBottom={2.5}
           >
             <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
               {" "}
@@ -637,7 +650,7 @@ function TimeSheetManual() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-5">
+                  <div className="col-sm-3">
                     <TextField
                       id="datetime-local"
                       label="Start Time *"
@@ -648,12 +661,13 @@ function TimeSheetManual() {
                       value={startTimexx}
                       onChange={(e) => setStartTime(e.target.value)}
                       onInput={(e) => handleTime(e.target.value)}
+                      variant="standard"
                     />
                   </div>
-                  <div className="col-sm-2">
+                  <div className="col-sm-6">
                     <></>
                   </div>
-                  <div className="col-sm-5">
+                  <div className="col-sm-3">
                     <TextField
                       id="datetime-local"
                       label="End Time *"
@@ -664,25 +678,10 @@ function TimeSheetManual() {
                       value={endTimex}
                       onChange={(e) => setEndTimex(e.target.value)}
                       onInput={(e) => handleTimexx(e.target.value)}
+                      variant="standard"
                     />
                   </div>
                 </div>
-                &nbsp; &nbsp;
-                <div className="col-sm-12">
-                  <TextField
-                    id="outlined-textarea"
-                    rows={2}
-                    value={commentx || ""}
-                    label="Comment "
-                    placeholder="Comment "
-                    onChange={(e) => setCommentx(e.target.value)}
-                    sx={{
-                      width: 500,
-                    }}
-                    multiline
-                  />
-                </div>
-                &nbsp; &nbsp;
                 <div className="row">
                   <div className="col-sm-6">
                     <Form.Select
@@ -713,8 +712,22 @@ function TimeSheetManual() {
                     </Form.Select>
                   </div>
                 </div>
-                &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp;
                 <div className="row">
+                  <div className="col-sm-6">
+                    <TextField
+                      id="outlined-textarea"
+                      rows={1}
+                      value={commentx || ""}
+                      label="Comment "
+                      placeholder=" Add a Comment "
+                      onChange={(e) => setCommentx(e.target.value)}
+                      sx={{
+                        width: 450,
+                      }}
+                      multiline
+                    />
+                  </div>
                   <div className="col-sm-6">
                     <Form.Select
                       aria-label="Default select example"
@@ -729,6 +742,7 @@ function TimeSheetManual() {
                     </Form.Select>
                   </div>
                 </div>
+                &nbsp; &nbsp;
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>

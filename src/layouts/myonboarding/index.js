@@ -145,7 +145,7 @@ function OnboardingCompany() {
         <Grid item xs={12}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            bgColor="warning"
             borderRadius="lg"
             coloredShadow="warning"
             mx={10}
@@ -162,7 +162,7 @@ function OnboardingCompany() {
           <Grid item xs={12}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="warning"
               mx={10}
@@ -180,7 +180,7 @@ function OnboardingCompany() {
           <Grid item xs={12}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="warning"
               mx={10}
@@ -200,7 +200,7 @@ function OnboardingCompany() {
           <MDBox component="form" role="form" mx={10}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="warning"
               borderRadius="lg"
               coloredShadow="info"
               mx={0}
@@ -217,7 +217,7 @@ function OnboardingCompany() {
             <div className="App" style={{ marginBottom: "20px" }}>
               <MDBox
                 variant="gradient"
-                bgColor="info"
+                bgColor="warning"
                 borderRadius="lg"
                 coloredShadow="info"
                 mx={0}

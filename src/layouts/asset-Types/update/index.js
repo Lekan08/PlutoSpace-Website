@@ -19,6 +19,7 @@ import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import Styles from "styles";
+import Grid from "@mui/material/Grid";
 
 function UpdateAssetTypes() {
   const MySwal = withReactContent(Swal);
@@ -60,6 +61,10 @@ function UpdateAssetTypes() {
     }
   };
   const handleOnRateKeys = (value) => {
+    if (typeof value !== "string") {
+      setCheckedNumber(true);
+      return;
+    }
     const numbers = /^[0-9 ]+$/;
     if (!value.toString().match(numbers)) {
       setCheckedNumber(false);
@@ -77,6 +82,10 @@ function UpdateAssetTypes() {
     }
   };
   const handleOnMaximumKeys = (value) => {
+    if (typeof value !== "string") {
+      setCheckedMaximum(true);
+      return;
+    }
     const numbers = /^[0-9 ]+$/;
     if (!value.toString().match(numbers)) {
       setCheckedMaximum(false);
@@ -95,11 +104,9 @@ function UpdateAssetTypes() {
   };
   const handleOnTypeKeys = (value) => {
     setType(value);
-    const Validate = "--Type *--";
-    if (value.match(Validate)) {
+    if (value === "") {
       setCheckedTypes(false);
-    }
-    if (!value.match(Validate)) {
+    } else {
       setCheckedTypes(true);
     }
   };
@@ -227,6 +234,12 @@ function UpdateAssetTypes() {
   };
 
   const handleValidate = (e) => {
+    console.log({
+      checkedNamex: checkedName,
+      checkednumber: checkedNumber,
+      checkedmax: checkedMaximum,
+      checkedType: checkedTypes,
+    });
     if (checkedName && checkedNumber && checkedMaximum && checkedTypes === true) {
       handleClick(e);
     }
@@ -236,7 +249,7 @@ function UpdateAssetTypes() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
             borderRadius="lg"
@@ -276,19 +289,19 @@ function UpdateAssetTypes() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
-                      label="Name"
+                      label="Name *"
                       value={namex || ""}
                       onKeyUp={(e) => handleOnNameKeys(e.target.value)}
                       onChange={(e) => setName(e.target.value)}
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       label="Description"
@@ -297,14 +310,9 @@ function UpdateAssetTypes() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDBox>
                       <Form.Select
                         value={typex || ""}
@@ -317,8 +325,9 @@ function UpdateAssetTypes() {
                         <option value="2">Appreciating</option>
                       </Form.Select>
                     </MDBox>
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       label="Rate % *"
@@ -328,14 +337,9 @@ function UpdateAssetTypes() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="number"
                       label="Maximum Life Cycle *"
@@ -346,19 +350,28 @@ function UpdateAssetTypes() {
                       placeholder="Numbers in Month"
                       fullWidth
                     />
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleValidate}
+                        style={Styles.buttonSx}
+                        width="50%"
+                      >
+                        Update
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleValidate}
-                style={Styles.buttonSx}
-                width="50%"
-              >
-                Update
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>

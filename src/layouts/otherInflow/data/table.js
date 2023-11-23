@@ -114,7 +114,7 @@ export default function OtherInflowntable() {
   };
 
   const handleUpdate = (value) => {
-    navigate(`/other-Inflow/update?id=${value}`);
+    navigate(`/otherInflow/update?id=${value}`);
   };
 
   const handleApprove = (id) => {

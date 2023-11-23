@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 // zinoleesky wrote this part of d code called treasuryTpe
 
-function Treasury() {
+function UpdateTreasury() {
   const MySwal = withReactContent(Swal);
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
@@ -44,6 +44,14 @@ function Treasury() {
   const [checkedAmount, setCheckedAmount] = useState("");
 
   const handleOnAmountKeys = (value) => {
+    console.log(value);
+
+    // Check if value is a string
+    if (typeof value !== "string") {
+      setCheckedAmount(true);
+      return; // exit the function early to avoid further errors
+    }
+
     const letters = /^[0-9 ]+$/;
     if (!value.match(letters)) {
       setCheckedAmount(false);
@@ -143,9 +151,10 @@ function Treasury() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
+    console.log(ids);
     const headers = miHeaders;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/treasuryTypes/getByIds/${ids}`, { headers })
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/treasury/getByIds/${ids}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
@@ -165,9 +174,10 @@ function Treasury() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log(result);
           setItems(result);
           setTreasureTypex(result[0].treasuryTypeID);
-          setAmount(result[0].amoount);
+          setAmount(result[0].amount);
           setUClientTypex(result[0].clientType);
           setUClientIDx(result[0].clientID);
           handleChangeClient(result[0].clientType);
@@ -182,19 +192,16 @@ function Treasury() {
   const handleUpdate = (e) => {
     setOpened(true);
     e.preventDefault();
-    const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
-    const idx = data11.personalID;
     const raw = JSON.stringify({
       id: items[0].id,
-      orgID: orgIDs,
+      orgID: items[0].orgID,
       clientID: uclientIDx,
       clientType: uclientTypex,
       treasuryTypeID: treasureTypex,
       amount: amountx,
       lastContributionTime: items[0].lastContributionTime,
-      createdBy: idx,
+      createdBy: items[0].createdBy,
       createdTime: items[0].createdTime,
       status: items[0].status,
       approvedBy: items[0].approvedBy,
@@ -307,7 +314,7 @@ function Treasury() {
                       color="text"
                       mt={0}
                     >
-                      Client Type
+                      Client Type *
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -330,7 +337,7 @@ function Treasury() {
                         align="left"
                         color="text"
                       >
-                        Client
+                        Client *
                       </MDTypography>{" "}
                       {showClients ? (
                         <Form.Select
@@ -374,6 +381,7 @@ function Treasury() {
                           label="Amount (NGN)"
                           placeholder="Amount (NGN)"
                           type="number"
+                          required
                         />
                       </FormControl>
                     </Box>
@@ -396,7 +404,7 @@ function Treasury() {
                         onChange={(e) => setTreasureTypex(e.target.value)}
                         aria-label="Default select example"
                       >
-                        <option value="">--Select Treasury Type--</option>
+                        <option value="">--Select Treasury Type *--</option>
                         {treasureType.map((api) => (
                           <option key={api.id} value={api.id}>
                             {api.name}
@@ -436,4 +444,4 @@ function Treasury() {
     </DashboardLayout>
   );
 }
-export default Treasury;
+export default UpdateTreasury;

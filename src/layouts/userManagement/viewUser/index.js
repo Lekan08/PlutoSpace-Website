@@ -693,7 +693,7 @@ function ViewUser() {
               <MDBox component="form" role="form">
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  style={{ backgroundColor: "#f96d02" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={25}
@@ -928,7 +928,7 @@ function ViewUser() {
               <MDBox component="form" role="form">
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  style={{ backgroundColor: "#f96d02" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={2}
@@ -1024,7 +1024,7 @@ function ViewUser() {
               <MDBox component="form" role="form">
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  style={{ backgroundColor: "#f96d02" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={2}
@@ -1080,7 +1080,7 @@ function ViewUser() {
               <MDBox component="form" role="form">
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  style={{ backgroundColor: "#f96d02" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={2}
@@ -1136,7 +1136,7 @@ function ViewUser() {
               <MDBox component="form" role="form">
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  style={{ backgroundColor: "#f96d02" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={2}
@@ -1339,7 +1339,7 @@ function ViewUser() {
               <MDBox component="form" role="form">
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  style={{ backgroundColor: "#f96d02" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={25}
@@ -1444,7 +1444,7 @@ function ViewUser() {
               <MDBox component="form" role="form">
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  style={{ backgroundColor: "#f96d02" }}
                   borderRadius="lg"
                   coloredShadow="success"
                   mx={25}
