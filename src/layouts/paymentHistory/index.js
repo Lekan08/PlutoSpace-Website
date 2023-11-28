@@ -842,7 +842,7 @@ function PaymentHis() {
                         <div className="col-sm-6">
                           <MDInput
                             type="text"
-                            label="Name( name on receipt) *"
+                            label="Name (name on receipt) *"
                             value={namex || ""}
                             onKeyUp={handleOnNameKeys}
                             onChange={(e) => setName(e.target.value)}
