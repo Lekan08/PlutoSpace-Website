@@ -18,8 +18,8 @@ import { useNavigate } from "react-router-dom";
 // import withReactContent from "sweetalert2-react-content";
 // import PHeaders from "postHeader";
 import Footer from "examples/Footer";
-import MixedChart from "examples/Charts/MixedChart";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+// import MixedChart from "examples/Charts/MixedChart";
+// import { ThemeProvider, createTheme } from "@mui/material/styles";
 import GHeaders from "getHeader";
 import MDButton from "components/MDButton";
 // import Backdrop from "@mui/material/Backdrop";
@@ -38,17 +38,17 @@ export default function AnnouncementDashboard() {
   //   const [ticketUnASS, setTicketUnAss] = useState("");
   //   const [isResolved, setIsResolved] = useState("");
   //   const [averageRating, setAverageRating] = useState("");
-  const [graphx, setGraph] = useState([]);
+  // const [graphx, setGraph] = useState([]);
   const [namex, setName] = useState("");
   const [show, setShow] = useState(false);
   const [piex, setPie] = useState([]);
   const { allGHeaders: miHeaders } = GHeaders();
   const onBeforeGetContentResolve = useRef();
-  const darkTheme = createTheme({
-    palette: {
-      mode: "dark",
-    },
-  });
+  // const darkTheme = createTheme({
+  //   palette: {
+  //     mode: "dark",
+  //   },
+  // });
 
   useEffect(() => {
     const headers = miHeaders;
@@ -80,7 +80,7 @@ export default function AnnouncementDashboard() {
         }
         if (isMounted) {
           console.log(result);
-          setGraph(result);
+          // setGraph(result);
         }
       });
     return () => {
@@ -143,7 +143,10 @@ export default function AnnouncementDashboard() {
               backgroundColor: bgColorCode,
             };
             console.log(result);
+            console.log(result);
             setPie(allDataa);
+          } else {
+            setPie([]);
           }
         }
       });
@@ -228,6 +231,7 @@ export default function AnnouncementDashboard() {
   //     clearTimeout(id);
   //   };
   // }, [show, onBeforeGetContentResolve]);
+  console.log(piex);
 
   return (
     <DashboardLayout>
@@ -245,7 +249,7 @@ export default function AnnouncementDashboard() {
         {show ? <PDF namexxx={namex} /> : ""}
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={12} lg={12}>
+            {/* <Grid item xs={12} md={12} lg={12}>
               <ThemeProvider theme={darkTheme}>
                 {graphx.length > 0 && (
                   <MixedChart
@@ -292,19 +296,33 @@ export default function AnnouncementDashboard() {
                   />
                 )}
               </ThemeProvider>
-            </Grid>
+            </Grid> */}
             <Grid item xs={6} md={6} lg={6}>
               <Card>
+                {/* <PieChart
+                  title="Pie Chart"
+                  height="17.125rem"
+                  description="Analytics Insights"
+                  chart={{
+                    labels: piex.labels !== null ? piex.labels : "",
+                    datasets: {
+                      label: "Appraisal Grades",
+                      backgroundColors: piex.backgroundColor,
+                      data: piex.data,
+                    },
+                  }}
+                /> */}
+
                 <PieChart
                   title="Pie Chart"
                   height="17.125rem"
                   description="Analytics Insights"
                   chart={{
-                    labels: piex.labels,
+                    labels: piex ? piex.labels : [],
                     datasets: {
                       label: "Appraisal Grades",
-                      backgroundColors: piex.backgroundColor,
-                      data: piex.data,
+                      backgroundColors: piex.backgroundColor ? piex.backgroundColor : [],
+                      data: piex.data ? piex.data : [],
                     },
                   }}
                 />
