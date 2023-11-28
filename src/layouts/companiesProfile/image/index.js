@@ -13,6 +13,7 @@ import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 
 import defaulto from "./defaulto.png";
 
@@ -383,7 +384,8 @@ function CompanyImage() {
     <div>
       <MDBox
         variant="gradient"
-        bgColor="info"
+        // bgColor="info"
+        style={Styles.boxSx}
         borderRadius="lg"
         coloredShadow="info"
         mx={3}
@@ -392,7 +394,7 @@ function CompanyImage() {
         // mb={1}
         textAlign="center"
       >
-        <MDTypography variant="h6" fontWeight="medium" color="white">
+        <MDTypography variant="h6" style={Styles.boxSx} fontWeight="medium" color="white">
           Image
         </MDTypography>
       </MDBox>
@@ -435,7 +437,8 @@ function CompanyImage() {
           <MDButton
             variant="gradient"
             onClick={handleImageUpload}
-            color="info"
+            // color="info"
+            style={Styles.buttonSx}
             width="50%"
             disabled={dis}
           >
