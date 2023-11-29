@@ -634,7 +634,7 @@ function Csv() {
                     </Grid>
                     <Grid item xs={10}>
                       {" "}
-                      <u>Before Proceeding Read carefully:</u>
+                      <u>Before Proceeding Read Carefully:</u>
                       <MDBox p={1} mt={2}>
                         <MDTypography
                           variant="h4"
