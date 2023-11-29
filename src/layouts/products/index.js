@@ -21,6 +21,7 @@ import Paper from "@mui/material/Paper";
 import Accordion from "react-bootstrap/Accordion";
 import Csv from "layouts/products/csv";
 import ProductTableData from "layouts/products/table/productTableData";
+import Grid from "@mui/material/Grid";
 
 function Products() {
   const MySwal = withReactContent(Swal);
@@ -239,10 +240,11 @@ function Products() {
           <Accordion.Body>
             <Paper elevation={3}>
               <br />
-              <MDBox pt={4} pb={3} px={30}>
+              <MDBox pt={4} pb={3}>
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  // bgColor="info"
+                  style={Styles.boxSx}
                   borderRadius="lg"
                   coloredShadow="info"
                   mx={2}
@@ -273,8 +275,8 @@ function Products() {
                 <MDBox component="form" role="form">
                   <MDBox mb={2}>
                     <Container>
-                      <div className="row">
-                        <div className="col-sm-6">
+                      <Grid container justifyContent="center" spacing={2}>
+                        <Grid item xs={5}>
                           <MDInput
                             type="text"
                             label="Name *"
@@ -285,8 +287,8 @@ function Products() {
                             variant="standard"
                             fullWidth
                           />
-                        </div>
-                        <div className="col-sm-6">
+                        </Grid>
+                        <Grid item xs={5}>
                           <MDInput
                             type="text"
                             value={descriptionx || ""}
@@ -295,8 +297,8 @@ function Products() {
                             variant="standard"
                             fullWidth
                           />
-                        </div>
-                        <div className="col-sm-6">
+                        </Grid>
+                        <Grid item xs={5}>
                           <MDInput
                             type="text"
                             value={pricePerQuantityx || ""}
@@ -305,20 +307,32 @@ function Products() {
                             variant="standard"
                             fullWidth
                           />
-                        </div>
-                      </div>
+                        </Grid>
+
+                        <Grid item xs={5}>
+                          <></>
+                        </Grid>
+
+                        <Grid item xs={5}>
+                          <MDBox mt={1} mb={1}>
+                            <MDButton
+                              variant="gradient"
+                              onClick={handleClick}
+                              // color="info"
+                              style={Styles.buttonSx}
+                              width="50%"
+                              align="left"
+                            >
+                              Save
+                            </MDButton>
+                          </MDBox>
+                        </Grid>
+
+                        <Grid item xs={5}>
+                          <></>
+                        </Grid>
+                      </Grid>
                     </Container>
-                  </MDBox>
-                  <MDBox mt={4} mb={1}>
-                    <MDButton
-                      variant="gradient"
-                      onClick={handleClick}
-                      color="info"
-                      width="50%"
-                      align="left"
-                    >
-                      Save
-                    </MDButton>
                   </MDBox>
                 </MDBox>
               </MDBox>
