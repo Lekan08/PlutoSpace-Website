@@ -222,11 +222,11 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const handleGetImage = () => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
     if (data11 !== null) {
-      const personalIDs = data11.personalID;
-      const imgKey = `PROF_PIC_EMP-${personalIDs}`;
+      // const personalIDs = data11.personalID;
+      // const imgKey = `PROF_PIC_EMP-${personalIDs}`;
       const orgIDs = data11.orgID;
       const headers = miHeaders;
-      fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${imgKey}`, {
+      fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${orgIDs}`, {
         headers,
       })
         .then(async (res) => {

@@ -121,23 +121,51 @@ function Products() {
     }
   };
 
-  const pdfColumns = [
-    { Header: "name", accessor: "name", align: "left" },
-    { Header: "description", accessor: "description", align: "left" },
-    { Header: "price Per Quantity", accessor: "pricePerQuantity", align: "left" },
-  ];
-
-  const exportColumns = pdfColumns.map((Col) => ({
-    title: Col.Header,
-    dataKey: Col.accessor,
-  }));
-
   const exportPDF = () => {
+    // Define exportColumns within the same scope
+    const pdfColumns = [
+      { Header: "Name", accessor: "name", align: "left" },
+      { Header: "Description", accessor: "description", align: "left" },
+      { Header: "Price Per Quantity", accessor: "pricePerQuantity", align: "left" },
+    ];
+
+    const exportColumns = pdfColumns.map((Col) => ({
+      title: Col.Header,
+      dataKey: Col.accessor,
+    }));
+
     import("jspdf").then((jsPDF) => {
       import("jspdf-autotable").then(() => {
         // eslint-disable-next-line new-cap
         const doc = new jsPDF.default(0, 0);
-        doc.autoTable(exportColumns, pRows);
+
+        // Manually draw the header with custom background color
+        doc.addPage();
+        doc.setFillColor(249, 109, 2); // Set the background color to #f96d02
+        doc.rect(10, 10, doc.internal.pageSize.width - 20, 20, "F"); // Adjust the coordinates and dimensions
+
+        // Use autoTable for the rest of the table
+        doc.autoTable({
+          head: [exportColumns.map((col) => col.title)],
+          body: pRows,
+          startY: 30, // Adjust the starting Y position based on the header height
+          didDrawCell: (data) => {
+            // Check if the current cell is in the header row
+            const isHeaderCell = data.row.index === 0 && data.column.index >= 0;
+
+            // Check if the current cell corresponds to Name, Description, or Price Per Quantity
+            const isColoredCell = ["Name", "Description", "Price Per Quantity"].includes(
+              pdfColumns[data.column.index].Header
+            );
+
+            // Set the background color for the specific cells
+            if (isHeaderCell || isColoredCell) {
+              doc.setFillColor(249, 109, 2); // Set the background color to #f96d02
+              doc.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height, "F");
+            }
+          },
+        });
+
         doc.save("ProductTableData.pdf");
       });
     });
