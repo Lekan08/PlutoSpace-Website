@@ -624,7 +624,16 @@ function GeneralBills() {
         return res.json();
       })
       .then((result2) => {
+        handleClose2();
         console.log(result2);
+        setOpened(false);
+        MySwal.fire({
+          title: result2.status,
+          type: "success",
+          text: result2.message,
+        }).then(() => {
+          window.location.reload();
+        });
       });
   };
   // eslint-disable-next-line consistent-return
