@@ -601,10 +601,10 @@ function GeneralBills() {
       amount: Number(amountx),
       amountInWords: amountW,
       paymentMethod: paymentMethodx,
-      authorizedBy: Number(authorizedByx),
+      authorizedBy: authorizedByx,
       particulars: particularx,
       initiatedBy: createdBy,
-      issuedTo: Number(issuedx),
+      issuedTo: issuedx,
       issueTime: new Date(issueTimex).getTime(),
     });
     console.log(raw);
