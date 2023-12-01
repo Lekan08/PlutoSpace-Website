@@ -49,6 +49,7 @@ import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 
+import Styles from "styles";
 import ContentView from "./libraryView/contentView";
 import IconView from "./libraryView/iconView";
 
@@ -58,7 +59,7 @@ const AntTabs = styled(Tabs)({
   "& .MuiTabs-indicator": {
     // backgroundColor: "#1890ff",
     borderRadius: "0px",
-    borderBottom: "5px solid #1890ff",
+    borderBottom: "5px solid #f96d02",
   },
 });
 
@@ -742,7 +743,7 @@ function DocumentLibrary() {
       <DashboardNavbar />
       <Card sx={{ height: "auto", maxHeight: "100vh", borderRadius: 1 }}>
         <AppBar position="static" color="info">
-          <Toolbar disableGutters>
+          <Toolbar disableGutters style={Styles.boxSx}>
             <Typography variant="h4" component="div" sx={{ ml: 5, mr: 1, color: "inherit" }}>
               Documents
             </Typography>
