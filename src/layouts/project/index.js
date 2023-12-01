@@ -572,7 +572,7 @@ function Project() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-3">
+                  <div className="col-sm-6">
                     <TextField
                       id="datetime-local"
                       label="Start Time *"
@@ -580,21 +580,27 @@ function Project() {
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      sx={{
+                        width: 400,
+                      }}
                       value={startTimexx}
                       onChange={(e) => setStartTime(e.target.value)}
                       onInput={(e) => handleTime(e.target.value)}
                     />
                   </div>
-                  <div className="col-sm-6">
+                  {/* <div className="col-sm-6">
                     <></>
-                  </div>
-                  <div className="col-sm-3">
+                  </div> */}
+                  <div className="col-sm-6">
                     <TextField
                       id="datetime-local"
                       label="Forecasted End Time *"
                       type="datetime-local"
                       InputLabelProps={{
                         shrink: true,
+                      }}
+                      sx={{
+                        width: 400,
                       }}
                       value={foreCastedEndTimexx}
                       onChange={(e) => setForeCastedEndTime(e.target.value)}
@@ -645,7 +651,7 @@ function Project() {
                     placeholder="Project Description"
                     onChange={(e) => setDescription(e.target.value)}
                     sx={{
-                      width: 950,
+                      width: 826,
                     }}
                     multiline
                   />

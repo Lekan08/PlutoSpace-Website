@@ -290,7 +290,7 @@ function Csv() {
                 </MDBox>
                 <br />
                 <br />
-                <u>Before Proceeding Read carefully:</u>
+                <u>Before Proceeding Read Carefully:</u>
                 <MDBox p={3} mt={2}>
                   <MDTypography
                     variant="h4"
@@ -308,7 +308,7 @@ function Csv() {
                     image in new tab to zoom in for a clearer view)
                   </MDTypography>
                 </MDBox>
-                <img className="img" src={example} alt="example" />
+                <img className="img" style={{ width: "60%" }} src={example} alt="example" />
                 <br />
                 <MDBox textAlign="center" p={5}>
                   <MDTypography

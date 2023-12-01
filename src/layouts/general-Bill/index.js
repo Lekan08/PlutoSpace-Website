@@ -601,10 +601,10 @@ function GeneralBills() {
       amount: Number(amountx),
       amountInWords: amountW,
       paymentMethod: paymentMethodx,
-      authorizedBy: Number(authorizedByx),
+      authorizedBy: authorizedByx,
       particulars: particularx,
       initiatedBy: createdBy,
-      issuedTo: Number(issuedx),
+      issuedTo: issuedx,
       issueTime: new Date(issueTimex).getTime(),
     });
     console.log(raw);
@@ -624,7 +624,16 @@ function GeneralBills() {
         return res.json();
       })
       .then((result2) => {
+        handleClose2();
         console.log(result2);
+        setOpened(false);
+        MySwal.fire({
+          title: result2.status,
+          type: "success",
+          text: result2.message,
+        }).then(() => {
+          window.location.reload();
+        });
       });
   };
   // eslint-disable-next-line consistent-return
