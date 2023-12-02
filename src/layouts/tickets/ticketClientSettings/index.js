@@ -752,8 +752,8 @@ function TicketClientSettings() {
               textAlign="center"
               color="info"
             >
-              &nbsp;&nbsp;&nbsp;&nbsp;Set the Average Resolution Time for each Client Level(They are
-              in minutes and seconds)
+              &nbsp;&nbsp;&nbsp;&nbsp;Set The Average Resolution Time For Each Client Level (They
+              are in minutes and seconds)
             </MDTypography>
           </MDBox>
           <MDBox component="form" role="form">
