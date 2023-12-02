@@ -16,6 +16,7 @@ import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function Announcement() {
   const MySwal = withReactContent(Swal);
@@ -219,10 +220,11 @@ function Announcement() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={3}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -341,8 +343,14 @@ function Announcement() {
                 </div>
               </Container>
             </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" width="50%">
+            <MDBox mt={4} mb={1} ml={2}>
+              <MDButton
+                variant="gradient"
+                onClick={handleValidate}
+                //  color="info"
+                style={Styles.buttonSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>
