@@ -35,7 +35,9 @@ import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
-import bgImage from "assets/images/plutospace-1.png";
+// import bgImage from "assets/images/plutospace-1.png";
+
+import Plutospace from "assets/images/Plutospace.png";
 
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
@@ -342,7 +344,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={bgImage} alt="Brand" width="10rem" />}
+          {brand && <MDBox component="img" src={Plutospace} alt="Brand" width="10rem" />}
         </MDBox>
         <br />
         <MDBox

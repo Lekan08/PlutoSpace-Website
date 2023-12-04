@@ -33,7 +33,8 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
-import plutospaceImg from "assets/images/PlutoSpaceImg.png";
+// import plutospaceImg from "assets/images/PlutoSpaceImg.png";
+import Plutospace from "assets/images/Plutospace.png";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -366,18 +367,26 @@ function Cover() {
     <CoverLayout image={bgImage}>
       <Card>
         <MDBox
+          component="img"
+          mt={2}
+          mb={2}
+          style={{ alignSelf: "center" }}
+          src={Plutospace}
+          alt="PlutoSpace"
+          width="15rem"
+        />
+        <MDBox
           variant="gradient"
           // bgColor="info"
           style={Styles.boxSx}
           borderRadius="lg"
           coloredShadow="success"
           mx={2}
-          mt={-3}
+          mt={0}
           p={3}
           mb={1}
           textAlign="center"
         >
-          <MDBox component="img" src={plutospaceImg} alt="PlutoSpace" width="10rem" />
           <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
             Create an Account
           </MDTypography>

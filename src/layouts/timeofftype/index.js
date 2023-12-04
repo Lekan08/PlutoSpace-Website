@@ -15,6 +15,9 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 
 function TimeOffType() {
   const MySwal = withReactContent(Swal);
@@ -24,88 +27,91 @@ function TimeOffType() {
   const [descripx, setDescrip] = useState("");
   const [typex, setType] = useState("");
 
+  const [opened, setOpened] = useState(false);
+
   const [checkedName, setCheckedName] = useState("");
-  const [enabled, setEnabled] = useState("");
+  // const [enabled, setEnabled] = useState("");
 
   const navigate = useNavigate();
 
   const { allPHeaders: myHeaders } = PHeaders();
 
-  const handleOnNameKeys = () => {
+  const handleOnNameKeys = (namexx) => {
+    console.log(namexx);
     const letters = /^[a-zA-Z ]+$/;
-    if (!namex.match(letters)) {
+    if (!namexx.match(letters)) {
       setCheckedName(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "Name - input only capital and small letters<br>";
     }
-    if (namex.match(letters)) {
+    if (namexx.match(letters)) {
       setCheckedName(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "";
     }
-    if (namex.length === 0) {
+    if (namexx.length === 0) {
+      setCheckedName(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "Name is required<br>";
     }
-    setEnabled(checkedName === true);
   };
 
   const handleClick = (e) => {
-    handleOnNameKeys();
-    if (enabled) {
-      e.preventDefault();
-      const data11 = JSON.parse(localStorage.getItem("user1"));
+    e.preventDefault();
+    setOpened(true);
+    const data11 = JSON.parse(localStorage.getItem("user1"));
 
-      const raw = JSON.stringify({
-        timeOffType: {
-          orgID: data11.orgID,
-          name: namex,
-          descrip: descripx,
-          type: typex,
-        },
-        condition: [],
-      });
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-      fetch(`${process.env.REACT_APP_NSUTANA_URL}/timeofftype/add`, requestOptions)
-        .then(async (res) => {
-          const aToken = res.headers.get("token-1");
-          localStorage.setItem("rexxdex", aToken);
-          return res.json();
-        })
-        .then((result) => {
-          if (result.message === "Expired Access") {
-            navigate("/authentication/sign-in");
-            window.location.reload();
-          }
-          if (result.message === "Token Does Not Exist") {
-            navigate("/authentication/sign-in");
-            window.location.reload();
-          }
-          if (result.message === "Unauthorized Access") {
-            navigate("/authentication/forbiddenPage");
-            window.location.reload();
-          }
-          MySwal.fire({
-            title: result.status,
-            type: "success",
-            text: result.message,
-          }).then(() => {
-            window.location.reload();
-          });
-        })
-        .catch((error) => {
-          MySwal.fire({
-            title: error.status,
-            type: "error",
-            text: error.message,
-          });
+    const raw = JSON.stringify({
+      timeOffType: {
+        orgID: data11.orgID,
+        name: namex,
+        descrip: descripx,
+        type: typex,
+      },
+      condition: [],
+    });
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow",
+    };
+    fetch(`${process.env.REACT_APP_NSUTANA_URL}/timeofftype/add`, requestOptions)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        setOpened(false);
+        MySwal.fire({
+          title: result.status,
+          type: "success",
+          text: result.message,
+        }).then(() => {
+          window.location.reload();
         });
-    }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
   };
 
   return (
@@ -115,9 +121,10 @@ function TimeOffType() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={Styles.boxSx}
+            // coloredShadow="info"
             mx={2}
             mt={-3}
             p={2}
@@ -164,7 +171,7 @@ function TimeOffType() {
                       type="text"
                       label="Name*"
                       value={namex || ""}
-                      onKeyUp={handleOnNameKeys}
+                      onKeyUp={(e) => handleOnNameKeys(e.target.value)}
                       onChange={(e) => setName(e.target.value)}
                       variant="standard"
                       fullWidth
@@ -180,7 +187,7 @@ function TimeOffType() {
                         onChange={(e) => setDescrip(e.target.value)}
                         label="Message"
                         variant="standard"
-                        fullWidth
+                        // fullWidth
                       />
                     </Form.Group>
                   </div>
@@ -192,14 +199,14 @@ function TimeOffType() {
                 <div className="col-sm-6">
                   <MDBox mb={2}>
                     <MDTypography variant="button" fontWeight="regular" color="text">
-                      Type
+                      Type*
                     </MDTypography>
                     <Form.Select
                       onChange={(e) => setType(e.target.value)}
                       value={typex || ""}
                       aria-label="Default select example"
                     >
-                      <option>---Select Type---</option>
+                      <option value="">---Select Type---</option>
                       {/* <option value="1">Monthly</option> */}
                       <option value="2">Annually</option>
                     </Form.Select>
@@ -208,7 +215,14 @@ function TimeOffType() {
               </div>
             </Container>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleClick}
+                disabled={!checkedName || (typex === "" && true)}
+                // color="info"
+                style={Styles.buttonSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>
@@ -226,6 +240,9 @@ function TimeOffType() {
         />
       </MDBox>
       <Footer />
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
+        <CircularProgress color="info" />
+      </Backdrop>
     </DashboardLayout>
   );
 }
