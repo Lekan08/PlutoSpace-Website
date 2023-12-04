@@ -37,7 +37,7 @@
 //       text: "You won't be able to revert this!",
 //       icon: "warning",
 //       showCancelButton: true,
-//       confirmButtonColor: "#3085d6",
+//       confirmButtonColor: "#f96d02",
 //       cancelButtonColor: "#d33",
 //       confirmButtonText: "Yes, delete it!",
 //     }).then((result) => {
@@ -84,7 +84,7 @@
 //   //     text: "You won't be able to revert this!",
 //   //     icon: "warning",
 //   //     showCancelButton: true,
-//   //     confirmButtonColor: "#3085d6",
+//   //     confirmButtonColor: "#f96d02",
 //   //     cancelButtonColor: "#d33",
 //   //     confirmButtonText: "Yes, delete it!",
 //   //   }).then((result) => {
@@ -239,7 +239,7 @@
 //   //       <td><input type="text" class="swal2-input" id="image" value="${imageUrlx}" placeholder="Image"></td></tr></table>`,
 //   //       confirmButtonText: "Save",
 //   //       showCancelButton: true,
-//   //       confirmButtonColor: "#3085d6",
+//   //       confirmButtonColor: "#f96d02",
 //   //       cancelButtonColor: "#d33",
 //   //       preConfirm: () => {
 //   //         const question = Swal.getPopup().querySelector("#question").value;

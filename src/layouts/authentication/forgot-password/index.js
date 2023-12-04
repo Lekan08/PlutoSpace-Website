@@ -33,6 +33,7 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.gif";
+import Styles from "styles";
 
 function ForgotPass() {
   const navigate = useNavigate();
@@ -94,9 +95,10 @@ function ForgotPass() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
           borderRadius="lg"
-          coloredShadow="success"
+          style={Styles.boxSx}
+          // coloredShadow="info"
           mx={2}
           mt={-3}
           py={2}
@@ -123,7 +125,13 @@ function ForgotPass() {
               />
             </MDBox>
             <MDBox mt={6} mb={1}>
-              <MDButton variant="gradient" color="info" onClick={handleClick} fullWidth>
+              <MDButton
+                variant="gradient"
+                // color="info"
+                style={Styles.buttonSx}
+                onClick={handleClick}
+                fullWidth
+              >
                 Send
               </MDButton>
             </MDBox>

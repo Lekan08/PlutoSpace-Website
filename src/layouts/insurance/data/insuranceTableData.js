@@ -42,7 +42,7 @@ export default function InsuranceTableData() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, terminate it!",
     }).then((result) => {
@@ -114,7 +114,7 @@ export default function InsuranceTableData() {
            </table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       preConfirm: () => {
         const comment = Swal.getPopup().querySelector("#comment").value;

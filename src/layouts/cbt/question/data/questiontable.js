@@ -97,7 +97,7 @@ export default function CbtQuestion() {
   //            <b>Description:</b> <textarea rows="4" cols="8" class="form-control" id="descrip">${descripx}</textarea></div>`,
   //       confirmButtonText: "Save",
   //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
+  //       confirmButtonColor: "#f96d02",
   //       cancelButtonColor: "#d33",
   //       preConfirm: () => {
   //         const title = Swal.getPopup().querySelector("#title").value;
@@ -119,7 +119,7 @@ export default function CbtQuestion() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -171,7 +171,7 @@ export default function CbtQuestion() {
   //       text: "You won't be able to easily revert this!",
   //       icon: "warning",
   //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
+  //       confirmButtonColor: "#f96d02",
   //       cancelButtonColor: "#d33",
   //       confirmButtonText: "Yes, Change it!",
   //     }).then((result) => {

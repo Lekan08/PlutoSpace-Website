@@ -117,7 +117,7 @@ export default function FreeDaysData() {
              <td><input type="text" class="swal2-input" id="yearss" value="${yearx}" placeholder="Description"></td></tr></table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       preConfirm: () => {
         const name = Swal.getPopup().querySelector("#namess").value;
@@ -152,7 +152,7 @@ export default function FreeDaysData() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
