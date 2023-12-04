@@ -17,7 +17,6 @@
     "npm": ">=6"
   },
   "dependencies": {
-    "@babel/plugin-proposal-private-property-in-object",
     "@date-io/dayjs": "^2.11.0",
     "@emotion/cache": "11.4.0",
     "@emotion/core": "^10.1.1",
@@ -140,6 +139,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object",
     "eslint": "7.30.0",
     "eslint-plugin-import": "2.23.4",
     "eslint-plugin-jsx-a11y": "6.4.1",
