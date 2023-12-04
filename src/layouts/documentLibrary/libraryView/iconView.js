@@ -51,6 +51,8 @@ import WordPng from "assets/document-pngs/WordPng.png";
 import ImagePng from "assets/document-pngs/imagePng.png";
 import RollingGif from "assets/images/Rolling.gif";
 
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+
 const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
@@ -190,6 +192,7 @@ function IconView({ items, groups, level }) {
   //   "C:/Users/HP/PlutospaceERP-/src/assets/images/Infinity.gif"
   // );
   const [imageUrl, setImageUrl] = useState(RollingGif);
+  const [showcsv, setShowcsv] = useState([]);
 
   const [groupidx, setGroupIdx] = useState("");
   const [documentIDx, setDocumentIDx] = useState("");
@@ -222,7 +225,7 @@ function IconView({ items, groups, level }) {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((resultd) => {
@@ -396,8 +399,10 @@ function IconView({ items, groups, level }) {
               if (resultxx.length > 0) {
                 console.log(resultxx[0]);
                 const docType = filteredItems[0].type;
+                console.log(docType);
                 const docUrl = resultxx[0];
-                const mdocsUrlStart = "https://view.officeapps.live.com/op/embed.aspx?src=";
+                // const mdocsUrlStart = "https://view.officeapps.live.com/op/embed.aspx?src=";
+                const mdocsUrlStart = `https://docs.google.com/viewer?url=${docUrl}&embedded=true`;
                 const mdocsUrlEnd = "";
                 if (
                   docType === "image/png" ||
@@ -409,13 +414,13 @@ function IconView({ items, groups, level }) {
                   setImageUrl(`${docUrl}`);
                   setViewDoc(true);
                 } else if (docType === "application/msword") {
-                  setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
+                  setImageUrl(`${mdocsUrlStart}${mdocsUrlEnd}`);
                   setViewDoc(true);
                 } else if (
                   docType ===
                   "application/vnd.openxmlformats-officedocument.presentationml.presentation"
                 ) {
-                  setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
+                  setImageUrl(`${mdocsUrlStart}${mdocsUrlEnd}`);
                   setViewDoc(true);
                 } else if (docType === "application/pdf") {
                   console.log("rtyukjhgvcx");
@@ -425,8 +430,29 @@ function IconView({ items, groups, level }) {
                   docType === "text/csv" ||
                   docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 ) {
-                  setImageUrl(`${mdocsUrlStart}${docUrl}${mdocsUrlEnd}`);
+                  console.log("ebokolofar");
+                  console.log(`${mdocsUrlStart}${mdocsUrlEnd}`);
+                  setImageUrl(`${mdocsUrlStart}${mdocsUrlEnd}`);
+                  const supportedFileTypes = ["pdf", "png", "csv", "docx"];
+
+                  const getFileType = (file) => {
+                    const extension = file.split(".").pop()?.toLowerCase();
+                    return supportedFileTypes ? extension : "default";
+                  };
+                  const doc = [
+                    {
+                      uri: `${docUrl}`,
+                      fileType: getFileType(`${docUrl}`),
+                    },
+                  ];
+                  setShowcsv(doc);
                   setViewDoc(true);
+                  // documents={[
+                  //   {
+                  //     uri: `yourUrl`,
+                  //     fileType: `getFileType(yourUrl)`
+                  //   },
+                  // ]}
                 } else {
                   console.log("it entered");
                   setViewDoc(false);
@@ -541,6 +567,63 @@ function IconView({ items, groups, level }) {
     }
   };
 
+  const handleDownloadAnchor = (value) => {
+    setOpened(true);
+    const headers = miHeaders;
+    fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${value.name}`, {
+      headers,
+    })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const resultres = await res.text();
+        if (resultres === null || resultres === undefined || resultres === "") {
+          return {};
+        }
+        return JSON.parse(resultres);
+      })
+      .then((resultxx) => {
+        setOpened(false);
+        if (resultxx.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (resultxx.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (resultxx.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(resultxx);
+        console.log(resultxx[0]);
+
+        // const linkSource = `data:application/vnd.ms-excel;base64,${value.base64Txt}`;
+        // const downloadLink = document.createElement("a");
+        // const fileName = `${value.name}.xls`;
+        const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${value.base64Txt}`;
+        const downloadLink = document.createElement("a");
+        const fileName = `${value.name}.xlsx`;
+
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+
+        const objectURL = URL.createObjectURL(resultxx[0]);
+        console.log(objectURL);
+
+        // // (C2) TO "FORCE DOWNLOAD"
+        const anchor = document.createElement("a");
+        anchor.href = linkSource;
+        anchor.download = value.name;
+        anchor.click();
+
+        // (C3) CLEAN UP
+        window.URL.revokeObjectURL(linkSource);
+      });
+  };
+
   const handleDownload = (value) => {
     const filteredItems = items.filter((item) => item.id === value);
     const docKey = filteredItems[0].key;
@@ -586,6 +669,9 @@ function IconView({ items, groups, level }) {
           body: raw1,
           redirect: "follow",
         };
+        if (result.name) {
+          handleDownloadAnchor(result);
+        }
 
         fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/download`, requestOptions1)
           .then((res) => res.blob())
@@ -603,17 +689,17 @@ function IconView({ items, groups, level }) {
               window.location.reload();
             }
             console.log(resultxx);
-            const objectURL = URL.createObjectURL(resultxx);
-            console.log(objectURL);
+            // const objectURL = URL.createObjectURL(resultxx);
+            // console.log(objectURL);
 
-            // (C2) TO "FORCE DOWNLOAD"
-            const anchor = document.createElement("a");
-            anchor.href = objectURL;
-            anchor.download = result.name;
-            anchor.click();
+            // // (C2) TO "FORCE DOWNLOAD"
+            // const anchor = document.createElement("a");
+            // anchor.href = objectURL;
+            // anchor.download = result.name;
+            // anchor.click();
 
-            // (C3) CLEAN UP
-            window.URL.revokeObjectURL(objectURL);
+            // // (C3) CLEAN UP
+            // window.URL.revokeObjectURL(objectURL);
             setOpened(false);
           });
       });
@@ -868,6 +954,7 @@ function IconView({ items, groups, level }) {
             display="block"
             position="relative"
           />
+          <DocViewer pluginRenderers={DocViewerRenderers} documents={showcsv} />
         </Card>
       </Backdrop>
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>

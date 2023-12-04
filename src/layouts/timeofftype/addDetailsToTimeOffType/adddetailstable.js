@@ -14,7 +14,7 @@ export default function AddDetailsData() {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const id = urlParams.get("id");
-  const ids = JSON.parse([id]);
+  // const ids = JSON.parse([id]);
 
   const navigate = useNavigate();
 
@@ -28,7 +28,7 @@ export default function AddDetailsData() {
     const raw = JSON.stringify({
       id: idx,
       orgID: orgIDs,
-      timeOffTypeID: ids,
+      timeOffTypeID: id,
       type: typex,
       name: namex,
       value: valuex,
@@ -106,7 +106,7 @@ export default function AddDetailsData() {
       <td><input type="text" class="swal2-input" id="value" value="${valuex}" placeholder="Value"></td></tr></table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       preConfirm: () => {
         const name = Swal.getPopup().querySelector("#name").value;
@@ -129,7 +129,7 @@ export default function AddDetailsData() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -194,7 +194,8 @@ export default function AddDetailsData() {
     // const queryString = window.location.search;
     // const urlParams = new URLSearchParams(queryString);
     // const id = urlParams.get("id");
-    const values = JSON.parse([id]);
+    // const values = JSON.parse([id]);
+    const values = id;
 
     const headers = miHeaders;
     let isMounted = true;

@@ -247,7 +247,7 @@ function Tax() {
            `,
       confirmButtonText: "Save",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       preConfirm: () => {
         const valuexx = Swal.getPopup().querySelector("#name").value;

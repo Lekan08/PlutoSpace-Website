@@ -139,11 +139,39 @@ function AssetAttachDocument() {
   const formData = new FormData();
 
   const imageChange = (e) => {
+    console.log(e);
+    const selectedFile = e.target.files[0];
+
+    // Check if a file is selected
+    if (selectedFile) {
+      // Get the file extension
+      const fileExtension = selectedFile.name.split(".").pop().toLowerCase();
+
+      // Allowed file extensions
+      const allowedExtensions = ["pdf", "jpg", "jpeg", "png", "gif"];
+
+      // Check if the file extension is in the allowed list
+      if (allowedExtensions.includes(fileExtension)) {
+        console.log("File is valid:", selectedFile);
+
+        setFiles(e.target.files);
+      } else {
+        setOpenn(false);
+        MySwal.fire({
+          icon: "error",
+          title: "Invalid File Type",
+          text: "Please upload a valid image (jpg, jpeg, png, gif) or PDF file.",
+        });
+
+        // Clear the input to prevent uploading the invalid file
+        e.target.value = "";
+      }
+    }
+
     // if (e.target.files[0].size > 522240) {
     //   alert("File should not exceed 500kb");
     //   // setDisabled(true);
     // } else {
-    setFiles(e.target.files);
     // setImgType(e.target.files[0].type);
     // setImgChanged(true);
     // setDisabled(false);
@@ -439,7 +467,7 @@ function AssetAttachDocument() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
     }).then((resultd) => {

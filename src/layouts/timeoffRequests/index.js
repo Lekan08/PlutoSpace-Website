@@ -20,6 +20,9 @@ import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import TimeOffRequestData from "layouts/timeoffRequests/timeOffRequestTable/timeOffRequests";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 // Dem no aw we do it every december 😎 --ZINO
 
 function TimeOff() {
@@ -41,50 +44,11 @@ function TimeOff() {
 
   const navigate = useNavigate();
 
+  const [opened, setOpened] = useState(false);
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
-  useEffect(() => {
-    const headers = miHeaders;
-
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    const orgIDs = data11.orgID;
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          setUser(result);
-        }
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  useEffect(() => {
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    const orgIDs = data11.orgID;
-    const headers = miHeaders;
-    let isMounted = true;
+  const getAllEmployeeTimeOffSetup = (headers, orgIDs) => {
     fetch(`${process.env.REACT_APP_NSUTANA_URL}/employeetimeoffsetup/getAll/${orgIDs}`, {
       headers,
     })
@@ -106,16 +70,171 @@ function TimeOff() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        if (isMounted) {
+        setOpened(false);
+        if (result?.length > 0) {
           setEmpSetup(result);
+        } else {
+          setEmpSetup([]);
         }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
       });
+  };
+
+  const getAllUserInfo = (headers, orgIDs) => {
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        getAllEmployeeTimeOffSetup(headers, orgIDs);
+        if (result?.length > 0) {
+          setUser(result);
+        } else {
+          setUser([]);
+        }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+
+  useEffect(() => {
+    setOpened(true);
+    let isMounted = true;
+    const headers = miHeaders;
+
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    if (isMounted) {
+      getAllUserInfo(headers, orgIDs);
+    }
     return () => {
       isMounted = false;
     };
   }, []);
 
+  const addTimeOffJourney = (eTOTId, currentholderID, orgIDs) => {
+    const raw2 = JSON.stringify({
+      orgID: orgIDs,
+      employeeTimeOffTransactionID: eTOTId.data.id,
+      currentHolderID: currentholderID,
+    });
+    const requestOptions2 = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw2,
+      redirect: "follow",
+    };
+    fetch(`${process.env.REACT_APP_NSUTANA_URL}/timeoffjourney/add`, requestOptions2)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((resulty) => {
+        setOpened(false);
+        if (resulty.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+        }
+        if (resulty.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+        }
+        if (resulty.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+        }
+        if (resulty.status === "SUCCESS") {
+          MySwal.fire({
+            title: eTOTId.status,
+            type: "success",
+            text: eTOTId.message,
+          }).then(() => {
+            window.location.reload();
+          });
+        } else {
+          MySwal.fire({
+            title: eTOTId.status,
+            type: "error",
+            text: eTOTId.message,
+          });
+        }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+
+  const addTimeOffRequest = (requestOptions, currentholderID, orgIDs) => {
+    fetch(`${process.env.REACT_APP_NSUTANA_URL}/employeetimeofftransaction/add`, requestOptions)
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((resultx) => {
+        if (resultx.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+        }
+        if (resultx.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+        }
+        if (resultx.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+        }
+        if (resultx.status === "SUCCESS") {
+          addTimeOffJourney(resultx, currentholderID, orgIDs);
+        } else {
+          setOpened(false);
+          MySwal.fire({
+            title: resultx.status,
+            type: "error",
+            text: resultx.message,
+          });
+        }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+
   const handleAddEvent = (e) => {
+    setOpened(true);
     const startCDate = new Date(startDate).getTime();
     const endCDate = new Date(endDate).getTime();
     const resumptionCDate = new Date(resumptionDate).getTime();
@@ -153,7 +272,7 @@ function TimeOff() {
         const numofdays = Math.ceil(startDateandendDate / varx) - numberOfFreedays;
 
         const currentholderID = data11.personalID;
-        let eTOTId = {};
+
         const raw = JSON.stringify({
           orgID: orgIDs,
           empID: personalIds,
@@ -167,6 +286,7 @@ function TimeOff() {
           approverID: approvex,
           adminID: adminIdx,
         });
+        console.log(JSON.parse(raw));
         const requestOptions = {
           method: "POST",
           headers: myHeaders,
@@ -176,94 +296,37 @@ function TimeOff() {
         let check = 0;
         if (startCDate < CurTime) {
           check = 1;
+          setOpened(false);
           MySwal.fire({
             title: "Invalid Date",
             type: "error",
-            text: "Please Enter A Date From The Future",
+            text: "Please Enter A Start Date From The Future",
           });
+          return;
         }
-        if (check === 0 && endCDate < startCDate) {
+        if (endCDate < startCDate) {
           check = 1;
+          setOpened(false);
           MySwal.fire({
             title: "Invalid Ending Date",
             type: "error",
-            text: "Please Enter A Date From The Future",
+            text: "Please Enter An End Date From The Future",
           });
+          return;
         }
-        if (check === 0 && resumptionCDate < endCDate) {
+        if (resumptionCDate > endCDate) {
           check = 1;
+          setOpened(false);
           MySwal.fire({
             title: "Invalid Resuming Date",
             type: "error",
-            text: "Please Enter A Date From The Future",
+            text: "Please Enter A Resumption Date Before The End Date",
           });
+          return;
         }
 
         if (check === 0) {
-          fetch(
-            `${process.env.REACT_APP_NSUTANA_URL}/employeetimeofftransaction/add`,
-            requestOptions
-          )
-            .then(async (res) => {
-              const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              return res.json();
-            })
-            .then((resultx) => {
-              eTOTId = resultx;
-
-              if (resultx.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-              }
-              if (resultx.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-              }
-              if (resultx.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-              }
-              MySwal.fire({
-                title: resultx.status,
-                type: "success",
-                text: resultx.message,
-              }).then(() => {
-                const raw2 = JSON.stringify({
-                  orgID: orgIDs,
-                  employeeTimeOffTransactionID: eTOTId.data.id,
-                  currentHolderID: currentholderID,
-                });
-                const requestOptions2 = {
-                  method: "POST",
-                  headers: myHeaders,
-                  body: raw2,
-                  redirect: "follow",
-                };
-                fetch(`${process.env.REACT_APP_NSUTANA_URL}/timeoffjourney/add`, requestOptions2)
-                  .then(async (res) => {
-                    const aToken = res.headers.get("token-1");
-                    localStorage.setItem("rexxdex", aToken);
-                    return res.json();
-                  })
-                  .then((resulty) => {
-                    if (resulty.message === "Expired Access") {
-                      navigate("/authentication/sign-in");
-                    }
-                    if (resulty.message === "Token Does Not Exist") {
-                      navigate("/authentication/sign-in");
-                    }
-                    if (resulty.message === "Unauthorized Access") {
-                      navigate("/authentication/forbiddenPage");
-                    }
-                  });
-                window.location.reload();
-              });
-            })
-            .catch((error) => {
-              MySwal.fire({
-                title: error.status,
-                type: "error",
-                text: error.message,
-              });
-            });
+          addTimeOffRequest(requestOptions, currentholderID, orgIDs);
         }
       });
   };
@@ -275,9 +338,10 @@ function TimeOff() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={Styles.boxSx}
+            // coloredShadow="info"
             mx={0}
             mt={-3}
             p={2}
@@ -553,8 +617,29 @@ function TimeOff() {
             <MDBox mt={2} mb={2}>
               <MDButton
                 variant="gradient"
-                onClick={handleAddEvent}
-                color="info"
+                onClick={(e) => {
+                  if (
+                    titlex === "" ||
+                    startDate === "" ||
+                    endDate === "" ||
+                    resumptionDate === "" ||
+                    approvex === "" ||
+                    adminIdx === "" ||
+                    duty === "" ||
+                    purposex === ""
+                    // || empSetupIdx === ""
+                  ) {
+                    MySwal.fire({
+                      title: "EMPTY_TEXTFIELDS",
+                      type: "error",
+                      text: "Please Fill All Fields",
+                    });
+                  } else {
+                    handleAddEvent(e);
+                  }
+                }}
+                // color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >
@@ -575,6 +660,9 @@ function TimeOff() {
         />
       </MDBox>
       <Footer />
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
+        <CircularProgress color="info" />
+      </Backdrop>
     </DashboardLayout>
   );
 }

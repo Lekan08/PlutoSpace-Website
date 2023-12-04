@@ -15,6 +15,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 // announcement images
 import AnnounceIcon from "assets/annoucement-images/AnnounceIcon.png";
@@ -196,10 +197,11 @@ function Announcementtype() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={3}>
+        <MDBox pt={4} pb={3} px={1}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -324,7 +326,8 @@ function Announcementtype() {
                             <MDButton
                               variant="gradient"
                               onClick={handleShowIcons}
-                              color="info"
+                              // color="info"
+                              style={Styles.buttonSx}
                               width="50%"
                             >
                               Choose Icon
@@ -343,7 +346,13 @@ function Announcementtype() {
               </div>
             </Container>
             <MDBox mt={2} mb={2}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleValidate}
+                //  color="info"
+                style={Styles.buttonSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

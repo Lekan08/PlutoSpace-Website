@@ -18,6 +18,7 @@ import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 import UserData from "./data/userTableData";
 // Big Zzz neva sabi anything this time
 
@@ -231,10 +232,10 @@ function UserManagement() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -242,6 +243,7 @@ function UserManagement() {
             p={2}
             mb={1}
             textAlign="center"
+            style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Invite Other Users
@@ -331,7 +333,12 @@ function UserManagement() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleClick} /* color="info" */
+                style={Styles.buttonSx}
+                width="50%"
+              >
                 Invite User
               </MDButton>
             </MDBox>

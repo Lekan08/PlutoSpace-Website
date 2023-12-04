@@ -19,6 +19,7 @@ import withReactContent from "sweetalert2-react-content";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Container, Form, Button } from "react-bootstrap";
+import Grid from "@mui/material/Grid";
 
 import example from "./example.PNG";
 import "../Force.css";
@@ -426,7 +427,10 @@ function Csv() {
   };
 
   const handleChangeClient = (value) => {
+    console.log(value);
+
     const callClientType = value.toString();
+    console.log(callClientType);
     setClientTypex(callClientType);
     let clientTyppe = "";
     if (callClientType === "1") {
@@ -435,6 +439,9 @@ function Csv() {
     } else if (callClientType === "2") {
       setShowClients(false);
       clientTyppe = "corporate";
+    } else if (callClientType === "--Select Client Type--") {
+      setClient([]);
+      return;
     }
     setOpened(true);
     const headers = miHeaders;
@@ -478,8 +485,8 @@ function Csv() {
             <Paper elevation={3}>
               <MDBox textAlign="center" mt={3}>
                 <Container>
-                  <div className="row">
-                    <div className="col-sm-6">
+                  <Grid container justifyContent="center" spacing={2}>
+                    <Grid item xs={5}>
                       <MDTypography
                         variant="button"
                         fontWeight="regular"
@@ -505,9 +512,8 @@ function Csv() {
                           ))}
                         </Form.Select>
                       </MDBox>
-                    </div>
-                    <br />
-                    <div className="col-sm-6">
+                    </Grid>
+                    <Grid item xs={5}>
                       <MDTypography
                         variant="button"
                         fontWeight="regular"
@@ -532,12 +538,8 @@ function Csv() {
                           ))}
                         </Form.Select>
                       </MDBox>
-                    </div>
-                  </div>
-                </Container>
-                <Container>
-                  <div className="row">
-                    <div className="col-sm-6">
+                    </Grid>
+                    <Grid item xs={5}>
                       <MDTypography
                         variant="button"
                         fontWeight="regular"
@@ -559,8 +561,8 @@ function Csv() {
                           <option value="2">Corporate</option>
                         </Form.Select>
                       </MDBox>
-                    </div>
-                    <div className="col-sm-6">
+                    </Grid>
+                    <Grid item xs={5}>
                       <MDBox mt={0}>
                         <MDTypography
                           variant="button"
@@ -598,79 +600,94 @@ function Csv() {
                             ))}
                           </Form.Select>
                         )}
-                        <br />
                       </MDBox>
-                    </div>
-                  </div>
-                </Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDTypography
-                      variant="button"
-                      fontWeight="regular"
-                      fontSize="80%"
-                      align="left"
-                      color="text"
-                      mt={0}
-                    >
-                      Assigned To *
-                    </MDTypography>
-                    <MDBox textAlign="right">
-                      <Form.Select
-                        value={assignedTox}
-                        aria-label="Default select example"
-                        name="branchID"
-                        onChange={(e) => setAssignedTo(e.target.value)}
+                    </Grid>
+                    <Grid item xs={5}>
+                      <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        fontSize="80%"
+                        align="left"
+                        color="text"
+                        mt={0}
                       >
-                        <option>--Assigned To--</option>
-                        {user.map((apis) => (
-                          <option key={apis.personal.id} value={apis.personal.id}>
-                            {apis.personal.fname} {apis.personal.lname}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </MDBox>
-                  </div>
-                </div>
-                <u>Before Proceeding Read carefully:</u>
-                <MDBox p={3} mt={2}>
-                  <MDTypography
-                    variant="h4"
-                    fontWeight="regular"
-                    fontSize="75%"
-                    textAlign="center"
-                    color="text"
-                  >
-                    &nbsp;&nbsp;&nbsp;&nbsp;The first line/row in your csv file must be exactly the
-                    same as the words in the image below in row 1 A - G (should be camelCase when
-                    necessary. The first row order does not matter, in essence, you may have fname
-                    or lname or title at any position you want) and your further details in each row
-                    should be corresponding to the content of the first row (i.e under please open
-                    image in new tab to zoom in for a clearer view)
-                  </MDTypography>
-                </MDBox>
-                <img className="img" src={example} alt="example" />
-                <br />
-                <MDBox textAlign="center" p={5}>
-                  <MDTypography
-                    variant="h4"
-                    fontWeight="regular"
-                    fontSize="75%"
-                    textAlign="center"
-                    color="text"
-                  >
-                    <input
-                      type="file"
-                      name="file"
-                      accept=".csv"
-                      onChange={changeHandler}
-                      style={{ display: "block", margin: "10px auto" }}
-                    />
-                  </MDTypography>
-                </MDBox>
-                <Button onClick={handleUpload} variant="success">
-                  Upload
-                </Button>
+                        Assigned To *
+                      </MDTypography>
+                      <MDBox textAlign="right">
+                        <Form.Select
+                          value={assignedTox}
+                          aria-label="Default select example"
+                          name="branchID"
+                          onChange={(e) => setAssignedTo(e.target.value)}
+                        >
+                          <option>--Assigned To--</option>
+                          {user.map((apis) => (
+                            <option key={apis.personal.id} value={apis.personal.id}>
+                              {apis.personal.fname} {apis.personal.lname}
+                            </option>
+                          ))}
+                        </Form.Select>
+                      </MDBox>
+                    </Grid>
+                    <Grid item xs={5}>
+                      {" "}
+                    </Grid>
+                    <Grid item xs={10}>
+                      {" "}
+                      <u>Before Proceeding Read Carefully:</u>
+                      <MDBox p={1} mt={2}>
+                        <MDTypography
+                          variant="h4"
+                          fontWeight="regular"
+                          fontSize="75%"
+                          textAlign="center"
+                          color="text"
+                        >
+                          &nbsp;&nbsp;&nbsp;&nbsp;The first line/row in your csv file must be
+                          exactly the same as the words in the image below in row 1 A - G (should be
+                          camelCase when necessary. The first row order does not matter, in essence,
+                          you may have fname or lname or title at any position you want) and your
+                          further details in each row should be corresponding to the content of the
+                          first row (i.e under please open image in new tab to zoom in for a clearer
+                          view)
+                        </MDTypography>
+                      </MDBox>
+                      <img className="img" src={example} style={{ width: "100%" }} alt="example" />{" "}
+                    </Grid>
+                    <Grid item xs={5}>
+                      {" "}
+                      <MDBox textAlign="center">
+                        <MDTypography
+                          variant="h4"
+                          fontWeight="regular"
+                          fontSize="75%"
+                          textAlign="center"
+                          color="text"
+                        >
+                          <input
+                            type="file"
+                            name="file"
+                            accept=".csv"
+                            onChange={changeHandler}
+                            style={{ display: "block", margin: "10px auto" }}
+                          />
+                        </MDTypography>
+                      </MDBox>{" "}
+                    </Grid>
+                    <Grid item xs={5}>
+                      {" "}
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <Button onClick={handleUpload} variant="success">
+                        Upload
+                      </Button>{" "}
+                    </Grid>
+                    <Grid item xs={5}>
+                      {" "}
+                    </Grid>
+                  </Grid>
+                </Container>
               </MDBox>
               <br />
               <br />

@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
+import Styles from "styles";
 
 function UpdateAnnouncement() {
   const MySwal = withReactContent(Swal);
@@ -272,7 +273,8 @@ function UpdateAnnouncement() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -396,7 +398,8 @@ function UpdateAnnouncement() {
                 variant="gradient"
                 onClick={(e) => handleValidate(e)}
                 // disabled={!enabled}
-                color="info"
+                // color="info"
+                style={Styles.buttonSx}
                 width="50%"
               >
                 Save

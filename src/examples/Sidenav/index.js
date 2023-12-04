@@ -35,7 +35,9 @@ import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
-import bgImage from "assets/images/plutospace-1.png";
+// import bgImage from "assets/images/plutospace-1.png";
+
+import Plutospace from "assets/images/Plutospace.png";
 
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
@@ -222,11 +224,11 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const handleGetImage = () => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
     if (data11 !== null) {
-      const personalIDs = data11.personalID;
-      const imgKey = `PROF_PIC_EMP-${personalIDs}`;
+      // const personalIDs = data11.personalID;
+      // const imgKey = `PROF_PIC_EMP-${personalIDs}`;
       const orgIDs = data11.orgID;
       const headers = miHeaders;
-      fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${imgKey}`, {
+      fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${orgIDs}`, {
         headers,
       })
         .then(async (res) => {
@@ -342,7 +344,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={bgImage} alt="Brand" width="10rem" />}
+          {brand && <MDBox component="img" src={Plutospace} alt="Brand" width="10rem" />}
         </MDBox>
         <br />
         <MDBox

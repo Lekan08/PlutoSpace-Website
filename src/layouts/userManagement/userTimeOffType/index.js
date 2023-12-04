@@ -18,6 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 import UserTOTdata from "./data/userTOTTableData";
 
 function UserTOT() {
@@ -218,7 +219,7 @@ function UserTOT() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -226,6 +227,7 @@ function UserTOT() {
             p={2}
             mb={1}
             textAlign="center"
+            style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Add Time-Off Type To User
@@ -327,7 +329,12 @@ function UserTOT() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleClick}
+                /* color="info" */ style={Styles.buttonSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

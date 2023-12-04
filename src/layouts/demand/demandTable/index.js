@@ -43,7 +43,7 @@ export default function DemandTable() {
   //            `,
   //     confirmButtonText: "Save",
   //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
+  //     confirmButtonColor: "#f96d02",
   //     cancelButtonColor: "#d33",
   //     preConfirm: () => {
   //       const valuexx = Swal.getPopup().querySelector("#name").value;
@@ -71,7 +71,7 @@ export default function DemandTable() {
   //     text: "You won't be able to revert this!",
   //     icon: "warning",
   //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
+  //     confirmButtonColor: "#f96d02",
   //     cancelButtonColor: "#d33",
   //     confirmButtonText: "Yes, Terminate it!",
   //   }).then((result) => {
@@ -158,7 +158,7 @@ export default function DemandTable() {
   //     title: "Demand to supply",
   //     confirmButtonText: "Save",
   //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
+  //     confirmButtonColor: "#f96d02",
   //     cancelButtonColor: "#d33",
   //     preConfirm: () => {
   //       const id = value;
@@ -188,7 +188,7 @@ export default function DemandTable() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Confirm it!",
     }).then((result) => {

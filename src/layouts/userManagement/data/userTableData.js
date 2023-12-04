@@ -94,7 +94,7 @@ export default function UserData() {
   //         <option value="Sacked">Sacked</option>
   //       </select></div>`,
   //         showCancelButton: true,
-  //         confirmButtonColor: "#3085d6",
+  //         confirmButtonColor: "#f96d02",
   //         cancelButtonColor: "#d33",
   //         confirmButtonText: "Yes, delete it!",
   //       }).then((resultD) => {

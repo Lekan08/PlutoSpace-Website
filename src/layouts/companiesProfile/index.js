@@ -22,6 +22,8 @@ import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 
 function CompanyProfile() {
   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
@@ -264,10 +266,11 @@ function CompanyProfile() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -311,10 +314,10 @@ function CompanyProfile() {
             </MDTypography>
           </MDBox>
           <MDBox component="form" role="form">
-            <MDBox mb={2}>
+            <MDBox mb={2} mt={4}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       label="Name"
@@ -322,10 +325,11 @@ function CompanyProfile() {
                       onKeyUp={handleOnNameKeys}
                       onChange={(e) => setName(e.target.value)}
                       variant="standard"
+                      style={{ width: "100%", height: "100%" }}
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={emailx || ""}
@@ -333,16 +337,25 @@ function CompanyProfile() {
                       onChange={(e) => setEmail(e.target.value)}
                       label="Email"
                       variant="standard"
+                      style={{ width: "100%", height: "100%" }}
                       fullWidth
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-8">
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <MDInput
+                      type="text"
+                      value={descripx || ""}
+                      onKeyUp={handleOnDescripKeys}
+                      onChange={(e) => setDescrip(e.target.value)}
+                      label="Description"
+                      variant="standard"
+                      style={{ width: "100%", height: "100%" }}
+                      fullWidth
+                    />
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={streetx || ""}
@@ -350,10 +363,12 @@ function CompanyProfile() {
                       onChange={(e) => setStreet(e.target.value)}
                       label="Street"
                       variant="standard"
+                      style={{ width: "100%", height: "100%" }}
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-4">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={cityx || ""}
@@ -361,22 +376,19 @@ function CompanyProfile() {
                       onChange={(e) => setCity(e.target.value)}
                       label="City"
                       variant="standard"
+                      style={{ width: "100%", height: "100%" }}
                       fullWidth
                     />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-8">
+                  </Grid>
+
+                  <Grid item xs={5}>
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                       Country
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
                         value={countryx || ""}
+                        style={{ width: "100%", height: "100%" }}
                         aria-label="Default select example"
                         onChange={handleOnChangeRCCountry}
                       >
@@ -388,12 +400,8 @@ function CompanyProfile() {
                         ))}
                       </Form.Select>
                     </MDBox>
-                  </div>
-                </div>
-              </Container>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-8">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                       State
                     </MDTypography>
@@ -401,6 +409,7 @@ function CompanyProfile() {
                       <Form.Select
                         value={statex || ""}
                         aria-label="Default select example"
+                        style={{ width: "100%", height: "100%" }}
                         onChange={handleOnChangeRCState}
                       >
                         <option>--Select State--</option>
@@ -411,14 +420,8 @@ function CompanyProfile() {
                         ))}
                       </Form.Select>
                     </MDBox>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-8">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDTypography variant="button" fontWeight="regular" color="text">
                       Phone Number
                     </MDTypography>
@@ -428,26 +431,25 @@ function CompanyProfile() {
                       buttonStyle={{}}
                       onChange={setPno}
                     />
-                  </div>
-                </div>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <MDBox mt={4} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleClick}
+                        //  color="info"
+                        style={Styles.buttonSx}
+                        width="50%"
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-              <MDBox mt={2}>
-                <MDInput
-                  type="text"
-                  value={descripx || ""}
-                  onKeyUp={handleOnDescripKeys}
-                  onChange={(e) => setDescrip(e.target.value)}
-                  label="Description"
-                  variant="standard"
-                  fullWidth
-                />
-              </MDBox>
-              <br />
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>
