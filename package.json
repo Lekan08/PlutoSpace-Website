@@ -17,6 +17,7 @@
     "npm": ">=6"
   },
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object",
     "@date-io/dayjs": "^2.11.0",
     "@emotion/cache": "11.4.0",
     "@emotion/core": "^10.1.1",
