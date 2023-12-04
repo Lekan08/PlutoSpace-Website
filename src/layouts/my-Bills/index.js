@@ -199,7 +199,7 @@ function MyBills() {
             billID: result.data.id,
             actionBy: currentlyLogegdIn,
           });
-          console.log(raw);
+          console.log(rawBJ);
           const requestOptionsBJ = {
             method: "POST",
             headers: myHeaders,
