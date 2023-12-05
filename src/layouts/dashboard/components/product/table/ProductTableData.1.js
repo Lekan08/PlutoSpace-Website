@@ -7,7 +7,6 @@ import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 
-
 export default function ProductTableData() {
   const MySwal = withReactContent(Swal);
   const [items, setItems] = useState([]);
@@ -22,15 +21,14 @@ export default function ProductTableData() {
 
     const orgIDs = data11.orgID;
     const raw = JSON.stringify({
-      orgID: orgIDs
+      orgID: orgIDs,
     });
     const requestOptions = {
       method: "GET",
       headers: myHeaders,
       body: raw,
-      redirect: "follow"
+      redirect: "follow",
     };
-
 
     fetch(`${process.env.REACT_APP_LOUGA_URL}/products/gets/{orgID}`, requestOptions)
       .then(async (res) => {
@@ -54,7 +52,7 @@ export default function ProductTableData() {
         MySwal.fire({
           title: result.status,
           type: "success",
-          text: result.message
+          text: result.message,
         }).then(() => {
           window.location.reload();
         });
@@ -63,7 +61,7 @@ export default function ProductTableData() {
         MySwal.fire({
           title: error.status,
           type: "error",
-          text: error.message
+          text: error.message,
         });
       });
   };
@@ -75,14 +73,14 @@ export default function ProductTableData() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         const requestOptions = {
           method: "DELETE",
-          headers: PHeaders
+          headers: PHeaders,
         };
 
         fetch(`${process.env.REACT_APP_LOUGA_URL}/products/delete/${value}`, requestOptions)
@@ -104,7 +102,7 @@ export default function ProductTableData() {
             MySwal.fire({
               title: resx.status,
               type: "success",
-              text: resx.message
+              text: resx.message,
             }).then(() => {
               window.location.reload();
             });
@@ -113,7 +111,7 @@ export default function ProductTableData() {
             MySwal.fire({
               title: error.status,
               type: "error",
-              text: error.message
+              text: error.message,
             });
           });
       }
@@ -172,7 +170,7 @@ export default function ProductTableData() {
         Header: "Date Created",
         accessor: "createdTime",
         Cell: ({ cell: { value } }) => changeDate(value),
-        align: "left"
+        align: "left",
       },
       {
         Header: "actions",
@@ -183,7 +181,7 @@ export default function ProductTableData() {
             style={{
               width: "100%",
               backgroundColor: "#dadada",
-              borderRadius: "2px"
+              borderRadius: "2px",
             }}
           >
             <Dropdown>
@@ -200,10 +198,10 @@ export default function ProductTableData() {
             </Dropdown>
           </div>
         ),
-        align: "left"
+        align: "left",
       },
     ],
 
-    rows: items
+    rows: items,
   };
 }

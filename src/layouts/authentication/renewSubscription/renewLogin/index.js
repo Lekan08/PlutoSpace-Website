@@ -37,7 +37,10 @@ import BasicLayout from "layouts/authentication/components/BasicLayout";
 
 // Images
 import bgImage from "assets/images/bg-sign-in-basic.gif";
-import plutospaceImg from "assets/images/PlutoSpaceImg.png";
+// import plutospaceImg from "assets/images/PlutoSpaceImg.png";
+
+import Plutospace from "assets/images/Plutospace.png";
+import Styles from "styles";
 
 function RenewLog() {
   const navigate = useNavigate();
@@ -109,17 +112,26 @@ function RenewLog() {
       <BasicLayout image={bgImage}>
         <Card>
           <MDBox
+            component="img"
+            mt={2}
+            mb={2}
+            style={{ alignSelf: "center" }}
+            src={Plutospace}
+            alt="PlutoSpace"
+            width="15rem"
+          />
+          <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={Styles.boxSx}
+            // coloredShadow="info"
             mx={2}
-            mt={-3}
+            mt={0}
             p={2}
             mb={1}
             textAlign="center"
           >
-            <MDBox component="img" src={plutospaceImg} alt="PlutoSpace" width="15rem" />
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               Log In
             </MDTypography>
@@ -186,7 +198,13 @@ function RenewLog() {
                   </div>
                 </Container>
               </MDBox>
-              <MDButton variant="gradient" onClick={handleClick} color="info" fullWidth>
+              <MDButton
+                variant="gradient"
+                onClick={handleClick}
+                // color="info"
+                style={Styles.buttonSx}
+                fullWidth
+              >
                 Log In
               </MDButton>
             </MDBox>

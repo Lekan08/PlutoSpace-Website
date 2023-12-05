@@ -14,6 +14,7 @@ import { useReactToPrint } from "react-to-print";
 import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
 import PDF from "layouts/announcement-Dashboard/pdf";
+import Styles from "styles";
 
 export default function AppraisalDashboard() {
   const navigate = useNavigate();
@@ -208,7 +209,13 @@ export default function AppraisalDashboard() {
       <MDBox mb={1}>
         <div align="center">
           <MDBox mt={2} mb={2}>
-            <MDButton variant="gradient" onClick={handlePrint} color="info" width="50%">
+            <MDButton
+              variant="gradient"
+              onClick={handlePrint}
+              // color="info"
+              style={Styles.buttonSx}
+              width="50%"
+            >
               Print Page
             </MDButton>
           </MDBox>

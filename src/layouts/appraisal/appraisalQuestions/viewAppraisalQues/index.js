@@ -20,6 +20,7 @@ import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 
 function VuAppraisalQuestion() {
   const MySwal = withReactContent(Swal);
@@ -278,7 +279,7 @@ function VuAppraisalQuestion() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, remove it!",
     }).then((result) => {
@@ -370,10 +371,11 @@ function VuAppraisalQuestion() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
-            mx={2}
+            style={Styles.boxSx}
+            // coloredShadow="info"
+            mx={0}
             mt={-3}
             p={2}
             mb={1}
@@ -461,7 +463,13 @@ function VuAppraisalQuestion() {
                 </div>
               </Container>
               <MDBox mt={4} mb={1}>
-                <MDButton variant="gradient" onClick={handleValidate} color="info" width="50%">
+                <MDButton
+                  variant="gradient"
+                  onClick={handleValidate}
+                  // color="info"
+                  style={Styles.buttonSx}
+                  width="50%"
+                >
                   Save
                 </MDButton>
               </MDBox>
@@ -470,16 +478,23 @@ function VuAppraisalQuestion() {
               <MDBox mb={2}>
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  // bgColor="info"
                   borderRadius="lg"
-                  coloredShadow="info"
-                  mx={2}
+                  style={Styles.boxSx}
+                  // coloredShadow="info"
+                  mx={0}
                   mt={0}
                   p={2}
                   mb={1}
                   textAlign="center"
                 >
-                  <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                  <MDTypography
+                    variant="h4"
+                    fontWeight="medium"
+                    // color="info"
+                    style={Styles.textSx}
+                    mt={1}
+                  >
                     Add Option
                   </MDTypography>
                 </MDBox>
@@ -498,7 +513,13 @@ function VuAppraisalQuestion() {
                   </div>
                 </Container>
                 <MDBox mt={4} mb={1}>
-                  <MDButton variant="gradient" onClick={handleAddOption} color="info" width="50%">
+                  <MDButton
+                    variant="gradient"
+                    onClick={handleAddOption}
+                    // color="info"
+                    style={Styles.buttonSx}
+                    width="50%"
+                  >
                     Add Option
                   </MDButton>
                 </MDBox>

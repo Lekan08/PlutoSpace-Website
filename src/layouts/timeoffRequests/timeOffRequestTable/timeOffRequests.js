@@ -196,7 +196,7 @@ export default function TimeOffRequestData() {
       <td><input type="text" class="swal2-input" id="daysapproved" value="${daysapprovex}" placeholder="Purpose"></td></tr></table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       preConfirm: () => {
         const daysRequested = Swal.getPopup().querySelector("#days").value;
@@ -236,7 +236,7 @@ export default function TimeOffRequestData() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -469,7 +469,7 @@ export default function TimeOffRequestData() {
       <td><input type="text" class="swal2-input" id="days" value="${completedDaysx}" placeholder="Days Requested"></td></tr></table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       preConfirm: () => {
         const daysCompleted = Swal.getPopup().querySelector("#days").value;

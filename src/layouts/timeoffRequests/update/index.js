@@ -13,6 +13,7 @@ import GHeaders from "getHeader";
 import PHeaders from "postHeader";
 import DatePicker from "react-datepicker";
 import MDButton from "components/MDButton";
+import Styles from "styles";
 
 function TimeoffRequestUpdate() {
   const MySwal = withReactContent(Swal);
@@ -301,10 +302,11 @@ function TimeoffRequestUpdate() {
               <MDBox component="form" role="form">
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  // bgColor="info"
                   borderRadius="lg"
-                  coloredShadow="success"
-                  mx={2}
+                  style={Styles.boxSx}
+                  // coloredShadow="info"
+                  mx={0}
                   mt={-6}
                   p={3}
                   mb={1}
@@ -519,7 +521,8 @@ function TimeoffRequestUpdate() {
                   <MDButton
                     variant="gradient"
                     onClick={(e) => handleOnPurposeKeys(e)}
-                    color="info"
+                    // color="info"
+                    style={Styles.buttonSx}
                     width="50%"
                     align="center"
                   >

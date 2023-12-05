@@ -110,7 +110,7 @@ export default function data() {
       </td></tr></table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       preConfirm: () => {
         const name = Swal.getPopup().querySelector("#name").value;
@@ -133,7 +133,7 @@ export default function data() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {

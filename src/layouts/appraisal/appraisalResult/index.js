@@ -25,6 +25,7 @@ import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 // import TextWrapper from "react-text-wrapper";,
 import Grid from "@mui/material/Grid";
+import Styles from "styles";
 
 import "./index.css";
 
@@ -296,10 +297,11 @@ function AppraisalResult() {
         <MDBox pt={4} pb={3} px={10}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
-            mx={2}
+            style={Styles.boxSx}
+            // coloredShadow="info"
+            mx={0}
             mt={-3}
             p={2}
             mb={1}
@@ -331,7 +333,13 @@ function AppraisalResult() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleClick}
+                // color="info"
+                style={Styles.buttonSx}
+                width="50%"
+              >
                 View Answers
               </MDButton>
             </MDBox>
@@ -356,7 +364,8 @@ function AppraisalResult() {
                             <CardContent>
                               <MDTypography
                                 variant="h6"
-                                color="info"
+                                // color="info"
+                                style={Styles.textSx}
                                 fontSize="75%"
                                 textAlign="left"
                                 mt={1}
@@ -401,10 +410,11 @@ function AppraisalResult() {
         <MDBox pt={4} pb={3} px={10}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
-            mx={2}
+            style={Styles.boxSx}
+            // coloredShadow="info"
+            mx={0}
             mt={-3}
             p={2}
             mb={1}
@@ -451,7 +461,8 @@ function AppraisalResult() {
                 variant="gradient"
                 onClick={handleGrade}
                 disabled={!enabled}
-                color="info"
+                // color="info"
+                style={Styles.buttonSx}
                 width="50%"
               >
                 Grade

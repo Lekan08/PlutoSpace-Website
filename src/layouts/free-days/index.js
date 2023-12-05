@@ -26,6 +26,7 @@ import DataTable from "examples/Tables/DataTable";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 import FreeDaysData from "./free-days-list/freeDaysList";
 
@@ -200,9 +201,10 @@ function FreeDay() {
         <MDBox component="form" role="form">
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={Styles.boxSx}
+            // coloredShadow="info"
             mx={0}
             mt={-3}
             p={2}
@@ -275,7 +277,8 @@ function FreeDay() {
               <MDButton
                 variant="gradient"
                 onClick={handleAddEvent}
-                color="info"
+                // color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >
@@ -289,9 +292,10 @@ function FreeDay() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
           borderRadius="lg"
-          coloredShadow="info"
+          style={Styles.boxSx}
+          // coloredShadow="info"
           mx={2}
           mt={-3}
           p={2}

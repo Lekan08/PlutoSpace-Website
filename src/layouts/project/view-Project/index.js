@@ -1193,7 +1193,8 @@ export default function Pipeline() {
                           <br />
                           <MDBox
                             variant="gradient"
-                            bgColor="info"
+                            // bgColor="info"
+                            style={{ backgroundColor: "#f96d02" }}
                             borderRadius="lg"
                             coloredShadow="info"
                             mx={1}
@@ -1249,7 +1250,7 @@ export default function Pipeline() {
                                                 fontSize: "15px",
                                                 backgroundColor: snapshots.isDragging
                                                   ? "#121212"
-                                                  : "#318CE7",
+                                                  : "#f96d02",
                                                 color: "white",
                                                 ...provideds.draggableProps.style,
                                               }}
@@ -1259,7 +1260,7 @@ export default function Pipeline() {
                                                 style={{
                                                   backgroundColor: snapshots.isDragging
                                                     ? "#121212"
-                                                    : "#318CE7",
+                                                    : "#f96d02",
                                                   minHeight: "30px",
                                                 }}
                                                 onClick={() => openModal(item.id)}
@@ -1494,15 +1495,16 @@ export default function Pipeline() {
                     <></>
                   )}
                 </div>
-                &nbsp; &nbsp;
+                {/* &nbsp; &nbsp; */}
                 <MDButton
                   variant="gradient"
                   onClick={handleUpdateTask}
-                  color="info"
+                  // color="info"
                   width="50%"
                   align="center"
                   size="small"
-                  style={{ marginTop: "10px" }}
+                  style={Styles.buttonSx}
+                  // style={{ marginTop: "10px" }}
                 >
                   Update
                 </MDButton>
@@ -1510,10 +1512,11 @@ export default function Pipeline() {
                 <MDButton
                   variant="gradient"
                   onClick={handleViewSubtask}
-                  color="info"
+                  // color="info"
+                  style={Styles.buttonSx}
                   width="50%"
                   align="left"
-                  style={{ marginTop: "10px" }}
+                  size="small"
                 >
                   Subtask
                 </MDButton>
@@ -1570,7 +1573,12 @@ export default function Pipeline() {
                   onChange={(e) => setTaskComment(e.target.value)}
                 />{" "}
                 &nbsp;
-                <MDButton color="info" size="small" onClick={(e) => handleCommentButton(e)}>
+                <MDButton
+                  // color="info"
+                  style={Styles.buttonSx}
+                  size="small"
+                  onClick={(e) => handleCommentButton(e)}
+                >
                   <Icon fontSize="small">send</Icon>
                 </MDButton>
                 <CommentCardTask taskId={taskId} />

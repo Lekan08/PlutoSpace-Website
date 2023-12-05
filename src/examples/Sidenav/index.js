@@ -35,7 +35,9 @@ import MDButton from "components/MDButton";
 
 // Material Dashboard 2 React example components
 import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
-import bgImage from "assets/images/plutospace-1.png";
+// import bgImage from "assets/images/plutospace-1.png";
+
+import Plutospace from "assets/images/Plutospace.png";
 
 // Custom styles for the Sidenav
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
@@ -51,6 +53,7 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+import Styles from "styles";
 
 import GHeaders from "getHeader";
 import defaulto from "./defaulto.png";
@@ -71,6 +74,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
+  // console.log({ collapseName });
 
   let textColor = "white";
 
@@ -342,7 +346,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           </MDTypography>
         </MDBox>
         <MDBox component={NavLink} to="/" display="flex" alignItems="center">
-          {brand && <MDBox component="img" src={bgImage} alt="Brand" width="10rem" />}
+          {brand && <MDBox component="img" src={Plutospace} alt="Brand" width="10rem" />}
         </MDBox>
         <br />
         <MDBox
@@ -398,6 +402,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         {newRenderRoutes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
           let returnValue;
 
+          const collapseNameWithSlash = `/${collapseName}`;
+
           if (type === "collapse") {
             returnValue = href ? (
               <Link
@@ -410,13 +416,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
                 <SidenavCollapse
                   name={name}
                   icon={icon}
-                  active={key === collapseName}
+                  active={route === collapseNameWithSlash}
                   noCollapse={noCollapse}
                 />
               </Link>
             ) : (
               <NavLink key={key} to={route}>
-                <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
+                <SidenavCollapse name={name} icon={icon} active={route === collapseNameWithSlash} />
               </NavLink>
             );
           } else if (type === "title") {
@@ -452,7 +458,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         })}
       </List>
       <MDBox p={2} mt="auto">
-        <MDButton variant="gradient" color="info" onClick={handleLogOut} fullWidth>
+        <MDButton
+          variant="gradient"
+          // color="info"
+          style={Styles.buttonSx}
+          onClick={handleLogOut}
+          fullWidth
+        >
           Sign Out
         </MDButton>
       </MDBox>

@@ -162,7 +162,7 @@ function Voucher() {
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#f96d02",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, Approve voucher!",
       }).then((result) => {
@@ -221,7 +221,7 @@ function Voucher() {
         text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#f96d02",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, Disapprove voucher!",
       }).then((result) => {
@@ -292,7 +292,7 @@ function Voucher() {
         icon: "warning",
         showDenyButton: true,
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#f96d02",
         // cancelButtonColor: "#d33",
         confirmButtonText: "Yes",
         denyButtonText: "No",

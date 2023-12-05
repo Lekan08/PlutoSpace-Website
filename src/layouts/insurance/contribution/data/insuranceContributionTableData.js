@@ -114,7 +114,7 @@ export default function InsuranceContributionTableData() {
                  </table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       preConfirm: () => {
         const cash = Swal.getPopup().querySelector("#cash").value;
@@ -144,7 +144,7 @@ export default function InsuranceContributionTableData() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -268,7 +268,7 @@ export default function InsuranceContributionTableData() {
                  </table>`,
         confirmButtonText: "Save",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#f96d02",
         cancelButtonColor: "#d33",
         preConfirm: () => {
           const comment = Swal.getPopup().querySelector("#comment").value;
@@ -289,7 +289,7 @@ export default function InsuranceContributionTableData() {
                      </table>`,
         confirmButtonText: "Save",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#f96d02",
         cancelButtonColor: "#d33",
         preConfirm: () => {
           const comment = Swal.getPopup().querySelector("#comment").value;
