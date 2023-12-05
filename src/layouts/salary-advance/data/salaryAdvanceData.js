@@ -292,6 +292,7 @@ export default function SalaryAdvanceData() {
                       navigate("/authentication/forbiddenPage");
                       window.location.reload();
                     }
+                    console.log(resultpay);
                     if (resultpay.status === "SUCCESS") {
                       handleUpdate(
                         filteredItems[0].id,
