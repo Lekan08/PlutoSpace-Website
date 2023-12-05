@@ -15,6 +15,9 @@ import { useNavigate } from "react-router-dom";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import MDInput from "components/MDInput";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 
 function AddTimeOffType() {
   const MySwal = withReactContent(Swal);
@@ -31,6 +34,7 @@ function AddTimeOffType() {
   const [allTOTGs, setAllTOTGs] = useState([]);
   const [typeValue, setTypeValue] = useState("");
 
+  const [opened, setOpened] = useState(false);
   // const [checkedName, setCheckedName] = useState("");
   // const [enabled, setEnabled] = useState("");
 
@@ -184,14 +188,15 @@ function AddTimeOffType() {
   }, []);
 
   const handleClick = () => {
+    setOpened(true);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const id = urlParams.get("id");
-    const ids = JSON.parse([id]);
+    // const ids = JSON.parse([id]);
 
     const raw = JSON.stringify({
       orgID: orgIDs,
-      timeOffTypeID: ids,
+      timeOffTypeID: id,
       type: typeValue,
       name: allTOTGVal,
       value: numofdaysx,
@@ -210,6 +215,7 @@ function AddTimeOffType() {
         return res.json();
       })
       .then((result) => {
+        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -222,15 +228,24 @@ function AddTimeOffType() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        MySwal.fire({
-          title: result.status,
-          type: "success",
-          text: result.message,
-        }).then(() => {
-          window.location.reload();
-        });
+        if (result.status === "SUCCESS") {
+          MySwal.fire({
+            title: result.status,
+            type: "success",
+            text: result.message,
+          }).then(() => {
+            window.location.reload();
+          });
+        } else {
+          MySwal.fire({
+            title: result.status,
+            type: "success",
+            text: result.message,
+          });
+        }
       })
       .catch((error) => {
+        setOpened(false);
         MySwal.fire({
           title: error.status,
           type: "error",
@@ -245,7 +260,7 @@ function AddTimeOffType() {
     if (!numofdaysx.match(numbers)) {
       // setCheckedName(false);
       // eslint-disable-next-line no-unused-expressions
-      document.getElementById("numofdays").innerHTML = "Name - input only numbers<br>";
+      document.getElementById("numofdays").innerHTML = "Number Of Days - input only numbers<br>";
     }
     if (numofdaysx.match(numbers)) {
       // setCheckedName(true);
@@ -268,10 +283,11 @@ function AddTimeOffType() {
       <MDBox pt={4} pb={3} px={3}>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
           borderRadius="lg"
-          coloredShadow="info"
-          mx={2}
+          style={Styles.boxSx}
+          // coloredShadow="info"
+          mx={0}
           mt={-3}
           p={2}
           mb={1}
@@ -359,8 +375,9 @@ function AddTimeOffType() {
                 <MDButton
                   variant="gradient"
                   onClick={(e) => handleOnNumofdayskeysKeys(e)}
-                  // disabled={!enabled}
-                  color="info"
+                  disabled={numofdaysx === "" || allTOTGVal === "" || (typeValue === "" && true)}
+                  // color="info"
+                  style={Styles.buttonSx}
                   width="50%"
                 >
                   Save
@@ -393,6 +410,9 @@ function AddTimeOffType() {
         />
       </MDBox>
       <Footer />
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
+        <CircularProgress color="info" />
+      </Backdrop>
     </DashboardLayout>
   );
 }

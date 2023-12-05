@@ -473,7 +473,7 @@ function Appointments() {
             bgColor="warning"
             borderRadius="lg"
             coloredShadow="info"
-            mx={0}
+            mx={2}
             mt={-3}
             p={2}
             mb={1}
@@ -699,7 +699,7 @@ function Appointments() {
             <MDBox mt={3} mb={3}>
               &nbsp;
               <MDBox component="form" role="form">
-                <MDBox variant="gradient" mx={0} mt={-3} p={2} mb={1} textAlign="center">
+                <MDBox variant="gradient" mx={2} mt={-3} p={2} mb={1} textAlign="center">
                   <MDTypography variant="h5" fontWeight="medium" color="warning" mt={1}>
                     Add Participants Not In The Organization
                   </MDTypography>

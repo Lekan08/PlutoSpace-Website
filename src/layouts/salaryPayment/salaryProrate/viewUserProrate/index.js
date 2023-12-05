@@ -18,6 +18,8 @@ import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 
 function VuUserProrate() {
   const MySwal = withReactContent(Swal);
@@ -180,10 +182,11 @@ function VuUserProrate() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -204,7 +207,7 @@ function VuUserProrate() {
             mx={3}
             mt={1}
             p={1}
-            mb={1}
+            mb={3}
             textAlign="center"
           >
             <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
@@ -214,8 +217,8 @@ function VuUserProrate() {
           <MDBox component="form" role="form">
             <MDBox mb={0}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={noOfDaysx || ""}
@@ -224,49 +227,65 @@ function VuUserProrate() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={5}>
                     <MDInput
                       type="text"
                       value={totalNumOfDayx || ""}
                       onChange={(e) => setTotalNumOfDays(e.target.value)}
-                      label="Total Number Of Days"
+                      label="Total Number Of Days *"
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <MDTypography
+                      variant="button"
+                      fontWeight="regular"
+                      fontSize="80%"
+                      align="left"
+                      color="text"
+                    >
+                      User *
+                    </MDTypography>
+                    <Form.Select
+                      value={userIDx}
+                      onChange={(e) => setUserIDx(e.target.value)}
+                      aria-label="Default select example"
+                    >
+                      <option value="">--Select User--</option>
+                      {user.map((api) => (
+                        <option key={api.personal.id} value={api.personal.id}>
+                          {api.personal.fname} {api.personal.lname}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleClick}
+                        // color="info"
+                        style={Styles.buttonSx}
+                        width="50%"
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={5}>
+                    {" "}
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
             </MDBox>
-            <MDBox mt={2}>
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                fontSize="80%"
-                align="left"
-                color="text"
-              >
-                User
-              </MDTypography>
-              <Form.Select
-                value={userIDx}
-                onChange={(e) => setUserIDx(e.target.value)}
-                aria-label="Default select example"
-              >
-                <option value="">--Select User--</option>
-                {user.map((api) => (
-                  <option key={api.personal.id} value={api.personal.id}>
-                    {api.personal.fname} {api.personal.lname}
-                  </option>
-                ))}
-              </Form.Select>
-              <br />
-            </MDBox>
-          </MDBox>
-          <MDBox mt={4} mb={1}>
-            <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
-              Save
-            </MDButton>
           </MDBox>
         </MDBox>
       </Card>

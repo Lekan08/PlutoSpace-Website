@@ -22,6 +22,7 @@ import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 // import Select from "react-select";
 // import makeAnimated from "react-select/animated";
 
@@ -624,9 +625,10 @@ function AppraiseQandA() {
               <MDBox mb={2} mt={3}>
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  // bgColor="info"
                   borderRadius="lg"
-                  coloredShadow="info"
+                  style={Styles.boxSx}
+                  // coloredShadow="info"
                   mx={2}
                   mt={-3}
                   p={2}
@@ -641,7 +643,7 @@ function AppraiseQandA() {
                   variant="gradient"
                   bgColor="white"
                   borderRadius="lg"
-                  coloredShadow="info"
+                  coloredShadow="secondary"
                   mx={2}
                   mt={0}
                   p={2}
@@ -658,7 +660,8 @@ function AppraiseQandA() {
                       <MDButton
                         variant="gradient"
                         onClick={handleChangeToForm}
-                        color="info"
+                        // color="info"
+                        style={Styles.buttonSx}
                         width="50%"
                       >
                         Start
@@ -667,7 +670,13 @@ function AppraiseQandA() {
                   ) : (
                     <MDBox mt={4} mb={1}>
                       <MDBox mt={4} mb={1}>
-                        <MDButton variant="gradient" onClick={handleBack} color="info" width="50%">
+                        <MDButton
+                          variant="gradient"
+                          onClick={handleBack}
+                          // color="info"
+                          style={Styles.buttonSx}
+                          width="50%"
+                        >
                           Go Back
                         </MDButton>
                       </MDBox>
@@ -675,7 +684,8 @@ function AppraiseQandA() {
                         <MDButton
                           variant="gradient"
                           onClick={handleComplete}
-                          color="info"
+                          // color="info"
+                          style={Styles.buttonSx}
                           width="50%"
                         >
                           Complete
@@ -696,9 +706,10 @@ function AppraiseQandA() {
                             <div className="col-sm-4">
                               <MDBox
                                 variant="gradient"
-                                bgColor="info"
+                                // bgColor="info"
                                 borderRadius="lg"
-                                coloredShadow="info"
+                                style={Styles.boxSx}
+                                // coloredShadow="info"
                                 mx={2}
                                 mt={-3}
                                 p={2}
@@ -716,7 +727,7 @@ function AppraiseQandA() {
                           variant="gradient"
                           bgColor="white"
                           borderRadius="lg"
-                          coloredShadow="info"
+                          coloredShadow="secondary"
                           mx={2}
                           mt={0}
                           p={2}
@@ -749,9 +760,10 @@ function AppraiseQandA() {
                       <div className="col-sm-4">
                         <MDBox
                           variant="gradient"
-                          bgColor="info"
+                          // bgColor="info"
                           borderRadius="lg"
-                          coloredShadow="info"
+                          style={Styles.boxSx}
+                          // coloredShadow="info"
                           mx={5}
                           mt={2}
                           p={2}
@@ -851,7 +863,8 @@ function AppraiseQandA() {
                           <MDButton
                             variant="gradient"
                             onClick={handlePrev}
-                            color="info"
+                            // color="info"
+                            style={Styles.buttonSx}
                             width="50%"
                           >
                             Prev
@@ -864,7 +877,8 @@ function AppraiseQandA() {
                           <MDButton
                             variant="gradient"
                             onClick={handleNext}
-                            color="info"
+                            // color="info"
+                            style={Styles.buttonSx}
                             width="50%"
                           >
                             Next

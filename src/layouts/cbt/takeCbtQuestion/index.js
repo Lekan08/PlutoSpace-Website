@@ -41,7 +41,7 @@ function TakeCbtQuestion() {
   //       text: "You won't be able to revert this!",
   //       icon: "warning",
   //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
+  //       confirmButtonColor: "#f96d02",
   //       cancelButtonColor: "#d33",
   //       confirmButtonText: "Yes, delete it!",
   //     }).then((result) => {
@@ -157,7 +157,7 @@ function TakeCbtQuestion() {
   //     html: `<input type="text" id="answer" value="${answerx}" class="swal2-input" placeholder="Answer">`,
   //     confirmButtonText: "Save",
   //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
+  //     confirmButtonColor: "#f96d02",
   //     cancelButtonColor: "#d33",
   //     preConfirm: () => {
   //       const answer = Swal.getPopup().querySelector("#answer").value;

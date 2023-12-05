@@ -12,9 +12,10 @@ import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import MDButton from "components/MDButton";
+import Styles from "styles";
 
 function updatesystemrole() {
-  const [users, setUsers] = useState({});
+  const [users, setUsers] = useState([]);
   const [lists, setLists] = useState([]);
   const [opened, setOpened] = useState(false);
   const navigate = useNavigate();
@@ -32,7 +33,8 @@ function updatesystemrole() {
     const orgIDs = data11.orgID;
 
     const id = urlParams.get("id");
-    const idVal = JSON.parse([id]);
+    console.log(id);
+    const idVal = id;
 
     let isMounted = true;
     fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/getByPersonalID/${orgIDs}/${idVal}`, {
@@ -57,6 +59,7 @@ function updatesystemrole() {
         if (isMounted) {
           if (resultg.roleID === null) setRoleID("0");
           else setRoleID(resultg.roleID);
+          console.log(resultg);
           setUsers(resultg);
         }
       });
@@ -155,7 +158,7 @@ function updatesystemrole() {
       <MDBox pt={4} pb={3} px={3}>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
           borderRadius="lg"
           coloredShadow="info"
           mx={2}
@@ -163,6 +166,7 @@ function updatesystemrole() {
           p={2}
           mb={1}
           textAlign="center"
+          style={Styles.boxSx}
         >
           <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
             Update User System Role
@@ -209,7 +213,12 @@ function updatesystemrole() {
 
             <div className="row">
               <MDBox mt={4} mb={1}>
-                <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+                <MDButton
+                  variant="gradient"
+                  onClick={handleClick}
+                  /* color="info" */ style={Styles.buttonSx}
+                  width="50%"
+                >
                   Save
                 </MDButton>
               </MDBox>

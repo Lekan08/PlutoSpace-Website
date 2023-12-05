@@ -267,120 +267,130 @@ export default function Pipeline() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
     const orgIDs = data11.orgID;
     const createdByx = data11.personalID;
-    const raw = JSON.stringify({
-      orgID: orgIDs,
-      projectID: projectIDx,
-      title: taskNamex,
-      descrip: taskDescription,
-      assignedTo: assignedTox,
-      expectedStartTime: expectedStartTimex,
-      expectedEndTime: expectedEndTimex,
-      currentStageID: currentStageIdx[0].stages[0].id,
-      totalExpectedCost: costx,
-    });
-    console.log(raw);
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-
-    if (
-      expectedEndTimex < expectedStartTimex ||
-      expectedEndTimex < currTime ||
-      expectedStartTimex < currTime
-    ) {
-      MySwal.fire({
-        title: "Invalid Date",
-        type: "error",
-        text: "Please Enter A Date From The Future",
+    const Stagessxx = currentStageIdx[0].stages;
+    if (Stagessxx.length) {
+      const raw = JSON.stringify({
+        orgID: orgIDs,
+        projectID: projectIDx,
+        title: taskNamex,
+        descrip: taskDescription,
+        assignedTo: assignedTox,
+        expectedStartTime: expectedStartTimex,
+        expectedEndTime: expectedEndTimex,
+        currentStageID: currentStageIdx[0].stages[0].id,
+        totalExpectedCost: costx,
       });
+      console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
 
-      setOpened(false);
-    } else {
-      fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/add`, requestOptions)
-        .then(async (res) => {
-          const aToken = res.headers.get("token-1");
-          localStorage.setItem("rexxdex", aToken);
-          return res.json();
-        })
-        .then((resultr) => {
-          console.log(resultr);
-          setOpened(false);
-          if (resultr.message === "Expired Access") {
-            navigate("/authentication/sign-in");
-            window.location.reload();
-          }
-          if (resultr.message === "Token Does Not Exist") {
-            navigate("/authentication/sign-in");
-            window.location.reload();
-          }
-          if (resultr.message === "Unauthorized Access") {
-            navigate("/authentication/forbiddenPage");
-            window.location.reload();
-          }
-          MySwal.fire({
-            title: resultr.status,
-            type: "success",
-            text: resultr.message,
-          }).then(() => {
-            window.location.reload();
-          });
-          console.log(resultr);
-          if (resultr.data !== null) {
-            const raww = JSON.stringify({
-              orgID: orgIDs,
-              projectID: projectIDx,
-              taskID: resultr.data.id,
-              actionBy: createdByx,
-              actionTaken: "created this Task on",
-            });
-            console.log(raw);
-            const requestOptionsx = {
-              method: "POST",
-              headers: myHeaders,
-              body: raww,
-              redirect: "follow",
-            };
-            fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
-              .then(async (res) => {
-                const aToken = res.headers.get("token-1");
-                localStorage.setItem("rexxdex", aToken);
-                return res.json();
-              })
-              .then((result) => {
-                console.log(result);
-                setOpened(false);
-                if (result.message === "Expired Access") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (result.message === "Token Does Not Exist") {
-                  navigate("/authentication/sign-in");
-                  window.location.reload();
-                }
-                if (result.message === "Unauthorized Access") {
-                  navigate("/authentication/forbiddenPage");
-                  window.location.reload();
-                }
-                console.log(result.status);
-              })
-              .catch((errorr) => {
-                setOpened(false);
-
-                console.log(errorr.status);
-              });
-          }
-        })
-        .catch((error) => {
-          setOpened(false);
-          MySwal.fire({
-            title: error.status,
-            type: "error",
-            text: error.message,
-          });
+      if (
+        expectedEndTimex < expectedStartTimex ||
+        expectedEndTimex < currTime ||
+        expectedStartTimex < currTime
+      ) {
+        MySwal.fire({
+          title: "Invalid Date",
+          type: "error",
+          text: "Please Enter A Date From The Future",
         });
+
+        setOpened(false);
+      } else {
+        fetch(`${process.env.REACT_APP_HALIFAX_URL}/task/add`, requestOptions)
+          .then(async (res) => {
+            const aToken = res.headers.get("token-1");
+            localStorage.setItem("rexxdex", aToken);
+            return res.json();
+          })
+          .then((resultr) => {
+            console.log(resultr);
+            setOpened(false);
+            if (resultr.message === "Expired Access") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (resultr.message === "Token Does Not Exist") {
+              navigate("/authentication/sign-in");
+              window.location.reload();
+            }
+            if (resultr.message === "Unauthorized Access") {
+              navigate("/authentication/forbiddenPage");
+              window.location.reload();
+            }
+            MySwal.fire({
+              title: resultr.status,
+              type: "success",
+              text: resultr.message,
+            }).then(() => {
+              window.location.reload();
+            });
+            console.log(resultr);
+            if (resultr.data !== null) {
+              const raww = JSON.stringify({
+                orgID: orgIDs,
+                projectID: projectIDx,
+                taskID: resultr.data.id,
+                actionBy: createdByx,
+                actionTaken: "created this Task on",
+              });
+              console.log(raw);
+              const requestOptionsx = {
+                method: "POST",
+                headers: myHeaders,
+                body: raww,
+                redirect: "follow",
+              };
+              fetch(`${process.env.REACT_APP_HALIFAX_URL}/taskAudit/add`, requestOptionsx)
+                .then(async (res) => {
+                  const aToken = res.headers.get("token-1");
+                  localStorage.setItem("rexxdex", aToken);
+                  return res.json();
+                })
+                .then((result) => {
+                  console.log(result);
+                  setOpened(false);
+                  if (result.message === "Expired Access") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (result.message === "Token Does Not Exist") {
+                    navigate("/authentication/sign-in");
+                    window.location.reload();
+                  }
+                  if (result.message === "Unauthorized Access") {
+                    navigate("/authentication/forbiddenPage");
+                    window.location.reload();
+                  }
+                  console.log(result.status);
+                })
+                .catch((errorr) => {
+                  setOpened(false);
+
+                  console.log(errorr.status);
+                });
+            }
+          })
+          .catch((error) => {
+            setOpened(false);
+            MySwal.fire({
+              title: error.status,
+              type: "error",
+              text: error.message,
+            });
+          });
+      }
+    } else {
+      setOpened(false);
+      MySwal.fire({
+        title: "Empty TextField",
+        type: "error",
+        text: "Please Add Stages to WorkFlow",
+      });
     }
   };
   const onDragTask = (filteredData, onDragCurrentStageIDx) => {
@@ -1183,7 +1193,8 @@ export default function Pipeline() {
                           <br />
                           <MDBox
                             variant="gradient"
-                            bgColor="info"
+                            // bgColor="info"
+                            style={{ backgroundColor: "#f96d02" }}
                             borderRadius="lg"
                             coloredShadow="info"
                             mx={1}
@@ -1239,7 +1250,7 @@ export default function Pipeline() {
                                                 fontSize: "15px",
                                                 backgroundColor: snapshots.isDragging
                                                   ? "#121212"
-                                                  : "#318CE7",
+                                                  : "#f96d02",
                                                 color: "white",
                                                 ...provideds.draggableProps.style,
                                               }}
@@ -1249,7 +1260,7 @@ export default function Pipeline() {
                                                 style={{
                                                   backgroundColor: snapshots.isDragging
                                                     ? "#121212"
-                                                    : "#318CE7",
+                                                    : "#f96d02",
                                                   minHeight: "30px",
                                                 }}
                                                 onClick={() => openModal(item.id)}
@@ -1484,15 +1495,16 @@ export default function Pipeline() {
                     <></>
                   )}
                 </div>
-                &nbsp; &nbsp;
+                {/* &nbsp; &nbsp; */}
                 <MDButton
                   variant="gradient"
                   onClick={handleUpdateTask}
-                  color="info"
+                  // color="info"
                   width="50%"
                   align="center"
                   size="small"
-                  style={{ marginTop: "10px" }}
+                  style={Styles.buttonSx}
+                  // style={{ marginTop: "10px" }}
                 >
                   Update
                 </MDButton>
@@ -1500,10 +1512,11 @@ export default function Pipeline() {
                 <MDButton
                   variant="gradient"
                   onClick={handleViewSubtask}
-                  color="info"
+                  // color="info"
+                  style={Styles.buttonSx}
                   width="50%"
                   align="left"
-                  style={{ marginTop: "10px" }}
+                  size="small"
                 >
                   Subtask
                 </MDButton>
@@ -1560,7 +1573,12 @@ export default function Pipeline() {
                   onChange={(e) => setTaskComment(e.target.value)}
                 />{" "}
                 &nbsp;
-                <MDButton color="info" size="small" onClick={(e) => handleCommentButton(e)}>
+                <MDButton
+                  // color="info"
+                  style={Styles.buttonSx}
+                  size="small"
+                  onClick={(e) => handleCommentButton(e)}
+                >
                   <Icon fontSize="small">send</Icon>
                 </MDButton>
                 <CommentCardTask taskId={taskId} />

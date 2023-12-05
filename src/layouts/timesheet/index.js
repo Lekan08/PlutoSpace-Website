@@ -451,7 +451,7 @@ function TimeSheetManual() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -650,7 +650,7 @@ function TimeSheetManual() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-3">
+                  <div className="col-sm-6">
                     <TextField
                       id="datetime-local"
                       label="Start Time *"
@@ -658,16 +658,19 @@ function TimeSheetManual() {
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      sx={{
+                        width: 400,
+                      }}
                       value={startTimexx}
                       onChange={(e) => setStartTime(e.target.value)}
                       onInput={(e) => handleTime(e.target.value)}
-                      variant="standard"
+                      // variant="standard"
                     />
                   </div>
-                  <div className="col-sm-6">
+                  {/* <div className="col-sm-6">
                     <></>
-                  </div>
-                  <div className="col-sm-3">
+                  </div> */}
+                  <div className="col-sm-6">
                     <TextField
                       id="datetime-local"
                       label="End Time *"
@@ -675,13 +678,17 @@ function TimeSheetManual() {
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      sx={{
+                        width: 400,
+                      }}
                       value={endTimex}
                       onChange={(e) => setEndTimex(e.target.value)}
                       onInput={(e) => handleTimexx(e.target.value)}
-                      variant="standard"
+                      // variant="standard"
                     />
                   </div>
-                </div>
+                </div>{" "}
+                &nbsp; &nbsp;
                 <div className="row">
                   <div className="col-sm-6">
                     <Form.Select
@@ -723,7 +730,7 @@ function TimeSheetManual() {
                       placeholder=" Add a Comment "
                       onChange={(e) => setCommentx(e.target.value)}
                       sx={{
-                        width: 450,
+                        width: 403,
                       }}
                       multiline
                     />

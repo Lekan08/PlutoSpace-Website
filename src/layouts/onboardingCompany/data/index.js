@@ -66,7 +66,7 @@ export default function OnboardingCompanyTable() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -171,7 +171,7 @@ export default function OnboardingCompanyTable() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -248,7 +248,7 @@ export default function OnboardingCompanyTable() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Confirm it!",
     }).then((result) => {
@@ -529,7 +529,7 @@ export default function OnboardingCompanyTable() {
   //     text: "You won't be able to revert this!",
   //     icon: "warning",
   //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
+  //     confirmButtonColor: "#f96d02",
   //     cancelButtonColor: "#d33",
   //     confirmButtonText: "Yes, Confirm it!",
   //   }).then((result) => {
@@ -646,7 +646,7 @@ export default function OnboardingCompanyTable() {
   //     html: `<div text-align="left"><b>Description:</b> <textarea rows="4" cols="8" class="form-control" id="descrip">${descripx}</textarea></div>`,
   //     confirmButtonText: "Save",
   //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
+  //     confirmButtonColor: "#f96d02",
   //     cancelButtonColor: "#d33",
   //     preConfirm: () => {
   //       const time = Swal.getPopup().querySelector("#time").value;

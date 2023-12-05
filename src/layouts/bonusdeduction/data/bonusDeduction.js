@@ -23,7 +23,7 @@ export default function bonusdeductionData() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -72,11 +72,11 @@ export default function bonusdeductionData() {
   };
 
   const handleClone = (value) => {
-    navigate(`/Bonus-And-Deduction/Clone?id=${value}`);
+    navigate(`/Bonus-&-Deduction/Clone?id=${value}`);
   };
 
   const handleShow = (value) => {
-    navigate(`/Bonus-And-Deduction/Update?id=${value}`);
+    navigate(`/Bonus-&-Deduction/Update?id=${value}`);
   };
 
   // Method to change date from timestamp

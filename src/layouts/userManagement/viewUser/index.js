@@ -1430,7 +1430,11 @@ function ViewUser() {
                       </Form.Select>
                       <br />
                     </MDBox>
-                    <Button variant="primary" onClick={handleOfficeSave}>
+                    <Button
+                      variant="primary"
+                      onClick={handleOfficeSave}
+                      style={{ backgroundColor: "#f96d02" }}
+                    >
                       Save Changes
                     </Button>
                   </Container>
@@ -1474,7 +1478,11 @@ function ViewUser() {
                       </Form.Select>
                       <br />
                     </MDBox>
-                    <Button variant="primary" onClick={handleGetPersonalID}>
+                    <Button
+                      variant="primary"
+                      onClick={handleGetPersonalID}
+                      style={{ backgroundColor: "#f96d02" }}
+                    >
                       Save Changes
                     </Button>
                   </Container>

@@ -12,6 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
 import PHeaders from "postHeader";
+import Styles from "styles";
 
 function Appraisers() {
   const MySwal = withReactContent(Swal);
@@ -247,10 +248,12 @@ function Appraisers() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
           borderRadius="lg"
-          coloredShadow="success"
-          mx={30}
+          style={Styles.boxSx}
+          // coloredShadow="info"
+          mx={2}
+          // mx={30}
           mt={2}
           p={2}
           mb={1}

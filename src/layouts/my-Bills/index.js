@@ -199,7 +199,7 @@ function MyBills() {
             billID: result.data.id,
             actionBy: currentlyLogegdIn,
           });
-          console.log(raw);
+          console.log(rawBJ);
           const requestOptionsBJ = {
             method: "POST",
             headers: myHeaders,
@@ -493,7 +493,7 @@ function MyBills() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -552,7 +552,7 @@ function MyBills() {
           text: "You won't be able to revert this!",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonColor: "#3085d6",
+          confirmButtonColor: "#f96d02",
           cancelButtonColor: "#d33",
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {

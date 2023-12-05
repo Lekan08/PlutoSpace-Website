@@ -13,6 +13,7 @@ import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function ForwardTimeOff() {
   const [currentHolder, setCurrentHolder] = useState("");
@@ -213,13 +214,14 @@ function ForwardTimeOff() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
-            mx={0}
+            style={Styles.boxSx}
+            // coloredShadow="info"
+            mx={2}
             mt={-3}
             p={2}
             mb={1}
@@ -258,7 +260,8 @@ function ForwardTimeOff() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                // color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >

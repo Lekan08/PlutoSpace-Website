@@ -41,6 +41,7 @@ export default function SalaryAdvanceData() {
       approverID: approverIDx,
       status: statusx,
     });
+    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -108,7 +109,7 @@ export default function SalaryAdvanceData() {
         html: `<textarea rows="9" id="comment" class="form-control"></textarea>`,
         confirmButtonText: "Save",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#f96d02",
         cancelButtonColor: "#d33",
         preConfirm: () => {
           const comment = Swal.getPopup().querySelector("#comment").value;
@@ -140,7 +141,7 @@ export default function SalaryAdvanceData() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Delete it!",
     }).then((result) => {
@@ -211,7 +212,7 @@ export default function SalaryAdvanceData() {
         text: "Do you want to approve this?",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#f96d02",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, Approve it!",
       }).then((result) => {
@@ -261,6 +262,7 @@ export default function SalaryAdvanceData() {
                   destinationBankCode: resultx.bankAccount.bankCode,
                   destinationAccountNumber: resultx.bankAccount.acctNo,
                 });
+                console.log(raw1);
                 const requestOptions1 = {
                   method: "POST",
                   headers: myHeaders,
@@ -290,6 +292,7 @@ export default function SalaryAdvanceData() {
                       navigate("/authentication/forbiddenPage");
                       window.location.reload();
                     }
+                    console.log(resultpay);
                     if (resultpay.status === "SUCCESS") {
                       handleUpdate(
                         filteredItems[0].id,

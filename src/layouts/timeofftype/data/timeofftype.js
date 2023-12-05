@@ -115,7 +115,8 @@ export default function data() {
       </td></tr></table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      // confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       preConfirm: () => {
         const name = Swal.getPopup().querySelector("#name").value;

@@ -27,6 +27,7 @@ import withReactContent from "sweetalert2-react-content";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MonnifyConsumer } from "react-monnify";
+import Styles from "styles";
 
 function RenewSub() {
   const MySwal = withReactContent(Swal);
@@ -381,9 +382,10 @@ function RenewSub() {
               <MDBox pt={4} pb={3} px={2}>
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  // bgColor="info"
                   borderRadius="lg"
-                  coloredShadow="info"
+                  style={Styles.boxSx}
+                  // coloredShadow="info"
                   mx={2}
                   mt={-3}
                   p={2}
@@ -516,7 +518,8 @@ function RenewSub() {
                           <MDButton
                             variant="gradient"
                             onClick={() => initializePayment()}
-                            color="info"
+                            // color="info"
+                            style={Styles.buttonSx}
                             width="50%"
                           >
                             Pay

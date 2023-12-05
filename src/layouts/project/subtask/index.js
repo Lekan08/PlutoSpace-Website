@@ -4,7 +4,7 @@ import MDBox from "components/MDBox";
 // import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import GHeaders from "getHeader";
-
+import Styles from "styles";
 import PHeaders from "postHeader";
 import React, { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
@@ -194,7 +194,7 @@ const Subtask = () => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -782,7 +782,8 @@ const Subtask = () => {
         <Card>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={5}
@@ -861,8 +862,8 @@ const Subtask = () => {
                       }}
                     />
                   </Grid>
-                  &nbsp; &nbsp;
-                  <Grid item xs={5}>
+                  {/* &nbsp; &nbsp; */}
+                  <Grid item xs={6}>
                     <Form.Select
                       aria-label="Default select example"
                       value={userID}
@@ -915,7 +916,8 @@ const Subtask = () => {
                 <MDBox textAlign="center" p={3}>
                   <MDButton
                     textAlign="center"
-                    color="success"
+                    // color="success"
+                    style={Styles.buttonSx}
                     variant="gradient"
                     onClick={handleValidate}
                     size="large"
@@ -1163,7 +1165,8 @@ const Subtask = () => {
                 <MDButton
                   variant="gradient"
                   onClick={handleUpdateSubtask}
-                  color="info"
+                  // color="info"
+                  style={Styles.buttonSx}
                   width="50%"
                   align="center"
                   size="small"

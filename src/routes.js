@@ -1327,7 +1327,7 @@ const routes = [
     name: "Update Other Inflow",
     key: "otherinflowupdate",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
-    route: "/otherInflow/update",
+    route: "/other-Inflow/update",
     component: <UpdateOtherInflow />,
   },
   {
@@ -2015,24 +2015,24 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Bonus/Deduction",
+    name: "Bonus & Deduction",
     key: "bonusdeduction",
     icon: <Icon fontSize="small">remove_circle</Icon>,
-    route: "/Bonus-And-Deduction",
+    route: "/Bonus-&-Deduction",
     component: <Bonusdeduction />,
   },
   {
     name: "Clone Bonus/Deduction",
     key: "cloneBonusDeduction",
     icon: <Icon fontSize="small">remove_circle</Icon>,
-    route: "/Bonus-And-Deduction/Clone",
+    route: "/Bonus-&-Deduction/Clone",
     component: <CloneBonusDeduction />,
   },
   {
     name: "Update Bonus or Deduction",
     key: "updateBonusDeduction",
     icon: <Icon fontSize="small">remove_circle</Icon>,
-    route: "/Bonus-And-Deduction/Update",
+    route: "/Bonus-&-Deduction/Update",
     component: <UpdateBonusOrDeduction />,
   },
   {
@@ -2248,10 +2248,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Client Settings",
+    name: "Ticket Settings Client And More",
     key: "ticketClientSettings",
     icon: <Icon fontSize="small">manage_accounts</Icon>,
-    route: "/Ticket-Client-Settings",
+    route: "/Ticket-Settings-Client-And-More",
     component: <TicketClientSettings />,
   },
   {

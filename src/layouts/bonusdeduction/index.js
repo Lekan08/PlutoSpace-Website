@@ -5,7 +5,7 @@ import DataTable from "examples/Tables/DataTable";
 import bonusdeductionData from "layouts/bonusdeduction/data/bonusDeduction";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
-import { Container, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MDTypography from "components/MDTypography";
 import Backdrop from "@mui/material/Backdrop";
@@ -16,6 +16,8 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 
@@ -171,10 +173,11 @@ function bonusdeduction() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={5} pb={9} px={29}>
+        <MDBox pt={5} pb={9}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -184,7 +187,7 @@ function bonusdeduction() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add Bonus Or Deduction
+              Add Bonus & Deduction
             </MDTypography>
           </MDBox>
           <MDBox
@@ -204,8 +207,8 @@ function bonusdeduction() {
           </MDBox>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <div className="row">
-                <div className="col-sm-12">
+              <Grid container justifyContent="center" spacing={2}>
+                <Grid item xs={10}>
                   <MDInput
                     type="text"
                     label="Name *"
@@ -215,144 +218,137 @@ function bonusdeduction() {
                     variant="standard"
                     fullWidth
                   />
-                </div>
-              </div>
-            </MDBox>
+                </Grid>
 
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-3">
-                    <MDInput
-                      type="text"
-                      value={currencyx || ""}
-                      onChange={(e) => setCurrency(e.target.value)}
-                      disabled
-                      label="Variation *"
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                  <div className="col-sm-9">
-                    <MDInput
-                      type="number"
-                      value={amountx || ""}
-                      onChange={(e) => setAmount(e.target.value)}
-                      label="Amount *"
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mt={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDTypography
-                      variant="button"
-                      fontWeight="regular"
-                      fontSize="80%"
+                <Grid item xs={5}>
+                  {" "}
+                  <MDInput
+                    type="text"
+                    value={currencyx || ""}
+                    onChange={(e) => setCurrency(e.target.value)}
+                    disabled
+                    label="Variation *"
+                    variant="standard"
+                    fullWidth
+                  />{" "}
+                </Grid>
+                <Grid item xs={5}>
+                  {" "}
+                  <MDInput
+                    type="number"
+                    value={amountx || ""}
+                    onChange={(e) => setAmount(e.target.value)}
+                    label="Amount *"
+                    variant="standard"
+                    fullWidth
+                  />{" "}
+                </Grid>
+                <Grid item xs={5}>
+                  {" "}
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    fontSize="80%"
+                    align="left"
+                    color="text"
+                  >
+                    User *
+                  </MDTypography>
+                  <Form.Select
+                    value={userIDx}
+                    onChange={(e) => setUserIDx(e.target.value)}
+                    aria-label="Default select example"
+                  >
+                    <option value="">--Select User--</option>
+                    {user.map((api) => (
+                      <option key={api.personal.id} value={api.personal.id}>
+                        {api.personal.fname} {api.personal.lname}
+                      </option>
+                    ))}
+                  </Form.Select>{" "}
+                </Grid>
+                <Grid item xs={5}>
+                  {" "}
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    fontSize="80%"
+                    align="left"
+                    color="text"
+                  >
+                    Variation *
+                  </MDTypography>
+                  <Form.Select
+                    onChange={handleOnChangeSymbol}
+                    value={typex || ""}
+                    aria-label="Default select example"
+                  >
+                    <option>---Select Variation---</option>
+                    <option value="FLAT">FLAT</option>
+                    <option value="PERCENTAGE">PERCENTAGE</option>
+                  </Form.Select>{" "}
+                </Grid>
+                <Grid item xs={5}>
+                  {" "}
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    fontSize="80%"
+                    align="left"
+                    color="text"
+                  >
+                    Type *
+                  </MDTypography>
+                  <Form.Select
+                    onChange={(e) => setSetupTypex(e.target.value)}
+                    value={setupTypex || ""}
+                    aria-label="Default select example"
+                  >
+                    <option>---Select Type---</option>
+                    <option value="1">Bonus</option>
+                    <option value="2">Deduction</option>
+                  </Form.Select>{" "}
+                </Grid>
+                <Grid item xs={5}>
+                  {" "}
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    fontSize="80%"
+                    align="left"
+                    color="text"
+                  >
+                    Frequency *
+                  </MDTypography>
+                  <Form.Select
+                    onChange={(e) => setFrequencyx(e.target.value)}
+                    value={frequencyx || ""}
+                    aria-label="Default select example"
+                  >
+                    <option>---Select Frequency---</option>
+                    <option value="1">One-Time</option>
+                    <option value="2">Always</option>
+                  </Form.Select>{" "}
+                </Grid>
+                <Grid item xs={5}>
+                  {" "}
+                  <MDBox mt={1} mb={1}>
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleOnNameKeys}
+                      // color="info"
+                      style={Styles.buttonSx}
+                      width="50%"
                       align="left"
-                      color="text"
                     >
-                      User *
-                    </MDTypography>
-                    <Form.Select
-                      value={userIDx}
-                      onChange={(e) => setUserIDx(e.target.value)}
-                      aria-label="Default select example"
-                    >
-                      <option value="">--Select User--</option>
-                      {user.map((api) => (
-                        <option key={api.personal.id} value={api.personal.id}>
-                          {api.personal.fname} {api.personal.lname}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </div>
-
-                  <div className="col-sm-6">
-                    <MDTypography
-                      variant="button"
-                      fontWeight="regular"
-                      fontSize="80%"
-                      align="left"
-                      color="text"
-                    >
-                      Variation *
-                    </MDTypography>
-                    <Form.Select
-                      onChange={handleOnChangeSymbol}
-                      value={typex || ""}
-                      aria-label="Default select example"
-                    >
-                      <option>---Select Variation---</option>
-                      <option value="FLAT">FLAT</option>
-                      <option value="PERCENTAGE">PERCENTAGE</option>
-                    </Form.Select>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mb={2}>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDTypography
-                      variant="button"
-                      fontWeight="regular"
-                      fontSize="80%"
-                      align="left"
-                      color="text"
-                    >
-                      Type *
-                    </MDTypography>
-                    <Form.Select
-                      onChange={(e) => setSetupTypex(e.target.value)}
-                      value={setupTypex || ""}
-                      aria-label="Default select example"
-                    >
-                      <option>---Select Type---</option>
-                      <option value="1">Bonus</option>
-                      <option value="2">Deduction</option>
-                    </Form.Select>
-                  </div>
-
-                  <div className="col-sm-6">
-                    <MDTypography
-                      variant="button"
-                      fontWeight="regular"
-                      fontSize="80%"
-                      align="left"
-                      color="text"
-                    >
-                      Frequency *
-                    </MDTypography>
-                    <Form.Select
-                      onChange={(e) => setFrequencyx(e.target.value)}
-                      value={frequencyx || ""}
-                      aria-label="Default select example"
-                    >
-                      <option>---Select Frequency---</option>
-                      <option value="1">One-Time</option>
-                      <option value="2">Always</option>
-                    </Form.Select>
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleOnNameKeys}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Save
-              </MDButton>
+                      Save
+                    </MDButton>
+                  </MDBox>{" "}
+                </Grid>
+                <Grid item xs={5}>
+                  {" "}
+                </Grid>
+              </Grid>
             </MDBox>
           </MDBox>
         </MDBox>

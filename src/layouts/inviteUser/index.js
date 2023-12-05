@@ -28,6 +28,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Styles from "styles";
 // import PHeaders from "postHeader";
 // import GHeaders from "getHeader";
 // Zinoleesky is fire
@@ -371,7 +372,7 @@ function InviteUser() {
               text: "You won't be able to revert this!",
               icon: "warning",
               showCancelButton: true,
-              confirmButtonColor: "#3085d6",
+              confirmButtonColor: "#f96d02",
               cancelButtonColor: "#d33",
               confirmButtonText: "Yes, Join!",
             }).then((resulty) => {
@@ -630,7 +631,7 @@ function InviteUser() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
           borderRadius="lg"
           coloredShadow="success"
           mx={2}
@@ -638,6 +639,7 @@ function InviteUser() {
           p={3}
           mb={1}
           textAlign="center"
+          style={Styles.boxSx}
         >
           <MDTypography variant="h2" fontWeight="medium" color="white" mt={1}>
             PlutoSpace
@@ -650,7 +652,7 @@ function InviteUser() {
           <MDBox component="form" role="form">
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -658,6 +660,7 @@ function InviteUser() {
               p={3}
               mb={1}
               textAlign="center"
+              style={Styles.boxSx}
             >
               <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
                 BASIC INFO
@@ -879,7 +882,7 @@ function InviteUser() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -887,6 +890,7 @@ function InviteUser() {
               p={3}
               mb={1}
               textAlign="center"
+              style={Styles.boxSx}
             >
               <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
                 ADDRESS
@@ -987,7 +991,7 @@ function InviteUser() {
             </MDBox>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
               borderRadius="lg"
               coloredShadow="success"
               mx={0}
@@ -995,6 +999,7 @@ function InviteUser() {
               p={3}
               mb={1}
               textAlign="center"
+              style={Styles.boxSx}
             >
               <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
                 PASSWORD
@@ -1028,7 +1033,7 @@ function InviteUser() {
                       value={passwordx || ""}
                       onKeyUp={(e) => handleOnPasswordKeys(e.target.value)}
                       onChange={(e) => setPassword(e.target.value)}
-                      disabled={!passEnabled}
+                      disabled={passEnabled}
                       variant="standard"
                       fullWidth
                     />
@@ -1046,7 +1051,7 @@ function InviteUser() {
                       value={retypePasswordx || ""}
                       onKeyUp={(e) => handleOnRTPasswordKeys(e.target.value)}
                       onChange={(e) => setRetypePassword(e.target.value)}
-                      disabled={!passEnabled}
+                      disabled={passEnabled}
                       variant="standard"
                       fullWidth
                     />
@@ -1086,7 +1091,12 @@ function InviteUser() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" fullWidth>
+              <MDButton
+                variant="gradient"
+                onClick={handleValidate} /* color="info" */
+                style={Styles.buttonSx}
+                fullWidth
+              >
                 Create Account
               </MDButton>
             </MDBox>

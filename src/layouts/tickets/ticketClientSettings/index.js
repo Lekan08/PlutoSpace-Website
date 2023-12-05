@@ -541,7 +541,7 @@ function TicketClientSettings() {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
+      confirmButtonColor: "#f96d02",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
@@ -726,7 +726,7 @@ function TicketClientSettings() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Ticket Settings Client and more
+              Ticket Settings Client And More
             </MDTypography>
           </MDBox>
           <MDBox
@@ -752,8 +752,8 @@ function TicketClientSettings() {
               textAlign="center"
               color="info"
             >
-              &nbsp;&nbsp;&nbsp;&nbsp;Set the Average Resolution Time for each Client Level(They are
-              in minutes and seconds)
+              &nbsp;&nbsp;&nbsp;&nbsp;Set The Average Resolution Time For Each Client Level (They
+              are in minutes and seconds)
             </MDTypography>
           </MDBox>
           <MDBox component="form" role="form">
