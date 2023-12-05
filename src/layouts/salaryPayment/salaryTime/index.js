@@ -16,6 +16,8 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 import SalaryTimeData from "./data/salaryTimeTable";
 
 function SalaryTime() {
@@ -88,10 +90,11 @@ function SalaryTime() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -122,8 +125,8 @@ function SalaryTime() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={7}>
                     {" "}
                     <MDTypography
                       variant="button"
@@ -132,7 +135,7 @@ function SalaryTime() {
                       align="left"
                       color="text"
                     >
-                      Payment Time
+                      Payment Time *
                     </MDTypography>
                     <input
                       type="datetime-local"
@@ -141,20 +144,24 @@ function SalaryTime() {
                       onChange={(e) => setTime(e.target.value)}
                       variant="standard"
                     />
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={10}>
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleClick}
+                        // color="info"
+                        style={Styles.buttonSx}
+                        width="50%"
+                        align="left"
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>{" "}
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleClick}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>
