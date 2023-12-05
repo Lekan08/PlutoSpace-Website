@@ -252,7 +252,7 @@ function Appraisers() {
           borderRadius="lg"
           style={Styles.boxSx}
           // coloredShadow="info"
-          mx={0}
+          mx={2}
           // mx={30}
           mt={2}
           p={2}

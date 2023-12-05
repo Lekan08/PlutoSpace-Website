@@ -13,6 +13,8 @@ import GHeaders from "getHeader";
 import PHeaders from "postHeader";
 import DatePicker from "react-datepicker";
 import MDButton from "components/MDButton";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import Styles from "styles";
 
 function TimeoffRequestUpdate() {
@@ -41,15 +43,15 @@ function TimeoffRequestUpdate() {
   const [statusx, setStatusx] = useState("");
 
   const [user, setUser] = useState([]);
+  const [opened, setOpened] = useState(false);
 
   // Method to fetch all timeofftype
-  useEffect(() => {
+  const getAllEmployeeTimeOffTransaction = () => {
     const headers = miHeaders;
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
-    let isMounted = true;
     fetch(`${process.env.REACT_APP_NSUTANA_URL}/employeetimeofftransaction/getByIds/${ids}`, {
       headers,
     })
@@ -71,41 +73,38 @@ function TimeoffRequestUpdate() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        if (isMounted) {
-          // eslint-disable-next-line eqeqeq
-          if (result.length != 0) {
-            setIdx(result[0].id);
-            setEmpSetupId(result[0].empSetupID);
-            setDaysx(result[0].noOfDaysRequested);
-            setDaysapprovex(result[0].noOfDaysApproved);
-            setStartx(result[0].startDate);
-            setEndx(result[0].endDate);
-            setResumex(result[0].resumptionDate);
-            setDutyrelieverx(result[0].dutyRelieverID);
-            setCreatedx(result[0].createdDate);
-            setPurposex(result[0].purpose);
-            setDeletex(result[0].deleteFlag);
-            setApprovex(result[0].approverID);
-            setAdminx(result[0].adminID);
-            setReasonx(result[0].reasonForDisapproval);
-            setStatusx(result[0].status);
-          } else {
-            setIdx(null);
-          }
+        setOpened(false);
+        if (result.length !== 0) {
+          setIdx(result[0].id);
+          setEmpSetupId(result[0].empSetupID);
+          setDaysx(result[0].noOfDaysRequested);
+          setDaysapprovex(result[0].noOfDaysApproved);
+          setStartx(result[0].startDate);
+          setEndx(result[0].endDate);
+          setResumex(result[0].resumptionDate);
+          setDutyrelieverx(result[0].dutyRelieverID);
+          setCreatedx(result[0].createdDate);
+          setPurposex(result[0].purpose);
+          setDeletex(result[0].deleteFlag);
+          setApprovex(result[0].approverID);
+          setAdminx(result[0].adminID);
+          setReasonx(result[0].reasonForDisapproval);
+          setStatusx(result[0].status);
+        } else {
+          setIdx(null);
         }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
       });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  };
 
-  useEffect(() => {
-    const headers = miHeaders;
-
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-
-    const orgIDs = data11.orgID;
-    let isMounted = true;
+  const getAllUserInfo = (headers, orgIDs) => {
     fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -125,10 +124,34 @@ function TimeoffRequestUpdate() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        if (isMounted) {
+        getAllEmployeeTimeOffTransaction(headers, orgIDs);
+        if (result?.length > 0) {
           setUser(result);
+        } else {
+          setUser([]);
         }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
       });
+  };
+
+  useEffect(() => {
+    setOpened(true);
+    let isMounted = true;
+    const headers = miHeaders;
+
+    const data11 = JSON.parse(localStorage.getItem("user1"));
+
+    const orgIDs = data11.orgID;
+    if (isMounted) {
+      getAllUserInfo(headers, orgIDs);
+    }
     return () => {
       isMounted = false;
     };
@@ -208,27 +231,33 @@ function TimeoffRequestUpdate() {
     let check = 0;
     if (startCDate < CurTime) {
       check = 1;
+      setOpened(false);
       MySwal.fire({
         title: "Invalid Date",
         type: "error",
-        text: "Please Enter A Date From The Future",
+        text: "Please Enter A Start Date From The Future",
       });
+      return;
     }
-    if (check === 0 && endCDate < startCDate) {
+    if (endCDate < startCDate) {
       check = 1;
+      setOpened(false);
       MySwal.fire({
         title: "Invalid Ending Date",
         type: "error",
-        text: "Please Enter A Date From The Future",
+        text: "Please Enter An End Date From The Future",
       });
+      return;
     }
-    if (check === 0 && resumptionCDate < endCDate) {
+    if (resumptionCDate < endCDate) {
       check = 1;
+      setOpened(false);
       MySwal.fire({
         title: "Invalid Resuming Date",
         type: "error",
-        text: "Please Enter A Date From The Future",
+        text: "Please Enter A Resumption Date After The End Date",
       });
+      return;
     }
 
     if (check === 0) {
@@ -306,7 +335,7 @@ function TimeoffRequestUpdate() {
                   borderRadius="lg"
                   style={Styles.boxSx}
                   // coloredShadow="info"
-                  mx={0}
+                  mx={2}
                   mt={-6}
                   p={3}
                   mb={1}
@@ -534,6 +563,9 @@ function TimeoffRequestUpdate() {
           </Card>
         </div>
       </div>
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
+        <CircularProgress color="info" />
+      </Backdrop>
     </DashboardLayout>
   );
 }
