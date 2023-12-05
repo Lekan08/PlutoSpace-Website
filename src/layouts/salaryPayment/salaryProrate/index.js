@@ -324,7 +324,7 @@ function SalaryProrate() {
                         value={totalNumberOfDaysx || ""}
                         onKeyUp={handleOnTNDKeys}
                         onChange={(e) => setTotalNumberOfDays(e.target.value)}
-                        label="Employee Total Working Days"
+                        label="Employee Total Working Days *"
                         variant="standard"
                         fullWidth
                       />
@@ -338,7 +338,7 @@ function SalaryProrate() {
                         align="left"
                         color="text"
                       >
-                        User
+                        User *
                       </MDTypography>
                       <Form.Select
                         value={userIDx}
