@@ -187,7 +187,7 @@ function bonusdeduction() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add Bonus/Deduction
+              Add Bonus & Deduction
             </MDTypography>
           </MDBox>
           <MDBox

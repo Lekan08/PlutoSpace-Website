@@ -2018,7 +2018,7 @@ const routes = [
     name: "Bonus/Deduction",
     key: "bonusdeduction",
     icon: <Icon fontSize="small">remove_circle</Icon>,
-    route: "/Bonus-And-Deduction",
+    route: "/Bonus-&-Deduction",
     component: <Bonusdeduction />,
   },
   {
