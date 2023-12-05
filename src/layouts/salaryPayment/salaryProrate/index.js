@@ -20,6 +20,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 import SalaryProrateData from "./data/salaryProrateTable";
 
 function SalaryProrate() {
@@ -242,10 +244,11 @@ function SalaryProrate() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -266,7 +269,7 @@ function SalaryProrate() {
             mx={3}
             mt={1}
             p={1}
-            mb={1}
+            mb={3}
             textAlign="center"
           >
             <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
@@ -289,88 +292,88 @@ function SalaryProrate() {
             <MDBox mb={2}>
               <MDBox>
                 <Container>
-                  <div className="row">
-                    <div className="col-sm-5">
-                      <MDBox mt={2}>
-                        <MDTypography
-                          variant="button"
-                          fontWeight="regular"
-                          fontSize="80%"
-                          align="left"
-                          color="text"
+                  <Grid container justifyContent="center" spacing={2}>
+                    <Grid item xs={5}>
+                      <DatePicker
+                        placeholderText="Start Date *"
+                        style={{ width: "100%" }}
+                        selected={startDate}
+                        peekNextMonth
+                        showMonthDropdown
+                        showYearDropdown
+                        dropdownMode="select"
+                        onChange={handleCalDate}
+                      />
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDInput
+                        type="text"
+                        value={noOfDaysx || ""}
+                        onKeyUp={handleOnNODKeys}
+                        onChange={(e) => setNoOfDays(e.target.value)}
+                        label="Prorate No Of Days *"
+                        variant="standard"
+                        fullWidth
+                      />
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDInput
+                        type="text"
+                        value={totalNumberOfDaysx || ""}
+                        onKeyUp={handleOnTNDKeys}
+                        onChange={(e) => setTotalNumberOfDays(e.target.value)}
+                        label="Employee Total Working Days *"
+                        variant="standard"
+                        fullWidth
+                      />
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDTypography
+                        variant="button"
+                        fontWeight="regular"
+                        fontSize="80%"
+                        align="left"
+                        color="text"
+                      >
+                        User *
+                      </MDTypography>
+                      <Form.Select
+                        value={userIDx}
+                        onChange={(e) => setUserIDx(e.target.value)}
+                        aria-label="Default select example"
+                      >
+                        <option value="">--Select User--</option>
+                        {user.map((api) => (
+                          <option key={api.personal.id} value={api.personal.id}>
+                            {api.personal.fname} {api.personal.lname}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <MDBox mt={1} mb={1}>
+                        <MDButton
+                          variant="gradient"
+                          onClick={handleClick}
+                          //  color="info"
+                          style={Styles.buttonSx}
+                          width="50%"
                         >
-                          Start Date
-                        </MDTypography>
-                        <DatePicker
-                          placeholderText="Start Date"
-                          style={{ marginRight: "10px" }}
-                          selected={startDate}
-                          peekNextMonth
-                          showMonthDropdown
-                          showYearDropdown
-                          dropdownMode="select"
-                          onChange={handleCalDate}
-                        />
+                          Save
+                        </MDButton>
                       </MDBox>
-                    </div>
-                  </div>
+                    </Grid>
+
+                    <Grid item xs={5}>
+                      <></>
+                    </Grid>
+                  </Grid>
                 </Container>
               </MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      value={noOfDaysx || ""}
-                      onKeyUp={handleOnNODKeys}
-                      onChange={(e) => setNoOfDays(e.target.value)}
-                      label="Prorate No Of Days"
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                  <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      value={totalNumberOfDaysx || ""}
-                      onKeyUp={handleOnTNDKeys}
-                      onChange={(e) => setTotalNumberOfDays(e.target.value)}
-                      label="Employee Total Working Days"
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div>
-                </div>
-              </Container>
-            </MDBox>
-            <MDBox mt={2}>
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                fontSize="80%"
-                align="left"
-                color="text"
-              >
-                User
-              </MDTypography>
-              <Form.Select
-                value={userIDx}
-                onChange={(e) => setUserIDx(e.target.value)}
-                aria-label="Default select example"
-              >
-                <option value="">--Select User--</option>
-                {user.map((api) => (
-                  <option key={api.personal.id} value={api.personal.id}>
-                    {api.personal.fname} {api.personal.lname}
-                  </option>
-                ))}
-              </Form.Select>
-              <br />
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>

@@ -72,11 +72,11 @@ export default function bonusdeductionData() {
   };
 
   const handleClone = (value) => {
-    navigate(`/Bonus-And-Deduction/Clone?id=${value}`);
+    navigate(`/Bonus-&-Deduction/Clone?id=${value}`);
   };
 
   const handleShow = (value) => {
-    navigate(`/Bonus-And-Deduction/Update?id=${value}`);
+    navigate(`/Bonus-&-Deduction/Update?id=${value}`);
   };
 
   // Method to change date from timestamp

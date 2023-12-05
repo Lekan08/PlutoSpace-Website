@@ -41,6 +41,7 @@ export default function SalaryAdvanceData() {
       approverID: approverIDx,
       status: statusx,
     });
+    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -261,6 +262,7 @@ export default function SalaryAdvanceData() {
                   destinationBankCode: resultx.bankAccount.bankCode,
                   destinationAccountNumber: resultx.bankAccount.acctNo,
                 });
+                console.log(raw1);
                 const requestOptions1 = {
                   method: "POST",
                   headers: myHeaders,
@@ -290,6 +292,7 @@ export default function SalaryAdvanceData() {
                       navigate("/authentication/forbiddenPage");
                       window.location.reload();
                     }
+                    console.log(resultpay);
                     if (resultpay.status === "SUCCESS") {
                       handleUpdate(
                         filteredItems[0].id,
