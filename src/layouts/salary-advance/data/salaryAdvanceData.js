@@ -262,6 +262,7 @@ export default function SalaryAdvanceData() {
                   destinationBankCode: resultx.bankAccount.bankCode,
                   destinationAccountNumber: resultx.bankAccount.acctNo,
                 });
+                console.log(raw1);
                 const requestOptions1 = {
                   method: "POST",
                   headers: myHeaders,
