@@ -19,6 +19,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function AppraiseeIDX() {
   const MySwal = withReactContent(Swal);
@@ -175,10 +176,11 @@ function AppraiseeIDX() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
-            mx={2}
+            style={Styles.boxSx}
+            // coloredShadow="info"
+            mx={0}
             mt={-3}
             p={2}
             mb={1}
@@ -237,7 +239,13 @@ function AppraiseeIDX() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleValidate}
+                // color="info"
+                style={Styles.buttonSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

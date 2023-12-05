@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
 import DatePicker from "react-datepicker";
+import Styles from "styles";
 // Girl i want to be dancing with you forever
 
 function View() {
@@ -77,10 +78,11 @@ function View() {
               <MDBox component="form" role="form">
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  // bgColor="info"
                   borderRadius="lg"
-                  coloredShadow="success"
-                  mx={2}
+                  style={Styles.boxSx}
+                  // coloredShadow="info"
+                  mx={0}
                   mt={-6}
                   p={3}
                   mb={1}

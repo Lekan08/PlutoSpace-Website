@@ -12,19 +12,39 @@ Coded by www.creative-tim.com
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
+
+import Styles from "styles";
+
 function collapseItem(theme, ownerState) {
   const { palette, transitions, breakpoints, boxShadows, borders, functions } = theme;
-  const { active, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = ownerState;
+  const {
+    active,
+    transparentSidenav,
+    whiteSidenav,
+    darkMode,
+    // sidenavColor
+  } = ownerState;
 
-  const { white, transparent, dark, grey, gradients } = palette;
+  const {
+    white,
+    transparent,
+    dark,
+    grey,
+    //  gradients
+  } = palette;
   const { md } = boxShadows;
   const { borderRadius } = borders;
-  const { pxToRem, rgba, linearGradient } = functions;
+  const {
+    pxToRem,
+    rgba,
+    // linearGradient
+  } = functions;
 
   return {
-    background: active
-      ? linearGradient(gradients[sidenavColor].main, gradients[sidenavColor].state)
-      : transparent.main,
+    // background: active
+    //   ? linearGradient(gradients[sidenavColor].main, gradients[sidenavColor].state)
+    //   : transparent.main,
+    background: active ? Styles.boxSx.backgroundColor : transparent.main,
     color:
       (transparentSidenav && !darkMode && !active) || (whiteSidenav && !active)
         ? dark.main

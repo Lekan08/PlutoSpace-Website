@@ -18,6 +18,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function AppraisalGrade() {
   const MySwal = withReactContent(Swal);
@@ -198,10 +199,11 @@ function AppraisalGrade() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
-            mx={2}
+            style={Styles.boxSx}
+            // coloredShadow="info"
+            mx={0}
             mt={-3}
             p={2}
             mb={1}
@@ -333,7 +335,13 @@ function AppraisalGrade() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleValidate}
+                // color="info"
+                style={Styles.buttonSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

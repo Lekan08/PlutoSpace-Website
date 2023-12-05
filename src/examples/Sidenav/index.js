@@ -73,6 +73,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
+  // console.log({ collapseName });
 
   let textColor = "white";
 
@@ -400,6 +401,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         {newRenderRoutes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
           let returnValue;
 
+          const collapseNameWithSlash = `/${collapseName}`;
+
           if (type === "collapse") {
             returnValue = href ? (
               <Link
@@ -412,13 +415,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
                 <SidenavCollapse
                   name={name}
                   icon={icon}
-                  active={key === collapseName}
+                  active={route === collapseNameWithSlash}
                   noCollapse={noCollapse}
                 />
               </Link>
             ) : (
               <NavLink key={key} to={route}>
-                <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
+                <SidenavCollapse name={name} icon={icon} active={route === collapseNameWithSlash} />
               </NavLink>
             );
           } else if (type === "title") {

@@ -125,7 +125,7 @@ function TimeOffType() {
             borderRadius="lg"
             style={Styles.boxSx}
             // coloredShadow="info"
-            mx={2}
+            mx={0}
             mt={-3}
             p={2}
             mb={1}

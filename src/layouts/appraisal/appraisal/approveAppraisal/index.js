@@ -20,6 +20,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Styles from "styles";
 import "./index.css";
 
 function ApproveApp() {
@@ -440,10 +441,11 @@ function ApproveApp() {
         <MDBox>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
-            mx={2}
+            style={Styles.boxSx}
+            // coloredShadow="info"
+            mx={0}
             mt={-3}
             p={2}
             mb={1}
@@ -463,7 +465,7 @@ function ApproveApp() {
                 variant="gradient"
                 bgColor="secondary"
                 borderRadius="lg"
-                coloredShadow="info"
+                coloredShadow="secondary"
                 mt={1}
                 p={2}
                 mb={1}
@@ -551,10 +553,11 @@ function ApproveApp() {
         <MDBox>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
-            mx={2}
+            style={Styles.boxSx}
+            // coloredShadow="info"
+            mx={0}
             mt={-3}
             p={2}
             mb={1}
@@ -624,9 +627,9 @@ function ApproveApp() {
 
                       <MDBox
                         variant="gradient"
-                        bgColor={bool2 ? "info" : "secondary"}
+                        bgColor={bool2 ? "#f96d02" : "secondary"}
                         borderRadius="lg"
-                        coloredShadow="info"
+                        coloredShadow="secondary"
                         mx={2}
                         mt={-3}
                         p={1}
@@ -658,10 +661,11 @@ function ApproveApp() {
           <Card sx={style} style={cardBorder}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
               borderRadius="lg"
-              coloredShadow="info"
-              mx={2}
+              style={Styles.boxSx}
+              // coloredShadow="info"
+              mx={0}
               mt={-3}
               p={2}
               mb={1}
@@ -715,7 +719,13 @@ function ApproveApp() {
             </MDBox>
             <div align="center">
               <MDBox mt={4} mb={5}>
-                <MDButton variant="gradient" onClick={handleForward} color="info" width="50%">
+                <MDButton
+                  variant="gradient"
+                  onClick={handleForward}
+                  // color="info"
+                  style={Styles.buttonSx}
+                  width="50%"
+                >
                   Approve
                 </MDButton>
               </MDBox>

@@ -314,13 +314,13 @@ function TimeOff() {
           });
           return;
         }
-        if (resumptionCDate > endCDate) {
+        if (resumptionCDate < endCDate) {
           check = 1;
           setOpened(false);
           MySwal.fire({
             title: "Invalid Resuming Date",
             type: "error",
-            text: "Please Enter A Resumption Date Before The End Date",
+            text: "Please Enter A Resumption Date After The End Date",
           });
           return;
         }
