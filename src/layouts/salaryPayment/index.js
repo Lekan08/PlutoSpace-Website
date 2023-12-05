@@ -24,6 +24,8 @@ import withReactContent from "sweetalert2-react-content";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import Select from "react-select";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 // import makeAnimated from "react-select/animated";
 import { CSVLink } from "react-csv";
 
@@ -815,10 +817,11 @@ function SalaryPayment() {
       <DashboardNavbar />
       <Container>
         <Card>
-          <MDBox pt={4} pb={3} px={30}>
+          <MDBox pt={4} pb={3}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={1}
@@ -857,8 +860,8 @@ function SalaryPayment() {
                 <Container>
                   <div align="center">
                     {" "}
-                    <div className="row">
-                      <div className="col-sm-12">
+                    <Grid container justifyContent="center" spacing={2}>
+                      <Grid item xs={5}>
                         <MDBox mt={2}>
                           <MDTypography
                             variant="button"
@@ -867,7 +870,7 @@ function SalaryPayment() {
                             align="left"
                             color="text"
                           >
-                            Select User
+                            Select User *
                           </MDTypography>
                           <Select
                             closeMenuOnSelect
@@ -877,42 +880,52 @@ function SalaryPayment() {
                             options={sUser}
                           />
                         </MDBox>
-                      </div>
-                    </div>
-                    <MDBox
-                      variant="gradient"
-                      bgColor="white"
-                      borderRadius="lg"
-                      coloredShadow="info"
-                      mx={-20}
-                      mt={3}
-                      p={2}
-                      mb={1}
-                      textAlign="center"
-                    >
-                      <MDBox mt={4} mb={1}>
-                        <MDButton
+                      </Grid>
+
+                      <Grid item xs={10}>
+                        <MDBox
                           variant="gradient"
-                          onClick={handleClick}
-                          color="info"
-                          width="50%"
-                          ml={10}
+                          bgColor="white"
+                          borderRadius="lg"
+                          coloredShadow="info"
+                          mt={3}
+                          p={2}
+                          mb={1}
+                          textAlign="center"
                         >
-                          Calculate Selected Users
-                        </MDButton>
-                        <MDButton variant="text" size="small" color="info" width="50%">
-                          OR
-                        </MDButton>
-                        <MDButton
-                          variant="gradient"
-                          onClick={handleAllCal}
-                          color="info"
-                          width="50%"
-                        >
-                          calculate All Users
-                        </MDButton>
-                      </MDBox>
-                    </MDBox>
+                          <MDBox mt={4} mb={1}>
+                            <MDButton
+                              variant="gradient"
+                              onClick={handleClick}
+                              // color="info"
+                              style={Styles.buttonSx}
+                              width="50%"
+                              ml={10}
+                            >
+                              Calculate Selected Users
+                            </MDButton>
+                            <MDButton
+                              variant="text"
+                              size="small"
+                              //  color="info"
+                              style={Styles.buttonSx}
+                              width="50%"
+                            >
+                              OR
+                            </MDButton>
+                            <MDButton
+                              variant="gradient"
+                              onClick={handleAllCal}
+                              // color="info"
+                              style={Styles.buttonSx}
+                              width="50%"
+                            >
+                              calculate All Users
+                            </MDButton>
+                          </MDBox>
+                        </MDBox>
+                      </Grid>
+                    </Grid>
                   </div>
                 </Container>
               </MDBox>
@@ -921,10 +934,11 @@ function SalaryPayment() {
         </Card>
         &nbsp;
         <Card>
-          <MDBox pt={4} pb={3} px={30}>
+          <MDBox pt={4} pb={3}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={1}
@@ -959,52 +973,67 @@ function SalaryPayment() {
               </MDTypography>
             </MDBox>
             <MDBox component="form" role="form">
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  label="Title*"
-                  value={namex || ""}
-                  className="form-control"
-                  onChange={(e) => setName(e.target.value)}
-                  variant="standard"
-                  fullWidth
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <MDInput
-                  type="text"
-                  value={descripx || ""}
-                  onChange={(e) => setDescrip(e.target.value)}
-                  label="Narration*"
-                  variant="standard"
-                  fullWidth
-                />
-              </MDBox>
-              <MDBox mb={2}>
-                <Container>
-                  <div align="center">
-                    <MDBox mt={4} mb={1}>
-                      <MDButton
-                        variant="gradient"
-                        onClick={handleInitiatePay}
-                        color="info"
-                        width="50%"
-                      >
-                        Initiate
-                      </MDButton>
-                    </MDBox>
-                  </div>
-                </Container>
-              </MDBox>
+              <Grid container justifyContent="center" spacing={2}>
+                <Grid item xs={10}>
+                  {" "}
+                  <MDBox mb={2}>
+                    <MDInput
+                      type="text"
+                      label="Title*"
+                      value={namex || ""}
+                      className="form-control"
+                      onChange={(e) => setName(e.target.value)}
+                      variant="standard"
+                      fullWidth
+                    />
+                  </MDBox>{" "}
+                </Grid>
+
+                <Grid item xs={10}>
+                  {" "}
+                  <MDBox mb={2}>
+                    <MDInput
+                      type="text"
+                      value={descripx || ""}
+                      onChange={(e) => setDescrip(e.target.value)}
+                      label="Narration*"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </MDBox>{" "}
+                </Grid>
+
+                <Grid item xs={10}>
+                  {" "}
+                  <MDBox mb={2}>
+                    <Container>
+                      <div align="center">
+                        <MDBox mt={4} mb={1}>
+                          <MDButton
+                            variant="gradient"
+                            onClick={handleInitiatePay}
+                            // color="info"
+                            style={Styles.buttonSx}
+                            width="50%"
+                          >
+                            Initiate
+                          </MDButton>
+                        </MDBox>
+                      </div>
+                    </Container>
+                  </MDBox>{" "}
+                </Grid>
+              </Grid>
             </MDBox>
           </MDBox>
         </Card>
         &nbsp;
         <Card>
-          <MDBox pt={4} pb={3} px={30}>
+          <MDBox pt={4} pb={3}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
+              style={Styles.boxSx}
               borderRadius="lg"
               coloredShadow="success"
               mx={1}
@@ -1042,8 +1071,8 @@ function SalaryPayment() {
               <MDBox mb={2}>
                 <MDBox mb={0}>
                   <Container>
-                    <div className="row">
-                      <div className="col-sm-6">
+                    <Grid container justifyContent="center" spacing={2}>
+                      <Grid item xs={5}>
                         <MDInput
                           type="text"
                           label="Title*"
@@ -1053,8 +1082,8 @@ function SalaryPayment() {
                           variant="standard"
                           fullWidth
                         />
-                      </div>
-                      <div className="col-sm-6">
+                      </Grid>
+                      <Grid item xs={5}>
                         <MDInput
                           type="text"
                           value={descripxx || ""}
@@ -1063,15 +1092,9 @@ function SalaryPayment() {
                           variant="standard"
                           fullWidth
                         />
-                      </div>
-                    </div>
-                  </Container>
-                </MDBox>
-                <Container>
-                  <div align="center">
-                    {" "}
-                    <div className="row">
-                      <div className="col-sm-12">
+                      </Grid>
+
+                      <Grid item xs={10}>
                         <MDBox mt={2}>
                           <MDTypography
                             variant="button"
@@ -1090,26 +1113,28 @@ function SalaryPayment() {
                             options={aUser}
                           />
                         </MDBox>
-                      </div>
-                    </div>
-                    <MDBox mb={2}>
-                      <Container>
-                        <div align="center">
-                          <MDBox mt={4} mb={1}>
-                            <MDButton
-                              variant="gradient"
-                              onClick={handleRetryPayment}
-                              color="info"
-                              width="50%"
-                            >
-                              <span className="material-icons">refresh</span> &nbsp; Retry
-                            </MDButton>
-                          </MDBox>
-                        </div>
-                      </Container>
-                    </MDBox>
-                  </div>
-                </Container>
+                      </Grid>
+
+                      <Grid item xs={5}>
+                        <MDBox mt={1} mb={1}>
+                          <MDButton
+                            variant="gradient"
+                            onClick={handleRetryPayment}
+                            // color="info"
+                            style={Styles.buttonSx}
+                            width="50%"
+                          >
+                            <span className="material-icons">refresh</span> &nbsp; Retry
+                          </MDButton>
+                        </MDBox>
+                      </Grid>
+                      <Grid item xs={5}>
+                        {" "}
+                        <></>{" "}
+                      </Grid>
+                    </Grid>
+                  </Container>
+                </MDBox>
               </MDBox>
             </MDBox>
           </MDBox>
@@ -1127,7 +1152,7 @@ function SalaryPayment() {
         </MDBox>
         <div align="center">
           <MDBox mt={4} mb={1}>
-            <CSVLink {...csvReport} color="white">
+            <CSVLink {...csvReport} style={Styles.textSx}>
               {" "}
               EXPORT AS CSV
             </CSVLink>
