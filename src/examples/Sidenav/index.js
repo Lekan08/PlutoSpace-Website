@@ -53,6 +53,7 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+import Styles from "styles";
 
 import GHeaders from "getHeader";
 import defaulto from "./defaulto.png";
@@ -457,7 +458,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         })}
       </List>
       <MDBox p={2} mt="auto">
-        <MDButton variant="gradient" color="info" onClick={handleLogOut} fullWidth>
+        <MDButton
+          variant="gradient"
+          // color="info"
+          style={Styles.buttonSx}
+          onClick={handleLogOut}
+          fullWidth
+        >
           Sign Out
         </MDButton>
       </MDBox>
