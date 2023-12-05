@@ -2015,7 +2015,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Bonus/Deduction",
+    name: "Bonus & Deduction",
     key: "bonusdeduction",
     icon: <Icon fontSize="small">remove_circle</Icon>,
     route: "/Bonus-&-Deduction",
@@ -2025,14 +2025,14 @@ const routes = [
     name: "Clone Bonus/Deduction",
     key: "cloneBonusDeduction",
     icon: <Icon fontSize="small">remove_circle</Icon>,
-    route: "/Bonus-And-Deduction/Clone",
+    route: "/Bonus-&-Deduction/Clone",
     component: <CloneBonusDeduction />,
   },
   {
     name: "Update Bonus or Deduction",
     key: "updateBonusDeduction",
     icon: <Icon fontSize="small">remove_circle</Icon>,
-    route: "/Bonus-And-Deduction/Update",
+    route: "/Bonus-&-Deduction/Update",
     component: <UpdateBonusOrDeduction />,
   },
   {

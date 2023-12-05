@@ -13,6 +13,8 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 import withReactContent from "sweetalert2-react-content";
 import GHeaders from "getHeader";
 
@@ -140,10 +142,11 @@ function CloneBonusAndDeduction() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={5} pb={9} px={29}>
+        <MDBox pt={5} pb={9}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -174,8 +177,8 @@ function CloneBonusAndDeduction() {
           <MDBox component="form" role="form">
             <MDBox mt={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-8">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={10}>
                     <MDInput
                       type="text"
                       label="Name *"
@@ -185,8 +188,8 @@ function CloneBonusAndDeduction() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                  <div className="col-sm-8">
+                  </Grid>
+                  <Grid item xs={10}>
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -208,20 +211,28 @@ function CloneBonusAndDeduction() {
                         </option>
                       ))}
                     </Form.Select>
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <MDBox mt={1} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleOnNameKeys}
+                        // color="info"
+                        // color="info"
+                        style={Styles.buttonSx}
+                        width="50%"
+                        align="left"
+                      >
+                        Clone
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleOnNameKeys}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Clone
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>
