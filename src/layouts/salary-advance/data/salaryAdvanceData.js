@@ -41,6 +41,7 @@ export default function SalaryAdvanceData() {
       approverID: approverIDx,
       status: statusx,
     });
+    console.log(raw);
     const requestOptions = {
       method: "POST",
       headers: myHeaders,

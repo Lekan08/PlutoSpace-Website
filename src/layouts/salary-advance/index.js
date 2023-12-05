@@ -16,6 +16,8 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
@@ -164,10 +166,11 @@ function SalaryAdvance() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -198,8 +201,8 @@ function SalaryAdvance() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={10}>
                     <MDInput
                       type="text"
                       label="Amount (No Decimal Places) *"
@@ -209,10 +212,9 @@ function SalaryAdvance() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+                  <Grid item xs={10}>
+                    {" "}
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -233,21 +235,29 @@ function SalaryAdvance() {
                           {api.personal.fname} {api.personal.lname}
                         </option>
                       ))}
-                    </Form.Select>
-                  </div>
-                </div>
+                    </Form.Select>{" "}
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    {" "}
+                    <MDBox mt={4} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleOnAmountKeys}
+                        // color="info"
+                        style={Styles.buttonSx}
+                        width="50%"
+                        align="left"
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={handleOnAmountKeys}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>

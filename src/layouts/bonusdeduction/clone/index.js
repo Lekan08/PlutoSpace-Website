@@ -219,7 +219,6 @@ function CloneBonusAndDeduction() {
                         variant="gradient"
                         onClick={handleOnNameKeys}
                         // color="info"
-                        // color="info"
                         style={Styles.buttonSx}
                         width="50%"
                         align="left"
