@@ -62,7 +62,9 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
+    const saved = JSON.parse(localStorage.getItem("darkMode"));
     localStorage.clear();
+    localStorage.setItem("darkMode", JSON.stringify(saved));
     navigate("/authentication/sign-in", { replace: true });
     window.location.reload();
   };
