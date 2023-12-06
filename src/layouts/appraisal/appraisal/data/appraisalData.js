@@ -185,7 +185,10 @@ export default function AppraisalData() {
     console.log(items);
     const filteredItems = items.filter((item) => item.id === value);
     const data11 = JSON.parse(localStorage.getItem("user1"));
-    if (filteredItems[0].approvalID === data11.personalID) {
+    if (
+      filteredItems[0].createdBy === data11.personalID ||
+      filteredItems[0].approvalID === data11.personalID
+    ) {
       navigate(`/Appraisals/Approve-Appraisal?id=${value}`);
     } else {
       // navigate(`/Appraisals/Result?id=${value}`);
