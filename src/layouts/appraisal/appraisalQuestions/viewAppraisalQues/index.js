@@ -368,14 +368,14 @@ function VuAppraisalQuestion() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"
             borderRadius="lg"
             style={Styles.boxSx}
             // coloredShadow="info"
-            mx={0}
+            mx={2}
             mt={-3}
             p={2}
             mb={1}
@@ -482,7 +482,7 @@ function VuAppraisalQuestion() {
                   borderRadius="lg"
                   style={Styles.boxSx}
                   // coloredShadow="info"
-                  mx={0}
+                  mx={2}
                   mt={0}
                   p={2}
                   mb={1}

@@ -445,7 +445,7 @@ function ApproveApp() {
             borderRadius="lg"
             style={Styles.boxSx}
             // coloredShadow="info"
-            mx={0}
+            mx={2}
             mt={-3}
             p={2}
             mb={1}
@@ -557,7 +557,7 @@ function ApproveApp() {
             borderRadius="lg"
             style={Styles.boxSx}
             // coloredShadow="info"
-            mx={0}
+            mx={2}
             mt={-3}
             p={2}
             mb={1}
@@ -665,7 +665,7 @@ function ApproveApp() {
               borderRadius="lg"
               style={Styles.boxSx}
               // coloredShadow="info"
-              mx={0}
+              mx={2}
               mt={-3}
               p={2}
               mb={1}

@@ -82,7 +82,7 @@ function View() {
                   borderRadius="lg"
                   style={Styles.boxSx}
                   // coloredShadow="info"
-                  mx={0}
+                  mx={2}
                   mt={-6}
                   p={3}
                   mb={1}

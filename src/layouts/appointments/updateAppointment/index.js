@@ -441,7 +441,7 @@ function UpdateCalendar() {
             bgColor="warning"
             borderRadius="lg"
             coloredShadow="info"
-            mx={0}
+            mx={2}
             mt={-3}
             p={2}
             mb={1}
