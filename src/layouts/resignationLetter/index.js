@@ -116,7 +116,7 @@ function ResignationLetter() {
       });
   };
   const imageChange = (e) => {
-    if (e.target.files[0].size > 522240) {
+    if (e.target.files[0].size > 5222400000) {
       alert("File should not exceed 500kb");
       // setDisabled(true);
     } else {
@@ -175,7 +175,10 @@ function ResignationLetter() {
           body: raw,
           redirect: "follow",
         };
-
+        // fetch(
+        //   `https://monoverse.plutospace.space/media/uploadFile?key=${cbtKey}ss&type=${files[0].type}`,
+        //   requestOptions
+        // )
         fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
           .then(async (res) => {
             const aToken = res.headers.get("token-1");
