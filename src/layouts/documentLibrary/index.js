@@ -492,7 +492,8 @@ function DocumentLibrary() {
               redirect: "follow",
             };
 
-            fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
+            fetch(`http://monoverse.plutospace.space/media/uploadFile`, requestOptions)
+              // fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
               .then(async (res) => {
                 const aToken = res.headers.get("token-1");
                 localStorage.setItem("rexxdex", aToken);
