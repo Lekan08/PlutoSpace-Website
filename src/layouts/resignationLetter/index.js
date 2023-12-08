@@ -175,11 +175,11 @@ function ResignationLetter() {
           body: raw,
           redirect: "follow",
         };
-        // fetch(
-        //   `https://monoverse.plutospace.space/media/uploadFile?key=${cbtKey}ss&type=${files[0].type}`,
-        //   requestOptions
-        // )
-        fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
+        fetch(
+          `https://monoverse.plutospace.space/media/uploadFile?key=${cbtKey}ss&type=${files[0].type}`,
+          requestOptions
+        )
+          // fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
           .then(async (res) => {
             const aToken = res.headers.get("token-1");
             localStorage.setItem("rexxdex", aToken);
