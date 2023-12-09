@@ -393,7 +393,7 @@ function TimeOff() {
                         type="text"
                         value={titlex || ""}
                         onChange={(e) => setTitilex(e.target.value)}
-                        label="Title"
+                        label="Title*"
                         variant="standard"
                         style={{ width: "100%" }}
                       />
@@ -414,7 +414,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Start Date
+                        Start Date*
                       </MDTypography>
                       <DatePicker
                         placeholderText="Start Date"
@@ -438,7 +438,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        End Date
+                        End Date*
                       </MDTypography>
                       <DatePicker
                         placeholderText="End Date"
@@ -466,7 +466,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Resumption Date
+                        Resumption Date*
                       </MDTypography>
                       <DatePicker
                         placeholderText="Resumption Date"
@@ -490,7 +490,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Time Off Category
+                        Time Off Category*
                       </MDTypography>
                       <Form.Select
                         onChange={(e) => setEmpSetupId(e.target.value)}
@@ -521,7 +521,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Duty Reliever
+                        Duty Reliever*
                       </MDTypography>
                       <Form.Select
                         value={duty}
@@ -547,7 +547,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Select Admin
+                        Select Admin*
                       </MDTypography>
                       <Form.Select
                         value={adminIdx || ""}
@@ -578,7 +578,7 @@ function TimeOff() {
                       align="left"
                       color="text"
                     >
-                      Select Approver
+                      Select Approver*
                     </MDTypography>
                     <Form.Select
                       value={approvex || ""}
@@ -606,7 +606,7 @@ function TimeOff() {
                         type="text"
                         value={purposex || ""}
                         onChange={(e) => setPurpose(e.target.value)}
-                        label="Purpose"
+                        label="Purpose*"
                         variant="standard"
                         style={{ width: "100%" }}
                       />

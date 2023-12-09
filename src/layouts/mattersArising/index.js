@@ -17,6 +17,8 @@ import MDButton from "components/MDButton";
 import DataTable from "examples/Tables/DataTable";
 import Footer from "examples/Footer";
 import MattersArisingTable from "layouts/mattersArising/data/mattersArising";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function MattersArising() {
   const MySwal = withReactContent(Swal);
@@ -24,13 +26,14 @@ function MattersArising() {
   const [messagex, setMessage] = useState("");
   const [levelx, setLevel] = useState("");
 
-  const [checkedMessage, setCheckedMessage] = useState("");
+  const [checkedMessage, setCheckedMessage] = useState(false);
 
   const { columns: pColumns, rows: pRows } = MattersArisingTable();
 
-  const [checkedTitle, setCheckedTitle] = useState("");
+  const [checkedTitle, setCheckedTitle] = useState(false);
+  const [opened, setOpened] = useState(false);
   // const [checkedMessage, setCheckedMessage] = useState("");
-  const [enabled, setEnabled] = useState("");
+  // const [enabled, setEnabled] = useState("");
   const [raisedto, setRaisedTO] = useState("");
 
   const [user, setUser] = useState([]);
@@ -40,41 +43,56 @@ function MattersArising() {
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
 
-  const handleOnTitleKeys = () => {
+  const handleOnTitleKeys = (value) => {
     const letters = /^[a-zA-Z ]+$/;
-    if (!titlex.match(letters)) {
+    if (!value.match(letters)) {
       setCheckedTitle(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("title").innerHTML =
         "Title - input only capital and small letters<br>";
     }
-    if (titlex.match(letters)) {
+    if (value.match(letters)) {
       setCheckedTitle(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("title").innerHTML = "";
     }
-    if (titlex.length === 0) {
+    if (value.length === 0) {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("title").innerHTML = "Title is required<br>";
     }
-    setEnabled(checkedTitle === true && checkedMessage === true);
+    // setEnabled(checkedTitle === true && checkedMessage === true);
   };
 
-  const handleOnMessageKeys = () => {
-    if (messagex.length === 0) {
+  const handleOnMessageKeys = (value) => {
+    if (value.length === 0) {
       setCheckedMessage(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("message").innerHTML = "Message is required<br>";
     } else {
       setCheckedMessage(true);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("message").innerHTML = "";
     }
-    setEnabled(checkedTitle === true && checkedMessage === true);
+    // setEnabled(checkedTitle === true && checkedMessage === true);
   };
 
   const handleClick = (e) => {
-    handleOnTitleKeys();
-    handleOnMessageKeys();
-    if (enabled) {
+    if (levelx === "") {
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("level").innerHTML = "Level is required<br>";
+    } else {
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("level").innerHTML = "";
+    }
+    if (raisedto === "") {
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("raisedTo").innerHTML = "Raised To is required<br>";
+    } else {
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("raisedTo").innerHTML = "";
+    }
+    if (checkedTitle === true && checkedMessage === true && levelx !== "" && raisedto !== "") {
+      setOpened(true);
       e.preventDefault();
       const data11 = JSON.parse(localStorage.getItem("user1"));
       const orgIDs = data11.orgID;
@@ -105,6 +123,7 @@ function MattersArising() {
           return res.json();
         })
         .then((result) => {
+          setOpened(false);
           if (result.message === "Expired Access") {
             navigate("/authentication/sign-in");
           }
@@ -123,6 +142,7 @@ function MattersArising() {
           });
         })
         .catch((error) => {
+          setOpened(false);
           MySwal.fire({
             title: error.status,
             type: "error",
@@ -134,6 +154,7 @@ function MattersArising() {
 
   useEffect(() => {
     const headers = miHeaders;
+    setOpened(true);
 
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
@@ -146,6 +167,7 @@ function MattersArising() {
         return res.json();
       })
       .then((result) => {
+        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
         }
@@ -219,6 +241,12 @@ function MattersArising() {
             <MDTypography variant="gradient" fontSize="60%" color="error" id="message">
               {" "}
             </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="level">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="raisedTo">
+              {" "}
+            </MDTypography>
           </MDBox>
           {/* <MDBox component="form" role="form" name="form1"> */}
           <MDBox mb={2}>
@@ -227,9 +255,9 @@ function MattersArising() {
                 <div className="col-sm-6">
                   <MDInput
                     type="text"
-                    label="Title *"
+                    label="Title*"
                     value={titlex || ""}
-                    onKeyUp={handleOnTitleKeys}
+                    onKeyUp={(e) => handleOnTitleKeys(e.target.value)}
                     onChange={(e) => setTitle(e.target.value)}
                     variant="standard"
                     fullWidth
@@ -240,11 +268,11 @@ function MattersArising() {
                 <div className="row"> */}
                 <div className="col-sm-6">
                   <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
-                    <Form.Label style={{ fontSize: 14 }}>Message</Form.Label>
+                    <Form.Label style={{ fontSize: 14 }}>Message*</Form.Label>
                     <Form.Control
                       as="textarea"
                       value={messagex || ""}
-                      onKeyUp={handleOnMessageKeys}
+                      onKeyUp={(e) => handleOnMessageKeys(e.target.value)}
                       onChange={(e) => setMessage(e.target.value)}
                       rows={2}
                     />
@@ -274,7 +302,7 @@ function MattersArising() {
                 <div className="col-sm-6">
                   <MDBox mb={2}>
                     <MDTypography variant="button" fontWeight="regular" color="text">
-                      Level
+                      Level*
                     </MDTypography>
                     <Form.Select
                       aria-label="Default select example"
@@ -284,7 +312,7 @@ function MattersArising() {
                       <option>---Level---</option>
                       <option value="Low">Low</option>
                       <option value="Medium">Medium</option>
-                      <option value="HIGH">HIGH</option>
+                      <option value="HIGH">High</option>
                       <option value="Critical">Critical</option>
                     </Form.Select>
                   </MDBox>
@@ -292,7 +320,7 @@ function MattersArising() {
                 <div className="col-sm-6">
                   <MDBox mb={2}>
                     <MDTypography variant="button" fontWeight="regular" color="text">
-                      Raised To
+                      Raised To*
                     </MDTypography>
                     <Form.Select
                       value={raisedto}
@@ -348,6 +376,9 @@ function MattersArising() {
           canSearch
         />
       </MDBox>
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
+        <CircularProgress color="info" />
+      </Backdrop>
       <Footer />
     </DashboardLayout>
   );

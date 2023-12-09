@@ -387,6 +387,48 @@ function DocumentLibrary() {
     };
   }, []);
 
+  const deleteDocument = (valuex) => {
+    const requestOptionsd = {
+      method: "DELETE",
+      headers: miHeaders,
+    };
+
+    fetch(
+      `${process.env.REACT_APP_EKOATLANTIC_URL}/documentLibrary/delete/${valuex}`,
+      requestOptionsd
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((resxx) => {
+        if (resxx.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+        }
+        if (resxx.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+        }
+        if (resxx.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+        }
+        setOpened(false);
+        console.log({
+          title: resxx.status,
+          type: "success",
+          text: resxx.message,
+        });
+      })
+      .catch((error) => {
+        setOpened(false);
+        console.log({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+
   const handleDocUpload = (e) => {
     handleClose();
     // if (imageUrl) {
@@ -492,8 +534,8 @@ function DocumentLibrary() {
               redirect: "follow",
             };
 
-            fetch(`http://monoverse.plutospace.space/media/uploadFile`, requestOptions)
-              // fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
+            // fetch(`https://monoverse.plutospace.space/media/uploadFile`, requestOptions)
+            fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/uploadFile`, requestOptions)
               .then(async (res) => {
                 const aToken = res.headers.get("token-1");
                 localStorage.setItem("rexxdex", aToken);
@@ -531,6 +573,7 @@ function DocumentLibrary() {
               })
               .catch((error) => {
                 setOpened(false);
+                deleteDocument(upFileData.id);
                 MySwal.fire({
                   title: error.status,
                   type: "error",
