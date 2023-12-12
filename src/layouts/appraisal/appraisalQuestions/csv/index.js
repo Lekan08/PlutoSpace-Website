@@ -75,23 +75,12 @@ function AppCsv() {
           }
           console.log(item.OptionA);
           if (
-            item.OptionA === "" &&
-            item.OptionB === "" &&
-            item.OptionC === "" &&
-            item.OptionD === "" &&
-            item.OptionE === ""
+            item.OptionA !== "" ||
+            item.OptionB !== "" ||
+            item.OptionC !== "" ||
+            item.OptionD !== "" ||
+            item.OptionE !== ""
           ) {
-            const timidMan = {
-              question: {
-                orgID: orgIDs,
-                question: item.Question,
-                hint: item.Hint,
-                inputType: "Text",
-              },
-            };
-
-            newResult.push(timidMan);
-          } else {
             const allOptionShit = [];
             if (item.OptionA) {
               if (item.OptionA !== "") {
@@ -146,6 +135,17 @@ function AppCsv() {
                 inputType: "Option",
               },
               options: allOptionShit,
+            };
+
+            newResult.push(timidMan);
+          } else {
+            const timidMan = {
+              question: {
+                orgID: orgIDs,
+                question: item.Question,
+                hint: item.Hint,
+                inputType: "Text",
+              },
             };
 
             newResult.push(timidMan);

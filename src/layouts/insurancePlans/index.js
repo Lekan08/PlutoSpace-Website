@@ -43,15 +43,20 @@ function InsurancePlans() {
       document.getElementById("name").innerHTML =
         "Title - input only capital, small letters and numbers<br>";
     } else if (
+      titlex.length > 0 ||
       (damageClientContributionx.length > 0 && !damageClientContributionx.match(PricePCval)) ||
       (monthlyContributionx.length > 0 && !monthlyContributionx.match(PricePCval)) ||
-      (yearlyContributionx.length > 0 && !yearlyContributionx.match(PricePCval)) ||
+      (yearlyContributionx.length > 0 && !yearlyContributionx.match(PricePCval))
+    ) {
+      document.getElementById("name").innerHTML =
+        "Please fill title, damage client contribution, monthly contribution and yearly contribution<br>";
+    } else if (
       (damageClientContributionx.length > 0 && Number(damageClientContributionx) > 100) ||
       (monthlyContributionx.length > 0 && Number(monthlyContributionx) > 100) ||
       (yearlyContributionx.length > 0 && Number(yearlyContributionx) > 100)
     ) {
       document.getElementById("name").innerHTML =
-        "Please enter valid inputs for title, damage client contribution, monthly contribution and yearly contribution<br>";
+        "Value for damage client contribution, monthly contribution and yearly contribution should not exceed 100<br>";
     } else {
       document.getElementById("name").innerHTML = "";
       setOpened(true);

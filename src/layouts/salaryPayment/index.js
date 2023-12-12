@@ -837,7 +837,7 @@ function SalaryPayment() {
                 textAlign="center"
                 mt={1}
               >
-                Calculate Bonus and Deduction
+                Calculate Bonus & Deduction
               </MDTypography>
             </MDBox>
             <MDBox

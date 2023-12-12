@@ -110,7 +110,7 @@ export default function data() {
       <td><input type="text" id="name" value="${namex}" class="swal2-input" placeholder="Name"></td></tr><br>
       <tr><td><label for="descrip">Description:   </label></td>
       <td><input type="text" class="swal2-input" id="descrip" value="${descripx}" placeholder="Description"></td></tr><br>
-      <tr><td><label for="colorCode">ColorCode:</label></td>
+      <tr><td><label for="colorCode">Color Code:</label></td>
       <td><input type="color"  class="swal2-input" style="width:77%" id="colorCode" value="${colorCodex}" placeholder="ColorCode"></td></tr></table>`,
       confirmButtonText: "Save",
       showCancelButton: true,
