@@ -24,6 +24,7 @@ const { transparent } = colors;
 export default {
   styleOverrides: {
     select: {
+      color: "rgba(0,0,0,0.8)",
       display: "grid",
       alignItems: "center",
       padding: `0 ${pxToRem(12)} !important`,

@@ -55,6 +55,14 @@ function Configurator() {
 
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("darkMode"));
+    console.log(JSON.parse(localStorage.getItem("darkMode")));
+    console.log(darkMode, "darkmodeee");
+    if (saved === true) {
+      setDarkMode(dispatch, true);
+    } else {
+      setDarkMode(dispatch, false);
+    }
     // A function that sets the disabled state of the buttons for the sidenav type.
     function handleDisabled() {
       return window.innerWidth > 1200 ? setDisabled(false) : setDisabled(true);
@@ -84,7 +92,10 @@ function Configurator() {
     setTransparentSidenav(dispatch, false);
   };
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
-  const handleDarkMode = () => setDarkMode(dispatch, !darkMode);
+  const handleDarkMode = () => {
+    setDarkMode(dispatch, !darkMode);
+    localStorage.setItem("darkMode", JSON.stringify(!darkMode));
+  };
 
   // sidenav type buttons styles
   const sidenavTypeButtonsStyles = ({

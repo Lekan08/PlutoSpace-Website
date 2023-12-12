@@ -21,6 +21,7 @@ import borders from "assets/theme-dark/base/borders";
 // Material Dashboard 2 PRO React Helper Functions
 import rgba from "assets/theme-dark/functions/rgba";
 
+// eslint-disable-next-line no-unused-vars
 const { info, inputBorderColor, dark, grey, white } = colors;
 const { size } = typography;
 const { borderWidth } = borders;
@@ -44,7 +45,7 @@ export default {
       },
 
       input: {
-        color: white.main,
+        color: dark.main,
 
         "&::-webkit-input-placeholder": {
           color: grey[100],

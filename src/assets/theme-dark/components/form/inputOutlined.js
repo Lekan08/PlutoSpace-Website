@@ -22,7 +22,8 @@ import typography from "assets/theme-dark/base/typography";
 import pxToRem from "assets/theme-dark/functions/pxToRem";
 import rgba from "assets/theme-dark/functions/rgba";
 
-const { inputBorderColor, info, grey, transparent, white } = colors;
+// eslint-disable-next-line no-unused-vars
+const { inputBorderColor, info, grey, transparent, white, dark } = colors;
 const { borderRadius } = borders;
 const { size } = typography;
 
@@ -49,7 +50,7 @@ export default {
     },
 
     input: {
-      color: white.main,
+      color: dark.main,
       padding: pxToRem(12),
       backgroundColor: transparent.main,
 
