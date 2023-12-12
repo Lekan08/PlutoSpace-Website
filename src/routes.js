@@ -2248,7 +2248,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Settings Client And More",
+    name: "Ticket Settings Client",
     key: "ticketClientSettings",
     icon: <Icon fontSize="small">manage_accounts</Icon>,
     route: "/Ticket-Settings-Client-And-More",

@@ -849,7 +849,7 @@ function Tickets() {
                           align="left"
                           color="text"
                         >
-                          Agent
+                          Agent *
                         </MDTypography>
                         <Form.Select
                           value={agentIDx}
@@ -875,7 +875,7 @@ function Tickets() {
                         color="text"
                         mt={0}
                       >
-                        Priority
+                        Priority *
                       </MDTypography>
                       <MDBox textAlign="right">
                         <Form.Select
@@ -902,7 +902,7 @@ function Tickets() {
                         color="text"
                         mt={0}
                       >
-                        Client Type
+                        Client Type *
                       </MDTypography>
                       <MDBox textAlign="right">
                         <Form.Select
@@ -925,7 +925,7 @@ function Tickets() {
                           align="left"
                           color="text"
                         >
-                          Client
+                          Client *
                         </MDTypography>{" "}
                         {showClients ? (
                           <Form.Select
@@ -967,7 +967,7 @@ function Tickets() {
                       color="text"
                       mt={2}
                     >
-                      Channel
+                      Channel *
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -988,9 +988,10 @@ function Tickets() {
                     <MDButton
                       variant="gradient"
                       onClick={handleClick}
-                      color="info"
+                      // color="info"
                       width="50%"
                       align="center"
+                      style={Styles.buttonSx}
                     >
                       Save
                     </MDButton>
@@ -1004,7 +1005,13 @@ function Tickets() {
       &nbsp;
       <MDBox>
         <MDBox mt={4} mb={1}>
-          <MDButton variant="gradient" onClick={handleOpen} color="info" width="50%" align="center">
+          <MDButton
+            variant="gradient"
+            onClick={handleOpen}
+            /* color="info" */ width="50%"
+            align="center"
+            style={Styles.buttonSx}
+          >
             Add Filters
           </MDButton>
         </MDBox>
@@ -1073,7 +1080,7 @@ function Tickets() {
                               align="left"
                               color="text"
                             >
-                              Agent
+                              Agent *
                             </MDTypography>
                             <Form.Select
                               value={uagentIDx}
@@ -1099,7 +1106,7 @@ function Tickets() {
                             color="text"
                             mt={0}
                           >
-                            Priorty
+                            Priorty *
                           </MDTypography>
                           <MDBox textAlign="right">
                             <Form.Select
@@ -1126,7 +1133,7 @@ function Tickets() {
                             color="text"
                             mt={0}
                           >
-                            Client Type
+                            Client Type *
                           </MDTypography>
                           <MDBox textAlign="right">
                             <Form.Select
@@ -1149,7 +1156,7 @@ function Tickets() {
                               align="left"
                               color="text"
                             >
-                              Client
+                              Client *
                             </MDTypography>{" "}
                             {showClients ? (
                               <Form.Select
@@ -1191,7 +1198,7 @@ function Tickets() {
                           color="text"
                           mt={2}
                         >
-                          Channel
+                          Channel *
                         </MDTypography>
                         <MDBox textAlign="right">
                           <Form.Select
@@ -1212,9 +1219,10 @@ function Tickets() {
                         <MDButton
                           variant="gradient"
                           onClick={handleUpdate}
-                          color="info"
+                          // color="info"
                           width="50%"
                           align="center"
+                          style={Styles.buttonSx}
                         >
                           Save
                         </MDButton>
@@ -1343,9 +1351,10 @@ function Tickets() {
                         <MDButton
                           variant="gradient"
                           onClick={handleGets}
-                          color="info"
+                          // color="info"
                           width="50%"
                           align="center"
+                          style={Styles.buttonSx}
                         >
                           Add Filters
                         </MDButton>

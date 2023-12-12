@@ -376,7 +376,8 @@ function DocumentLibrary() {
         }
         if (isMounted) {
           if (result) {
-            if (result.length !== 0) {
+            if (result.length) {
+              console.log(result);
               setGroups(result);
             }
           }

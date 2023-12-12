@@ -950,7 +950,12 @@ function SingleCorporate() {
               </Container>
             </MDBox> */}
                   <MDBox mt={4} mb={1}>
-                    <MDButton variant="gradient" onClick={handleCheckYear} color="info" width="50%">
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleCheckYear}
+                      /* color="info" */ width="50%"
+                      style={Styles.buttonSx}
+                    >
                       Save
                     </MDButton>
                   </MDBox>
