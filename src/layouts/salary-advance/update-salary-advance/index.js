@@ -14,6 +14,8 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import Styles from "styles";
+import Grid from "@mui/material/Grid";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
@@ -215,10 +217,11 @@ function EditSalaryAdvance() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -249,8 +252,8 @@ function EditSalaryAdvance() {
           <MDBox component="form" role="form">
             <MDBox mb={2}>
               <Container>
-                <div className="row">
-                  <div className="col-sm-6">
+                <Grid container justifyContent="center" spacing={2}>
+                  <Grid item xs={10}>
                     <MDInput
                       type="text"
                       label="Amount (No Decimal Places) *"
@@ -260,10 +263,9 @@ function EditSalaryAdvance() {
                       variant="standard"
                       fullWidth
                     />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-sm-6">
+                  </Grid>
+
+                  <Grid item xs={10}>
                     <MDTypography
                       variant="button"
                       fontWeight="regular"
@@ -285,20 +287,27 @@ function EditSalaryAdvance() {
                         </option>
                       ))}
                     </Form.Select>
-                  </div>
-                </div>
+                  </Grid>
+
+                  <Grid item xs={5}>
+                    <MDBox mt={4} mb={1}>
+                      <MDButton
+                        variant="gradient"
+                        onClick={(e) => handleClick(e)}
+                        // color="info"
+                        style={Styles.buttonSx}
+                        width="50%"
+                        align="left"
+                      >
+                        Save
+                      </MDButton>
+                    </MDBox>
+                  </Grid>
+                  <Grid item xs={5}>
+                    <></>
+                  </Grid>
+                </Grid>
               </Container>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton
-                variant="gradient"
-                onClick={(e) => handleClick(e)}
-                color="info"
-                width="50%"
-                align="left"
-              >
-                Save
-              </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>

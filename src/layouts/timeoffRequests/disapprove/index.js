@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function Disapprove() {
   const MySwal = withReactContent(Swal);
@@ -202,7 +203,8 @@ function Disapprove() {
                 <MDButton
                   variant="gradient"
                   onClick={handleDisApprove}
-                  color="info"
+                  // color="info"
+                  style={Styles.buttonSx}
                   width="50%"
                   align="right"
                 >

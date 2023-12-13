@@ -157,7 +157,7 @@ function Reports() {
           window.location.reload();
         }
         // setItems(result);
-        console.log(result);
+        console.log({ assetsGetBetweenResult: result });
         const allMAP = result;
         if (result !== "") {
           const itemz = result.map((each) => ({
@@ -204,8 +204,8 @@ function Reports() {
                 window.location.reload();
               }
               if (isMounted) {
-                console.log(result);
-                console.log(resultxp);
+                console.log({ assetsGetBetweenResult: result });
+                console.log({ orgsGetResult: resultxp });
                 if (result.length !== 0) {
                   fetch(
                     `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getByKey/${orgIDs}/${orgIDs}`,
@@ -231,6 +231,7 @@ function Reports() {
                         navigate("/authentication/forbiddenPage");
                         window.location.reload();
                       }
+                      console.log({ mediaGetByKeyResult: resultme });
                       console.log(resultme.name);
                       fetch(
                         `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${resultme.name}`,
@@ -316,6 +317,7 @@ function Reports() {
                                   navigate("/authentication/forbiddenPage");
                                   window.location.reload();
                                 }
+                                console.log({ assetsAddResult: resultxx });
                                 if (resultxx.status === "SUCCESS") {
                                   fetch(
                                     `${process.env.REACT_APP_EKOATLANTIC_URL}/reports/generate/asset-list`,
@@ -341,6 +343,7 @@ function Reports() {
                                       }
 
                                       // if (isMounted) {
+                                      console.log({ reportsGenerateAssetListResult: resultxme2 });
                                       console.log(`link [${resultxme2[0]}]`);
                                       const url = resultxme2[0];
                                       if (url !== "") {
@@ -423,6 +426,7 @@ function Reports() {
                                   window.location.reload();
                                 }
                                 console.log(resultxxx);
+                                console.log({ reportsGenerateAssetListResult: resultxxx });
                                 if (resultxxx.status === "SUCCESS") {
                                   console.log(resultxxx.data.id);
                                   fetch(
@@ -453,7 +457,7 @@ function Reports() {
                                       window.open(urls, "_blank", "noopener,noreferrer");
 
                                       // if (isMounted) {
-                                      console.log(`link [${resultxme2[0]}]`);
+                                      console.log(`link2 [${resultxme2[0]}]`);
                                       const url = resultxme2[0];
                                       if (url !== "") {
                                         const objectURL = url;
@@ -1628,7 +1632,16 @@ function Reports() {
           window.location.reload();
         }
         // setItems(result);
-        console.log(result);
+        console.log({ accountingGetBetweenResult: result });
+        if (result.length === 0) {
+          setOpened(false);
+          MySwal.fire({
+            title: "NO_REPORTS",
+            type: "error",
+            text: "There are no reports between the date you selected",
+          });
+          return;
+        }
         const allMAP = result;
         if (result !== "") {
           const incomeFIltered = result.filter((os) => os.category === "INCOME");

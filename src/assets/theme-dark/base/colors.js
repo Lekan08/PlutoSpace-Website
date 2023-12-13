@@ -27,7 +27,7 @@ export default {
   },
 
   text: {
-    main: "#ffffffcc",
+    main: "black",
     focus: "#ffffffcc",
   },
 

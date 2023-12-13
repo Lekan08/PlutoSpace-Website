@@ -30,7 +30,7 @@ import Icon from "@mui/material/Icon";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+// import MDButton from "components/MDButton";
 // import MDInput from "components/MDInput";
 
 // Material Dashboard 2 React example components
@@ -53,19 +53,20 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+// import Styles from "styles";
 
 import GHeaders from "getHeader";
 import defaulto from "./defaulto.png";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const navigate = useNavigate();
-
-  const handleLogOut = () => {
-    localStorage.clear();
-    navigate("/authentication/sign-in", { replace: true });
-    window.location.reload();
-  };
-
+  // const handleLogOut = () => {
+  //   const saved = JSON.parse(localStorage.getItem("darkMode"));
+  //   localStorage.clear();
+  //   localStorage.setItem("darkMode", JSON.stringify(saved));
+  //   navigate("/authentication/sign-in", { replace: true });
+  //   window.location.reload();
+  // };
   const [userRoleID, setUserRoleID] = useState("");
   const [userFullName, setUserFullName] = useState("");
 
@@ -73,6 +74,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
+  // console.log({ collapseName });
 
   let textColor = "white";
 
@@ -400,6 +402,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         {newRenderRoutes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
           let returnValue;
 
+          const collapseNameWithSlash = `/${collapseName}`;
+
           if (type === "collapse") {
             returnValue = href ? (
               <Link
@@ -412,13 +416,13 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
                 <SidenavCollapse
                   name={name}
                   icon={icon}
-                  active={key === collapseName}
+                  active={route === collapseNameWithSlash}
                   noCollapse={noCollapse}
                 />
               </Link>
             ) : (
               <NavLink key={key} to={route}>
-                <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
+                <SidenavCollapse name={name} icon={icon} active={route === collapseNameWithSlash} />
               </NavLink>
             );
           } else if (type === "title") {
@@ -453,11 +457,17 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           return returnValue;
         })}
       </List>
-      <MDBox p={2} mt="auto">
-        <MDButton variant="gradient" color="info" onClick={handleLogOut} fullWidth>
+      {/* <MDBox p={2} mt="auto">
+        <MDButton
+          variant="gradient"
+          // color="info"
+          style={Styles.buttonSx}
+          onClick={handleLogOut}
+          fullWidth
+        >
           Sign Out
         </MDButton>
-      </MDBox>
+      </MDBox> */}
     </SidenavRoot>
   );
 }

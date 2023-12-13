@@ -26,7 +26,7 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import { Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import { Link } from 'react-router-dom';
-import Icon from "@mui/material/Icon";
+// import Icon from "@mui/material/Icon";
 import PHeaders from "postHeader";
 // react-chartjs-2 components
 import PieChart from "examples/Charts/PieChart";
@@ -41,6 +41,7 @@ import GHeaders from "getHeader";
 import ProgressBar from "react-bootstrap/ProgressBar";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 // import { getFormGroupUtilityClass } from "@mui/material";
 
 // import React from "react";
@@ -1019,7 +1020,7 @@ function Dashboard() {
             <MDBox mb={1.5}>
               <Link to="/user-Management">
                 <ComplexStatisticsCard
-                  color="info"
+                  color="secondary"
                   icon="people"
                   title="No Of Users"
                   count={noOfUsers}
@@ -1071,73 +1072,83 @@ function Dashboard() {
         <MDBox mt={4.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={6}>
-              <Card>
-                <MDBox
-                  variant="gradient"
-                  bgColor="info"
-                  borderRadius="lg"
-                  coloredShadow="success"
-                  mt={2}
-                  mb={5}
-                  mx={0}
-                  p={1}
-                  textAlign="left"
-                >
-                  <MDTypography
-                    variant="h4"
-                    fontWeight="medium"
-                    color="white"
-                    textAlign="center"
-                    mt={1}
-                  >
-                    Appraisal Score
-                  </MDTypography>
-                </MDBox>
-                &nbsp;
-                <MDBox mb={5}>
-                  <ProgressBar
-                    now={grading.score}
-                    variant={grading.colorCode}
-                    label={`${grading.score}%`}
-                  />
-                </MDBox>
-              </Card>
+              <>
+                {grading?.score > 0 && (
+                  <Card>
+                    <MDBox
+                      variant="gradient"
+                      // bgColor="info"
+                      // borderRadius="lg"
+                      style={Styles.boxSx}
+                      // coloredShadow="info"
+                      mt={2}
+                      mb={-2}
+                      mx={0}
+                      p={1}
+                      textAlign="left"
+                    >
+                      <MDTypography
+                        variant="h4"
+                        fontWeight="medium"
+                        color="white"
+                        textAlign="center"
+                        // mt={1}
+                      >
+                        Appraisal Score
+                      </MDTypography>
+                    </MDBox>
+                    &nbsp;
+                    <MDBox mb={2}>
+                      <ProgressBar
+                        now={grading.score}
+                        variant={grading.colorCode}
+                        label={`${grading.score}%`}
+                        style={{
+                          borderRadius: 0,
+                        }}
+                      />
+                    </MDBox>
+                  </Card>
+                )}
+              </>
               &nbsp;
             </Grid>
             <Grid item xs={6} md={3} lg={6}>
-              {showBirth ? (
-                <Card style={{ backgroundColor: "#318CE7", maxHeight: 350 }}>
-                  <MDTypography
-                    variant="h4"
-                    fontWeight="bold"
-                    color="white"
-                    textAlign="left"
-                    mt={1}
-                  >
-                    &nbsp; Birthdays
-                  </MDTypography>
-                  &nbsp;
-                  <div
-                    className="scrollbar scrollbar-primary mt-2 mx-auto"
-                    style={scrollContainerStyle}
-                  >
-                    <Container>
-                      <div className="row">
-                        {itemsx.map((item) => (
-                          <Grid item xs={12} md={12} lg={12} key={item.id}>
-                            <Card sx={{ maxWidth: 345 }}>
-                              <CardContent>
-                                <MDTypography
-                                  variant="h5"
-                                  fontWeight="medium"
-                                  fontSize="120%"
-                                  color="info"
-                                  textAlign="left"
-                                  mt={1}
-                                >
-                                  {item.personal.fname} &nbsp; {item.personal.lname}
-                                </MDTypography>
-                                {/* <MDTypography
+              <>
+                {showBirth ? (
+                  <Card style={{ backgroundColor: "#f96d02", maxHeight: 350 }}>
+                    <MDTypography
+                      variant="h4"
+                      fontWeight="bold"
+                      color="white"
+                      textAlign="left"
+                      mt={1}
+                    >
+                      &nbsp; Birthdays
+                    </MDTypography>
+                    &nbsp;
+                    <div
+                      className="scrollbar scrollbar-primary mt-2 mx-auto"
+                      style={scrollContainerStyle}
+                    >
+                      <Container>
+                        <div className="row">
+                          {itemsx.map((item) => (
+                            <Grid item xs={12} md={12} lg={12} key={item.id}>
+                              <Card sx={{ maxWidth: 345 }}>
+                                <CardContent>
+                                  <MDTypography
+                                    variant="h5"
+                                    fontWeight="medium"
+                                    fontSize="120%"
+                                    // color="info"
+                                    style={Styles.textSx}
+                                    textAlign="left"
+                                    mt={1}
+                                  >
+                                    {item.personal.fname} &nbsp; {item.personal.lname}
+                                  </MDTypography>
+                                  {/* <MDTypography
                                   variant="h6"
                                   color="text"
                                   fontSize="75%"
@@ -1146,35 +1157,35 @@ function Dashboard() {
                                 >
                                   You have been selected for this Appraisal
                                 </MDTypography> */}
-                                <MDTypography
-                                  variant="h6"
-                                  color="text"
-                                  fontSize="75%"
-                                  textAlign="left"
-                                  mt={1}
-                                >
-                                  Phone Number - {item.personal.pno}
-                                </MDTypography>
-                                <MDTypography
-                                  variant="h6"
-                                  color="text"
-                                  fontSize="75%"
-                                  textAlign="left"
-                                  mt={0}
-                                >
-                                  Country - {item.personal.residentialCountry}
-                                </MDTypography>
-                                <MDTypography
-                                  variant="h6"
-                                  color="text"
-                                  fontSize="75%"
-                                  textAlign="left"
-                                  mt={0}
-                                >
-                                  Marital Status - {item.personal.maritalStatus}
-                                </MDTypography>
-                              </CardContent>
-                              {/* <CardActions>
+                                  <MDTypography
+                                    variant="h6"
+                                    color="text"
+                                    fontSize="75%"
+                                    textAlign="left"
+                                    mt={1}
+                                  >
+                                    Phone Number - {item.personal.pno}
+                                  </MDTypography>
+                                  <MDTypography
+                                    variant="h6"
+                                    color="text"
+                                    fontSize="75%"
+                                    textAlign="left"
+                                    mt={0}
+                                  >
+                                    Country - {item.personal.residentialCountry}
+                                  </MDTypography>
+                                  <MDTypography
+                                    variant="h6"
+                                    color="text"
+                                    fontSize="75%"
+                                    textAlign="left"
+                                    mt={0}
+                                  >
+                                    Marital Status - {item.personal.maritalStatus}
+                                  </MDTypography>
+                                </CardContent>
+                                {/* <CardActions>
                                 <div align="right">
                                   <MDButton
                                     variant="gradient"
@@ -1186,17 +1197,24 @@ function Dashboard() {
                                   </MDButton>
                                 </div>
                               </CardActions> */}
-                            </Card>
-                            &nbsp;
-                          </Grid>
-                        ))}
-                      </div>
-                    </Container>
-                  </div>
-                  &nbsp;
-                </Card>
-              ) : (
-                <Card style={{ backgroundColor: "#318CE7", maxHeight: 350 }}>
+                              </Card>
+                              &nbsp;
+                            </Grid>
+                          ))}
+                        </div>
+                      </Container>
+                    </div>
+                    &nbsp;
+                  </Card>
+                ) : (
+                  <>
+                    {/* <Card
+                  style={{
+                    // backgroundColor: "#318CE7",
+                    backgroundColor: "#f96d02",
+                    maxHeight: 350,
+                  }}
+                >
                   {" "}
                   <MDTypography
                     variant="h3"
@@ -1214,8 +1232,10 @@ function Dashboard() {
                   >
                     sentiment_dissatisfied
                   </Icon>
-                </Card>
-              )}
+                </Card> */}
+                  </>
+                )}
+              </>
             </Grid>
           </Grid>
         </MDBox>
@@ -1228,9 +1248,10 @@ function Dashboard() {
                     <Card sx={{ maxHeight: 350 }}>
                       <MDBox
                         variant="gradient"
-                        bgColor="info"
-                        borderRadius="lg"
-                        coloredShadow="success"
+                        // bgColor="info"
+                        // borderRadius="lg"
+                        style={Styles.boxSx}
+                        // coloredShadow="info"
                         mt={2}
                         mx={0}
                         p={1}
@@ -1296,7 +1317,8 @@ function Dashboard() {
                     </Card>
                   </Grid>
                 ) : (
-                  <Card style={{ backgroundColor: "#318CE7", maxHeight: 350 }}>
+                  <>
+                    {/* <Card style={{ backgroundColor: "#f96d02", maxHeight: 350 }}>
                     {" "}
                     <MDTypography
                       variant="h3"
@@ -1314,7 +1336,8 @@ function Dashboard() {
                     >
                       sentiment_dissatisfied
                     </Icon>
-                  </Card>
+                  </Card> */}
+                  </>
                 )}
               </MDBox>
             </Grid>
@@ -1323,9 +1346,10 @@ function Dashboard() {
                 <Card sx={{ maxHeight: 350 }}>
                   <MDBox
                     variant="gradient"
-                    bgColor="info"
-                    borderRadius="lg"
-                    coloredShadow="success"
+                    // bgColor="info"
+                    // borderRadius="lg"
+                    style={Styles.boxSx}
+                    // coloredShadow="info"
                     mt={2}
                     mx={0}
                     p={1}
@@ -1352,7 +1376,7 @@ function Dashboard() {
                             <Grid container spacing={0} key={item.id}>
                               <Grid item xs={12} md={12} lg={12}>
                                 {/* <Link to={`/polls/vote-Polls?id=${api.id}`}> */}
-                                <Card style={{ backgroundColor: "#318CE7" }}>
+                                <Card style={{ backgroundColor: "#f96d02" }}>
                                   <CardContent>
                                     <MDTypography
                                       variant="h6"
@@ -1394,7 +1418,8 @@ function Dashboard() {
                   </div>
                 </Card>
               ) : (
-                <Card style={{ backgroundColor: "#318CE7", maxHeight: 350 }}>
+                <>
+                  {/* <Card style={{ backgroundColor: "#f96d02", maxHeight: 350 }}>
                   {" "}
                   <MDTypography
                     variant="h3"
@@ -1412,73 +1437,76 @@ function Dashboard() {
                   >
                     sentiment_dissatisfied
                   </Icon>
-                </Card>
+                </Card> */}
+                </>
               )}
             </Grid>
-            <Grid item xs={6} md={3} lg={4}>
-              <Card sx={{ maxHeight: 350 }}>
-                <div
-                  className="scrollbar scrollbar-primary mt-2 mx-auto"
-                  style={scrollContainerStyle}
-                >
-                  <MDBox mb={1.5}>
-                    <MDBox
-                      variant="gradient"
-                      bgColor="info"
-                      borderRadius="lg"
-                      coloredShadow="success"
-                      mt={2}
-                      mx={0}
-                      p={1}
-                      mb={3}
-                      textAlign="left"
-                    >
-                      <MDTypography
-                        variant="h4"
-                        fontWeight="medium"
-                        color="white"
-                        textAlign="center"
-                        mt={1}
+            {resulty.length > 0 && (
+              <Grid item xs={6} md={3} lg={4}>
+                <Card sx={{ maxHeight: 350 }}>
+                  <div
+                    className="scrollbar scrollbar-primary mt-2 mx-auto"
+                    style={scrollContainerStyle}
+                  >
+                    <MDBox mb={1.5}>
+                      <MDBox
+                        variant="gradient"
+                        // bgColor="info"
+                        // borderRadius="lg"
+                        style={Styles.boxSx}
+                        // coloredShadow="info"
+                        mt={2}
+                        mx={0}
+                        p={1}
+                        mb={3}
+                        textAlign="left"
                       >
-                        Matters Arising
-                      </MDTypography>
-                    </MDBox>
-                    <Container>
-                      <div className="row">
-                        {resulty.map((api) => (
-                          <Grid container spacing={0} key={api.id}>
-                            <Grid item xs={12} md={12} lg={12}>
-                              <MDBox mb={2}>
-                                <Link to={`/view-Matter?username=${userNamex}&room=${api.id}`}>
-                                  <Card style={{ backgroundColor: "#318CE7" }}>
-                                    <CardContent>
-                                      <MDTypography
-                                        variant="h4"
-                                        fontWeight="medium"
-                                        color="white"
-                                        textAlign="left"
-                                        mt={1}
-                                      >
-                                        {api.title}
-                                      </MDTypography>
-                                      <div
-                                        style={{
-                                          overflow: "hidden",
-                                          textOverflow: "ellipsis",
-                                          width: "10rem",
-                                          color: "#f5f5f5",
-                                          whiteSpace: "nowrap",
-                                          fontSize: "80%",
-                                        }}
-                                      >
-                                        <p>{api.message}</p>
-                                      </div>
-                                    </CardContent>
-                                  </Card>{" "}
-                                </Link>
-                              </MDBox>
+                        <MDTypography
+                          variant="h4"
+                          fontWeight="medium"
+                          color="white"
+                          textAlign="center"
+                          mt={1}
+                        >
+                          Matters Arising
+                        </MDTypography>
+                      </MDBox>
+                      <Container>
+                        <div className="row">
+                          {resulty.map((api) => (
+                            <Grid container spacing={0} key={api.id}>
+                              <Grid item xs={12} md={12} lg={12}>
+                                <MDBox mb={2}>
+                                  <Link to={`/view-Matter?username=${userNamex}&room=${api.id}`}>
+                                    <Card style={{ backgroundColor: "#f96d02" }}>
+                                      <CardContent>
+                                        <MDTypography
+                                          variant="h4"
+                                          fontWeight="medium"
+                                          color="white"
+                                          textAlign="left"
+                                          mt={1}
+                                        >
+                                          {api.title}
+                                        </MDTypography>
+                                        <div
+                                          style={{
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            width: "10rem",
+                                            color: "#f5f5f5",
+                                            whiteSpace: "nowrap",
+                                            fontSize: "80%",
+                                          }}
+                                        >
+                                          <p>{api.message}</p>
+                                        </div>
+                                      </CardContent>
+                                    </Card>{" "}
+                                  </Link>
+                                </MDBox>
 
-                              {/* <Link to={`/polls/vote-Polls?id=${api.id}`}>
+                                {/* <Link to={`/polls/vote-Polls?id=${api.id}`}>
                               <Card style={{ backgroundColor: "#318CE7" }}>
                                 <CardContent>
                                   <MDTypography
@@ -1495,15 +1523,16 @@ function Dashboard() {
                               </Card>{" "}
                               &nbsp; &nbsp;
                             </Link> */}
+                              </Grid>
                             </Grid>
-                          </Grid>
-                        ))}
-                      </div>
-                    </Container>
-                  </MDBox>
-                </div>
-              </Card>
-            </Grid>
+                          ))}
+                        </div>
+                      </Container>
+                    </MDBox>
+                  </div>
+                </Card>
+              </Grid>
+            )}
           </Grid>
         </MDBox>
       </MDBox>
@@ -1631,11 +1660,11 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={6} md={6} lg={6}>
               {showApp ? (
-                <Card style={{ backgroundColor: "#318CE7", maxHeight: 350 }}>
+                <Card style={{ backgroundColor: "#f96d02", maxHeight: 350 }}>
                   <MDBox
                     variant="gradient"
                     bgColor="white"
-                    borderRadius="lg"
+                    // borderRadius="lg"
                     coloredShadow="success"
                     mt={2}
                     mx={0}
@@ -1645,7 +1674,8 @@ function Dashboard() {
                     <MDTypography
                       variant="h4"
                       fontWeight="medium"
-                      color="info"
+                      // color="info"
+                      style={Styles.textSx}
                       textAlign="center"
                       mt={1}
                     >
@@ -1667,7 +1697,8 @@ function Dashboard() {
                                   variant="h5"
                                   fontWeight="medium"
                                   fontSize="120%"
-                                  color="info"
+                                  // color="info"
+                                  style={Styles.textSx}
                                   textAlign="left"
                                   mt={1}
                                 >
@@ -1705,7 +1736,8 @@ function Dashboard() {
                                 <div align="right">
                                   <MDButton
                                     variant="gradient"
-                                    color="info"
+                                    // color="info"
+                                    style={Styles.buttonSx}
                                     onClick={() => handleAppraise(item.id)}
                                     width="50%"
                                   >
@@ -1723,7 +1755,8 @@ function Dashboard() {
                   &nbsp;
                 </Card>
               ) : (
-                <Card style={{ backgroundColor: "#318CE7", maxHeight: 350 }}>
+                <>
+                  {/* <Card style={{ backgroundColor: "#f96d02", maxHeight: 350 }}>
                   {" "}
                   <MDTypography
                     variant="h3"
@@ -1741,7 +1774,8 @@ function Dashboard() {
                   >
                     sentiment_dissatisfied
                   </Icon>
-                </Card>
+                </Card> */}
+                </>
               )}
             </Grid>
             <Grid item xs={6} md={6} lg={6}>
@@ -1758,7 +1792,7 @@ function Dashboard() {
                             <Grid container spacing={0} key={api.id}>
                               <Grid item xs={12} md={12} lg={12}>
                                 <Link to={`/polls/vote-Polls?id=${api.id}`}>
-                                  <Card style={{ backgroundColor: "#318CE7" }}>
+                                  <Card style={{ backgroundColor: "#f96d02" }}>
                                     <CardContent>
                                       <MDTypography
                                         variant="h4"
@@ -1783,7 +1817,8 @@ function Dashboard() {
                   </div>
                 </Card>
               ) : (
-                <Card style={{ backgroundColor: "#318CE7", maxHeight: 350 }}>
+                <>
+                  {/* <Card style={{ backgroundColor: "#f96d02", maxHeight: 350 }}>
                   {" "}
                   <MDTypography
                     variant="h3"
@@ -1801,18 +1836,19 @@ function Dashboard() {
                   >
                     sentiment_dissatisfied
                   </Icon>
-                </Card>
+                </Card> */}
+                </>
               )}
             </Grid>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <Grid container spacing={3}>
+            <Grid container spacing={1}>
               <Grid item xs={6} md={6} lg={6}>
                 {idiotPoll ? (
-                  <Card>
+                  <Card style={{ marginLeft: 10 }}>
                     <PieChart
                       // icon={{ color: "primary", component: "leaderboard" }}
                       title="Pie Chart"
-                      description="Analytics Insights"
+                      description="Poll Analytics Insights"
                       chart={{
                         labels: pollsResult.labels,
                         datasets: {

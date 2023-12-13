@@ -286,7 +286,8 @@ function TimeOff() {
           approverID: approvex,
           adminID: adminIdx,
         });
-        console.log(JSON.parse(raw));
+        console.log(raw);
+        console.log({ data: raw, currentTimestamp: new Date().getTime() });
         const requestOptions = {
           method: "POST",
           headers: myHeaders,
@@ -314,13 +315,13 @@ function TimeOff() {
           });
           return;
         }
-        if (resumptionCDate > endCDate) {
+        if (resumptionCDate < endCDate) {
           check = 1;
           setOpened(false);
           MySwal.fire({
             title: "Invalid Resuming Date",
             type: "error",
-            text: "Please Enter A Resumption Date Before The End Date",
+            text: "Please Enter A Resumption Date After The End Date",
           });
           return;
         }
@@ -335,14 +336,14 @@ function TimeOff() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"
             borderRadius="lg"
             style={Styles.boxSx}
             // coloredShadow="info"
-            mx={0}
+            mx={2}
             mt={-3}
             p={2}
             mb={1}
@@ -392,7 +393,7 @@ function TimeOff() {
                         type="text"
                         value={titlex || ""}
                         onChange={(e) => setTitilex(e.target.value)}
-                        label="Title"
+                        label="Title*"
                         variant="standard"
                         style={{ width: "100%" }}
                       />
@@ -413,7 +414,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Start Date
+                        Start Date*
                       </MDTypography>
                       <DatePicker
                         placeholderText="Start Date"
@@ -437,7 +438,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        End Date
+                        End Date*
                       </MDTypography>
                       <DatePicker
                         placeholderText="End Date"
@@ -465,7 +466,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Resumption Date
+                        Resumption Date*
                       </MDTypography>
                       <DatePicker
                         placeholderText="Resumption Date"
@@ -489,7 +490,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Time Off Category
+                        Time Off Category*
                       </MDTypography>
                       <Form.Select
                         onChange={(e) => setEmpSetupId(e.target.value)}
@@ -520,7 +521,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Duty Reliever
+                        Duty Reliever*
                       </MDTypography>
                       <Form.Select
                         value={duty}
@@ -546,7 +547,7 @@ function TimeOff() {
                         align="left"
                         color="text"
                       >
-                        Select Admin
+                        Select Admin*
                       </MDTypography>
                       <Form.Select
                         value={adminIdx || ""}
@@ -577,7 +578,7 @@ function TimeOff() {
                       align="left"
                       color="text"
                     >
-                      Select Approver
+                      Select Approver*
                     </MDTypography>
                     <Form.Select
                       value={approvex || ""}
@@ -605,7 +606,7 @@ function TimeOff() {
                         type="text"
                         value={purposex || ""}
                         onChange={(e) => setPurpose(e.target.value)}
-                        label="Purpose"
+                        label="Purpose*"
                         variant="standard"
                         style={{ width: "100%" }}
                       />

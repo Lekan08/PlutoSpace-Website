@@ -15,6 +15,7 @@ import Footer from "examples/Footer";
 import MDTypography from "components/MDTypography";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function ChangePassword() {
   const MySwal = withReactContent(Swal);
@@ -154,10 +155,10 @@ function ChangePassword() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={3.5} pb={3.5} px={30}>
+        <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -165,6 +166,7 @@ function ChangePassword() {
             p={2}
             mb={1}
             textAlign="center"
+            style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
               CHANGE PASSWORD
@@ -254,7 +256,12 @@ function ChangePassword() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleValidate} color="info" width="40%">
+              <MDButton
+                variant="gradient"
+                onClick={handleValidate}
+                style={Styles.boxSx}
+                width="40%"
+              >
                 Save
               </MDButton>
             </MDBox>

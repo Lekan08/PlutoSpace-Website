@@ -277,9 +277,9 @@ function Tax() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            bgColor="warning"
             borderRadius="lg"
-            coloredShadow="info"
+            coloredShadow="warning"
             mx={2}
             mt={-3}
             p={2}
@@ -339,7 +339,7 @@ function Tax() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                color="warning"
                 width="50%"
                 align="left"
               >
@@ -367,7 +367,7 @@ function Tax() {
               padding: "40px",
               fontFamily: "verdana",
               color: "#ffffff",
-              backgroundColor: "#064ACB",
+              backgroundColor: "#FFA71C",
             }}
           >
             <table>
@@ -386,7 +386,7 @@ function Tax() {
                   <Button
                     variant="contained"
                     onClick={() => handleShow(tax, tax.id)}
-                    style={{ backgroundColor: "#376BCD", color: "#ffffff" }}
+                    style={{ backgroundColor: "#FB8C00", color: "#ffffff" }}
                   >
                     Update
                   </Button>
@@ -398,7 +398,7 @@ function Tax() {
       )}
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
-        <CircularProgress color="info" />
+        <CircularProgress color="warning" />
       </Backdrop>
     </DashboardLayout>
   );

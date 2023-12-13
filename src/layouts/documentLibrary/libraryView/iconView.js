@@ -52,6 +52,7 @@ import ImagePng from "assets/document-pngs/imagePng.png";
 import RollingGif from "assets/images/Rolling.gif";
 
 import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import { saveAs } from "file-saver";
 
 const StyledMenu = styled((props) => (
   <Menu
@@ -217,6 +218,50 @@ function IconView({ items, groups, level }) {
     setImageUrl(RollingGif);
   };
 
+  const deleteDocument = (value) => {
+    const requestOptionsd = {
+      method: "DELETE",
+      headers: miHeaders,
+    };
+
+    fetch(
+      `${process.env.REACT_APP_EKOATLANTIC_URL}/documentLibrary/delete/${value}`,
+      requestOptionsd
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((resxx) => {
+        if (resxx.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+        }
+        if (resxx.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+        }
+        if (resxx.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+        }
+        setOpened(false);
+        MySwal.fire({
+          title: resxx.status,
+          type: "success",
+          text: resxx.message,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+
   const handleDelete = (value) => {
     handleClose();
     const filteredItems = items.filter((item) => item.id === value);
@@ -269,55 +314,19 @@ function IconView({ items, groups, level }) {
             // }
             console.log(`STATUS - ${resx.status} - - - - - - MESSAGE - ${resx.message}`);
 
-            if (resx.status !== "SUCCESS") {
+            if (resx.status === "SUCCESS") {
+              setOpened(false);
+              deleteDocument(value);
+            } else if (resx.status === "RECORD_NONEXISTS") {
+              setOpened(false);
+              deleteDocument(value);
+            } else {
               setOpened(false);
               MySwal.fire({
                 title: "DELETE_UNSUCCESSFUL",
                 type: "error",
                 text: "Document Delete Was Unsuccessful",
               });
-            } else {
-              const requestOptionsd = {
-                method: "DELETE",
-                headers: miHeaders,
-              };
-
-              fetch(
-                `${process.env.REACT_APP_EKOATLANTIC_URL}/documentLibrary/delete/${value}`,
-                requestOptionsd
-              )
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  return res.json();
-                })
-                .then((resxx) => {
-                  if (resxx.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                  }
-                  setOpened(false);
-                  MySwal.fire({
-                    title: resxx.status,
-                    type: "success",
-                    text: resxx.message,
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                })
-                .catch((error) => {
-                  setOpened(false);
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
             }
           })
           .catch((error) => {
@@ -567,7 +576,7 @@ function IconView({ items, groups, level }) {
     }
   };
 
-  const handleDownloadAnchor = (value) => {
+  const handleDownloadAnchor = (value, e) => {
     setOpened(true);
     const headers = miHeaders;
     fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${value.name}`, {
@@ -599,32 +608,87 @@ function IconView({ items, groups, level }) {
         console.log(resultxx);
         console.log(resultxx[0]);
 
+        const valueType = value.type;
+        if (
+          valueType === "image/png" ||
+          valueType === "image/jpg" ||
+          valueType === "image/jpeg" ||
+          valueType === "image/gif"
+        ) {
+          // const download = () => {
+          // const element = document.createElement("a");
+          // const file = new Blob(
+          //   [
+          //     "https://timesofindia.indiatimes.com/thumb/msid-70238371,imgsize-89579,width-400,resizemode-4/70238371.jpg",
+          //   ],
+          //   { type: "image/*" }
+          // );
+          // element.href = URL.createObjectURL(file);
+          // element.download = "image.jpg";
+          // element.click();
+
+          // const download = e => {
+          console.log(e);
+          console.log(e.target.href);
+          // fetch(e.target.href, {
+          //   method: "GET",
+          //   headers: {},
+          // })
+          //   .then((response) => {
+          //     response.arrayBuffer().then((buffer) => {
+          //       const url = window.URL.createObjectURL(new Blob([buffer]));
+          //       const link = document.createElement("a");
+          //       link.href = url;
+          //       link.setAttribute("download", "image.png"); // or any other extension
+          //       document.body.appendChild(link);
+          //       link.click();
+          //     });
+          //   })
+          //   .catch((err) => {
+          //     console.log(err);
+          //   });
+          // const downloadImage = () => {
+          saveAs(resultxx[0], "image.jpg"); // Put your image URL here.
+          // }
+          // };
+          // };f
+        } else {
+          const fileNamex = resultxx[0].split("/").pop();
+          const aTag = document.createElement("a");
+          // eslint-disable-next-line prefer-destructuring
+          aTag.href = resultxx[0];
+          aTag.setAttribute("download", fileNamex);
+          document.body.appendChild(aTag);
+          aTag.click();
+          aTag.remove();
+        }
+
         // const linkSource = `data:application/vnd.ms-excel;base64,${value.base64Txt}`;
         // const downloadLink = document.createElement("a");
         // const fileName = `${value.name}.xls`;
         const linkSource = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${value.base64Txt}`;
-        const downloadLink = document.createElement("a");
-        const fileName = `${value.name}.xlsx`;
+        // const downloadLink = document.createElement("a");
+        // const fileName = `${value.name}.xlsx`;
 
-        downloadLink.href = linkSource;
-        downloadLink.download = fileName;
-        downloadLink.click();
+        // downloadLink.href = linkSource;
+        // downloadLink.download = fileName;
+        // downloadLink.click();
 
-        const objectURL = URL.createObjectURL(resultxx[0]);
-        console.log(objectURL);
+        // const objectURL = URL.createObjectURL(resultxx[0]);
+        // console.log(objectURL);
 
-        // // (C2) TO "FORCE DOWNLOAD"
-        const anchor = document.createElement("a");
-        anchor.href = linkSource;
-        anchor.download = value.name;
-        anchor.click();
+        // // // (C2) TO "FORCE DOWNLOAD"
+        // const anchor = document.createElement("a");
+        // anchor.href = linkSource;
+        // anchor.download = value.name;
+        // anchor.click();
 
         // (C3) CLEAN UP
         window.URL.revokeObjectURL(linkSource);
       });
   };
 
-  const handleDownload = (value) => {
+  const handleDownload = (value, e) => {
     const filteredItems = items.filter((item) => item.id === value);
     const docKey = filteredItems[0].key;
     handleClose();
@@ -670,7 +734,7 @@ function IconView({ items, groups, level }) {
           redirect: "follow",
         };
         if (result.name) {
-          handleDownloadAnchor(result);
+          handleDownloadAnchor(result, e);
         }
 
         fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/media/download`, requestOptions1)
@@ -830,7 +894,11 @@ function IconView({ items, groups, level }) {
                     Change Access Level
                   </MenuItem>
                   <Divider sx={{ my: 0.5 }} />
-                  <MenuItem onClick={() => handleDownload(iiidd)} disableRipple>
+                  <MenuItem
+                    href="https://upload.wikimedia.org/wikipedia/en/6/6b/Hello_Web_Series_%28Wordmark%29_Logo.png"
+                    onClick={(e) => handleDownload(iiidd, e)}
+                    disableRipple
+                  >
                     <DownloadIcon />
                     Download
                   </MenuItem>

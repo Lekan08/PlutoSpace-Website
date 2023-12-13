@@ -62,35 +62,25 @@ function AppCsv() {
         // eslint-disable-next-line array-callback-return, consistent-return
         waddup.map((item) => {
           if (
-            item.Question === undefined ||
-            item.Hint === undefined ||
-            item.OptionA === undefined ||
-            item.OptionB === undefined ||
-            item.OptionC === undefined ||
-            item.OptionD === undefined ||
-            item.OptionE === undefined
+            item.Question === undefined
+            // ||
+            // item.Hint === undefined ||
+            // item.OptionA === undefined ||
+            // item.OptionB === undefined ||
+            // item.OptionC === undefined ||
+            // item.OptionD === undefined ||
+            // item.OptionE === undefined
           ) {
             return consu();
           }
           console.log(item.OptionA);
           if (
-            item.OptionA === "" &&
-            item.OptionB === "" &&
-            item.OptionC === "" &&
-            item.OptionD === "" &&
-            item.OptionE === ""
+            item.OptionA !== "" ||
+            item.OptionB !== "" ||
+            item.OptionC !== "" ||
+            item.OptionD !== "" ||
+            item.OptionE !== ""
           ) {
-            const timidMan = {
-              question: {
-                orgID: orgIDs,
-                question: item.Question,
-                hint: item.Hint,
-                inputType: "Text",
-              },
-            };
-
-            newResult.push(timidMan);
-          } else {
             const allOptionShit = [];
             if (item.OptionA) {
               if (item.OptionA !== "") {
@@ -128,7 +118,7 @@ function AppCsv() {
                 allOptionShit.push(optionShit);
               }
             }
-            if (item.OptionA) {
+            if (item.OptionE) {
               if (item.OptionE !== "") {
                 const optionShit = {
                   orgID: orgIDs,
@@ -145,6 +135,17 @@ function AppCsv() {
                 inputType: "Option",
               },
               options: allOptionShit,
+            };
+
+            newResult.push(timidMan);
+          } else {
+            const timidMan = {
+              question: {
+                orgID: orgIDs,
+                question: item.Question,
+                hint: item.Hint,
+                inputType: "Text",
+              },
             };
 
             newResult.push(timidMan);

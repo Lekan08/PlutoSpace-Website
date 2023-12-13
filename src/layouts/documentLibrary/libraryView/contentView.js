@@ -214,6 +214,50 @@ function ContentView({ items, groups, level }) {
     setImageUrl(RollingGif);
   };
 
+  const deleteDocument = (value) => {
+    const requestOptionsd = {
+      method: "DELETE",
+      headers: miHeaders,
+    };
+
+    fetch(
+      `${process.env.REACT_APP_EKOATLANTIC_URL}/documentLibrary/delete/${value}`,
+      requestOptionsd
+    )
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((resxx) => {
+        if (resxx.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+        }
+        if (resxx.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+        }
+        if (resxx.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+        }
+        setOpened(false);
+        MySwal.fire({
+          title: resxx.status,
+          type: "success",
+          text: resxx.message,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
+      });
+  };
+
   const handleDelete = (value) => {
     handleClose();
     const filteredItems = items.filter((item) => item.id === value);
@@ -266,55 +310,19 @@ function ContentView({ items, groups, level }) {
             // }
             console.log(`STATUS - ${resx.status} - - - - - - MESSAGE - ${resx.message}`);
 
-            if (resx.status !== "SUCCESS") {
+            if (resx.status === "SUCCESS") {
+              setOpened(false);
+              deleteDocument(value);
+            } else if (resx.status === "RECORD_NONEXISTS") {
+              setOpened(false);
+              deleteDocument(value);
+            } else {
               setOpened(false);
               MySwal.fire({
                 title: "DELETE_UNSUCCESSFUL",
                 type: "error",
                 text: "Document Delete Was Unsuccessful",
               });
-            } else {
-              const requestOptionsd = {
-                method: "DELETE",
-                headers: miHeaders,
-              };
-
-              fetch(
-                `${process.env.REACT_APP_EKOATLANTIC_URL}/documentLibrary/delete/${value}`,
-                requestOptionsd
-              )
-                .then(async (res) => {
-                  const aToken = res.headers.get("token-1");
-                  localStorage.setItem("rexxdex", aToken);
-                  return res.json();
-                })
-                .then((resxx) => {
-                  if (resxx.message === "Expired Access") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Token Does Not Exist") {
-                    navigate("/authentication/sign-in");
-                  }
-                  if (resxx.message === "Unauthorized Access") {
-                    navigate("/authentication/forbiddenPage");
-                  }
-                  setOpened(false);
-                  MySwal.fire({
-                    title: resxx.status,
-                    type: "success",
-                    text: resxx.message,
-                  }).then(() => {
-                    window.location.reload();
-                  });
-                })
-                .catch((error) => {
-                  setOpened(false);
-                  MySwal.fire({
-                    title: error.status,
-                    type: "error",
-                    text: error.message,
-                  });
-                });
             }
           })
           .catch((error) => {
