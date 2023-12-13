@@ -17,6 +17,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { Paper } from "@mui/material";
 import MDButton from "components/MDButton";
+import Styles from "styles";
 
 function UserPension() {
   const MySwal = withReactContent(Swal);
@@ -263,7 +264,7 @@ function UserPension() {
             <MDBox component="form" role="form" mx={10}>
               <MDBox
                 variant="gradient"
-                bgColor="info"
+                // bgColor="info"
                 borderRadius="lg"
                 coloredShadow="info"
                 mx={0}
@@ -271,6 +272,7 @@ function UserPension() {
                 p={1}
                 mb={0}
                 textAlign="center"
+                style={Styles.boxSx}
               >
                 <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
                   Pension Provider For {namex}

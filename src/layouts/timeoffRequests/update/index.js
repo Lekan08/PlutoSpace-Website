@@ -301,24 +301,24 @@ function TimeoffRequestUpdate() {
     }
   };
 
-  const handleOnPurposeKeys = () => {
-    const letters = /^[a-zA-Z ]+$/;
-    if (!purposex.match(letters)) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("purpose").innerHTML =
-        "Purpose - input only capital and small letters<br>";
-    }
-    if (purposex.match(letters)) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("purpose").innerHTML = "";
-      handleUpdate();
-    }
-    if (purposex.length === 0) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("purpose").innerHTML = "Purpose is required<br>";
-    }
-    // setEnabled(checkedTitle === true);
-  };
+  // const handleOnPurposeKeys = () => {
+  //   const letters = /^[a-zA-Z ]+$/;
+  //   if (!purposex.match(letters)) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("purpose").innerHTML =
+  //       "Purpose - input only capital and small letters<br>";
+  //   }
+  //   if (purposex.match(letters)) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("purpose").innerHTML = "";
+  //     handleUpdate();
+  //   }
+  //   if (purposex.length === 0) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("purpose").innerHTML = "Purpose is required<br>";
+  //   }
+  //   // setEnabled(checkedTitle === true);
+  // };
 
   return (
     <DashboardLayout>
@@ -549,7 +549,26 @@ function TimeoffRequestUpdate() {
                 <MDBox mt={4} mb={1}>
                   <MDButton
                     variant="gradient"
-                    onClick={(e) => handleOnPurposeKeys(e)}
+                    onClick={() => {
+                      if (
+                        startx === "" ||
+                        endx === "" ||
+                        resumex === "" ||
+                        empSetupIdx === "" ||
+                        adminx === "" ||
+                        dutyrelieverx === "" ||
+                        purposex === ""
+                        // || empSetupIdx === ""
+                      ) {
+                        MySwal.fire({
+                          title: "EMPTY_TEXTFIELDS",
+                          type: "error",
+                          text: "Please Fill All Fields",
+                        });
+                      } else {
+                        handleUpdate();
+                      }
+                    }}
                     // color="info"
                     style={Styles.buttonSx}
                     width="50%"

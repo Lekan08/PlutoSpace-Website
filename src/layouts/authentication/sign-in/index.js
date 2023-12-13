@@ -236,8 +236,7 @@ function Basic() {
                 >
                   Forgot Password
                 </MDTypography>
-              </MDBox>
-              <MDBox mb={1} mt={-1} textAlign="center">
+                &nbsp;&nbsp;
                 <MDTypography
                   component={Link}
                   to="/authentication/renew-Login"
@@ -249,6 +248,9 @@ function Basic() {
                   Renew Subscription
                 </MDTypography>
               </MDBox>
+              {/* <MDBox mb={1} mt={-1} textAlign="center">
+                
+              </MDBox> */}
             </MDBox>
           </MDBox>
         </Card>
