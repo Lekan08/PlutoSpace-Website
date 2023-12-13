@@ -2251,7 +2251,7 @@ const routes = [
     name: "Ticket Settings Client",
     key: "ticketClientSettings",
     icon: <Icon fontSize="small">manage_accounts</Icon>,
-    route: "/Ticket-Settings-Client-And-More",
+    route: "/Ticket-Settings-Client",
     component: <TicketClientSettings />,
   },
   {

@@ -299,12 +299,22 @@ function UserPension() {
                 </MDBox>
                 <br />
                 <MDBox mt={4} mb={1} textAlign="center">
-                  <MDButton variant="gradient" onClick={handleCreate} color="info" width="50%">
+                  <MDButton
+                    variant="gradient"
+                    onClick={handleCreate} /* color="info" */
+                    style={Styles.buttonSx}
+                    width="50%"
+                  >
                     {add ? "Add" : "Update"}
                   </MDButton>
                   &nbsp;&nbsp;&nbsp;
                   {!add && (
-                    <MDButton variant="gradient" onClick={handleDelete} color="error" width="50%">
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleDelete}
+                      /* color="error" */ width="50%"
+                      style={Styles.buttonSx}
+                    >
                       Remove
                     </MDButton>
                   )}
