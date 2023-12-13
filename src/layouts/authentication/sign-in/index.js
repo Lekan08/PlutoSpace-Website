@@ -233,7 +233,6 @@ function Basic() {
                   // color="info"
                   style={Styles.textSx}
                   fontWeight="medium"
-                  // textGradient
                 >
                   Forgot Password
                 </MDTypography>
@@ -245,7 +244,6 @@ function Basic() {
                   // color="info"
                   style={Styles.textSx}
                   fontWeight="medium"
-                  // textGradient
                 >
                   Renew Subscription
                 </MDTypography>
