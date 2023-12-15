@@ -262,7 +262,7 @@ function Announcement() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Title*"
+                      label="Title *"
                       value={titlex || ""}
                       onKeyUp={(e) => handleOnTitleKeys(e.target.value)}
                       onChange={(e) => setTitle(e.target.value)}
@@ -273,7 +273,7 @@ function Announcement() {
 
                   <div className="col-sm-6">
                     <Form.Group className="mb-1" controlId="exampleForm.ControlTextArea">
-                      <Form.Label style={{ fontSize: 14 }}>Message*</Form.Label>
+                      <Form.Label style={{ fontSize: 14 }}>Message *</Form.Label>
                       <Form.Control
                         as="textarea"
                         value={messagex || ""}
@@ -296,7 +296,7 @@ function Announcement() {
                         fontSize="80%"
                         color="text"
                       >
-                        Annoucement Type*
+                        Annoucement Type *
                       </MDTypography>
                       <MDBox textAlign="right">
                         <Form.Select
