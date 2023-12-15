@@ -106,7 +106,7 @@ export default function data() {
     MySwal.fire({
       title: "Update Announcement Type",
       html: `<table><tr><td>
-      <label for="name">Name:   </label></td>
+      <label for="name">Name *:   </label></td>
       <td><input type="text" id="name" value="${namex}" class="swal2-input" placeholder="Name"></td></tr><br>
       <tr><td><label for="descrip">Description:   </label></td>
       <td><input type="text" class="swal2-input" id="descrip" value="${descripx}" placeholder="Description"></td></tr><br>
