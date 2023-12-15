@@ -11,6 +11,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import GHeaders from "getHeader";
+import Styles from "styles";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
 import MDInput from "components/MDInput";
@@ -18,7 +19,7 @@ import PhoneInput from "react-phone-input-2";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import AllCountriesAndStates from "countries-states-master/countries";
-import { Paper } from "@mui/material";
+// import { Paper } from "@mui/material";
 import MDButton from "components/MDButton";
 
 function Pension() {
@@ -197,46 +198,49 @@ function Pension() {
     <DashboardLayout>
       <DashboardNavbar />
       <br />
-      <MDBox mx={20} variant="gradient" bgColor="info">
-        <Paper elevation={8}>
-          <Card style={{ width: "700px", marginLeft: "13px" }}>
-            <MDBox component="form" role="form" mx={10}>
-              <MDBox
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
-                mx={0}
-                mt={2}
-                p={1}
-                mb={0}
-                textAlign="center"
-              >
-                <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                  Update Pension Provider
-                </MDTypography>
-              </MDBox>
-              <MDBox
-                variant="gradient"
-                sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-                borderRadius="lg"
-                coloredShadow="success"
-                mx={3}
-                mt={1}
-                p={1}
-                mb={1}
-                textAlign="center"
-              >
-                <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
-                  {" "}
-                </MDTypography>
-                <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
-                  {" "}
-                </MDTypography>
-              </MDBox>
-              <br />
-              <MDBox p={2}>
-                <Container>
+      {/* <MDBox mx={20} variant="gradient" bgColor="info">
+        <Paper elevation={8}> */}
+      <Card>
+        <MDBox component="form" role="form" pt={4} pb={3} px={3}>
+          <MDBox
+            variant="gradient"
+            // bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
+            borderRadius="lg"
+            coloredShadow="info"
+            mx={0}
+            mt={2}
+            p={1}
+            mb={0}
+            textAlign="center"
+          >
+            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+              Update Pension Provider
+            </MDTypography>
+          </MDBox>
+          <MDBox
+            variant="gradient"
+            sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+            borderRadius="lg"
+            coloredShadow="success"
+            mx={3}
+            mt={1}
+            p={1}
+            mb={1}
+            textAlign="center"
+          >
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
+              {" "}
+            </MDTypography>
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
+              {" "}
+            </MDTypography>
+          </MDBox>
+          <br />
+          <MDBox p={2}>
+            <Container>
+              <div className="row">
+                <div className="col-sm-6">
                   <MDInput
                     type="text"
                     label="Name"
@@ -244,9 +248,10 @@ function Pension() {
                     onKeyUp={handleOnNameKeys}
                     onChange={(e) => setChanges({ ...changes, name: e.target.value })}
                     variant="standard"
-                    style={{ width: "400px" }}
+                    style={{ width: "390px" }}
                   />
-                  <br />
+                </div>
+                <div className="col-sm-6">
                   <MDInput
                     type="text"
                     label="Email"
@@ -254,9 +259,79 @@ function Pension() {
                     onKeyUp={handleOnEmailKeys}
                     onChange={(e) => setChanges({ ...changes, email: e.target.value })}
                     variant="standard"
-                    style={{ width: "400px", marginTop: "12px" }}
+                    style={{ width: "390px" }}
                   />
-                  <br />
+                </div>
+              </div>
+              &nbsp;
+              <div className="row">
+                <div className="col-sm-6">
+                  <MDTypography variant="button" fontWeight="regular" color="text">
+                    Phone Number
+                  </MDTypography>
+                  <PhoneInput
+                    value={changes.pno}
+                    inputStyle={{ width: "100%" }}
+                    buttonStyle={{}}
+                    onChange={(e) => setChanges({ ...changes, pno: e })}
+                  />
+                </div>
+                <div className="col-sm-6">
+                  <MDInput
+                    type="text"
+                    label="City"
+                    value={changes.city || ""}
+                    //   onKeyUp={handleOnTitleKeys}
+                    onChange={(e) => setChanges({ ...changes, city: e.target.value })}
+                    variant="standard"
+                    style={{ width: "390px", marginTop: "25px" }}
+                  />
+                </div>
+              </div>
+              <br />
+              <div className="row">
+                <div className="col-sm-6">
+                  <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
+                    Country
+                  </MDTypography>
+                  <MDBox textAlign="right">
+                    <Form.Select
+                      value={residentialCountryx || ""}
+                      aria-label="Default select example"
+                      onChange={handleOnChangeRCCountry}
+                    >
+                      <option>--Select Country--</option>
+                      {AlCountry.map((apic) => (
+                        <option key={apic.code3} value={apic.name}>
+                          {apic.name}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </MDBox>
+                </div>
+                <div className="col-sm-6">
+                  <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
+                    State
+                  </MDTypography>
+                  <MDBox textAlign="right">
+                    <Form.Select
+                      value={residentialStatex || ""}
+                      aria-label="Default select example"
+                      onChange={handleOnChangeRCState}
+                    >
+                      <option>--Select State--</option>
+                      {allStates.map((apis) => (
+                        <option key={apis.code} value={apis.name}>
+                          {apis.name}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </MDBox>
+                </div>
+              </div>
+              <br />
+              <div className="row">
+                <div className="col-sm-12" style={{ alignItems: "center" }}>
                   <MDInput
                     type="text"
                     label="Address"
@@ -264,86 +339,28 @@ function Pension() {
                     //   onKeyUp={handleOnTitleKeys}
                     onChange={(e) => setChanges({ ...changes, address: e.target.value })}
                     variant="standard"
-                    style={{ width: "400px", marginTop: "12px" }}
+                    style={{ width: "800px", marginTop: "12px" }}
                   />
-                  <br />
-                  <br />
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <MDTypography variant="button" fontWeight="regular" color="text">
-                        Phone Number
-                      </MDTypography>
-                      <PhoneInput
-                        value={changes.pno}
-                        inputStyle={{ width: "100%" }}
-                        buttonStyle={{}}
-                        onChange={(e) => setChanges({ ...changes, pno: e })}
-                      />
-                    </div>
-                    <MDInput
-                      type="text"
-                      label="City"
-                      value={changes.city || ""}
-                      //   onKeyUp={handleOnTitleKeys}
-                      onChange={(e) => setChanges({ ...changes, city: e.target.value })}
-                      variant="standard"
-                      style={{ width: "200px", marginTop: "21px", marginLeft: "21px" }}
-                    />
-                  </div>
-                  <br />
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                        Country
-                      </MDTypography>
-                      <MDBox textAlign="right">
-                        <Form.Select
-                          value={residentialCountryx || ""}
-                          aria-label="Default select example"
-                          onChange={handleOnChangeRCCountry}
-                        >
-                          <option>--Select Country--</option>
-                          {AlCountry.map((apic) => (
-                            <option key={apic.code3} value={apic.name}>
-                              {apic.name}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </MDBox>
-                    </div>
-                    <div className="col-sm-6">
-                      <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                        State
-                      </MDTypography>
-                      <MDBox textAlign="right">
-                        <Form.Select
-                          value={residentialStatex || ""}
-                          aria-label="Default select example"
-                          onChange={handleOnChangeRCState}
-                        >
-                          <option>--Select State--</option>
-                          {allStates.map((apis) => (
-                            <option key={apis.code} value={apis.name}>
-                              {apis.name}
-                            </option>
-                          ))}
-                        </Form.Select>
-                      </MDBox>
-                    </div>
-                  </div>
-                  <br />
-                  <MDBox mt={4} mb={1} textAlign="center">
-                    <MDButton variant="gradient" onClick={handleCreate} color="info" width="50%">
-                      Update
-                    </MDButton>
-                  </MDBox>
-                  <br />
-                </Container>
+                </div>
+              </div>
+              <MDBox mt={4} mb={1} textAlign="center">
+                <MDButton
+                  variant="gradient"
+                  onClick={handleCreate}
+                  // color="info"
+                  style={Styles.buttonSx}
+                  width="50%"
+                >
+                  Update
+                </MDButton>
               </MDBox>
-            </MDBox>
-          </Card>
-        </Paper>
-      </MDBox>
+              <br />
+            </Container>
+          </MDBox>
+        </MDBox>
+      </Card>
+      {/* </Paper>
+      </MDBox> */}
       <br />
       <br />
       <Footer />
