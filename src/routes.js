@@ -2248,10 +2248,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Settings Client And More",
+    name: "Ticket Settings Client",
     key: "ticketClientSettings",
     icon: <Icon fontSize="small">manage_accounts</Icon>,
-    route: "/Ticket-Settings-Client-And-More",
+    route: "/Ticket-Settings-Client",
     component: <TicketClientSettings />,
   },
   {
@@ -2366,10 +2366,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Status Types",
-    key: "statusType",
+    name: "Employee Types",
+    key: "Employee Status",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/Status-Type",
+    route: "/Employee-Type",
     component: <Status />,
   },
   {

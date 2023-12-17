@@ -104,13 +104,13 @@ export default function data() {
     }
 
     MySwal.fire({
-      title: "Update Announcement Type",
+      title: `<div style="width:100%;background-color:#f96d02;padding:20px;color:#fff;border-radius:5px ">Update Announcement Type</div>`,
       html: `<table><tr><td>
-      <label for="name">Name:   </label></td>
+      <label for="name">Name *:   </label></td>
       <td><input type="text" id="name" value="${namex}" class="swal2-input" placeholder="Name"></td></tr><br>
       <tr><td><label for="descrip">Description:   </label></td>
       <td><input type="text" class="swal2-input" id="descrip" value="${descripx}" placeholder="Description"></td></tr><br>
-      <tr><td><label for="colorCode">ColorCode:</label></td>
+      <tr><td><label for="colorCode">Color Code:</label></td>
       <td><input type="color"  class="swal2-input" style="width:77%" id="colorCode" value="${colorCodex}" placeholder="ColorCode"></td></tr></table>`,
       confirmButtonText: "Save",
       showCancelButton: true,

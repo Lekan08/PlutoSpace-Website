@@ -248,7 +248,7 @@ function Announcementtype() {
                   <div className="col-sm-6">
                     <MDInput
                       type="text"
-                      label="Name*"
+                      label="Name *"
                       value={namex || ""}
                       onKeyUp={(e) => handleOnNameKeys(e.target.value)}
                       onChange={(e) => setName(e.target.value)}
@@ -263,7 +263,7 @@ function Announcementtype() {
                       value={descripx || ""}
                       onKeyUp={(e) => handleOnDescripKeys(e.target.value)}
                       onChange={(e) => setDescrip(e.target.value)}
-                      label="Description*"
+                      label="Description "
                       variant="standard"
                       fullWidth
                     />

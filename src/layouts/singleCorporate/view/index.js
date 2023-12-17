@@ -401,8 +401,12 @@ function ViewSingleCorporate() {
 
   // Get time code
   function getTimeCreated(createdAt) {
+    if (createdAt === 0) {
+      return 0;
+    }
     const now = new Date();
     const created = new Date(createdAt);
+    console.log(created);
 
     if (created.getDate() === now.getDate()) {
       // Comment created today
@@ -795,10 +799,10 @@ function ViewSingleCorporate() {
           if (result.length !== 0) {
             const zoom = result.map((item) => item.product);
             console.log(zoom);
-            if (zoom.length !== 0 && zoom !== null) {
+            if (zoom.length && zoom !== null) {
               console.log(zoom);
               // const view = zoom.map((item) => item.name);
-              setProduct(zoom);
+              setProduct([]); // zoom
             }
             // product
             const zoom1 = result.map((item) => item.totalRequests);
@@ -1468,11 +1472,11 @@ function ViewSingleCorporate() {
                                   // title="Ticket's Chart"
                                   description="ALL PRODUCT/PACKAGE SUPPLY REQUEST"
                                   chart={{
-                                    labels: [
-                                      // product,
-                                      // `${product[0].name}`,
-                                      // product[1].name,
-                                    ],
+                                    // labels: [
+                                    // product,
+                                    // `${product[0].name}`,
+                                    // product[1].name,
+                                    // ],
                                     datasets: [
                                       {
                                         chartType: "Bar Chart",

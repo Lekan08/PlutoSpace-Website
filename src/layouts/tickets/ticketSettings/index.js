@@ -899,10 +899,11 @@ function TicketSettings() {
                       <MDButton
                         variant="gradient"
                         onClick={() => AddChipData(1)}
-                        color="info"
+                        // color="info"
                         width="50%"
                         align="center"
                         size="small"
+                        style={Styles.buttonSx}
                       >
                         Add
                       </MDButton>
@@ -937,10 +938,11 @@ function TicketSettings() {
                       <MDButton
                         variant="gradient"
                         onClick={() => AddChipData(2)}
-                        color="info"
+                        // color="info"
                         width="50%"
                         align="center"
                         size="small"
+                        style={Styles.buttonSx}
                       >
                         Add
                       </MDButton>
@@ -1209,9 +1211,10 @@ function TicketSettings() {
                 <MDButton
                   variant="gradient"
                   onClick={handleAddorUpdate}
-                  color="info"
+                  // color="info"
                   width="50%"
                   align="center"
+                  style={Styles.buttonSx}
                 >
                   Save
                 </MDButton>

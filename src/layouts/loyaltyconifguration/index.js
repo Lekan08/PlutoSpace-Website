@@ -170,7 +170,7 @@ function LoyaltyConiguration() {
                       color="text"
                       mt={0}
                     >
-                      Category
+                      Category*
                     </MDTypography>
                     <MDBox textAlign="right">
                       <Form.Select
@@ -193,7 +193,7 @@ function LoyaltyConiguration() {
                         align="left"
                         color="text"
                       >
-                        Type
+                        Type*
                       </MDTypography>{" "}
                       <Form.Select
                         value={typex}
@@ -230,7 +230,7 @@ function LoyaltyConiguration() {
                     <Box sx={{ minWidth: 100 }}>
                       <FormControl fullWidth>
                         <TextField
-                          label="Threshold Amount"
+                          label="Threshold Amount*"
                           type="number"
                           value={noOfCountx}
                           //   onKeyUp={(e) => handleOnAmountKeys(e.target.value)}

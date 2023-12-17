@@ -176,7 +176,7 @@ function UpdateBonusOrDeduction() {
           type: "success",
           text: result.message,
         }).then(() => {
-          navigate("/Bonus-And-Deduction");
+          navigate("/Bonus-&-Deduction");
         });
       })
       .catch((error) => {

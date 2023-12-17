@@ -30,7 +30,7 @@ import Icon from "@mui/material/Icon";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDButton from "components/MDButton";
+// import MDButton from "components/MDButton";
 // import MDInput from "components/MDInput";
 
 // Material Dashboard 2 React example components
@@ -53,22 +53,20 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
-import Styles from "styles";
+// import Styles from "styles";
 
 import GHeaders from "getHeader";
 import defaulto from "./defaulto.png";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const navigate = useNavigate();
-
-  const handleLogOut = () => {
-    const saved = JSON.parse(localStorage.getItem("darkMode"));
-    localStorage.clear();
-    localStorage.setItem("darkMode", JSON.stringify(saved));
-    navigate("/authentication/sign-in", { replace: true });
-    window.location.reload();
-  };
-
+  // const handleLogOut = () => {
+  //   const saved = JSON.parse(localStorage.getItem("darkMode"));
+  //   localStorage.clear();
+  //   localStorage.setItem("darkMode", JSON.stringify(saved));
+  //   navigate("/authentication/sign-in", { replace: true });
+  //   window.location.reload();
+  // };
   const [userRoleID, setUserRoleID] = useState("");
   const [userFullName, setUserFullName] = useState("");
 
@@ -459,7 +457,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           return returnValue;
         })}
       </List>
-      <MDBox p={2} mt="auto">
+      {/* <MDBox p={2} mt="auto">
         <MDButton
           variant="gradient"
           // color="info"
@@ -469,7 +467,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         >
           Sign Out
         </MDButton>
-      </MDBox>
+      </MDBox> */}
     </SidenavRoot>
   );
 }
