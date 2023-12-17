@@ -121,6 +121,7 @@ function Reports() {
 
   const handleAssetList = (e) => {
     // Zino part Do not associate ur self by touching anything.
+    setOpen(false);
     setOpened(true);
     e.preventDefault();
     const headers = miHeaders;
@@ -159,7 +160,16 @@ function Reports() {
         // setItems(result);
         console.log({ assetsGetBetweenResult: result });
         const allMAP = result;
-        if (result !== "") {
+        if (result.length === 0) {
+          setOpened(false);
+          MySwal.fire({
+            title: "NO_ASSETS",
+            type: "error",
+            text: "There are no assets between the date you selected",
+          }).then(() => {
+            setOpen(true);
+          });
+        } else {
           const itemz = result.map((each) => ({
             dateAcquired: new Date(each.createdTime).toDateString(),
             name: each.item,
@@ -343,6 +353,7 @@ function Reports() {
                                       }
 
                                       // if (isMounted) {
+                                      setOpened(false);
                                       console.log({ reportsGenerateAssetListResult: resultxme2 });
                                       console.log(`link [${resultxme2[0]}]`);
                                       const url = resultxme2[0];
@@ -376,6 +387,8 @@ function Reports() {
                                   title: error.status,
                                   type: "error",
                                   text: error.message,
+                                }).then(() => {
+                                  setOpen(true);
                                 });
                               });
                           } else {
@@ -1595,6 +1608,7 @@ function Reports() {
 
   const handleFinancial = (e) => {
     // Zino part Do not associate ur self by touching anything.
+    setOpen(false);
     setOpened(true);
     e.preventDefault();
     const headers = miHeaders;
@@ -1639,6 +1653,8 @@ function Reports() {
             title: "NO_REPORTS",
             type: "error",
             text: "There are no reports between the date you selected",
+          }).then(() => {
+            setOpen(true);
           });
           return;
         }
@@ -1889,6 +1905,8 @@ function Reports() {
                                   title: error.status,
                                   type: "error",
                                   text: error.message,
+                                }).then(() => {
+                                  setOpen(true);
                                 });
                               });
                           } else {
@@ -2003,6 +2021,8 @@ function Reports() {
                                         title: error.status,
                                         type: "error",
                                         text: error.message,
+                                      }).then(() => {
+                                        setOpen(true);
                                       });
                                     });
                                 }
@@ -2097,7 +2117,7 @@ function Reports() {
         &nbsp; &nbsp;
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={6} lg={4}>
+            {/* <Grid item xs={12} md={6} lg={4}>
               <Card
                 style={{
                   backgroundColor: "#3F0071",
@@ -2119,7 +2139,7 @@ function Reports() {
                 </CardContent>
               </Card>
               &nbsp; &nbsp;
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} md={6} lg={4}>
               <Card
                 style={{
@@ -2148,7 +2168,7 @@ function Reports() {
         </Box>
       </Card>
       &nbsp; &nbsp;
-      <Card style={{ padding: "10px", paddingTop: "10px" }}>
+      {/* <Card style={{ padding: "10px", paddingTop: "10px" }}>
         <MDTypography textAlign="center" variant="h4" fontWeight="medium" color="secondary" mt={1}>
           COMPANY REPORTS
         </MDTypography>
@@ -2180,7 +2200,7 @@ function Reports() {
             </Grid>
           </Grid>
         </Box>
-      </Card>
+      </Card> */}
       &nbsp;
       <Card style={{ padding: "10px" }}>
         <MDTypography textAlign="center" variant="h4" fontWeight="medium" color="secondary" mt={1}>
@@ -2212,7 +2232,7 @@ function Reports() {
               </Card>
               &nbsp; &nbsp;
             </Grid>
-            <Grid item xs={12} md={6} lg={4}>
+            {/* <Grid item xs={12} md={6} lg={4}>
               <Card
                 style={{
                   backgroundColor: "#C1224F",
@@ -2255,7 +2275,7 @@ function Reports() {
                 </CardContent>
               </Card>
               &nbsp; &nbsp;
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
       </Card>

@@ -160,7 +160,7 @@ function AppraisalQues() {
                       <div className="row">
                         <div className="col-sm-12">
                           <Form.Group className="mb-1" controlId="exampleForm.ControlTextarea1">
-                            <Form.Label style={{ fontSize: 14 }}>Questions</Form.Label>
+                            <Form.Label style={{ fontSize: 14 }}>Questions*</Form.Label>
                             <Form.Control
                               as="textarea"
                               value={questionx || ""}
@@ -196,7 +196,7 @@ function AppraisalQues() {
                       <div className="row">
                         <div className="col-sm-8">
                           <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                            Question Type
+                            Question Type*
                           </MDTypography>
                           <MDBox textAlign="right">
                             <Form.Select
