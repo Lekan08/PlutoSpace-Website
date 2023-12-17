@@ -367,7 +367,7 @@ function Tax() {
               padding: "40px",
               fontFamily: "verdana",
               color: "#ffffff",
-              backgroundColor: "#FFA71C",
+              backgroundColor: "#FB8C00",
             }}
           >
             <table>
