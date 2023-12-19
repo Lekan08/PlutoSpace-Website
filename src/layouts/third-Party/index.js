@@ -3,6 +3,7 @@ import MDBox from "components/MDBox";
 import Modal from "@mui/material/Modal";
 import MDButton from "components/MDButton";
 import Card from "@mui/material/Card";
+import Styles from "styles";
 import { Container, Form, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MDTypography from "components/MDTypography";
@@ -806,10 +807,10 @@ function ThirdParty() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={20}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -824,7 +825,7 @@ function ThirdParty() {
           </MDBox>
           <MDBox
             variant="gradient"
-            bgColor="error"
+            // bgColor="error"
             borderRadius="lg"
             coloredShadow="success"
             mx={3}
@@ -833,28 +834,28 @@ function ThirdParty() {
             mb={3}
             textAlign="center"
           >
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="name">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="name">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="phoneNumber">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="phoneNumber">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="email">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="email">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="country">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="country">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="state">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="state">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="city">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="city">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="street">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="street">
               {" "}
             </MDTypography>
-            <MDTypography variant="gradient" fontSize="60%" color="white" id="type">
+            <MDTypography variant="gradient" fontSize="60%" color="error" id="type">
               {" "}
             </MDTypography>
           </MDBox>
@@ -862,7 +863,7 @@ function ThirdParty() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-12">
+                  <div className="col-sm-6">
                     <TextField
                       id="outlined-textarea"
                       value={namex || ""}
@@ -870,11 +871,22 @@ function ThirdParty() {
                       placeholder="Name "
                       onChange={(e) => handleName(e.target.value)}
                       sx={{
-                        width: 730,
+                        width: 400,
                       }}
                       multiline
                       required
                     />
+                  </div>{" "}
+                  <div className="col-sm-6">
+                    <Form.Select
+                      value={typex}
+                      aria-label="Default select example"
+                      onChange={(e) => handleType(e.target.value)}
+                    >
+                      <option value="">--Type *--</option>
+                      <option value="Vendor">VENDOR</option>
+                      <option value="Contractor">CONTRACTOR</option>
+                    </Form.Select>
                   </div>
                 </div>
                 &nbsp;
@@ -884,7 +896,7 @@ function ThirdParty() {
                       label=" Phone Number "
                       type="number"
                       sx={{
-                        width: 344,
+                        width: 400,
                       }}
                       value={phoneNumberx}
                       onChange={(e) => handlePhoneNumber(e.target.value)}
@@ -900,7 +912,7 @@ function ThirdParty() {
                       placeholder="Email "
                       type="email"
                       sx={{
-                        width: 362,
+                        width: 400,
                       }}
                       value={emailx}
                       onChange={(e) => handleEmailSelect(e.target.value)}
@@ -949,7 +961,7 @@ function ThirdParty() {
                       placeholder="CIty "
                       type="name"
                       sx={{
-                        width: 342,
+                        width: 400,
                       }}
                       value={cityx}
                       onChange={(e) => handleCity(e.target.value)}
@@ -967,7 +979,7 @@ function ThirdParty() {
                       label="Street "
                       placeholder="Street "
                       sx={{
-                        width: 362,
+                        width: 400,
                       }}
                       multiline
                       required
@@ -975,8 +987,8 @@ function ThirdParty() {
                     />
                   </div>
                 </div>
-                &nbsp; &nbsp;
-                <div className="row">
+                {/* &nbsp; &nbsp; */}
+                {/* <div className="row">
                   <div className="col-sm-6">
                     <Form.Select
                       value={typex}
@@ -988,7 +1000,7 @@ function ThirdParty() {
                       <option value="Contractor">CONTRACTOR</option>
                     </Form.Select>
                   </div>
-                </div>
+                </div> */}
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
@@ -996,7 +1008,8 @@ function ThirdParty() {
                 <MDButton
                   variant="gradient"
                   onClick={handleValidate}
-                  color="info"
+                  // color="info"
+                  style={Styles.buttonSx}
                   width="50%"
                   align="left"
                 >
@@ -1045,7 +1058,8 @@ function ThirdParty() {
             <>
               <MDBox
                 variant="gradient"
-                bgColor="info"
+                // bgColor="info"
+                style={{ backgroundColor: "#f96d02" }}
                 borderRadius="lg"
                 coloredShadow="info"
                 mx={2}
@@ -1060,7 +1074,7 @@ function ThirdParty() {
               </MDBox>
               <MDBox
                 variant="gradient"
-                bgColor="error"
+                // bgColor="error"
                 borderRadius="lg"
                 coloredShadow="success"
                 mx={3}
@@ -1098,7 +1112,7 @@ function ThirdParty() {
                 <MDBox mb={2}>
                   <Container>
                     <div className="row">
-                      <div className="col-sm-12">
+                      <div className="col-sm-6">
                         <TextField
                           id="outlined-textarea"
                           value={Unamex || ""}
@@ -1106,11 +1120,22 @@ function ThirdParty() {
                           placeholder="Name "
                           onChange={(e) => UhandleName(e.target.value)}
                           sx={{
-                            width: 684,
+                            width: 330,
                           }}
                           multiline
                           required
                         />
+                      </div>
+                      <div className="col-sm-6">
+                        <Form.Select
+                          value={Utypex}
+                          aria-label="Default select example"
+                          onChange={(e) => UhandleType(e.target.value)}
+                        >
+                          <option value="">--Type *--</option>
+                          <option value="Vendor">VENDOR</option>
+                          <option value="Contractor">CONTRACTOR</option>
+                        </Form.Select>
                       </div>
                     </div>
                     &nbsp; &nbsp;
@@ -1186,7 +1211,7 @@ function ThirdParty() {
                           placeholder="CIty "
                           type="name"
                           sx={{
-                            width: 342,
+                            width: 330,
                           }}
                           value={Ucityx}
                           onChange={(e) => UhandleCity(e.target.value)}
@@ -1212,25 +1237,14 @@ function ThirdParty() {
                         />
                       </div>
                     </div>
-                    &nbsp; &nbsp;
                     <div className="row">
-                      <div className="col-sm-6">
-                        <Form.Select
-                          value={Utypex}
-                          aria-label="Default select example"
-                          onChange={(e) => UhandleType(e.target.value)}
-                        >
-                          <option value="">--Type *--</option>
-                          <option value="Vendor">VENDOR</option>
-                          <option value="Contractor">CONTRACTOR</option>
-                        </Form.Select>
-                      </div>{" "}
-                      &nbsp; &nbsp;
+                      {/* &nbsp; &nbsp; */}
                       <MDBox mt={4} mb={1}>
                         <MDButton
                           variant="gradient"
                           onClick={handleUValidate}
-                          color="info"
+                          // color="info"
+                          style={Styles.buttonSx}
                           width="50%"
                           align="left"
                         >
