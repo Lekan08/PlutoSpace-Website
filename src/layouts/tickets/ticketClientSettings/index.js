@@ -726,7 +726,7 @@ function TicketClientSettings() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Ticket Settings Client And More
+              Ticket Settings Client
             </MDTypography>
           </MDBox>
           <MDBox
@@ -833,9 +833,10 @@ function TicketClientSettings() {
                 <MDButton
                   variant="gradient"
                   onClick={handleValidate}
-                  color="info"
+                  // color="info"
                   width="50%"
                   align="center"
+                  style={Styles.buttonSx}
                 >
                   Save
                 </MDButton>
@@ -878,7 +879,7 @@ function TicketClientSettings() {
                   textAlign="center"
                   mt={1}
                 >
-                  Update Ticket Client Settings
+                  Update Ticket Settings Client
                 </MDTypography>
               </MDBox>
               <MDBox

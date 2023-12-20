@@ -117,7 +117,8 @@ function InviteUser() {
           console.log(result);
           if (Object.keys(result).length !== 0) {
             if (result.id !== 0) {
-              setPassEnabled(false);
+              console.log(result.id);
+              setPassEnabled(true);
               setOname(result.oname);
               setId(result.id);
               setPhone(result.pno);
@@ -146,7 +147,7 @@ function InviteUser() {
             }
           } else {
             setId(0);
-            setPassEnabled(true);
+            setPassEnabled(false);
             setOname("");
             setPhone("");
             setNationality("");

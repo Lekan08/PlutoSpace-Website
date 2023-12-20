@@ -8,6 +8,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
+import Styles from "styles";
 import { Container, Form } from "react-bootstrap";
 // import MDInput from "components/MDInput";
 import DataTable from "examples/Tables/DataTable";
@@ -150,10 +151,11 @@ function Birthdays() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="success"
             mx={1}
@@ -242,45 +244,34 @@ function Birthdays() {
                       </Form.Select>
                     </MDBox>
                   </div>
-                </div>
 
-                {/* <div className="col-sm-6">
-                    <MDInput
-                      type="text"
-                      value={monthx || ""}
-                      onKeyUp={handleOnNumberKeys}
-                      onChange={(e) => setMonthx(e.target.value)}
-                      label="Month"
-                      variant="standard"
-                      fullWidth
-                    />
-                  </div> */}
-                <div className="col-sm-6">
-                  <MDBox mb={2}>
-                    <MDTypography variant="button" fontWeight="regular" color="text">
-                      Month
-                    </MDTypography>
-                    <Form.Select
-                      // onChange={handleonChangeTimeOffTime}
-                      aria-label="Default select example"
-                      value={monthx || ""}
-                      onChange={(e) => setMonthx(e.target.value)}
-                    >
-                      <option>---Month---</option>
-                      <option value="1">January</option>
-                      <option value="2">February</option>
-                      <option value="3">March</option>
-                      <option value="4">April</option>
-                      <option value="5">May</option>
-                      <option value="6">June</option>
-                      <option value="7">July</option>
-                      <option value="8">August</option>
-                      <option value="9">September</option>
-                      <option value="10">October</option>
-                      <option value="11">November</option>
-                      <option value="12">December</option>
-                    </Form.Select>
-                  </MDBox>
+                  <div className="col-sm-6">
+                    <MDBox mb={2}>
+                      <MDTypography variant="button" fontWeight="regular" color="text">
+                        Month
+                      </MDTypography>
+                      <Form.Select
+                        // onChange={handleonChangeTimeOffTime}
+                        aria-label="Default select example"
+                        value={monthx || ""}
+                        onChange={(e) => setMonthx(e.target.value)}
+                      >
+                        <option>---Month---</option>
+                        <option value="1">January</option>
+                        <option value="2">February</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">June</option>
+                        <option value="7">July</option>
+                        <option value="8">August</option>
+                        <option value="9">September</option>
+                        <option value="10">October</option>
+                        <option value="11">November</option>
+                        <option value="12">December</option>
+                      </Form.Select>
+                    </MDBox>
+                  </div>
                 </div>
               </Container>
               <MDBox mt={4} mb={1}>
@@ -288,7 +279,8 @@ function Birthdays() {
                   variant="gradient"
                   onClick={handleClick}
                   // disabled={!enabled}
-                  color="info"
+                  // color="info"
+                  style={Styles.buttonSx}
                   width="50%"
                   align="center"
                 >

@@ -314,15 +314,15 @@ function ApproveApp() {
                   window.location.reload();
                 }
                 if (isMounted) {
-                  //   console.log(resultq);
-                  const fdy = { id: eachQuestions.length, question: resultq[0].question.question };
+                  console.log(resultq);
+                  const fdy = { id: new Date().getTime(), question: resultq[0].question.question };
                   eachQuestions.push(fdy);
 
                   setAQuestions((itemm) => [...itemm, fdy]);
                 }
               });
           });
-          setAQuestions(eachQuestions);
+          // setAQuestions(eachQuestions);
         } else {
           setOpened(false);
           MySwal.fire({
@@ -496,7 +496,7 @@ function ApproveApp() {
                         maxHeight: 150,
                         height: 70,
                         borderRadius: 5,
-                        border: "2px solid #318CE7",
+                        border: "2px solid #f96d02",
                       }}
                     >
                       <div

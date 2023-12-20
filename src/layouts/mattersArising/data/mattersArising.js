@@ -207,7 +207,7 @@ export default function MattersArisingTable() {
     if (value === "Medium") {
       return "#00ff00";
     }
-    if (value === "HIGH") {
+    if (value === "High") {
       return "#FFA500";
     }
     return "#ff0000";

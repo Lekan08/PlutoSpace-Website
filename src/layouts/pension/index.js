@@ -12,6 +12,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import GHeaders from "getHeader";
 import PHeaders from "postHeader";
+import Styles from "styles";
 import { useNavigate } from "react-router-dom";
 import MDInput from "components/MDInput";
 import PhoneInput from "react-phone-input-2";
@@ -285,39 +286,33 @@ function Pension() {
                 <br />
                 <MDBox p={2} textAlign="center">
                   <Container>
-                    <MDInput
-                      type="text"
-                      label="Name"
-                      value={changes.name}
-                      onKeyUp={handleOnNameKeys}
-                      onChange={(e) => setChanges({ ...changes, name: e.target.value })}
-                      variant="standard"
-                      style={{ width: "600px", marginLeft: "-100px" }}
-                    />
+                    <div className="row">
+                      <div className="col-sm-6">
+                        <MDInput
+                          type="text"
+                          label="Name"
+                          value={changes.name}
+                          onKeyUp={handleOnNameKeys}
+                          onChange={(e) => setChanges({ ...changes, name: e.target.value })}
+                          variant="standard"
+                          style={{ width: "390px" }}
+                        />
+                      </div>
+                      <div className="col-sm-6">
+                        <MDInput
+                          type="text"
+                          label="Email"
+                          value={changes.email}
+                          onKeyUp={handleOnEmailKeys}
+                          onChange={(e) => setChanges({ ...changes, email: e.target.value })}
+                          variant="standard"
+                          style={{ width: "390px" }}
+                        />
+                      </div>
+                    </div>
                     <br />
-                    <MDInput
-                      type="text"
-                      label="Email"
-                      value={changes.email}
-                      onKeyUp={handleOnEmailKeys}
-                      onChange={(e) => setChanges({ ...changes, email: e.target.value })}
-                      variant="standard"
-                      style={{ width: "600px", marginLeft: "-100px" }}
-                    />
-                    <br />
-                    <MDInput
-                      type="text"
-                      label="Address"
-                      value={changes.address || ""}
-                      //   onKeyUp={handleOnTitleKeys}
-                      onChange={(e) => setChanges({ ...changes, address: e.target.value })}
-                      variant="standard"
-                      style={{ width: "600px", marginLeft: "-100px" }}
-                    />
-                    <br />
-                    <br />
-                    <div className="row" style={{ marginLeft: "80px" }}>
-                      <div className="col-sm-5">
+                    <div className="row">
+                      <div className="col-sm-6">
                         <MDTypography variant="button" fontWeight="regular" color="text">
                           Phone Number
                         </MDTypography>
@@ -328,19 +323,22 @@ function Pension() {
                           onChange={(e) => setChanges({ ...changes, pno: e })}
                         />
                       </div>
-                      <MDInput
-                        type="text"
-                        label="City"
-                        value={changes.city || ""}
-                        //   onKeyUp={handleOnTitleKeys}
-                        onChange={(e) => setChanges({ ...changes, city: e.target.value })}
-                        variant="standard"
-                        style={{ width: "300px", marginTop: "21px", marginLeft: "21px" }}
-                      />
+                      <div className="col-sm-6">
+                        <MDInput
+                          type="text"
+                          label="City"
+                          value={changes.city || ""}
+                          //   onKeyUp={handleOnTitleKeys}
+                          onChange={(e) => setChanges({ ...changes, city: e.target.value })}
+                          variant="standard"
+                          style={{ width: "390px", marginTop: "21px" }}
+                        />
+                      </div>
                     </div>
+
                     <br />
-                    <div className="row" style={{ marginLeft: "80px" }}>
-                      <div className="col-sm-5">
+                    <div className="row">
+                      <div className="col-sm-6">
                         <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                           Country
                         </MDTypography>
@@ -359,7 +357,7 @@ function Pension() {
                           </Form.Select>
                         </MDBox>
                       </div>
-                      <div className="col-sm-5">
+                      <div className="col-sm-6">
                         <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                           State
                         </MDTypography>
@@ -381,7 +379,13 @@ function Pension() {
                     </div>
                     <br />
                     <MDBox mt={4} mb={1} textAlign="center">
-                      <MDButton variant="gradient" onClick={handleCreate} color="info" width="50%">
+                      <MDButton
+                        variant="gradient"
+                        onClick={handleCreate}
+                        // color="info"
+                        style={Styles.buttonSx}
+                        width="50%"
+                      >
                         Add
                       </MDButton>
                     </MDBox>
