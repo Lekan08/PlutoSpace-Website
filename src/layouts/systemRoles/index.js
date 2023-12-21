@@ -127,7 +127,7 @@ function SysRoles() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={2}>
-              Add System Roles
+              Add Roles and Permissions
             </MDTypography>
           </MDBox>
           <MDBox
