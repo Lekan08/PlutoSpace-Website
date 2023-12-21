@@ -75,6 +75,23 @@ function AppCsv() {
           }
           console.log(item.OptionA);
           if (
+            item.OptionA === undefined &&
+            item.OptionB === undefined &&
+            item.OptionC === undefined &&
+            item.OptionD === undefined &&
+            item.OptionE === undefined
+          ) {
+            const timidMan = {
+              question: {
+                orgID: orgIDs,
+                question: item.Question,
+                hint: item.Hint,
+                inputType: "Text",
+              },
+            };
+
+            newResult.push(timidMan);
+          } else if (
             item.OptionA !== "" ||
             item.OptionB !== "" ||
             item.OptionC !== "" ||
@@ -152,7 +169,13 @@ function AppCsv() {
           }
         });
         console.log(newResult);
-        const why = JSON.stringify(newResult);
+        const newerResult = newResult.map((each) =>
+          each?.options?.length === 0
+            ? { ...each, question: { ...each?.question, inputType: "Text" } }
+            : each
+        );
+        console.log(newerResult);
+        const why = JSON.stringify(newerResult);
         setFile(why);
         setCheckedFile(true);
         setOpened(false);
