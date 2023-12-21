@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import DataTable from "examples/Tables/DataTable";
 // import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -100,7 +101,8 @@ export default function MyPension() {
       <br />
       <MDBox
         variant="gradient"
-        bgColor="info"
+        // bgColor="info"
+        style={{ backgroundColor: "#f96d02" }}
         borderRadius="lg"
         coloredShadow="info"
         mx={14}
@@ -165,7 +167,12 @@ export default function MyPension() {
           </div>
           <MDBox textAlign="center" mx={3}>
             <MDBox textAlign="center" p={3}>
-              <MDButton color="success" variant="gradient" onClick={handleGets} size="large">
+              <MDButton
+                style={Styles.buttonSx}
+                variant="gradient"
+                onClick={handleGets}
+                size="large"
+              >
                 Generate History
               </MDButton>
             </MDBox>

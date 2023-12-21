@@ -453,7 +453,8 @@ function Pension() {
                           <MDBox mt={4} mb={1} textAlign="center">
                             <MDButton
                               variant="gradient"
-                              color="info"
+                              // color="info"
+                              style={Styles.buttonSx}
                               width="50%"
                               onClick={handleSave}
                             >

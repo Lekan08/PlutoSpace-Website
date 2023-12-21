@@ -894,7 +894,7 @@ function ThirdParty() {
                   <div className="col-sm-4">
                     <TextField
                       label=" Phone Number "
-                      type="number"
+                      // type="number"
                       sx={{
                         width: 400,
                       }}
@@ -1143,7 +1143,7 @@ function ThirdParty() {
                       <div className="col-sm-4">
                         <TextField
                           label=" Phone Number "
-                          type="number"
+                          // type="number"
                           sx={{
                             width: 330,
                           }}

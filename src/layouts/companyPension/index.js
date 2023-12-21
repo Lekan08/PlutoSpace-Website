@@ -13,6 +13,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import DataTable from "examples/Tables/DataTable";
 // import PHeaders from "postHeader";
+import Styles from "styles";
 import { useNavigate } from "react-router-dom";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
@@ -342,7 +343,8 @@ export default function CompanyPensions() {
       <DashboardNavbar />
       <MDBox
         variant="gradient"
-        bgColor="info"
+        // bgColor="info"
+        style={{ backgroundColor: "#f96d02" }}
         borderRadius="lg"
         coloredShadow="info"
         mx={10}
@@ -417,7 +419,8 @@ export default function CompanyPensions() {
       <br />
       <MDBox
         variant="gradient"
-        bgColor="info"
+        // bgColor="info"
+        style={{ backgroundColor: "#f96d02" }}
         borderRadius="lg"
         coloredShadow="info"
         mx={14}
@@ -482,7 +485,12 @@ export default function CompanyPensions() {
           </div>
           <MDBox textAlign="center" mx={3}>
             <MDBox textAlign="center" p={3}>
-              <MDButton color="success" variant="gradient" onClick={handleGets} size="large">
+              <MDButton
+                style={Styles.buttonSx}
+                variant="gradient"
+                onClick={handleGets}
+                size="large"
+              >
                 Generate History
               </MDButton>
             </MDBox>
