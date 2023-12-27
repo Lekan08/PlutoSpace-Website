@@ -879,7 +879,7 @@ function TicketClientSettings() {
                   textAlign="center"
                   mt={1}
                 >
-                  Update Ticket Client Settings
+                  Update Ticket Settings Client
                 </MDTypography>
               </MDBox>
               <MDBox
