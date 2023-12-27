@@ -55,8 +55,12 @@ function Updatepolls() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log(result);
         setOpened(false);
         setGroups(result);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
@@ -86,9 +90,12 @@ function Updatepolls() {
           window.location.reload();
         }
         console.log(result);
+        setItems(result);
+        setQuestionx(result[0].question);
+        setGroupIDx(result[0].groupID);
+        getGroups();
         if (result[0].status === 0 || result[0].status === "0") {
-          return;
-          // eslint-disable-next-line no-else-return
+          // do nothing
         } else {
           setOpened(false);
           MySwal.fire({
@@ -100,10 +107,6 @@ function Updatepolls() {
             navigate("/polls");
           });
         }
-        setItems(result);
-        setQuestionx(result[0].question);
-        setGroupIDx(result[0].groupID);
-        getGroups();
       });
   };
 
