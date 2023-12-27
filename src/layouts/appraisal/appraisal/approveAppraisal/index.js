@@ -150,6 +150,7 @@ function ApproveApp() {
         }
         if (isMounted) {
           setAppraisalJournies(result);
+          console.log({ appraisalJourniesResult: result });
         }
       });
     return () => {
@@ -627,9 +628,10 @@ function ApproveApp() {
 
                       <MDBox
                         variant="gradient"
-                        bgColor={bool2 ? "#f96d02" : "secondary"}
+                        bgColor={bool2 ? "" : "secondary"}
+                        style={bool2 && Styles.boxSx}
                         borderRadius="lg"
-                        coloredShadow="secondary"
+                        coloredShadow="white"
                         mx={2}
                         mt={-3}
                         p={1}
