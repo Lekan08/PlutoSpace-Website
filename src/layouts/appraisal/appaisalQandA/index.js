@@ -859,20 +859,19 @@ function AppraiseQandA() {
                   <Container>
                     <div className="row">
                       <div className="col-sm-3">
-                        {pageNo >
-                          1(
-                            <MDBox mt={4} mb={1}>
-                              <MDButton
-                                variant="gradient"
-                                onClick={handlePrev}
-                                // color="info"
-                                style={Styles.buttonSx}
-                                width="50%"
-                              >
-                                Prev
-                              </MDButton>
-                            </MDBox>
-                          )}
+                        {pageNo > 1 && (
+                          <MDBox mt={4} mb={1}>
+                            <MDButton
+                              variant="gradient"
+                              onClick={handlePrev}
+                              // color="info"
+                              style={Styles.buttonSx}
+                              width="50%"
+                            >
+                              Prev
+                            </MDButton>
+                          </MDBox>
+                        )}
                       </div>
                       <div className="col-sm-6" />
                       <div className="col-sm-3">
