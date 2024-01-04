@@ -435,6 +435,13 @@ function ApproveApp() {
       });
   };
 
+  const changeTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return `${
+      date.getMonth() + 1
+    }/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -648,6 +655,16 @@ function ApproveApp() {
                         >
                           {api.empName}
                         </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          fontWeight="medium"
+                          color="white"
+                          fontSize="65%"
+                          textAlign="center"
+                          mt={1}
+                        >
+                          {changeTimestamp(api.createdTime)}
+                        </MDTypography>
                       </MDBox>
                     </Grid>
                   </>
@@ -728,7 +745,7 @@ function ApproveApp() {
                   style={Styles.buttonSx}
                   width="50%"
                 >
-                  Approve
+                  Foward
                 </MDButton>
               </MDBox>
             </div>

@@ -9,6 +9,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
+import { orange } from "@mui/material/colors";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 // import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -716,7 +717,7 @@ function AppraiseQandA() {
                                 mb={1}
                                 textAlign="left"
                               >
-                                <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                                <MDTypography variant="h4" fontWeight="medium" color="white">
                                   Question {questNo}
                                 </MDTypography>
                               </MDBox>
@@ -770,7 +771,7 @@ function AppraiseQandA() {
                           mb={-1}
                           textAlign="left"
                         >
-                          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+                          <MDTypography variant="h4" fontWeight="medium" color="white">
                             Answer
                           </MDTypography>
                         </MDBox>
@@ -809,19 +810,63 @@ function AppraiseQandA() {
                                   <div className="col-sm-4">
                                     <FormControl>
                                       <RadioGroup
-                                        aria-labelledby="demo-controlled-radio-buttons-group"
-                                        name="controlled-radio-buttons-group"
+                                        // row
+                                        // aria-labelledby="demo-controlled-radio-buttons-group"
+                                        // name="controlled-radio-buttons-group"
                                         value={answerx}
                                         onChange={handleOnChangeOption}
                                       >
                                         {itemss.map((apis) => (
-                                          <FormControlLabel
-                                            key={apis.id}
-                                            value={apis.optionValue}
-                                            control={<Radio />}
-                                            label={apis.optionValue}
-                                          />
+                                          <MDBox
+                                            // mt={2}
+                                            style={{
+                                              // justifyContent: "flex-start",
+                                              // flexDirection: "row",
+                                              display: "flex",
+                                              alignItems: "flex-start",
+                                              // border: "solid black 2px",
+                                            }}
+                                          >
+                                            <FormControlLabel
+                                              key={apis.id}
+                                              value={apis.optionValue}
+                                              control={
+                                                <Radio
+                                                  name="color-radio-button-demo"
+                                                  sx={{
+                                                    color: orange[800],
+                                                    "&.Mui-checked": {
+                                                      color: orange[600],
+                                                    },
+                                                  }}
+                                                />
+                                              }
+                                              label={apis.optionValue}
+                                            />
+                                          </MDBox>
                                         ))}
+                                        {/* <>
+                                          <FormControlLabel
+                                            value="are"
+                                            control={<Radio />}
+                                            label="are"
+                                          />
+                                          <FormControlLabel
+                                            value="what if we chow"
+                                            control={<Radio />}
+                                            label="what if we chow"
+                                          />
+                                          <FormControlLabel
+                                            value="good loving baby"
+                                            control={<Radio />}
+                                            label="good loving baby"
+                                          />
+                                          <FormControlLabel
+                                            value="are"
+                                            control={<Radio />}
+                                            label="are"
+                                          />
+                                        </> */}
                                       </RadioGroup>
                                     </FormControl>
                                   </div>
