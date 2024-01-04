@@ -21,7 +21,7 @@ import PhoneInput from "react-phone-input-2";
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 import AllCountriesAndStates from "countries-states-master/countries";
-
+import Styles from "styles";
 // import SingleCorporateTable from "./data";
 // ZINOLEESKY
 
@@ -428,7 +428,7 @@ function UpdateSingleCorporate() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -833,7 +833,12 @@ function UpdateSingleCorporate() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleCheckYear} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleCheckYear}
+                style={Styles.boxSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>
