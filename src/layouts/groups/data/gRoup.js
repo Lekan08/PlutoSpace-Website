@@ -128,50 +128,204 @@ export default function data() {
 
   // Method to handle diable
   const handleDisable = (id) => {
-    MySwal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#f96d02",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const requestOptions = {
-          method: "DELETE",
-          headers: miHeaders,
-        };
-        console.log(requestOptions);
-        fetch(`${process.env.REACT_APP_SHASHA_URL}/groups/delete/${id}`, requestOptions)
-          .then((res) => res.json())
-          .then((resx) => {
-            if (resx.message === "Expired Access") {
-              navigate("/authentication/sign-in");
+    console.log(id);
+    console.log("getGroup");
+    const headers = miHeaders;
+    // let resultxx = resultxx;
+
+    // let isMounted = true;
+    fetch(`${process.env.REACT_APP_SHASHA_URL}/groups/getByIds/${id}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((resultxx) => {
+        if (resultxx.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (resultxx.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (resultxx.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(resultxx);
+        // if (isMounted) {
+        // setItems(result);
+        // }
+        MySwal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#f96d02",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            if (resultxx.groupMembers !== []) {
+              // const headers = miHeaders;
+
+              // let isMounted = true;
+              // fetch(`${process.env.REACT_APP_SHASHA_URL}/groups/getByIds/${id}`, { headers })
+              //   .then(async (res) => {
+              //     const aToken = res.headers.get("token-1");
+              //     localStorage.setItem("rexxdex", aToken);
+              //     return res.json();
+              //   })
+              //   .then((resultxx) => {
+              //     if (resultxx.message === "Expired Access") {
+              //       navigate("/authentication/sign-in");
+              //       window.location.reload();
+              //     }
+              //     if (resultxx.message === "Token Does Not Exist") {
+              //       navigate("/authentication/sign-in");
+              //       window.location.reload();
+              //     }
+              //     if (resultxx.message === "Unauthorized Access") {
+              //       navigate("/authentication/forbiddenPage");
+              //       window.location.reload();
+              //     }
+              //     console.log(resultxx);
+              // if (isMounted) {
+              //   setItems(result);
+              // }
+              // if (resultxx.status === "SUCCESS") {
+              console.log("finalLap");
+              // const ID = result.data.id;
+              // console.log(ID);
+              // const raw2 = JSON.stringify({
+              //   orgID: orgid,
+              //   groupID: ID,
+              //   empID: data11.personalID,
+              // });
+              // console.log(raw2);
+              const requestOptions2 = {
+                method: "DELETE",
+                headers: miHeaders,
+              };
+              const resultMap = resultxx[0].groupMembers;
+              // eslint-disable-next-line array-callback-return
+              resultMap.map((val) => {
+                // const headers = miHeaders;
+                fetch(
+                  `${process.env.REACT_APP_SHASHA_URL}/groups/removeMember/${val.orgID}/${val.groupID}/${val.empID}`,
+                  requestOptions2
+                )
+                  .then(async (res) => {
+                    const aToken = res.headers.get("token-1");
+                    localStorage.setItem("rexxdex", aToken);
+                    return res.json();
+                  })
+                  .then((resultx) => {
+                    // setOpened(false);
+                    if (resultx.message === "Expired Access") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultx.message === "Token Does Not Exist") {
+                      navigate("/authentication/sign-in");
+                      window.location.reload();
+                    }
+                    if (resultx.message === "Unauthorized Access") {
+                      navigate("/authentication/forbiddenPage");
+                      window.location.reload();
+                    }
+                    console.log(resultx);
+                    if (resultx.status === "SUCCESS") {
+                      const requestOptions = {
+                        method: "DELETE",
+                        headers: miHeaders,
+                      };
+                      console.log(requestOptions);
+                      fetch(
+                        `${process.env.REACT_APP_SHASHA_URL}/groups/delete/${id}`,
+                        requestOptions
+                      )
+                        .then((res) => res.json())
+                        .then((resx) => {
+                          if (resx.message === "Expired Access") {
+                            navigate("/authentication/sign-in");
+                          }
+                          if (resx.message === "Token Does Not Exist") {
+                            navigate("/authentication/sign-in");
+                          }
+                          if (resx.message === "Unauthorized Access") {
+                            navigate("/authentication/forbiddenPage");
+                          }
+                          console.log(resx);
+                          if (resx.status === "SUCCESS") {
+                            console.log("getGroup");
+                          }
+                          MySwal.fire({
+                            title: resx.status,
+                            type: "success",
+                            text: resx.message,
+                          }).then(() => {
+                            window.location.reload();
+                          });
+                        })
+                        .catch((error) => {
+                          MySwal.fire({
+                            title: error.status,
+                            type: "error",
+                            text: error.message,
+                          });
+                        });
+                    }
+                    // window.location.reload();
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              });
+              // }
+              // });
             }
-            if (resx.message === "Token Does Not Exist") {
-              navigate("/authentication/sign-in");
-            }
-            if (resx.message === "Unauthorized Access") {
-              navigate("/authentication/forbiddenPage");
-            }
-            MySwal.fire({
-              title: resx.status,
-              type: "success",
-              text: resx.message,
-            }).then(() => {
-              window.location.reload();
-            });
-          })
-          .catch((error) => {
-            MySwal.fire({
-              title: error.status,
-              type: "error",
-              text: error.message,
-            });
-          });
-      }
-    });
+            console.log("okay");
+            const requestOptions = {
+              method: "DELETE",
+              headers: miHeaders,
+            };
+            console.log(requestOptions);
+            fetch(`${process.env.REACT_APP_SHASHA_URL}/groups/delete/${id}`, requestOptions)
+              .then((res) => res.json())
+              .then((resx) => {
+                if (resx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                }
+                if (resx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                }
+                if (resx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                }
+                console.log(resx);
+                if (resx.status === "SUCCESS") {
+                  console.log("getGroup");
+                }
+                MySwal.fire({
+                  title: resx.status,
+                  type: "success",
+                  text: resx.message,
+                }).then(() => {
+                  window.location.reload();
+                });
+              })
+              .catch((error) => {
+                MySwal.fire({
+                  title: error.status,
+                  type: "error",
+                  text: error.message,
+                });
+              });
+          }
+        });
+      });
   };
 
   const changeDate = (timestamp) => {
@@ -208,6 +362,7 @@ export default function data() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log(result);
         if (isMounted) {
           setItems(result);
         }

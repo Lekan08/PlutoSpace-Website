@@ -8,10 +8,13 @@ import MDInput from "components/MDInput";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
+import Styles from "styles";
 
 function Updatepolls() {
   const MySwal = withReactContent(Swal);
@@ -24,15 +27,15 @@ function Updatepolls() {
   const [groups, setGroups] = useState([]);
   const [groupIDx, setGroupIDx] = useState("");
   const [questionx, setQuestionx] = useState("");
+  const [opened, setOpened] = useState(false);
   // const [status, setStatus] = useState("");
 
-  useEffect(() => {
+  const getGroups = () => {
     const headers = miHeaders;
 
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
-    let isMounted = true;
     fetch(`${process.env.REACT_APP_SHASHA_URL}/groups/gets/${orgIDs}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -52,22 +55,21 @@ function Updatepolls() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        if (isMounted) {
-          setGroups(result);
-        }
+        console.log(result);
+        setOpened(false);
+        setGroups(result);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  };
 
-  useEffect(() => {
+  const pollGetByIDs = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
 
     const headers = miHeaders;
-    let isMounted = true;
     fetch(`${process.env.REACT_APP_KUBU_URL}/poll/getByIds/${ids}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -87,22 +89,33 @@ function Updatepolls() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        if (isMounted) {
-          if (result[0].status !== 0 || result[0].status !== "0") {
-            MySwal.fire({
-              title: "Poll Opened",
-              icon: "info",
-              type: "info",
-              text: `You can't update a open/closed poll`,
-            }).then(() => {
-              navigate("/polls");
-            });
-          }
-          setItems(result);
-          setQuestionx(result[0].question);
-          setGroupIDx(result[0].groupID);
+        console.log(result);
+        setItems(result);
+        setQuestionx(result[0].question);
+        setGroupIDx(result[0].groupID);
+        getGroups();
+        if (result[0].status === 0 || result[0].status === "0") {
+          // do nothing
+        } else {
+          setOpened(false);
+          MySwal.fire({
+            title: "Poll Opened",
+            icon: "info",
+            type: "info",
+            text: `You can't update an opened/closed poll`,
+          }).then(() => {
+            navigate("/polls");
+          });
         }
       });
+  };
+
+  useEffect(() => {
+    setOpened(true);
+    let isMounted = true;
+    if (isMounted) {
+      pollGetByIDs();
+    }
     return () => {
       isMounted = false;
     };
@@ -169,9 +182,10 @@ function Updatepolls() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={Styles.boxSx}
+            // coloredShadow="info"
             mx={2}
             mt={-3}
             p={2}
@@ -248,7 +262,8 @@ function Updatepolls() {
             <MDButton
               variant="gradient"
               onClick={(e) => handleUpdate(e)}
-              color="info"
+              // color="info"
+              style={Styles.buttonSx}
               width="50%"
               align="center"
             >
@@ -257,6 +272,9 @@ function Updatepolls() {
           </MDBox>
         </MDBox>
       </Card>
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
+        <CircularProgress color="info" />
+      </Backdrop>
     </DashboardLayout>
   );
 }

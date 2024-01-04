@@ -19,6 +19,7 @@ import GHeaders from "getHeader";
 import DataTable from "examples/Tables/DataTable";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 
 function Addpolloptions() {
   const MySwal = withReactContent(Swal);
@@ -106,7 +107,6 @@ function Addpolloptions() {
         return res.json();
       })
       .then((result) => {
-        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -120,6 +120,7 @@ function Addpolloptions() {
           window.location.reload();
         }
         if (isMounted) {
+          setOpened(false);
           setItems(result);
         }
       });
@@ -215,9 +216,10 @@ function Addpolloptions() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={Styles.boxSx}
+            // coloredShadow="info"
             mx={2}
             mt={-3}
             p={2}
@@ -268,7 +270,8 @@ function Addpolloptions() {
             <MDButton
               variant="gradient"
               onClick={(e) => handleUpdate(e)}
-              color="info"
+              // color="info"
+              style={Styles.buttonSx}
               width="50%"
               align="center"
             >

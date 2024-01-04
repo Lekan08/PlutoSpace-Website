@@ -63,6 +63,7 @@ export default function AppraisalData() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log({ appraisalsResult: result });
           setItems(result);
         }
       });
