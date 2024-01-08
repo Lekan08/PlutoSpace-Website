@@ -1,3 +1,12 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-else-return */
+/* eslint-disable no-var */
+/* eslint-disable one-var */
+/* eslint-disable prefer-const */
+/* eslint-disable no-undef */
+/* eslint-disable radix */
+/* eslint-disable eqeqeq */
+/* eslint-disable prefer-template */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -89,6 +98,52 @@ export default function VideoChat() {
     }
     return `${retDate} ${hour}:${minutes}:${seconds}`;
   };
+  // eslint-disable-next-line consistent-return
+  function timeDifference(current, previous) {
+    var msPerMinute = 60 * 1000;
+    var msPerHour = msPerMinute * 60;
+    var msPerDay = msPerHour * 24;
+    var msPerMonth = msPerDay * 30;
+    var msPerYear = msPerDay * 365;
+
+    var elapsed = current - previous;
+
+    if (elapsed < msPerMinute) {
+      return Math.round(elapsed / 1000) + " seconds ago";
+    } else if (elapsed < msPerHour) {
+      if (Math.round(elapsed / msPerHour) === 1) {
+        return Math.round(elapsed / msPerMinute) + " minute ago";
+      } else {
+        return Math.round(elapsed / msPerMinute) + " minutes ago";
+      }
+    } else if (elapsed < msPerDay) {
+      if (Math.round(elapsed / msPerHour) === 1) {
+        return Math.round(elapsed / msPerHour) + " hour ago";
+      } else {
+        return Math.round(elapsed / msPerHour) + " hours ago";
+      }
+    } else if (elapsed < msPerMonth) {
+      if (Math.round(elapsed / msPerDay) === 1) {
+        return Math.round(elapsed / msPerDay) + " day ago";
+      } else {
+        return Math.round(elapsed / msPerDay) + " days ago";
+      }
+    } else if (elapsed < msPerYear) {
+      if (Math.round(elapsed / msPerMonth) === 1) {
+        return Math.round(elapsed / msPerMonth) + " month ago";
+      } else {
+        return Math.round(elapsed / msPerMonth) + " months ago";
+      }
+    } else if (Math.round(elapsed / msPerYear) === 1) {
+      return Math.round(elapsed / msPerYear) + " year ago";
+    } else {
+      return Math.round(elapsed / msPerYear) + " years ago";
+    }
+  }
+
+  // const currentTimeStamp = new Date().getTime();
+
+  // console.log(timeSince(currentTimeStamp));
   const handleIcon = (value) => {
     if (Number(value) === 0) {
       return (
@@ -167,28 +222,36 @@ export default function VideoChat() {
           History
         </MDTypography>
       </MDBox>
-      <MDBox>
+      <MDBox m={5}>
         <DataTable
           table={{
             columns: [
               // { Header: "Source", accessor: "source", align: "left" },
               // { Header: "Total Amount", accessor: "totalAmount", align: "left" },
-              { Header: "other members", accessor: "secondPartyName", align: "left" },
+              // { Header: "other members", accessor: "secondPartyName", align: "left" },
               {
                 accessor: "status",
                 // eslint-disable-next-line react/prop-types, no-unused-vars
                 Cell: ({ cell: { value } }) => handleIcon(value),
                 align: "left",
+                width: 5,
               },
               {
                 Header: "call link",
                 accessor: "callLink",
+                // eslint-disable-next-line jsx-a11y/anchor-has-content, react/prop-types
+                Cell: ({ cell: { value } }) => (
+                  <div>
+                    <a href={value}>{value.slice(0, 70)} . . .</a>
+                  </div>
+                ),
+
                 align: "left",
               },
               {
                 Header: "time",
                 accessor: "createdTime",
-                Cell: ({ cell: { value } }) => changeDateandTime(value),
+                Cell: ({ cell: { value } }) => timeDifference(new Date().getTime(), value),
                 align: "left",
               },
             ],
