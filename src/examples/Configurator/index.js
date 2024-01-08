@@ -56,8 +56,14 @@ function Configurator() {
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("darkMode"));
-    console.log(JSON.parse(localStorage.getItem("darkMode")));
-    console.log(darkMode, "darkmodeee");
+    const colorChange = JSON.parse(localStorage.getItem("colorChange"));
+    // console.log(JSON.parse(localStorage.getItem("darkMode")));
+    // console.log(darkMode, "darkmodeee");
+    if (colorChange) {
+      setSidenavColor(dispatch, colorChange);
+    } else {
+      setSidenavColor(dispatch, "warning");
+    }
     if (saved === true) {
       setDarkMode(dispatch, true);
     } else {
@@ -205,7 +211,11 @@ function Configurator() {
                     borderColor: darkMode ? white.main : dark.main,
                   },
                 })}
-                onClick={() => setSidenavColor(dispatch, color)}
+                onClick={() => {
+                  // console.log(color);
+                  localStorage.setItem("colorChange", color);
+                  setSidenavColor(dispatch, color);
+                }}
               />
             ))}
           </MDBox>
