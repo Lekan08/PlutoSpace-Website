@@ -1662,7 +1662,7 @@ const routes = [
   },
   {
     type: "title",
-    title: "Project",
+    title: "Project Board",
     key: "titd1",
     route: "",
   },
@@ -2397,10 +2397,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "System Roles",
-    key: "systemRoles",
+    name: "Roles and Permissions",
+    key: "Roles and Permissions",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/system-Roles",
+    route: "/Roles&Permissions",
     component: <SysRoles />,
   },
   {

@@ -106,6 +106,7 @@ function AppraiseeIDX() {
       name: namex,
       approvalID: personalIDx,
     });
+    console.log({ raw });
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
@@ -133,6 +134,7 @@ function AppraiseeIDX() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log({ resultData: result.data });
         MySwal.fire({
           title: result.status,
           type: "success",

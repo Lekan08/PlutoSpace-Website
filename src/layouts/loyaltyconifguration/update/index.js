@@ -192,7 +192,7 @@ function UpdateLoyaltyConiguration() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"

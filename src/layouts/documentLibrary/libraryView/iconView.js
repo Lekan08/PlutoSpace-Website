@@ -576,6 +576,29 @@ function IconView({ items, groups, level }) {
     }
   };
 
+  const handleDownloadxx = async (val) => {
+    try {
+      const response = await fetch(val);
+      const blob = await response.blob();
+
+      // Create a temporary URL for the blob
+      const url = window.URL.createObjectURL(blob);
+
+      // Create a link element and trigger download
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "downloaded_image.jpg"; // Change the filename as needed
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Release the object URL
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading the image:", error);
+    }
+  };
+
   const handleDownloadAnchor = (value, e) => {
     setOpened(true);
     const headers = miHeaders;
@@ -615,6 +638,12 @@ function IconView({ items, groups, level }) {
           valueType === "image/jpeg" ||
           valueType === "image/gif"
         ) {
+          // // (C2) TO "FORCE DOWNLOAD"
+          const anchor = document.createElement("a");
+          const url = resultxx[0];
+          anchor.href = url;
+          anchor.download = value.name;
+          anchor.click();
           // const download = () => {
           // const element = document.createElement("a");
           // const file = new Blob(
@@ -653,14 +682,16 @@ function IconView({ items, groups, level }) {
           // };
           // };f
         } else {
-          const fileNamex = resultxx[0].split("/").pop();
-          const aTag = document.createElement("a");
-          // eslint-disable-next-line prefer-destructuring
-          aTag.href = resultxx[0];
-          aTag.setAttribute("download", fileNamex);
-          document.body.appendChild(aTag);
-          aTag.click();
-          aTag.remove();
+          // const fileNamex = resultxx[0].split("/").pop();
+          // const aTag = document.createElement("a");
+          // // eslint-disable-next-line prefer-destructuring
+          // aTag.href = resultxx[0];
+          // aTag.setAttribute("download", fileNamex);
+          // document.body.appendChild(aTag);
+          // aTag.click();
+          // aTag.remove();
+
+          handleDownloadxx(resultxx[0]);
         }
 
         // const linkSource = `data:application/vnd.ms-excel;base64,${value.base64Txt}`;
@@ -687,6 +718,10 @@ function IconView({ items, groups, level }) {
         window.URL.revokeObjectURL(linkSource);
       });
   };
+
+  // const handleDownloadxx = () => {
+
+  // };
 
   const handleDownload = (value, e) => {
     const filteredItems = items.filter((item) => item.id === value);

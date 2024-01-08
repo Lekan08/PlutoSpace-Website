@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
 import { IconButton } from "@mui/material";
+import Styles from "styles";
 
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
@@ -488,9 +489,10 @@ function LeadWorkflow() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
             coloredShadow="info"
+            style={Styles.boxSx}
             mx={2}
             mt={-3}
             p={2}
@@ -505,6 +507,7 @@ function LeadWorkflow() {
             variant="gradient"
             sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
+            // style={Styles.boxSx}
             coloredShadow="success"
             mx={3}
             mt={1}
@@ -549,7 +552,8 @@ function LeadWorkflow() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                // color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >
@@ -563,7 +567,8 @@ function LeadWorkflow() {
         <MDButton
           variant="gradient"
           onClick={handleShowCheckpoints}
-          color="info"
+          // color="info"
+          style={Styles.buttonSx}
           width="50%"
           align="left"
         >
@@ -577,9 +582,10 @@ function LeadWorkflow() {
               <MDBox pt={4} pb={3} px={30}>
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  // bgColor="info"
                   borderRadius="lg"
                   coloredShadow="info"
+                  style={Styles.boxSx}
                   mx={2}
                   mt={-3}
                   p={2}
@@ -595,6 +601,7 @@ function LeadWorkflow() {
                   sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                   borderRadius="lg"
                   coloredShadow="success"
+                  // style={Styles.boxSx}
                   mx={3}
                   mt={1}
                   p={1}
@@ -638,7 +645,8 @@ function LeadWorkflow() {
                     <MDButton
                       variant="gradient"
                       onClick={handleClickCheckpoints}
-                      color="info"
+                      // color="info"
+                      style={Styles.buttonSx}
                       width="50%"
                       align="left"
                     >
@@ -764,9 +772,10 @@ function LeadWorkflow() {
                 <MDBox pt={4} pb={3}>
                   <MDBox
                     variant="gradient"
-                    bgColor="info"
+                    // bgColor="info"
                     borderRadius="lg"
                     coloredShadow="info"
+                    style={Styles.boxSx}
                     mx={2}
                     mt={-3}
                     p={2}
@@ -782,6 +791,7 @@ function LeadWorkflow() {
                     sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
                     borderRadius="lg"
                     coloredShadow="success"
+                    // style={Styles.boxSx}
                     mx={3}
                     mt={1}
                     p={1}
@@ -825,7 +835,8 @@ function LeadWorkflow() {
                       <MDButton
                         variant="gradient"
                         onClick={handleUpdateVal}
-                        color="info"
+                        // color="info"
+                        style={Styles.buttonSx}
                         width="50%"
                         align="left"
                       >

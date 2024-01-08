@@ -150,6 +150,7 @@ function ApproveApp() {
         }
         if (isMounted) {
           setAppraisalJournies(result);
+          console.log({ appraisalJourniesResult: result });
         }
       });
     return () => {
@@ -434,6 +435,13 @@ function ApproveApp() {
       });
   };
 
+  const changeTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return `${
+      date.getMonth() + 1
+    }/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -627,9 +635,10 @@ function ApproveApp() {
 
                       <MDBox
                         variant="gradient"
-                        bgColor={bool2 ? "#f96d02" : "secondary"}
+                        bgColor={bool2 ? "" : "secondary"}
+                        style={bool2 && Styles.boxSx}
                         borderRadius="lg"
-                        coloredShadow="secondary"
+                        coloredShadow="white"
                         mx={2}
                         mt={-3}
                         p={1}
@@ -645,6 +654,16 @@ function ApproveApp() {
                           mt={1}
                         >
                           {api.empName}
+                        </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          fontWeight="medium"
+                          color="white"
+                          fontSize="65%"
+                          textAlign="center"
+                          mt={1}
+                        >
+                          {changeTimestamp(api.createdTime)}
                         </MDTypography>
                       </MDBox>
                     </Grid>
@@ -726,7 +745,7 @@ function ApproveApp() {
                   style={Styles.buttonSx}
                   width="50%"
                 >
-                  Approve
+                  Foward
                 </MDButton>
               </MDBox>
             </div>

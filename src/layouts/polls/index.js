@@ -19,6 +19,7 @@ import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function Polls() {
   const MySwal = withReactContent(Swal);
@@ -39,6 +40,7 @@ function Polls() {
   const { allGHeaders: miHeaders } = GHeaders();
 
   useEffect(() => {
+    setOpened(true);
     const headers = miHeaders;
 
     const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -65,6 +67,7 @@ function Polls() {
           window.location.reload();
         }
         if (isMounted) {
+          setOpened(false);
           setUser(result);
         }
       });
@@ -147,12 +150,13 @@ function Polls() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
             borderRadius="lg"
-            coloredShadow="info"
+            style={Styles.boxSx}
+            // coloredShadow="info"
             mx={2}
             mt={-3}
             p={2}
@@ -233,7 +237,8 @@ function Polls() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                // color="info"
+                style={Styles.buttonSx}
                 width="50%"
                 align="left"
               >

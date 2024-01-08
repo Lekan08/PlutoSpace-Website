@@ -8,14 +8,18 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MDBox from "components/MDBox";
+import Backdrop from "@mui/material/Backdrop";
+import CircularProgress from "@mui/material/CircularProgress";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import Card from "@mui/material/Card";
+import Styles from "styles";
 
 function PollsView() {
   const MySwal = withReactContent(Swal);
 
   const [items, setItems] = useState([]);
+  const [opened, setOpened] = useState(false);
 
   const { allGHeaders: miHeaders } = GHeaders();
 
@@ -23,7 +27,7 @@ function PollsView() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
+  const pollGetResults = () => {
     const headers = miHeaders;
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
@@ -33,7 +37,6 @@ function PollsView() {
     const urlParams = new URLSearchParams(queryString);
     const pollids = urlParams.get("id");
 
-    let isMounted = true;
     fetch(`${process.env.REACT_APP_KUBU_URL}/poll/getResults/${orgIDs}/${pollids}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -53,22 +56,17 @@ function PollsView() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        if (isMounted) {
-          setItems(result);
-        }
+        setOpened(false);
+        setItems(result);
       });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  };
 
-  useEffect(() => {
+  const pollGetByIDs = () => {
     const headers = miHeaders;
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const ids = urlParams.get("id");
 
-    let isMounted = true;
     fetch(`${process.env.REACT_APP_KUBU_URL}/poll/getByIds/${ids}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
@@ -88,20 +86,28 @@ function PollsView() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        if (isMounted) {
-          if (resultx[0].status === 0 || resultx[0].status === "0") {
-            MySwal.fire({
-              title: "Poll Not Opened",
-              icon: "info",
-              type: "info",
-              text: `Open Poll To Vote`,
-            }).then(() => {
-              navigate("/dashboard");
-            });
-          }
-          setQuestion(resultx[0].question);
+        if (resultx[0].status === 0 || resultx[0].status === "0") {
+          setOpened(false);
+          MySwal.fire({
+            title: "Poll Not Opened",
+            icon: "info",
+            type: "info",
+            text: `Open Poll To Vote`,
+          }).then(() => {
+            navigate("/dashboard");
+          });
         }
+        setQuestion(resultx[0].question);
+        pollGetResults();
       });
+  };
+
+  useEffect(() => {
+    setOpened(true);
+    let isMounted = true;
+    if (isMounted) {
+      pollGetByIDs();
+    }
     return () => {
       isMounted = false;
     };
@@ -120,9 +126,10 @@ function PollsView() {
           <MDBox pt={4} pb={3} px={3}>
             <MDBox
               variant="gradient"
-              bgColor="info"
+              // bgColor="info"
               borderRadius="lg"
-              coloredShadow="success"
+              style={Styles.boxSx}
+              // coloredShadow="info"
               mx={25}
               mt={-6}
               p={3}
@@ -145,6 +152,9 @@ function PollsView() {
           canSearch
         />
       </MDBox>
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
+        <CircularProgress color="info" />
+      </Backdrop>
       <Footer />
     </DashboardLayout>
   );
