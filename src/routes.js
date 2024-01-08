@@ -426,7 +426,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Video Chat",
+    name: "Call",
     key: "videoChat",
     icon: <Icon fontSize="small">video_call</Icon>,
     route: "/video-chat",

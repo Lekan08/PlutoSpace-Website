@@ -67,8 +67,8 @@ export default {
   },
 
   warning: {
-    main: "#fb8c00",
-    focus: "#fc9d26",
+    main: "#f96d02",
+    focus: "#f96d02",
   },
 
   error: {
@@ -120,8 +120,8 @@ export default {
     },
 
     warning: {
-      main: "#FFA726",
-      state: "#FB8C00",
+      main: "#f96d02",
+      state: "#f96d02",
     },
 
     error: {
@@ -224,7 +224,7 @@ export default {
     },
 
     warning: {
-      background: "#ffd59f",
+      background: "#f96d02",
       text: "#c87000",
     },
 
@@ -249,7 +249,7 @@ export default {
     secondary: "#110e0e",
     info: "#00bbd4",
     success: "#4caf4f",
-    warning: "#ff9900",
+    warning: "#f96d02",
     error: "#f44336",
     light: "#adb5bd",
     dark: "#404040",
