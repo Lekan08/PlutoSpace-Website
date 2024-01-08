@@ -56,9 +56,10 @@ function Configurator() {
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("darkMode"));
-    const colorChange = JSON.parse(localStorage.getItem("colorChange"));
+    const colorChange = localStorage.getItem("colorChange");
     // console.log(JSON.parse(localStorage.getItem("darkMode")));
     // console.log(darkMode, "darkmodeee");
+    console.warn(colorChange);
     if (colorChange) {
       setSidenavColor(dispatch, colorChange);
     } else {
