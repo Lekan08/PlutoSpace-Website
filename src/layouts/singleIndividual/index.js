@@ -857,7 +857,12 @@ function SingleIndividual() {
                     </Container>
                   </MDBox>
                   <MDBox mt={4} mb={1} textAlign="center">
-                    <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleClick}
+                      style={Styles.boxSx}
+                      width="50%"
+                    >
                       Save
                     </MDButton>
                   </MDBox>

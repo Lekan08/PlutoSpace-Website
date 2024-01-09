@@ -247,7 +247,7 @@ function Csv() {
                     />
                   </MDTypography>
                 </MDBox>
-                <Button onClick={handleUpload} style={Styles.boxSx} variant="success">
+                <Button onClick={handleUpload}                                                                                                                                                    variant="success">
                   Upload
                 </Button>
               </MDBox>
