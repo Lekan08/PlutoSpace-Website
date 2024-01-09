@@ -21,7 +21,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import DataTable from "examples/Tables/DataTable";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
-import { Call, PhoneCallback, PhoneMissed } from "@mui/icons-material";
+import { Call, PhoneCallback, PhoneMissed, Today } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 import MDTypography from "../../components/MDTypography/index";
@@ -173,7 +173,7 @@ export default function VideoChat() {
       <MDBox
         textAlign="center"
         style={{
-          paddingTop: "5vh",
+          // paddingTop: "5vh",
           paddingBottom: "5vh",
           // marginBottom:  "5v"
           marginRight: "auto",
@@ -182,26 +182,48 @@ export default function VideoChat() {
           display: "flex",
         }}
       >
-        <Card style={{ width: "60vw", height: "20vh" }}>
-          <p style={{ marginTop: "2vh" }}>
-            <br />
-          </p>
-          <a
-            href={`https://cairo-videochat.netlify.app/index.html?pid=${pid}&orgID=${orgID}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <ReactiveButton
-              size="large"
-              outline
-              shadow
-              animation
-              width="200px"
-              rounded
-              color="teal"
-              idleText="Make A Call"
-            />
-          </a>
+        <Card style={{ width: "80vw" }}>
+          <div className="row">
+            <div className="col-sm-6">
+              <Today sx={{ height: 200, width: 200, color: "#f96d02", opacity: 0.7 }} /> <br />
+              <ReactiveButton
+                size="large"
+                shadow
+                animation
+                outline
+                width="200px"
+                onClick={() => navigate("/appointments")}
+                rounded
+                color="yellow"
+                idleText="Schedule A Call"
+              />
+            </div>
+            <div
+              className="col-sm-6"
+              // style={{ justifyContent: "center", display: "flex", alignItems: "center" }}
+            >
+              {/* <p style={{ marginTop: "2vh" }}>
+                <br />
+              </p> */}
+              <Call sx={{ height: 200, width: 200, color: "#f96d02", opacity: 0.7 }} /> <br />
+              <a
+                href={`https://cairo-videochat.netlify.app/index.html?pid=${pid}&orgID=${orgID}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <ReactiveButton
+                  size="large"
+                  outline
+                  shadow
+                  animation
+                  width="200px"
+                  rounded
+                  color="yellow"
+                  idleText="Call Now (instant)"
+                />
+              </a>
+            </div>
+          </div>
           <br />
         </Card>
       </MDBox>
