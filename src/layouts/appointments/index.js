@@ -480,7 +480,7 @@ function Appointments() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add An Appointment
+              Schedule An Appointment
             </MDTypography>
           </MDBox>
           <MDBox
@@ -582,31 +582,31 @@ function Appointments() {
                 </div>
               </div>
               <br />
-              <div className="col-sm-6">
-                <div align="center">
-                  <MDTypography
-                    variant="button"
-                    fontWeight="regular"
-                    fontSize="80%"
-                    align="left"
-                    color="text"
-                    mt={2}
-                  >
-                    Remind me on
-                  </MDTypography>
-                  <DatePicker
-                    placeholderText="MM/DD/YY hh:mm"
-                    style={{ marginRight: "10px" }}
-                    selected={reminde}
-                    peekNextMonth
-                    dateFormat="MM/dd/yyyy h:mm aa"
-                    showMonthDropdown
-                    showYearDropdown
-                    showTimeSelect
-                    dropdownMode="select"
-                    onChange={(time) => reminder(time)}
-                  />
-                </div>
+
+              <div style={{ marginRight: "auto", marginLeft: "auto" }}>
+                <MDTypography
+                  variant="button"
+                  fontWeight="regular"
+                  fontSize="80%"
+                  // align="left"
+                  color="text"
+                  mt={2}
+                >
+                  Reminder
+                </MDTypography>{" "}
+                <br />
+                <DatePicker
+                  placeholderText="MM/DD/YY hh:mm"
+                  style={{ marginRight: "10px" }}
+                  selected={reminde}
+                  peekNextMonth
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showMonthDropdown
+                  showYearDropdown
+                  showTimeSelect
+                  dropdownMode="select"
+                  onChange={(time) => reminder(time)}
+                />
               </div>
             </Container>
             <div className="col-sm-6">

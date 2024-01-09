@@ -277,7 +277,8 @@ function Tax() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="warning"
+            // bgColor="#f96d02"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="warning"
             mx={2}
@@ -339,7 +340,7 @@ function Tax() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="warning"
+                style={{ backgroundColor: "#f96d02", color: "#ffffff" }}
                 width="50%"
                 align="left"
               >
@@ -367,7 +368,7 @@ function Tax() {
               padding: "40px",
               fontFamily: "verdana",
               color: "#ffffff",
-              backgroundColor: "#FB8C00",
+              backgroundColor: "#f96d02",
             }}
           >
             <table>
@@ -386,7 +387,7 @@ function Tax() {
                   <Button
                     variant="contained"
                     onClick={() => handleShow(tax, tax.id)}
-                    style={{ backgroundColor: "#FB8C00", color: "#ffffff" }}
+                    style={{ backgroundColor: "#f96d02", color: "#ffffff" }}
                   >
                     Update
                   </Button>

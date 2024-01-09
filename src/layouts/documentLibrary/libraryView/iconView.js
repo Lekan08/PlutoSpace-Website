@@ -638,6 +638,12 @@ function IconView({ items, groups, level }) {
           valueType === "image/jpeg" ||
           valueType === "image/gif"
         ) {
+          // // (C2) TO "FORCE DOWNLOAD"
+          const anchor = document.createElement("a");
+          const url = resultxx[0];
+          anchor.href = url;
+          anchor.download = value.name;
+          anchor.click();
           // const download = () => {
           // const element = document.createElement("a");
           // const file = new Blob(

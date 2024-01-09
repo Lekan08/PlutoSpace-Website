@@ -426,10 +426,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Video Chat",
-    key: "videoChat",
+    name: "Meetings",
+    key: "Meetings",
     icon: <Icon fontSize="small">video_call</Icon>,
-    route: "/video-chat",
+    route: "/meetings",
     component: <VideoChat />,
   },
   {
