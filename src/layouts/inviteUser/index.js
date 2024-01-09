@@ -63,7 +63,7 @@ function InviteUser() {
   const [passwordx, setPassword] = useState("");
   const [retypePasswordx, setRetypePassword] = useState("");
   //   const [enabled, setEnabled] = useState("");
-  const [passEnabled, setPassEnabled] = useState(true);
+  // const [passEnabled, setPassEnabled] = useState(true);
 
   const [opened, setOpened] = useState(false);
 
@@ -118,7 +118,7 @@ function InviteUser() {
           if (Object.keys(result).length !== 0) {
             if (result.id !== 0) {
               console.log(result.id);
-              setPassEnabled(true);
+              // setPassEnabled(true);
               setOname(result.oname);
               setId(result.id);
               setPhone(result.pno);
@@ -147,7 +147,7 @@ function InviteUser() {
             }
           } else {
             setId(0);
-            setPassEnabled(false);
+            // setPassEnabled(false);
             setOname("");
             setPhone("");
             setNationality("");
@@ -1034,7 +1034,7 @@ function InviteUser() {
                       value={passwordx || ""}
                       onKeyUp={(e) => handleOnPasswordKeys(e.target.value)}
                       onChange={(e) => setPassword(e.target.value)}
-                      disabled={passEnabled}
+                      // disabled={passEnabled}
                       variant="standard"
                       fullWidth
                     />
@@ -1052,7 +1052,7 @@ function InviteUser() {
                       value={retypePasswordx || ""}
                       onKeyUp={(e) => handleOnRTPasswordKeys(e.target.value)}
                       onChange={(e) => setRetypePassword(e.target.value)}
-                      disabled={passEnabled}
+                      // disabled={passEnabled}
                       variant="standard"
                       fullWidth
                     />
