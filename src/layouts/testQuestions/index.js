@@ -18,6 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 import TestData from "./data/testtable";
 // ZINOLEESKY
 
@@ -408,10 +409,11 @@ function TestQuestion() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -522,7 +524,12 @@ function TestQuestion() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleImageUpload} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleImageUpload}
+                style={Styles.buttonSx}
+                /* color="info" */ width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>
