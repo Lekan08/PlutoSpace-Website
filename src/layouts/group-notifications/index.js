@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react";
 import { Form, Container, Row, Col } from "react-bootstrap";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
@@ -132,6 +133,7 @@ function GroupNotifications() {
       const apiValue = rService;
       // const typeVal = Ntype;
       // console.log(typeVal);
+      setVPermissions([]);
       const data11 = JSON.parse(localStorage.getItem("user1"));
       const orgIDs = data11.orgID;
       // setRService(value);
@@ -217,6 +219,7 @@ function GroupNotifications() {
               } else {
                 setSAll(false);
               }
+              console.log(permissionsList);
               setVPermissions(permissionsList);
             });
         });
@@ -281,6 +284,7 @@ function GroupNotifications() {
         type: typeVal,
         permissionCall: permCall,
       });
+      console.log(raw);
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
@@ -337,80 +341,92 @@ function GroupNotifications() {
     }
   };
   // eslint-disable-next-line no-unused-vars
-  const handleSelectAll = (e) => {
-    if (showSAll) {
+  const handleSelectAll = (v) => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const idVal = urlParams.get("id");
+    if (v === 1) {
       setOpened(true);
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const id = urlParams.get("id");
-      const idVal = JSON.parse([id]);
-      let isChecked = 0;
-      const checks = e.target.value;
-      if (checks === "1") {
-        isChecked = 1;
-      }
-
       const data11 = JSON.parse(localStorage.getItem("user1"));
       const orgIDs = data11.orgID;
+      const selectAllPrems = [];
+      // eslint-disable-next-line array-callback-return
+      vPermissions.map((item) => {
+        const fdy = {
+          orgID: orgIDs,
+          groupID: idVal,
+          type: Ntype,
+          permissionCall: item.actionCall,
+          // isCheck: isChecked,
+        };
+        selectAllPrems.push(fdy);
+      });
+      const raw = JSON.stringify(selectAllPrems);
+      // console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
 
-      const headers = miHeaders;
-      fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/permissions/getForService/${rService}`, {
-        headers,
-      })
+      fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/notificationType/addMultiple`, requestOptions)
         .then(async (res) => {
           const aToken = res.headers.get("token-1");
           localStorage.setItem("rexxdex", aToken);
           return res.json();
         })
-        .then((resulta) => {
-          if (resulta.message === "Expired Access") {
+        .then((resultrp) => {
+          if (resultrp.message === "Expired Access") {
             navigate("/authentication/sign-in");
           }
-          if (resulta.message === "Token Does Not Exist") {
+          if (resultrp.message === "Token Does Not Exist") {
             navigate("/authentication/sign-in");
           }
-          if (resulta.message === "Unauthorized Access") {
+          if (resultrp.message === "Unauthorized Access") {
             navigate("/authentication/forbiddenPage");
           }
-          const selectAllPrems = [];
-          // eslint-disable-next-line array-callback-return
-          resulta.map((item) => {
-            const fdy = {
-              orgID: orgIDs,
-              roleID: idVal,
-              permissionCall: item.actionCall,
-              isCheck: isChecked,
-            };
-            selectAllPrems.push(fdy);
-          });
+          setOpened(false);
+          MySwal.fire({
+            title: "Success",
+            icon: "success",
+            text: "All notifications for this service have been enabled successfully",
+          }).then(() => window.location.reload());
+        });
+    } else {
+      console.log(vPermissions);
 
-          const raw = JSON.stringify(selectAllPrems);
-          const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-          };
-          fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/rolespermissions/save`, requestOptions)
-            .then(async (res) => {
-              const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              return res.json();
-            })
-            .then((resultrp) => {
-              setOpened(false);
-              if (resultrp.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-              }
-              if (resultrp.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-              }
-              if (resultrp.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-              }
-              setOpened(false);
-              window.location.reload();
-            });
+      const requestOptions = {
+        method: "DELETE",
+        headers: miHeaders,
+      };
+
+      fetch(
+        `${process.env.REACT_APP_EKOATLANTIC_URL}/notificationType/delete/${idVal}/${Ntype}`,
+        requestOptions
+      )
+        .then(async (res) => {
+          const aToken = res.headers.get("token-1");
+          localStorage.setItem("rexxdex", aToken);
+          return res.json();
+        })
+        .then((resx) => {
+          setOpened(false);
+
+          if (resx.message === "Expired Access") {
+            navigate("/authentication/sign-in");
+          }
+          if (resx.message === "Token Does Not Exist") {
+            navigate("/authentication/sign-in");
+          }
+          if (resx.message === "Unauthorized Access") {
+            navigate("/authentication/forbiddenPage");
+          }
+          MySwal.fire({
+            title: "Success",
+            icon: "success",
+            text: "All notifications for this service have been removed successfully",
+          }).then(() => window.location.reload());
         });
     }
   };
@@ -444,13 +460,7 @@ function GroupNotifications() {
             <Container>
               <Row>
                 <Col xs={0}>
-                  <MDTypography
-                    variant="h6"
-                    textAlign="center"
-                    fontWeight="medium"
-                    color="secondary"
-                    mt={0}
-                  >
+                  <MDTypography variant="h6" fontWeight="medium" color="secondary" mt={0}>
                     Notification Type
                   </MDTypography>
                   <MDBox mx={0} textAlign="center">
@@ -464,6 +474,7 @@ function GroupNotifications() {
                       >
                         <option>--Select Notification Type--</option>
                         <option value="EMAIL">Email</option>
+                        <option value="INAPP">In-App</option>
                         {/* <option value="SMS">SMS</option>
                         <option value="WHATSAPP">WhatsApp</option> */}
                       </Form.Select>
@@ -471,13 +482,7 @@ function GroupNotifications() {
                   </MDBox>
                 </Col>
                 <Col xs={0}>
-                  <MDTypography
-                    variant="h6"
-                    textAlign="center"
-                    fontWeight="medium"
-                    color="secondary"
-                    mt={0}
-                  >
+                  <MDTypography variant="h6" fontWeight="medium" color="secondary" mt={0}>
                     Select A Service
                   </MDTypography>
                   <MDBox mx={0} textAlign="center">
@@ -503,7 +508,6 @@ function GroupNotifications() {
                   <br />
                   <MDButton
                     align="center"
-                    textAlign="center"
                     style={Styles.buttonSx}
                     variant="gradient"
                     width={5}
@@ -520,53 +524,45 @@ function GroupNotifications() {
       &nbsp;
       <Container>
         <Card>
-          <MDTypography
-            variant="h4"
-            textAlign="left"
-            fontWeight="medium"
-            color="secondary"
-            mx={4}
-            mt={5}
-          >
+          <MDTypography variant="h4" fontWeight="medium" color="secondary" mx={4} mt={5}>
             {settings.set}
           </MDTypography>
           <MDBox pt={0} px={4}>
             &nbsp;
             {showSAll ? (
-              <div align="left">
-                {checkSelAll ? (
-                  <MDBox mt={4} mb={1}>
-                    {/* <MDButton
-                      variant="gradient"
-                      value={1}
-                      onClick={(e) => handleSelectAll(e)}
-                      color="info"
-                      width="50%"
-                    >
-                      Select All
-                    </MDButton> */}
-                  </MDBox>
-                ) : (
-                  <MDBox mt={4} mb={1}>
-                    {/* <MDButton
-                      variant="gradient"
-                      value={0}
-                      onClick={(e) => handleSelectAll(e)}
-                      color="info"
-                      width="50%"
-                    >
-                      UnSelect All
-                    </MDButton> */}
-                  </MDBox>
-                )}
+              <div align="left" style={{ display: "flex", margin: 10 }}>
+                <MDBox mt={0} mb={4} mr={5}>
+                  <MDButton
+                    variant="gradient"
+                    value={1}
+                    onClick={(e) => handleSelectAll(1)}
+                    color="warning"
+                    width="50%"
+                  >
+                    Select All
+                  </MDButton>
+                </MDBox>
+                <MDBox mt={0} mb={4}>
+                  <MDButton
+                    variant="gradient"
+                    value={0}
+                    onClick={(e) => handleSelectAll(2)}
+                    color="warning"
+                    width="50%"
+                  >
+                    UnSelect All
+                  </MDButton>
+                </MDBox>
+                <br />
               </div>
             ) : (
               <MDBox mt={0} mb={1} />
             )}
             <Form>
-              {vPermissions.map((api) => (
-                <Row>
-                  <div key={api.id} className="mb-3">
+              {vPermissions.map((api, indx) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <Row key={indx}>
+                  <div className="mb-3">
                     <Form.Check.Input
                       type="checkbox"
                       defaultChecked={api.isCheck}

@@ -242,14 +242,14 @@ function Appointments() {
       if (eventTime < CurTime || endTime < CurTime) {
         MySwal.fire({
           title: "Invalid Date",
-          type: "error",
+          icon: "error",
           text: "Please Enter A Date From The Future",
         });
         setOpened(false);
       } else if (eventTime < remind) {
         MySwal.fire({
           title: "Invalid Date",
-          type: "error",
+          icon: "error",
           text: "Reminder must be before the appointment starts",
         });
         setOpened(false);

@@ -275,9 +275,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
         }
         // console.log(result);
         if (result) {
+          console.log("##############NOTIFICATION", result);
           if (result.length !== 0) {
             setItems((item) => [...item, result]);
-            // console.log(result, (item) => [...item]);
             // console.log((item) => [item]);
             // console.log(result);
             // setMainItems(result);
