@@ -1730,14 +1730,6 @@ const routes = [
     route: "",
   },
   {
-    type: "collapse",
-    name: "Pipeline",
-    key: "pipeline",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/pipeline",
-    component: <Pipeline />,
-  },
-  {
     name: "Update User System Role",
     key: "userSystemRole",
     icon: <Icon fontSize="small">supervised_user_circle</Icon>,
@@ -2303,6 +2295,14 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/workflow",
     component: <Workflow />,
+  },
+  {
+    type: "collapse",
+    name: "Pipeline",
+    key: "pipeline",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/pipeline",
+    component: <Pipeline />,
   },
   {
     type: "collapse",
