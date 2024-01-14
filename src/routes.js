@@ -426,9 +426,9 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Meetings",
-    key: "Meetings",
-    icon: <Icon fontSize="small">video_call</Icon>,
+    name: "Call",
+    key: "Call",
+    icon: <Icon fontSize="small">phone</Icon>,
     route: "/meetings",
     component: <VideoChat />,
   },
