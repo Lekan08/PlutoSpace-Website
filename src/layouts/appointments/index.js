@@ -78,8 +78,8 @@ function Appointments() {
   // const [appID, setAppID] = useState("");
   useEffect(() => {
     const headers = miHeaders;
-
     const data11 = JSON.parse(localStorage.getItem("user1"));
+    setDutyRelieverx(data11.personalID);
 
     const orgIDs = data11.orgID;
     let isMounted = true;
@@ -338,7 +338,7 @@ function Appointments() {
   };
 
   const handleValidate = (e) => {
-    if (eventName && description && eventTime && endTime && remind && timezone && duty !== "") {
+    if (eventName && description && eventTime && endTime && remind && timezone) {
       handleAddEvent(e);
       setEnabled(true);
     } else {
@@ -609,36 +609,6 @@ function Appointments() {
                 />
               </div>
             </Container>
-            <div className="col-sm-6">
-              <MDBox mt={4}>
-                <MDBox textAlign="center">
-                  <MDTypography
-                    variant="button"
-                    fontWeight="regular"
-                    fontSize="80%"
-                    textAlign="center"
-                    color="text"
-                  >
-                    Account Owner
-                  </MDTypography>
-                  <Form.Select
-                    value={duty}
-                    onChange={(e) => {
-                      setDutyRelieverx(e.target.value);
-                      setLink("");
-                    }}
-                    aria-label="Default select example"
-                  >
-                    <option value="">Select Account Owner</option>
-                    {user.map((api) => (
-                      <option key={api.personal.id} value={api.personal.id}>
-                        {api.personal.fname} {api.personal.lname}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </MDBox>
-              </MDBox>
-            </div>
             <div className="col-sm-6">
               <MDBox mt={4}>
                 <MDBox textAlign="center">
