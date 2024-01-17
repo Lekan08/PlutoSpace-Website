@@ -442,7 +442,7 @@ function JobPost() {
       <DashboardNavbar />
       {/* <Container> */}
       <Card>
-        <MDBox pt={4} pb={3} px={5}>
+        <MDBox pt={4} pb={3} px={0}>
           {/* <Container> */}
           <MDBox
             variant="gradient"
@@ -451,7 +451,7 @@ function JobPost() {
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
-            mt={3}
+            mt={-3}
             p={2}
             mb={1}
             textAlign="center"
@@ -609,7 +609,7 @@ function JobPost() {
           <hr />
           <MDBox textAlign="center" mb={10}>
             <MDBox textAlign="center">
-              <br />
+              {/* <br /> */}
               <br />
               <Row>
                 <Col>
@@ -795,7 +795,7 @@ function JobPost() {
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 400,
+              width: 600,
               bgcolor: "background.paper",
               border: "3px solid #000",
               borderRadius: "10px",
@@ -842,7 +842,7 @@ function JobPost() {
                 </Container>
               </MDBox>
               <hr />
-              <MDBox textAlign="center">
+              <MDBox>
                 <MDTypography
                   variant="p"
                   textAlign="center"
@@ -853,8 +853,8 @@ function JobPost() {
                   Posted Date
                 </MDTypography>
                 <Row>
-                  <Col>
-                    <br />
+                  <Col sm={4}>
+                    {/* <br /> */}
                     <i className="required"> (required) </i>
                     <br />
                     <MDTypography
@@ -862,7 +862,7 @@ function JobPost() {
                       textAlign="center"
                       fontWeight="light"
                       color="secondary"
-                      fontSize="70%"
+                      fontSize="50%"
                     >
                       Lowest Posted Date
                     </MDTypography>
@@ -879,8 +879,9 @@ function JobPost() {
                       />
                     </Container>
                   </Col>
-                  <Col>
-                    <br />
+                  <Col sm={2} />
+                  <Col sm={4}>
+                    {/* <br /> */}
                     <i className="required"> (required) </i>
                     <br />
                     <MDTypography
@@ -920,7 +921,7 @@ function JobPost() {
                   Expiry Date
                 </MDTypography>
                 <Row>
-                  <Col>
+                  <Col sm={4}>
                     <MDTypography
                       variant="p"
                       textAlign="center"
@@ -943,7 +944,8 @@ function JobPost() {
                       />
                     </Container>
                   </Col>
-                  <Col>
+                  <Col sm={2} />
+                  <Col sm={4}>
                     <MDTypography
                       variant="p"
                       textAlign="center"
@@ -1110,26 +1112,30 @@ function JobPost() {
                   </Row>
                   <br />
                   <br />
-                  <ButtonGroup>
-                    <ToggleButton
-                      type="checkbox"
-                      value={selopen}
-                      onClick={handleOpened}
-                      variant="outline-success"
-                      checked={sellopen}
-                    >
-                      Opened
-                    </ToggleButton>
-                    <ToggleButton
-                      value={selopen}
-                      onClick={handleClosed}
-                      variant="outline-danger"
-                      checked={selclose}
-                      type="checkbox"
-                    >
-                      Closed
-                    </ToggleButton>
-                  </ButtonGroup>
+                  <Row>
+                    <Col sm={12}>
+                      <ButtonGroup>
+                        <ToggleButton
+                          type="checkbox"
+                          value={selopen}
+                          onClick={handleOpened}
+                          variant="outline-success"
+                          checked={sellopen}
+                        >
+                          Opened
+                        </ToggleButton>
+                        <ToggleButton
+                          value={selopen}
+                          onClick={handleClosed}
+                          variant="outline-danger"
+                          checked={selclose}
+                          type="checkbox"
+                        >
+                          Closed
+                        </ToggleButton>
+                      </ButtonGroup>
+                    </Col>
+                  </Row>
                 </Container>
               </MDBox>
               <MDBox textAlign="center" p={-2}>
