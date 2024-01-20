@@ -18,6 +18,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 
 function RecruitmentGrading() {
   const MySwal = withReactContent(Swal);
@@ -179,10 +180,11 @@ function RecruitmentGrading() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -314,7 +316,12 @@ function RecruitmentGrading() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleClick}
+                style={Styles.buttonSx}
+                /* color="info" */ width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

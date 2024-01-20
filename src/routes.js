@@ -426,9 +426,9 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Meetings",
-    key: "Meetings",
-    icon: <Icon fontSize="small">video_call</Icon>,
+    name: "Call",
+    key: "Call",
+    icon: <Icon fontSize="small">phone</Icon>,
     route: "/meetings",
     component: <VideoChat />,
   },
@@ -1760,14 +1760,6 @@ const routes = [
     route: "",
   },
   {
-    type: "collapse",
-    name: "Pipeline",
-    key: "pipeline",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/pipeline",
-    component: <Pipeline />,
-  },
-  {
     name: "Update User System Role",
     key: "userSystemRole",
     icon: <Icon fontSize="small">supervised_user_circle</Icon>,
@@ -2305,6 +2297,14 @@ const routes = [
     component: <Accessor />,
   },
 
+  {
+    type: "collapse",
+    name: "Pipeline",
+    key: "pipeline",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/pipeline",
+    component: <Pipeline />,
+  },
   {
     type: "collapse",
     name: "Groups",
