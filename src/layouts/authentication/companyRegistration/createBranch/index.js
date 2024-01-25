@@ -212,7 +212,7 @@ function CreateBranch() {
   return (
     <CoverLayout image={bgImage}>
       <Card>
-        <MDBox pt={4} pb={3} px={10}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
             // bgColor="info"
@@ -285,10 +285,16 @@ function CreateBranch() {
                 </div>
               </Container>
             </MDBox>
+            {/* <MDBox mb={2}>
+              <Container>
+                <div className="row">
+                </div>
+              </Container>
+            </MDBox> */}
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-7">
                     <MDInput
                       type="text"
                       value={streetx || ""}
@@ -299,7 +305,7 @@ function CreateBranch() {
                       fullWidth
                     />
                   </div>
-                  <div className="col-sm-4">
+                  <div className="col-sm-5">
                     <MDInput
                       type="text"
                       value={cityx || ""}
@@ -316,7 +322,7 @@ function CreateBranch() {
             <MDBox mb={2}>
               <Container>
                 <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                       Country
                     </MDTypography>
@@ -335,11 +341,7 @@ function CreateBranch() {
                       </Form.Select>
                     </MDBox>
                   </div>
-                </div>
-              </Container>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
                       State
                     </MDTypography>
@@ -360,6 +362,9 @@ function CreateBranch() {
                   </div>
                 </div>
               </Container>
+              {/* <Container>
+                <div className="row"></div>
+              </Container> */}
             </MDBox>
             <MDBox mb={2}>
               <Container>
