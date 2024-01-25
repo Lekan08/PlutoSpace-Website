@@ -125,7 +125,7 @@ function Status() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add Employee Type
+              Add Employee Types
             </MDTypography>
           </MDBox>
           <MDBox

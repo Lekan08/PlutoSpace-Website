@@ -986,7 +986,7 @@ function UserProfile() {
       align: "center",
     },
   ];
-
+//  DOSKI TESIING COMMIT
   const handleUpdate = () => {
     setOpened(true);
     const data11 = JSON.parse(localStorage.getItem("user1"));
