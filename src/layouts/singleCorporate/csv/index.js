@@ -16,7 +16,7 @@ import GHeaders from "getHeader";
 import MDTypography from "components/MDTypography";
 import Swal from "sweetalert2";
 
-import Styles from "styles";
+// import Styles from "styles";
 
 import withReactContent from "sweetalert2-react-content";
 import Backdrop from "@mui/material/Backdrop";
@@ -247,7 +247,7 @@ function Csv() {
                     />
                   </MDTypography>
                 </MDBox>
-                <Button onClick={handleUpload}                                                                                                                                                    variant="success">
+                <Button onClick={handleUpload} variant="success">
                   Upload
                 </Button>
               </MDBox>

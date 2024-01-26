@@ -136,9 +136,9 @@ function CreateBranch() {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const orgID = urlParams.get("orgID");
+    const orgIDx = urlParams.get("orgID");
     const raw = JSON.stringify({
-      orgID,
+      orgID: orgIDx,
       name: namex,
       email: emailx,
       street: streetx,
