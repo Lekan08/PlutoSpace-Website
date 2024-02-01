@@ -2367,10 +2367,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Employee Types",
+    name: "Employee Type",
     key: "Employee Status",
     icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/Employee-Types",
+    route: "/Employee-Type",
     component: <Status />,
   },
   {
