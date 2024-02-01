@@ -317,6 +317,9 @@ import OffboardingChecklist from "./layouts/offboardingCompany/offboardingCheckl
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
 import AccountingCSV from "layouts/general-ledger/csv";
+import SignUpPassword from "layouts/authentication/completeSignUp";
+import ValidateEmail from "layouts/inviteUser/validateEmail";
+import ValidatePassword from "layouts/inviteUser/validatePassword";
 
 const routes = [
   {
@@ -426,10 +429,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Video Chat",
-    key: "videoChat",
-    icon: <Icon fontSize="small">video_call</Icon>,
-    route: "/video-chat",
+    name: "Call",
+    key: "Call",
+    icon: <Icon fontSize="small">phone</Icon>,
+    route: "/meetings",
     component: <VideoChat />,
   },
   {
@@ -1662,17 +1665,25 @@ const routes = [
   },
   {
     type: "title",
-    title: "Project",
+    title: "Project Management",
     key: "titd1",
     route: "",
   },
   {
     type: "collapse",
-    name: "Project",
+    name: "Project Board",
     key: "project",
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/project",
     component: <Project />,
+  },
+  {
+    type: "collapse",
+    name: " Workflow",
+    key: "workflow",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/workflow",
+    component: <Workflow />,
   },
   {
     name: "Update Project",
@@ -1687,6 +1698,28 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/project/view-Project",
     component: <ProjectView />,
+  },
+  {
+    type: "collapse",
+    name: "Stage",
+    key: "Stage",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/stage",
+    component: <Stage />,
+  },
+  {
+    name: "Add Stage",
+    key: " addStage",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/workFlow/add-Stage",
+    component: <AddStage />,
+  },
+  {
+    name: "Stage Condition",
+    key: "stage Conditions",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/stage/Stage-Condition",
+    component: <StageCondition />,
   },
   {
     name: "Subtask ",
@@ -1728,14 +1761,6 @@ const routes = [
     title: "Recruitment",
     key: "titd304",
     route: "",
-  },
-  {
-    type: "collapse",
-    name: "Pipeline",
-    key: "pipeline",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/pipeline",
-    component: <Pipeline />,
   },
   {
     name: "Update User System Role",
@@ -2274,35 +2299,14 @@ const routes = [
     route: "/Calendar-Accessors",
     component: <Accessor />,
   },
+
   {
     type: "collapse",
-    name: "Stage",
-    key: "Stage",
+    name: "Pipeline",
+    key: "pipeline",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/stage",
-    component: <Stage />,
-  },
-  {
-    name: "Add Stage",
-    key: " addStage",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/workFlow/add-Stage",
-    component: <AddStage />,
-  },
-  {
-    name: "Stage Condition",
-    key: "stage Conditions",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/stage/Stage-Condition",
-    component: <StageCondition />,
-  },
-  {
-    type: "collapse",
-    name: "General Workflow",
-    key: "workflow",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/workflow",
-    component: <Workflow />,
+    route: "/pipeline",
+    component: <Pipeline />,
   },
   {
     type: "collapse",
@@ -2349,6 +2353,13 @@ const routes = [
     component: <CreateBranch />,
   },
   {
+    name: "Complete Sign-Up",
+    key: "completeSignUp",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/Complete-Sign-up",
+    component: <SignUpPassword />,
+  },
+  {
     type: "collapse",
     name: "Departments",
     key: "departments",
@@ -2366,7 +2377,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Employee Types",
+    name: "Employee Type",
     key: "Employee Status",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/Employee-Type",
@@ -2397,8 +2408,8 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Roles-and-Permissions",
-    key: "Roles-and-Permissions",
+    name: "Roles and Permissions",
+    key: "Roles and Permissions",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/Roles&Permissions",
     component: <SysRoles />,
@@ -2524,6 +2535,20 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/inviteUser",
     component: <InviteUser />,
+  },
+  {
+    name: "Email",
+    key: "validateEmail",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/validateEmail",
+    component: <ValidateEmail />,
+  },
+  {
+    name: "Password",
+    key: "validatePassword",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/ValidatePassword",
+    component: <ValidatePassword />,
   },
   {
     name: "Time Off Requests Journey",

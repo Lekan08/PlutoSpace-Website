@@ -78,8 +78,8 @@ function Appointments() {
   // const [appID, setAppID] = useState("");
   useEffect(() => {
     const headers = miHeaders;
-
     const data11 = JSON.parse(localStorage.getItem("user1"));
+    setDutyRelieverx(data11.personalID);
 
     const orgIDs = data11.orgID;
     let isMounted = true;
@@ -242,14 +242,14 @@ function Appointments() {
       if (eventTime < CurTime || endTime < CurTime) {
         MySwal.fire({
           title: "Invalid Date",
-          type: "error",
+          icon: "error",
           text: "Please Enter A Date From The Future",
         });
         setOpened(false);
       } else if (eventTime < remind) {
         MySwal.fire({
           title: "Invalid Date",
-          type: "error",
+          icon: "error",
           text: "Reminder must be before the appointment starts",
         });
         setOpened(false);
@@ -338,7 +338,7 @@ function Appointments() {
   };
 
   const handleValidate = (e) => {
-    if (eventName && description && eventTime && endTime && remind && timezone && duty !== "") {
+    if (eventName && description && eventTime && endTime && remind && timezone) {
       handleAddEvent(e);
       setEnabled(true);
     } else {
@@ -480,7 +480,7 @@ function Appointments() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add An Appointment
+              Schedule An Appointment
             </MDTypography>
           </MDBox>
           <MDBox
@@ -582,63 +582,33 @@ function Appointments() {
                 </div>
               </div>
               <br />
-              <div className="col-sm-6">
-                <div align="center">
-                  <MDTypography
-                    variant="button"
-                    fontWeight="regular"
-                    fontSize="80%"
-                    align="left"
-                    color="text"
-                    mt={2}
-                  >
-                    Remind me on
-                  </MDTypography>
-                  <DatePicker
-                    placeholderText="MM/DD/YY hh:mm"
-                    style={{ marginRight: "10px" }}
-                    selected={reminde}
-                    peekNextMonth
-                    dateFormat="MM/dd/yyyy h:mm aa"
-                    showMonthDropdown
-                    showYearDropdown
-                    showTimeSelect
-                    dropdownMode="select"
-                    onChange={(time) => reminder(time)}
-                  />
-                </div>
+
+              <div style={{ marginRight: "auto", marginLeft: "auto" }}>
+                <MDTypography
+                  variant="button"
+                  fontWeight="regular"
+                  fontSize="80%"
+                  // align="left"
+                  color="text"
+                  mt={2}
+                >
+                  Reminder
+                </MDTypography>{" "}
+                <br />
+                <DatePicker
+                  placeholderText="MM/DD/YY hh:mm"
+                  style={{ marginRight: "10px" }}
+                  selected={reminde}
+                  peekNextMonth
+                  dateFormat="MM/dd/yyyy h:mm aa"
+                  showMonthDropdown
+                  showYearDropdown
+                  showTimeSelect
+                  dropdownMode="select"
+                  onChange={(time) => reminder(time)}
+                />
               </div>
             </Container>
-            <div className="col-sm-6">
-              <MDBox mt={4}>
-                <MDBox textAlign="center">
-                  <MDTypography
-                    variant="button"
-                    fontWeight="regular"
-                    fontSize="80%"
-                    textAlign="center"
-                    color="text"
-                  >
-                    Account Owner
-                  </MDTypography>
-                  <Form.Select
-                    value={duty}
-                    onChange={(e) => {
-                      setDutyRelieverx(e.target.value);
-                      setLink("");
-                    }}
-                    aria-label="Default select example"
-                  >
-                    <option value="">Select Account Owner</option>
-                    {user.map((api) => (
-                      <option key={api.personal.id} value={api.personal.id}>
-                        {api.personal.fname} {api.personal.lname}
-                      </option>
-                    ))}
-                  </Form.Select>
-                </MDBox>
-              </MDBox>
-            </div>
             <div className="col-sm-6">
               <MDBox mt={4}>
                 <MDBox textAlign="center">

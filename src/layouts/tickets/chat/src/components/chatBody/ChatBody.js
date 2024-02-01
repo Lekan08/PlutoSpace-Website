@@ -273,7 +273,7 @@ export default function ChatBody({ socket, initialTicketID }) {
   }, [chatListDataa, socket]);
 
   const getClientData = (clientID) => {
-    // console.log(ticketID);
+    console.log(clientID);
     setOpened(true);
     const headers = miHeaders;
     // const data11 = JSON.parse(localStorage.getItem("user1"));
@@ -330,6 +330,7 @@ export default function ChatBody({ socket, initialTicketID }) {
     return { date: slashDate, time: hourMinute };
   };
   const listTickets = (allChatUsersParam) => {
+    console.log("sinceGET");
     const chatListData = [];
 
     const queryString = window.location.search;
@@ -384,6 +385,7 @@ export default function ChatBody({ socket, initialTicketID }) {
       isReopened: result[0].reopened,
       channel: result[0].channel,
     };
+    console.log(cObj);
     getClientData(cObj.clientID);
 
     setCurClientObj(cObj);
@@ -393,6 +395,7 @@ export default function ChatBody({ socket, initialTicketID }) {
   };
 
   const handleGets = () => {
+    console.log("codeeeeee");
     // handleClose();
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
@@ -401,11 +404,18 @@ export default function ChatBody({ socket, initialTicketID }) {
     const date = new Date();
     const firstDay = new Date(2010, date.getMonth(), 1).getTime();
     const curDay = new Date().getTime();
+    console.log(firstDay);
+    console.log(curDay);
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const startTimex = urlParams.get("startTime");
+    console.log(Number(startTimex));
 
     const raw = JSON.stringify({
       orgID: orgIDs,
-      startTime: firstDay,
+      startTime: Number(startTimex),
       endTime: curDay,
+      clientType: 0,
     });
     const requestOptions = {
       method: "POST",
@@ -438,12 +448,16 @@ export default function ChatBody({ socket, initialTicketID }) {
           window.location.reload();
         }
         // handleClose();
+        console.log("codeeeeee");
         console.log(result);
         if (result.status !== 500) {
+          console.log("codeeeeee");
           if (Object.keys(result).length !== 0) {
             if (result.length > 0) {
+              console.log("codeeeeee");
               listTickets(result);
             } else {
+              console.log("ahhhhhhh");
               setMainItems([{ time: { time: "", date: "" } }]);
             }
           }

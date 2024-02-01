@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 /**
 =========================================================
 * Material Dashboard 2 React - v2.0.0
@@ -56,8 +57,23 @@ function Configurator() {
   // Use the useEffect hook to change the button state for the sidenav type based on window size.
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem("darkMode"));
-    console.log(JSON.parse(localStorage.getItem("darkMode")));
-    console.log(darkMode, "darkmodeee");
+    const navcolor = localStorage.getItem("sidenav");
+    const colorChange = localStorage.getItem("colorChange");
+    // console.log(JSON.parse(localStorage.getItem("darkMode")));
+    // console.log(darkMode, "darkmodeee");
+    console.warn(colorChange);
+    if (colorChange) {
+      setSidenavColor(dispatch, colorChange);
+    } else {
+      setSidenavColor(dispatch, "warning");
+    }
+    if (navcolor === "transparent") {
+      handleTransparentSidenav();
+    } else if (navcolor === "white") {
+      handleWhiteSidenav();
+    } else {
+      handleDarkSidenav();
+    }
     if (saved === true) {
       setDarkMode(dispatch, true);
     } else {
@@ -82,14 +98,17 @@ function Configurator() {
   const handleTransparentSidenav = () => {
     setTransparentSidenav(dispatch, true);
     setWhiteSidenav(dispatch, false);
+    localStorage.setItem("sidenav", "transparent");
   };
   const handleWhiteSidenav = () => {
     setWhiteSidenav(dispatch, true);
     setTransparentSidenav(dispatch, false);
+    localStorage.setItem("sidenav", "white");
   };
   const handleDarkSidenav = () => {
     setWhiteSidenav(dispatch, false);
     setTransparentSidenav(dispatch, false);
+    localStorage.setItem("sidenav", "dark");
   };
   const handleFixedNavbar = () => setFixedNavbar(dispatch, !fixedNavbar);
   const handleDarkMode = () => {
@@ -205,7 +224,11 @@ function Configurator() {
                     borderColor: darkMode ? white.main : dark.main,
                   },
                 })}
-                onClick={() => setSidenavColor(dispatch, color)}
+                onClick={() => {
+                  // console.log(color);
+                  localStorage.setItem("colorChange", color);
+                  setSidenavColor(dispatch, color);
+                }}
               />
             ))}
           </MDBox>

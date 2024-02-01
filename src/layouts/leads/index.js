@@ -50,12 +50,12 @@ export default function Leads() {
 
   const [usernamex, setUsername] = useState("");
   const [passwordx, setPassword] = useState("");
-  const [passwordShown, setPasswordShown] = useState(false);
-  const togglePassword = () => {
-    // When the handler is invoked
-    // inverse the boolean state of passwordShown
-    setPasswordShown(!passwordShown);
-  };
+  // const [passwordShown, setPasswordShown] = useState(false);
+  // const togglePassword = () => {
+  //   // When the handler is invoked
+  //   // inverse the boolean state of passwordShown
+  //   setPasswordShown(!passwordShown);
+  // };
 
   const [others, setOthers] = useState(false);
   const [name, setName] = useState("");
@@ -626,7 +626,7 @@ export default function Leads() {
                           <div className="row">
                             <div className="col-sm-12">
                               <MDInput
-                                type={passwordShown ? "text" : "password"}
+                                // type={passwordShown ? "text" : "password"}
                                 value={passwordx || ""}
                                 onChange={(e) => setPassword(e.target.value)}
                                 onKeyPress={(ev) => ev.key === "Enter" && handleClick()}
@@ -635,16 +635,16 @@ export default function Leads() {
                                 fullWidth
                               />
                             </div>
-                            <MDTypography
+                            {/* <MDTypography
                               variant="button"
                               fontSize="70%"
                               align="right"
-                              onClick={togglePassword}
+                              // onClick={togglePassword}
                               mx={0}
                               color="info"
                             >
                               show password
-                            </MDTypography>
+                            </MDTypography> */}
                           </div>
                         </Container>
                       </MDBox>

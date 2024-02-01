@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
 import MDInput from "components/MDInput";
 import MDTypography from "components/MDTypography";
@@ -18,6 +18,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 import TestData from "./data/testtable";
 // ZINOLEESKY
 
@@ -39,8 +44,13 @@ function TestQuestion() {
   // const [imgType, setImgType] = useState("");
   // const [selectedImage, setSelectedImage] = useState();
   const [files, setFiles] = useState("");
+  const [allx, setAll] = useState([]);
+  const [open, setOpen] = React.useState(false);
   const { allGHeaders: miHeaders } = GHeaders();
   const { allPHeaders: myHeaders } = PHeaders();
+
+  // const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleOnNameKeys = () => {
     if (questionx.length === 0) {
@@ -109,6 +119,7 @@ function TestQuestion() {
             type: "success",
             text: result.message,
           }).then(() => {
+            setOpened(true);
             window.location.reload();
           });
         })
@@ -404,14 +415,59 @@ function TestQuestion() {
   //   handleClick(e.target.value);
   // };
 
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    overflow: "scroll",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const ids = urlParams.get("id");
+
+    const headers = miHeaders;
+    // let isMounted = true;
+    fetch(`${process.env.REACT_APP_RAGA_URL}/questions/getByIds/${ids}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        return res.json();
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(result);
+        setAll(result);
+      });
+  }, []);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            // bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -522,13 +578,91 @@ function TestQuestion() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleImageUpload} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleImageUpload}
+                style={Styles.buttonSx}
+                /* color="info" */ width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>
           </MDBox>
         </MDBox>
       </Card>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className="row">
+            {allx.map((item) => (
+              <Grid item xs={20} md={12} lg={20} key={item.id}>
+                <Card sx={{ maxWidth: 900 }}>
+                  <CardContent>
+                    <MDBox
+                      variant="gradient"
+                      bgColor="info"
+                      borderRadius="lg"
+                      coloredShadow="success"
+                      mt={2}
+                      mx={0}
+                      p={1}
+                      mb={3}
+                      textAlign="left"
+                    >
+                      <MDTypography
+                        variant="h4"
+                        fontWeight="medium"
+                        color="white"
+                        textAlign="center"
+                        mt={1}
+                      >
+                        View Test Question
+                      </MDTypography>
+                    </MDBox>
+                    <MDTypography
+                      variant="h6"
+                      color="text"
+                      fontSize="75%"
+                      textAlign="left"
+                      mt={1}
+                      // style={{ backgroundColor: "#ADD8E6" }}
+                    >
+                      Question - {item.question}
+                    </MDTypography>
+                    <hr />
+                    <br />
+                    <MDTypography variant="h6" color="text" fontSize="75%" textAlign="left" mt={0}>
+                      Hint - {item.hint}
+                    </MDTypography>
+                    <hr />
+                    <br />
+                    <MDTypography
+                      variant="h6"
+                      color="text"
+                      fontSize="75%"
+                      textAlign="left"
+                      mt={0}
+                      // style={{ backgroundColor: "#ADD8E6" }}
+                    >
+                      Instruction - {item.instruction}
+                    </MDTypography>
+                    <hr />
+                    <br />
+                    <MDTypography variant="h6" color="text" fontSize="75%" textAlign="left" mt={0}>
+                      {/* Image - <img src={allx[0].imageUrl} style={styles.image} alt="Thumb" /> */}
+                    </MDTypography>
+                  </CardContent>
+                </Card>
+                &nbsp;
+              </Grid>
+            ))}
+          </div>
+        </Box>
+      </Modal>
       <MDBox pt={3}>
         <DataTable
           table={{ columns: pColumns, rows: pRows }}
