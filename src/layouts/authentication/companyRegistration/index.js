@@ -34,7 +34,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -60,7 +60,7 @@ function CompanyReg() {
   const [Statex, setState] = useState("");
   const [Countryx, setCountry] = useState("");
   const [allStates, setAllStates] = useState([]);
-  const [configPrice, setConfigPrice] = useState("");
+  // const [configPrice, setConfigPrice] = useState("");
 
   const [checkedComEmail, setCheckedComEmail] = useState("");
   const [checkedComStreet, setCheckedComStreet] = useState("");
@@ -68,42 +68,6 @@ function CompanyReg() {
   const [checkedComCity, setCheckedComCity] = useState("");
 
   const [opened, setOpened] = useState(false);
-  useEffect(() => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-    const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
-    console.log(localStorage.getItem("email1"));
-    console.log(localStorage.getItem("pass1"));
-    let isMounted = true;
-    fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/configuration/gets`, { myHeaders })
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        if (isMounted) {
-          setConfigPrice(result[0].value);
-        }
-      });
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   const handleOnComNameKeys = (value) => {
     const letters = /^[a-zA-Z0-9 ]+$/;
@@ -210,6 +174,7 @@ function CompanyReg() {
     fetch(`${process.env.REACT_APP_KUBU_URL}/company/add`, requestOptions)
       .then((res) => res.json())
       .then((result) => {
+        console.log(result);
         if (result.status === "SUCCESS") {
           const raw1 = JSON.stringify({
             orgID: result.data.id,
@@ -246,56 +211,60 @@ function CompanyReg() {
               } else {
                 console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
                 localStorage.setItem("company", JSON.stringify(resultx.data));
-                const raw2 = JSON.stringify({
-                  orgID: result.data.id,
-                  empID: user.id,
-                  username: user.email,
-                  password: localStorage.getItem("pass1"),
-                });
-                const requestOptions2 = {
-                  method: "POST",
-                  headers: myHeaders,
-                  body: raw2,
-                  redirect: "follow",
-                };
-                fetch(`${process.env.REACT_APP_ZAVE_URL}/login/add`, requestOptions2)
-                  .then((res) => res.json())
-                  .then((resultLog) => {
-                    console.log(
-                      `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
-                    );
-                    const raw4 = JSON.stringify({
-                      orgID: result.data.id,
-                      paidAmount: configPrice,
-                      bonusAmount: 0,
-                      totalAmount: configPrice,
-                    });
-                    const requestOptions4 = {
-                      method: "POST",
-                      headers: myHeaders,
-                      body: raw4,
-                      redirect: "follow",
-                    };
-                    fetch(
-                      `${process.env.REACT_APP_EKOATLANTIC_URL}/paymentHistory/add`,
-                      requestOptions4
-                    )
-                      .then((res) => res.json())
-                      .then((resultPH) => {
-                        console.log(
-                          `STATUS - ${resultPH.status} - - - - - - MESSAGE - ${resultPH.message}`
-                        );
-                        setOpened(false);
-                        MySwal.fire({
-                          title: result.status,
-                          type: "success",
-                          text: result.message,
-                        }).then(() => {
-                          navigate(`/Create-Branch?orgID=${result.data.id}`, { replace: true });
-                        });
-                      });
-                  });
+                // const raw2 = JSON.stringify({
+                //   orgID: result.data.id,
+                //   empID: user.id,
+                //   username: user.email,
+                //   password: localStorage.getItem("pass1"),
+                // });
+                // const requestOptions2 = {
+                //   method: "POST",
+                //   headers: myHeaders,
+                //   body: raw2,
+                //   redirect: "follow",
+                // };
+                // fetch(`${process.env.REACT_APP_ZAVE_URL}/login/add`, requestOptions2)
+                //   .then((res) => res.json())
+                //   .then((resultLog) => {
+                //     console.log(
+                //       `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
+                //     );
+                //     const raw4 = JSON.stringify({
+                //       orgID: result.data.id,
+                //       paidAmount: configPrice,
+                //       bonusAmount: 0,
+                //       totalAmount: configPrice,
+                //     });
+                //     const requestOptions4 = {
+                //       method: "POST",
+                //       headers: myHeaders,
+                //       body: raw4,
+                //       redirect: "follow",
+                //     };
+                //     fetch(
+                //       `${process.env.REACT_APP_EKOATLANTIC_URL}/paymentHistory/add`,
+                //       requestOptions4
+                //     )
+                //       .then((res) => res.json())
+                //       .then((resultPH) => {
+                //         console.log(
+                //           `STATUS - ${resultPH.status} - - - - - - MESSAGE - ${resultPH.message}`
+                //         );
+                //         setOpened(false);
+                //         MySwal.fire({
+                //           title: result.status,
+                //           type: "success",
+                //           text: result.message,
+                //         }).then(() => {
+                //           navigate(`/Create-Branch?orgID=${result.data.id}`, { replace: true });
+                //         });
+                //       });
+                //   });
               }
+            })
+            .then(() => {
+              localStorage.setItem("newResult", JSON.stringify(result));
+              navigate(`/Complete-Sign-up?OrgID=${result.data.id}`, { replace: true });
             });
         } else {
           setOpened(false);
@@ -408,7 +377,7 @@ function CompanyReg() {
             <MDBox mb={2}>
               <MDInput
                 type="email"
-                label="Email"
+                label="Company Email"
                 value={emailx || ""}
                 onKeyUp={(e) => handleOnComEmailKeys(e.target.value)}
                 onChange={(e) => setEmail(e.target.value)}

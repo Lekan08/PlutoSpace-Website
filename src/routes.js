@@ -317,6 +317,9 @@ import OffboardingChecklist from "./layouts/offboardingCompany/offboardingCheckl
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
 import AccountingCSV from "layouts/general-ledger/csv";
+import SignUpPassword from "layouts/authentication/completeSignUp";
+import ValidateEmail from "layouts/inviteUser/validateEmail";
+import ValidatePassword from "layouts/inviteUser/validatePassword";
 
 const routes = [
   {
@@ -2350,6 +2353,13 @@ const routes = [
     component: <CreateBranch />,
   },
   {
+    name: "Complete Sign-Up",
+    key: "completeSignUp",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/Complete-Sign-up",
+    component: <SignUpPassword />,
+  },
+  {
     type: "collapse",
     name: "Departments",
     key: "departments",
@@ -2525,6 +2535,20 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/inviteUser",
     component: <InviteUser />,
+  },
+  {
+    name: "Email",
+    key: "validateEmail",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/validateEmail",
+    component: <ValidateEmail />,
+  },
+  {
+    name: "Password",
+    key: "validatePassword",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/ValidatePassword",
+    component: <ValidatePassword />,
   },
   {
     name: "Time Off Requests Journey",

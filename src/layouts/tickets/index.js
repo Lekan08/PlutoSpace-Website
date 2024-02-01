@@ -128,6 +128,7 @@ function Tickets() {
   const [ulastChatTimex, setULastChatTime] = useState("");
   const [ureopenedx, setUReopened] = useState(true);
   const [uresolvedx, setUResolved] = useState(true);
+  const [startTime, setStartTimex] = useState("");
 
   const [showUpdate, setShowUpdate] = useState(false);
   const [uopened, setUOpened] = useState(false);
@@ -178,6 +179,7 @@ function Tickets() {
     } else {
       nEndTime = endTimee;
     }
+    setStartTimex(nStartTime);
     const raw = JSON.stringify({
       orgID: orgIDs,
       startTime: nStartTime,
@@ -783,7 +785,9 @@ function Tickets() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigate("/Tickets/Chats")}>View</Dropdown.Item>
+              <Dropdown.Item onClick={() => navigate(`/Tickets/Chats/?startTime=${startTime}`)}>
+                View
+              </Dropdown.Item>
               <Dropdown.Item onClick={() => handleShow(items, value)}>Update</Dropdown.Item>
               <Dropdown.Item onClick={() => handleResolveTicket(value)}>Resolve</Dropdown.Item>
               <Dropdown.Item onClick={() => handleCloseTicket(value)}>

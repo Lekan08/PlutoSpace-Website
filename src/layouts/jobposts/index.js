@@ -608,11 +608,140 @@ function JobPost() {
           </MDBox>
           <hr />
           <MDBox textAlign="center" mb={10}>
-            <MDBox textAlign="center">
-              {/* <br /> */}
-              <br />
+            {/* <MDBox textAlign="center"> */}
+            {/* <br /> */}
+            {/* <br />
               <Row>
-                <Col>
+                <Col></Col>
+              </Row>
+            </MDBox> */}
+            <MDBox textAlign="center" mb={10}>
+              <MDBox textAlign="center">
+                {/* <br /> */}
+                {/* <br /> */}
+                {/* <Row>
+                  <Col>
+                    <MDBox>
+                      <Container>
+                        
+                      </Container>
+                    </MDBox>
+                  </Col> */}
+                {/* <Col> */}
+                <Container>
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <br />
+                      <MDTypography
+                        variant="p"
+                        fontWeight="regular"
+                        color="secondary"
+                        fontSize="90%"
+                      >
+                        Job Status
+                      </MDTypography>
+                      <MDBox>
+                        <Form.Select
+                          aria-label="Default select example"
+                          value={statusx}
+                          onChange={(e) => setStatusx(e.target.value)}
+                        >
+                          <option>--Job Status--</option>
+                          <option value="Full Time">Full Time</option>
+                          <option value="Part Time">Part Time</option>
+                          <option value="Temporal">Temporal</option>
+                          <option value="Seasonal">Seasonal</option>
+                          <option value="Internship">Internship</option>
+                          <option value="At Will">At Will</option>
+                        </Form.Select>
+                      </MDBox>
+                    </div>
+                    <div className="col-sm-4">
+                      <br />
+                      <MDTypography
+                        variant="p"
+                        fontWeight="regular"
+                        color="secondary"
+                        fontSize="90%"
+                      >
+                        Industry
+                      </MDTypography>
+                      <MDBox>
+                        <Form.Select
+                          aria-label="Default select example"
+                          value={industryx}
+                          //
+                          onChange={(e) => setIndustryx(e.target.value)}
+                        >
+                          <option>--Select Industry--</option>
+                          <option value="Agriculture">Agriculture</option>
+                          <option value="Chemical Industry">Chemical Industry</option>
+                          <option value="Commerce">Commerce</option>
+                          <option value="Construction">Construction</option>
+                          <option value="Education">Education</option>
+                          <option value="Financial Services">Financial Services</option>
+                          <option value="Fisheries">Fisheries</option>
+                          <option value="Food">Food</option>
+                          <option value="Forestry">Forestry</option>
+                          <option value="Health Services">Health Services</option>
+                          <option value="Hotels">Hotels</option>
+                          <option value="Metal Production">Metal Production</option>
+                          <option value="Mining">Mining</option>
+                          <option value="Mechanical and Electricitical Engineering">
+                            Mechanical and Electrical Engineering
+                          </option>
+                          <option value="Media - Culture">Media - Culture</option>
+                          <option value="Oil and Gas production">Oil and Gas production</option>
+                          <option value="Postals and Telecommunication">
+                            Postals and Telecommunication
+                          </option>
+                          <option value="Public Service">Public Service</option>
+                          <option value="Shipping and Ports">Shipping and Ports</option>
+                          <option value="Textiles"> Textiles, Clothing, Leather </option>
+                          <option value="Transport: road, railways">
+                            Transport (road, railways)
+                          </option>
+                          <option value="Transport Equipment Manufacturing">
+                            Transport Equipment Manufacturing
+                          </option>
+                          <option value="utilities: water, gas, electricity">
+                            Utilities:Water, Gas, Electricity
+                          </option>
+                          <option value="others">Others...</option>
+                        </Form.Select>
+                      </MDBox>
+                    </div>
+                    <div className="col-sm-4">
+                      <i className="optional" style={{ color: "red" }}>
+                        {" "}
+                        (required){" "}
+                      </i>
+                      <br />
+                      Add to Workflow
+                      <br />
+                      <Form.Select
+                        aria-label="Default select example"
+                        onChange={(e) => setTheWorkflowIDx(e.target.value)}
+                      >
+                        <option>--Select Workflow--</option>
+                        {workflow.map((item) => (
+                          <option key={item.id} value={item.id}>
+                            {item.name}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </div>
+                  </div>
+                </Container>
+                {/* </Col> */}
+                {/* </Row> */}
+              </MDBox>
+            </MDBox>
+            <br />
+            {/* <Container> */}
+            <Container>
+              <div className="row">
+                <div className="col-sm-6">
                   <MDTypography variant="p" fontWeight="bold" color="secondary" fontSize="90%">
                     <i className="optional"> (optional) </i>
                     <br />
@@ -624,147 +753,48 @@ function JobPost() {
                       onChange={(e) => setSalaryx(e.target.value)}
                     />
                   </MDTypography>
-                </Col>
-                <Col>
-                  <MDBox>
-                    <Container>
-                      <MDTypography
-                        variant="p"
-                        fontWeight="regular"
-                        color="secondary"
-                        fontSize="90%"
-                      >
-                        Job Status
-                      </MDTypography>
-                      <Form.Select
-                        aria-label="Default select example"
-                        value={statusx}
-                        onChange={(e) => setStatusx(e.target.value)}
-                      >
-                        <option>--Job Status--</option>
-                        <option value="Full Time">Full Time</option>
-                        <option value="Part Time">Part Time</option>
-                        <option value="Temporal">Temporal</option>
-                        <option value="Seasonal">Seasonal</option>
-                        <option value="Internship">Internship</option>
-                        <option value="At Will">At Will</option>
-                      </Form.Select>
-                    </Container>
-                  </MDBox>
-                </Col>
-              </Row>
-            </MDBox>
-            <br />
-            <Container>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDTypography variant="p" fontWeight="regular" color="secondary" fontSize="90%">
-                      Industry
-                    </MDTypography>
-                    <MDBox>
-                      <Form.Select
-                        aria-label="Default select example"
-                        value={industryx}
-                        //
-                        onChange={(e) => setIndustryx(e.target.value)}
-                      >
-                        <option>--Select Industry--</option>
-                        <option value="Agriculture">Agriculture</option>
-                        <option value="Chemical Industry">Chemical Industry</option>
-                        <option value="Commerce">Commerce</option>
-                        <option value="Construction">Construction</option>
-                        <option value="Education">Education</option>
-                        <option value="Financial Services">Financial Services</option>
-                        <option value="Fisheries">Fisheries</option>
-                        <option value="Food">Food</option>
-                        <option value="Forestry">Forestry</option>
-                        <option value="Health Services">Health Services</option>
-                        <option value="Hotels">Hotels</option>
-                        <option value="Metal Production">Metal Production</option>
-                        <option value="Mining">Mining</option>
-                        <option value="Mechanical and Electricitical Engineering">
-                          Mechanical and Electrical Engineering
-                        </option>
-                        <option value="Media - Culture">Media - Culture</option>
-                        <option value="Oil and Gas production">Oil and Gas production</option>
-                        <option value="Postals and Telecommunication">
-                          Postals and Telecommunication
-                        </option>
-                        <option value="Public Service">Public Service</option>
-                        <option value="Shipping and Ports">Shipping and Ports</option>
-                        <option value="Textiles"> Textiles, Clothing, Leather </option>
-                        <option value="Transport: road, railways">
-                          Transport (road, railways)
-                        </option>
-                        <option value="Transport Equipment Manufacturing">
-                          Transport Equipment Manufacturing
-                        </option>
-                        <option value="utilities: water, gas, electricity">
-                          Utilities:Water, Gas, Electricity
-                        </option>
-                        <option value="others">Others...</option>
-                      </Form.Select>
-                    </MDBox>
-                  </div>
-                  <div className="col-sm-6">
-                    <MDTypography variant="p" fontWeight="regular" color="secondary" fontSize="90%">
-                      <i className="optional"> (optional) </i>
-                      <br />
-                      Keywords
-                      <br />
-                      {newword.map((item) => (
-                        <React.Fragment key={item}>
-                          <Chip size="small" label={item} color="success" variant="outlined" />
-                          &nbsp;
-                        </React.Fragment>
-                      ))}
-                      <br /> <br />
-                      <TextField
-                        label="Add keywords "
-                        type="text"
-                        value={keywordx}
-                        onChange={(e) => setKeywordx(e.target.value)}
-                        onKeyDown={(e) => handleKeyDown(e)}
-                      />
-                    </MDTypography>
-                    &nbsp;
-                    <Button size="sm" variant="success" onClick={handleKeyword}>
-                      Add
-                    </Button>
-                    &nbsp;
-                    <Button size="sm" variant="danger" onClick={handleDelete}>
-                      Remove
-                    </Button>
-                  </div>
                 </div>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <i className="optional" style={{ color: "red" }}>
-                      {" "}
-                      (required){" "}
-                    </i>
+                <div className="col-sm-6">
+                  <MDTypography variant="p" fontWeight="regular" color="secondary" fontSize="90%">
+                    <i className="optional"> (optional) </i>
                     <br />
-                    Add to Workflow
+                    Keywords
                     <br />
-                    <Form.Select
-                      aria-label="Default select example"
-                      onChange={(e) => setTheWorkflowIDx(e.target.value)}
-                    >
-                      <option>--Select Workflow--</option>
-                      {workflow.map((item) => (
-                        <option key={item.id} value={item.id}>
-                          {item.name}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </div>
+                    {newword.map((item) => (
+                      <React.Fragment key={item}>
+                        <Chip size="small" label={item} color="success" variant="outlined" />
+                        &nbsp;
+                      </React.Fragment>
+                    ))}
+                    {/* <br /> */}
+                    <TextField
+                      label="Add keywords "
+                      type="text"
+                      value={keywordx}
+                      onChange={(e) => setKeywordx(e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(e)}
+                    />
+                  </MDTypography>
+                  &nbsp;
+                  <Button size="sm" variant="success" onClick={handleKeyword}>
+                    Add
+                  </Button>
+                  &nbsp;
+                  <Button size="sm" variant="danger" onClick={handleDelete}>
+                    Remove
+                  </Button>
                 </div>
-              </Container>
+              </div>
             </Container>
+            {/* </Container> */}
           </MDBox>
           <MDBox textAlign="center" p={5}>
-            <MDButton color="success" variant="gradient" onClick={handleCreate} size="large">
+            <MDButton
+              /* color="success" */ style={Styles.buttonSx}
+              variant="gradient"
+              onClick={handleCreate}
+              size="large"
+            >
               Create Job Post
             </MDButton>
           </MDBox>
@@ -774,7 +804,12 @@ function JobPost() {
       </Container> */}
       <br />
       <MDBox textAlign="center" p={5}>
-        <MDButton color="success" variant="gradient" onClick={handleOpen} size="large">
+        <MDButton
+          /* color="success" */ style={Styles.buttonSx}
+          variant="gradient"
+          onClick={handleOpen}
+          size="large"
+        >
           Get Job Post
         </MDButton>
       </MDBox>
