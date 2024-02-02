@@ -48,6 +48,39 @@ function OtherInflow() {
 
   const TotalAmountx = parseInt(taxAmountx, 10) + parseInt(amountx, 10);
 
+  const getTax = (orgIDs) => {
+    const headers = miHeaders;
+
+    fetch(`${process.env.REACT_APP_TANTA_URL}/tax/get/${orgIDs}`, { headers })
+      .then(async (res) => {
+        const aToken = res.headers.get("token-1");
+        localStorage.setItem("rexxdex", aToken);
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
+        return JSON.parse(result);
+      })
+      .then((result) => {
+        if (result.message === "Expired Access") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Token Does Not Exist") {
+          navigate("/authentication/sign-in");
+          window.location.reload();
+        }
+        if (result.message === "Unauthorized Access") {
+          navigate("/authentication/forbiddenPage");
+          window.location.reload();
+        }
+        console.log(result);
+        if (result?.value) {
+          setTaxAmount(result.value);
+        }
+      });
+  };
+
   useEffect(() => {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
@@ -75,6 +108,7 @@ function OtherInflow() {
         }
         if (isMounted) {
           setOIT(result);
+          getTax(orgIDs);
         }
       });
     return () => {

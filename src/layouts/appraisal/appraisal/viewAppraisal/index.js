@@ -31,7 +31,6 @@ function ViewAppraisal() {
   const [items, setItems] = useState({});
 
   const [enabled, setEnabled] = useState("");
-  const [checkedName, setCheckedName] = useState("");
   const [opened, setOpened] = useState(false);
 
   const { allPHeaders: myHeaders } = PHeaders();
@@ -77,39 +76,33 @@ function ViewAppraisal() {
   const handleOnNameKeys = () => {
     const letters = /^[a-zA-Z ]+$/;
     if (!namex.match(letters)) {
-      setCheckedName(false);
+      setEnabled(false);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "Name - input only capital and small letters<br>";
     }
     if (namex.match(letters)) {
-      setCheckedName(true);
+      setEnabled(true);
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "";
     }
     if (namex.length === 0) {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("name").innerHTML = "Name is required<br>";
+      setEnabled(false);
     }
-    setEnabled(checkedName === true);
   };
 
   // eslint-disable-next-line consistent-return
   const handleClick = (e) => {
-    handleOnNameKeys();
-    if (enabled) {
+    if (appraiseeIDx !== "" && namex !== "") {
       setOpened(true);
       e.preventDefault();
-      const data11 = JSON.parse(localStorage.getItem("user1"));
+      // const data11 = JSON.parse(localStorage.getItem("user1"));
 
-      const orgIDs = data11.orgID;
+      // const orgIDs = data11.orgID;
       const raw = JSON.stringify({
-        id: items.id,
-        deleteFlag: items.deleteFlag,
-        status: items.status,
-        createdTime: items.createdTime,
-        orgID: orgIDs,
+        ...items,
         appraiseeID: appraiseeIDx,
-        createdBy: items.createdBy,
         name: namex,
       });
       const requestOptions = {
@@ -188,6 +181,7 @@ function ViewAppraisal() {
         if (isMounted) {
           setItems(result[0]);
           setAppraiseeIDx(result[0].appraiseeID);
+          // setEnabled(true);
           setNamex(result[0].name);
         }
       });
@@ -267,6 +261,7 @@ function ViewAppraisal() {
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton
+                disabled={enabled && appraiseeIDx !== ""}
                 variant="gradient"
                 onClick={handleClick}
                 // color="info"
