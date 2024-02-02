@@ -442,7 +442,7 @@ function JobPost() {
       <DashboardNavbar />
       {/* <Container> */}
       <Card>
-        <MDBox pt={4} pb={3} px={0}>
+        <MDBox pt={6} pb={2} px={10}>
           {/* <Container> */}
           <MDBox
             variant="gradient"
