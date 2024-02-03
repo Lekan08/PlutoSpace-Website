@@ -15,6 +15,7 @@ import GHeaders from "getHeader";
 import Footer from "examples/Footer";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Styles from "styles";
 
 function Updatetest() {
   const MySwal = withReactContent(Swal);
@@ -344,8 +345,9 @@ function Updatetest() {
         localStorage.setItem("rexxdex", aToken);
         return res.json();
       })
+
       .then((result) => {
-        // setOpened(false);
+        setOpened(false);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -367,7 +369,7 @@ function Updatetest() {
         });
       })
       .catch((error) => {
-        // setOpened(false);
+        setOpened(false);
         MySwal.fire({
           title: error.status,
           type: "error",
@@ -442,7 +444,7 @@ function Updatetest() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -552,7 +554,7 @@ function Updatetest() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={callRight} color="info" width="50%">
+              <MDButton variant="gradient" onClick={callRight} style={Styles.boxSx} width="50%">
                 Update
               </MDButton>
             </MDBox>
