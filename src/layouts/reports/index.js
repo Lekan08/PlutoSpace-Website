@@ -1673,16 +1673,15 @@ function Reports() {
           console.log(eval(zoom111.join("+")));
           // eslint-disable-next-line no-eval
           const ExpensesTotal = eval(zoom111.join("+"));
-          console.log(ExpensesTotal);
+          console.log({ ExpensesTotal });
           const zoom112 = incomeFIltered.map((item) => item.totalAmount);
           // eslint-disable-next-line no-eval
           const IncomeTotal = eval(zoom112.join("+"));
 
           // const calculation = expensesIncome.amount;
-          console.log(IncomeTotal);
-          console.log(itemIncome);
-          console.log(expensesIncome);
-          console.log(expensesIncome);
+          console.log({ IncomeTotal });
+          console.log({ itemIncome });
+          console.log({ expensesIncome });
           // console.log(calculation);
           // eslint-disable-next-line no-eval
           // const ExpensesTotal = eval(calculation.join("+"));
@@ -1691,16 +1690,16 @@ function Reports() {
           // eslint-disable-next-line no-eval
           // const IncomeTotal = eval(calculation2.join("+"));
           const zoom = result.map((item) => item.totalAmount);
-          console.log(zoom);
+          console.log({ zoom });
           // eslint-disable-next-line no-eval
           console.log(eval(zoom.join("+")));
           // eslint-disable-next-line no-eval
           const viewTotal = eval(zoom.join("+"));
-          console.log(viewTotal);
+          console.log({ viewTotal });
           // eslint-disable-next-line no-eval
           const diffInMillis = eval(startTime - endTime);
           const numberOfDays = diffInMillis < 60 * 60 * 1000;
-          console.log(numberOfDays);
+          console.log({ numberOfDays });
         }
       });
   };
