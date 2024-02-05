@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
@@ -728,11 +729,16 @@ function ApproveApp() {
                 aria-label="Default select example"
               >
                 <option value="">--Select Employee--</option>
-                {user.map((api) => (
-                  <option key={api.personal.id} value={api.personal.id}>
-                    {api.personal.fname} {api.personal.lname}
-                  </option>
-                ))}
+                {user.map((api) => {
+                  if (appraisal?.appraiseeID === api.personal.id) {
+                    return;
+                  }
+                  return (
+                    <option key={api.personal.id} value={api.personal.id}>
+                      {api.personal.fname} {api.personal.lname}
+                    </option>
+                  );
+                })}
               </Form.Select>
               <br />
             </MDBox>
