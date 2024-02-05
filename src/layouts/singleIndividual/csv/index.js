@@ -21,6 +21,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import Styles from "styles";
 import example from "./example.jpg";
+import example1 from "./example1.jpg";
 import "../Force.css";
 
 function Csv() {
@@ -370,6 +371,7 @@ function Csv() {
                   </MDTypography>
                 </MDBox>
                 <img className="img" src={example} alt="example" height={100} width={200} />
+                <img className="img" src={example1} alt="example" height={100} width={200} />
                 <br />
                 <MDBox textAlign="center" p={5}>
                   <MDTypography
