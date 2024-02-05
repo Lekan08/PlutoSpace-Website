@@ -67,26 +67,32 @@ function RolesAndPerms() {
   const permissionsList = [];
 
   const handleOnChange = (value) => {
+    console.log("imhere");
     setOpened(true);
     const headers = miHeaders;
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
+    console.log("imhere");
     const id = urlParams.get("id");
     const idVal = JSON.parse([id]);
     JSON.stringify(localStorage.setItem("permVal", value));
-
+    console.log("imhere");
     const apiValue = value;
+    console.log("imhsssssere");
     setRService(value);
     setServiceVal(apiValue);
+    console.log("imhere");
     fetch(`${process.env.REACT_APP_EKOATLANTIC_URL}/permissions/getForService/${apiValue}`, {
       headers,
     })
       .then(async (res) => {
+        console.log("imhere");
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
         return res.json();
       })
       .then((resulta) => {
+        console.log(resulta);
         if (resulta.message === "Expired Access") {
           navigate("/authentication/sign-in");
         }
@@ -105,6 +111,7 @@ function RolesAndPerms() {
             return res.json();
           })
           .then((resultrpg) => {
+            console.log(resultrpg);
             setOpened(false);
             if (resultrpg.message === "Expired Access") {
               navigate("/authentication/sign-in");

@@ -11,6 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Styles from "styles";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useNavigate } from "react-router-dom";
@@ -286,7 +287,7 @@ function AddUserpayment() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -344,7 +345,12 @@ function AddUserpayment() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleOnAmountKeys} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleOnAmountKeys}
+                style={Styles.boxSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>
@@ -356,7 +362,7 @@ function AddUserpayment() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -395,7 +401,7 @@ function AddUserpayment() {
               <br />
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleSource} color="info" width="50%">
+              <MDButton variant="gradient" onClick={handleSource} style={Styles.boxSx} width="50%">
                 Save
               </MDButton>
             </MDBox>
