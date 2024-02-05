@@ -67,18 +67,20 @@ function RolesAndPerms() {
   const permissionsList = [];
 
   const handleOnChange = (value) => {
-    console.log("imhere");
+    console.log("doski");
     setOpened(true);
     const headers = miHeaders;
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     console.log("imhere");
-    const id = urlParams.get("id");
-    const idVal = JSON.parse([id]);
+    const idVal = urlParams.get("id");
+    console.log(idVal);
+    // const idVal = JSON.parse(id);
     JSON.stringify(localStorage.setItem("permVal", value));
     console.log("imhere");
+    console.log(value);
     const apiValue = value;
-    console.log("imhsssssere");
+
     setRService(value);
     setServiceVal(apiValue);
     console.log("imhere");
@@ -205,8 +207,8 @@ function RolesAndPerms() {
     setOpened(true);
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const id = urlParams.get("id");
-    const idVal = JSON.parse([id]);
+    const idVal = urlParams.get("id");
+    // const idVal = JSON.parse([id]);
 
     let isChecked = 0;
     const checks = e.target.checked;
