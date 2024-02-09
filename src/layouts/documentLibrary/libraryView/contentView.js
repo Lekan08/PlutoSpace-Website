@@ -429,6 +429,10 @@ function ContentView({ items, groups, level }) {
                   console.log("rtyukjhgvcx");
                   setImageUrl(`${docUrl}`);
                   setViewDoc(true);
+                } else if (docType === "video/webm") {
+                  console.log("rtyukjhgvcx___VID");
+                  setImageUrl(`${docUrl}`);
+                  setViewDoc(true);
                 } else if (
                   docType === "text/csv" ||
                   docType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
