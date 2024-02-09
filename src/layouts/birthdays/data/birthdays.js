@@ -64,6 +64,8 @@ function Birthdays() {
         } else {
           document.getElementById("number").innerHTML = "";
         }
+        console.log(result);
+        console.log("result");
         setItems(result);
       })
       .catch((error) => {

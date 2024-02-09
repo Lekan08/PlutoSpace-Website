@@ -812,7 +812,7 @@ function SingleIndividual() {
                     </Container>
                     <Container>
                       <div className="row">
-                        <MDBox mt={4}>
+                        <div className="col-sm-6">
                           <MDBox textAlign="center">
                             <MDTypography
                               variant="button"
@@ -836,28 +836,41 @@ function SingleIndividual() {
                               ))}
                             </Form.Select>
                           </MDBox>
-                        </MDBox>
-                      </div>
-                    </Container>
-                    <br />
-                    <Container>
-                      <div className="row">
-                        <MDTypography
-                          variant="button"
-                          fontWeight="regular"
-                          fontSize="80%"
-                          textAlign="center"
-                          color="text"
-                        >
-                          Corporate Name
-                        </MDTypography>
-                        <Select options={options} onChange={handleChanges} styles={customStyles} />
-                        <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
+                        </div>
+                        <div className="col-sm-6">
+                          <MDTypography
+                            variant="button"
+                            fontWeight="regular"
+                            fontSize="80%"
+                            textAlign="center"
+                            color="text"
+                          >
+                            Corporate Name
+                          </MDTypography>
+                          <Container>
+                            <div className="row">
+                              <Select
+                                options={options}
+                                onChange={handleChanges}
+                                styles={customStyles}
+                              />
+                              <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
+                            </div>
+                          </Container>
+                          <MDTypography variant="h4" fontWeight="light" fontSize="55%">
+                            (Optional)
+                          </MDTypography>
+                        </div>
                       </div>
                     </Container>
                   </MDBox>
                   <MDBox mt={4} mb={1} textAlign="center">
-                    <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleClick}
+                      style={Styles.boxSx}
+                      width="50%"
+                    >
                       Save
                     </MDButton>
                   </MDBox>

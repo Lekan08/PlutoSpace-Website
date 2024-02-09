@@ -19,6 +19,7 @@ import Box from "@mui/material/Box";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Checkbox from "@mui/material/Checkbox";
+import Styles from "styles";
 
 function AddQuesToCBT() {
   const MySwal = withReactContent(Swal);
@@ -555,7 +556,7 @@ function AddQuesToCBT() {
       <Card>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          style={Styles.boxSx}
           borderRadius="lg"
           coloredShadow="success"
           mx={30}
