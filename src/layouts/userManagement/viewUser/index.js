@@ -314,7 +314,9 @@ function ViewUser() {
                                                 navigate("/authentication/forbiddenPage");
                                               }
                                               if (isMounted) {
-                                                setStep(resultst.steps);
+                                                if (resultst.steps.length > 0) {
+                                                  setStep(resultst.steps);
+                                                }
 
                                                 if (result[0].stepID != null) {
                                                   // eslint-disable-next-line array-callback-return
@@ -674,7 +676,7 @@ function ViewUser() {
         if (resultst.message === "Unauthorized Access") {
           navigate("/authentication/forbiddenPage");
         }
-        if (resultst.steps !== null) {
+        if (resultst.steps.length > 0) {
           setStep(resultst.steps);
         } else {
           setStep([]);
