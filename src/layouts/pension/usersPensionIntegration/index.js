@@ -29,6 +29,8 @@ export default function UserPension() {
     fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getAllUserInfo/${orgIDs}`, { headers })
       .then(async (res) => res.json())
       .then((result) => {
+        console.log(result);
+        console.log("result");
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -48,6 +50,8 @@ export default function UserPension() {
         })
           .then(async (res) => res.json())
           .then((resultr) => {
+            console.log(resultr);
+            console.log("resultr");
             const providers = resultr;
             fetch(`${process.env.REACT_APP_JOHANNESBURG_URL}/pensionIntegration/gets/${orgIDs}`, {
               headers,
@@ -61,6 +65,7 @@ export default function UserPension() {
                 if (isMounted) {
                   const resultx = resultp;
                   console.log(resultx);
+                  console.log("resultx");
                   const brand = [];
                   let i = 0;
                   // eslint-disable-next-line no-plusplus
@@ -86,6 +91,8 @@ export default function UserPension() {
                       });
                     }
                   }
+                  console.log(brand);
+                  console.log("brand");
                   setItems(brand);
                 }
               });
