@@ -44,7 +44,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import GHeaders from "getHeader";
 // import PHeaders from "postHeader";
-
+import LogoutIcon from "@mui/icons-material/Logout";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
@@ -275,9 +275,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
         }
         // console.log(result);
         if (result) {
+          console.log("##############NOTIFICATION", result);
           if (result.length !== 0) {
             setItems((item) => [...item, result]);
-            // console.log(result, (item) => [...item]);
             // console.log((item) => [item]);
             // console.log(result);
             // setMainItems(result);
@@ -504,6 +504,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
               >
                 <Icon sx={iconsStyle}>settings</Icon>
               </IconButton>
+              <Link to="/authentication/sign-in">
+                <LogoutIcon size="BIG" color="black" disableRipple>
+                  <Icon>Logout</Icon>
+                </LogoutIcon>
+              </Link>
               <>
                 {["right"].map((anchor) => (
                   <React.Fragment key={anchor}>

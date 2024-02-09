@@ -642,6 +642,9 @@ function ViewSingleIndividual() {
 
   // Get time code
   function getTimeCreated(createdAt) {
+    if (createdAt === 0) {
+      return "No Engagement";
+    }
     const now = new Date();
     const created = new Date(createdAt);
 
@@ -962,7 +965,7 @@ function ViewSingleIndividual() {
                         color="white"
                         textAlign="center"
                       >
-                        Last Engagement
+                        Lastxw Engagement
                       </MDTypography>
                       <MDTypography
                         variant="h6"

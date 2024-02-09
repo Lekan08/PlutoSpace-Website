@@ -14,6 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
+import Styles from "styles";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
@@ -108,7 +109,7 @@ function CBT() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -186,7 +187,7 @@ function CBT() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                style={Styles.boxSx}
                 width="50%"
                 align="left"
               >

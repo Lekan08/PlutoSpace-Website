@@ -12,8 +12,10 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import GHeaders from "getHeader";
 // import PHeaders from "postHeader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import TextWrapper from "react-text-wrapper";
+import MDTypography from "components/MDTypography";
+import "./Css.css";
 // BIG Zzzzz
 
 export default function TestData() {
@@ -263,12 +265,151 @@ export default function TestData() {
     navigate(`/testQuestions/answer/?id=${value}`);
   };
 
-  const handleView = (value) => {
-    navigate(`/test-Questions/view/?id=${value}`);
-  };
+  // const handleView = (value) => {
+  //   navigate(`/test-Questions/view/?id=${value}`);
+  // };
   // AddQuesToCBT
   // const handleQuestion = (value) => {
   //   navigate(`/testQuestions/addquestions/?id=${value}`);
+  // };
+
+  // const handleUpdate2 = (
+  //   idx,
+  //   questionx,
+  //   instructionx,
+  //   hintx,
+  //   imageKey,
+  //   createdTimex,
+  //   deleteFlagx
+  // ) => {
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
+
+  //   const orgIDs = data11.orgID;
+  //   const raw = JSON.stringify({
+  //     id: idx,
+  //     orgID: orgIDs,
+  //     question: questionx,
+  //     instruction: instructionx,
+  //     hint: hintx,
+  //     imageUrl: imageKey,
+  //     createdTime: createdTimex,
+  //     deleteFlag: deleteFlagx,
+
+  //     // id: items[0].id,
+  //     // orgID: items[0].orgID,
+  //     // question: questionx,
+  //     // instruction: instructionx,
+  //     // hint: hintx,
+  //     // imageUrl: imgUrl,
+  //     // imageKey: imageKeyx,
+  //     // deleteFlag: items[0].deleteFlag,
+  //     // createdTime: items[0].createdTime,
+  //   });
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: raw,
+  //     redirect: "follow",
+  //   };
+
+  //   fetch(`${process.env.REACT_APP_RAGA_URL}/questions/update`, requestOptions)
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       const resultres = await res.text();
+  //       if (resultres === null || resultres === undefined || resultres === "") {
+  //         return {};
+  //       }
+  //       return JSON.parse(resultres);
+  //     })
+  //     .then((result) => {
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
+  //       MySwal.fire({
+  //         title: result.status,
+  //         type: "success",
+  //         text: result.message,
+  //       }).then(() => {
+  //         window.location.reload();
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       MySwal.fire({
+  //         title: error.status,
+  //         type: "error",
+  //         text: error.message,
+  //       });
+  //     });
+  // };
+
+  // const handleUpdate = (filteredData, value) => {
+  //   console.log(value);
+  //   console.log(filteredData);
+  //   let questionx = "";
+  //   let instrutionx = "";
+  //   let imageUrlx = "";
+  //   let hintx = "";
+  //   let imageKey = "";
+  //   let createdTime = 0;
+  //   let deleteFlag = 0;
+  //   // Avoid filter for empty string
+  //   if (!value) {
+  //     questionx = "";
+  //     instrutionx = "";
+  //     imageKey = "";
+  //     createdTime = 0;
+  //     deleteFlag = 0;
+  //   } else {
+  //     const filteredItems = filteredData.filter((item) => item.id === value);
+
+  //     questionx = filteredItems[0].question;
+  //     console.log(questionx);
+  //     instrutionx = filteredItems[0].instruction;
+  //     imageUrlx = filteredItems[0].imageUrl;
+  //     hintx = filteredItems[0].hint;
+  //     imageKey = filteredItems[0].imageKey;
+  //     createdTime = filteredItems[0].createdTime;
+  //     deleteFlag = filteredItems[0].deleteFlag;
+  //   }
+
+  //   MySwal.fire({
+  //     title: "Update Department",
+  //     html: ` <table><tr class="row"><td>
+  //          <label for="Question">Question</label></td>
+  //          <td><input type="text" id="quest" value="${questionx}" class="swal2-input" placeholder="Question"></td></tr><br>
+  //          <tr class="row"><td><label for="instruct">Instruction</label></td>
+  //          <td><input type="text" class="swal2-input" id="instruct" value="${instrutionx}" placeholder="Instruction"></td></tr>
+  //          <tr class="row"><td><label for="hint">Hint</label></td>
+  //          <td><input type="text" class="swal2-input" id="hint" value="${hintx}" placeholder="Hint"></td></tr>
+  //          <tr class="row"><td><label for="fileUpload">Image</label></td>
+  //          <td><input type="file" class="swal2-input" id="fileUpload" value="${imageUrlx}" placeholder="Image"></td></tr>
+  //          </td></tr></table>`,
+  //     confirmButtonText: "Save",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#f96d02",
+  //     cancelButtonColor: "#d33",
+  //     preConfirm: () => {
+  //       const question = Swal.getPopup().querySelector("#quest").value;
+  //       const instruction = Swal.getPopup().querySelector("#instruct").value;
+  //       const image = Swal.getPopup().querySelector("#image").value;
+  //       const hint = Swal.getPopup().querySelector("#hint").value;
+  //       const id = value;
+  //       if (!question) {
+  //         Swal.showValidationMessage(`Please enter name`);
+  //       }
+  //       handleUpdate2(id, question, instruction, image, hint, imageKey, createdTime, deleteFlag);
+  //     },
+  //   });
   // };
 
   return {
@@ -280,7 +421,24 @@ export default function TestData() {
         align: "left",
       },
       { Header: "Hint", accessor: "hint", align: "left" },
-      { Header: "Image", accessor: "imageUrl", align: "left" },
+      {
+        Header: "Image",
+        accessor: "imageUrl",
+        Cell: ({ cell: { value } }) => (
+          <Link to={value}>
+            <MDTypography
+              variant="h5"
+              fontWeight="medium"
+              style={{ color: "#FFA500" }}
+              textAlign="left"
+              mt={1}
+            >
+              View
+            </MDTypography>
+          </Link>
+        ),
+        align: "left",
+      },
       { Header: "Instruction", accessor: "instruction", align: "left" },
       {
         Header: "Date Created",
@@ -304,8 +462,9 @@ export default function TestData() {
                 <Icon sx={{ fontWeight: "light" }}>settings</Icon>
               </Dropdown.Toggle>
               <Dropdown.Menu>
+                {/* <Dropdown.Item onClick={() => handleUpdate(items, value)}>Update</Dropdown.Item> */}
                 <Dropdown.Item onClick={() => handleUpdate(value)}>Update</Dropdown.Item>
-                <Dropdown.Item onClick={() => handleView(value)}>View</Dropdown.Item>
+                {/* <Dropdown.Item onClick={() => handleView(value)}>View</Dropdown.Item> */}
                 <Dropdown.Item onClick={() => handleOptions(value)}>Add Options</Dropdown.Item>
                 {/* <Dropdown.Item onClick={() => handleQuestion(value)}>
                   Add Question To CBT

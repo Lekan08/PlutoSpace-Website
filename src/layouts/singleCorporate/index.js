@@ -361,7 +361,13 @@ function SingleCorporate() {
       MySwal.fire({
         title: "Empty_TextField",
         type: "error",
-        text: "Please choose a street",
+        text: "Please fill in your street",
+      });
+    } else if (clientLevel === "") {
+      MySwal.fire({
+        title: "Empty_TextField",
+        type: "error",
+        text: "Please select a client level",
       });
     } else {
       handleClick(e);

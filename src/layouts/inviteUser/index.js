@@ -41,7 +41,7 @@ function InviteUser() {
   const navigate = useNavigate();
 
   const [idx, setId] = useState(0);
-  const [orgIDx, setOrgID] = useState("");
+  // const [orgIDx, setOrgID] = useState("");
   // const [roleIDx, setRoleID] = useState(0);
   const [fnamex, setFname] = useState("");
   const [lnamex, setLname] = useState("");
@@ -60,15 +60,15 @@ function InviteUser() {
   const [sysStatusx, setSysStatus] = useState("");
   const [createdTimex, setCreatedTime] = useState("");
   const [allStates, setAllStates] = useState([]);
-  const [passwordx, setPassword] = useState("");
-  const [retypePasswordx, setRetypePassword] = useState("");
+  // const [passwordx, setPassword] = useState("");
+  // const [retypePasswordx, setRetypePassword] = useState("");
   //   const [enabled, setEnabled] = useState("");
   // const [passEnabled, setPassEnabled] = useState(true);
 
   const [opened, setOpened] = useState(false);
 
   const [checkedPemail, setCheckedPEmail] = useState("");
-  const [checkedPass, setCheckedPass] = useState("");
+  // const [checkedPass, setCheckedPass] = useState("");
   const [checkedFirst, setCheckedFirst] = useState("");
   const [checkedLast, setCheckedLast] = useState("");
 
@@ -77,101 +77,160 @@ function InviteUser() {
   // const { allPHeaders: myHeaders } = PHeaders();
   // const { allGHeaders: miHeaders } = GHeaders();
 
-  const [passwordShown, setPasswordShown] = useState(false);
+  // const [passwordShown, setPasswordShown] = useState(false);
 
-  const togglePassword = () => {
-    // When the handler is invoked
-    // inverse the boolean state of passwordShown
-    setPasswordShown(!passwordShown);
-  };
+  // const togglePassword = () => {
+  //   // When the handler is invoked
+  //   // inverse the boolean state of passwordShown
+  //   setPasswordShown(!passwordShown);
+  // };
 
   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
 
-  const getPersonalInformation = (e) => {
-    setEmail(e.target.value);
-    const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
-    const emailpersonal = e.target.value;
-    if (emailpersonal.length === 0 || !emailpersonal.match(letters)) {
-      // Email Invalid
-    } else {
-      const raw = JSON.stringify({
-        username: emailpersonal,
-      });
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-      fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/getByEmail`, requestOptions)
-        .then(async (res) => {
-          const aToken = res.headers.get("token-1");
-          localStorage.setItem("rexxdex", aToken);
-          const result = await res.text();
-          if (result === null || result === undefined || result === "") {
-            return {};
-          }
-          return JSON.parse(result);
-        })
-        .then((result) => {
-          console.log(result);
-          if (Object.keys(result).length !== 0) {
-            if (result.id !== 0) {
-              console.log(result.id);
-              // setPassEnabled(true);
-              setOname(result.oname);
-              setId(result.id);
-              setPhone(result.pno);
-              setNationality(result.nationality);
-              setResidentialStreet(result.residentialStreet);
-              setResidentialCity(result.residentialCity);
-              const filteredItems = AlCountry.filter(
-                (item) => item.name === result.residentialCountry
-              );
-              setAllStates(filteredItems[0].states);
-              setResidentialState(result.residentialState);
-              setResidentialCountry(result.residentialCountry);
-              setMaritalStatus(result.maritalStatus);
-              setSex(result.sex);
-              setDeleteFlag(result.deleteFlag);
-              setSysStatus(result.sysStatus);
-              setCreatedTime(result.createdTime);
+  const getAllFields = () => {
+    const personalInfo = JSON.parse(localStorage.getItem("personalInfo"));
+    console.log(personalInfo);
+    if (Object.keys(personalInfo).length !== 0) {
+      console.log("test44");
+      console.log(personalInfo);
+      setOname(personalInfo.oname);
+      setEmail(personalInfo.email);
+      setId(personalInfo.id);
+      setPhone(personalInfo.pno);
+      setNationality(personalInfo.nationality);
+      setResidentialStreet(personalInfo.residentialStreet);
+      setResidentialCity(personalInfo.residentialCity);
+      const filteredItems = AlCountry.filter(
+        (item) => item.name === personalInfo.residentialCountry
+      );
+      setAllStates(filteredItems[0].states);
+      setResidentialState(personalInfo.residentialState);
+      setResidentialCountry(personalInfo.residentialCountry);
+      setMaritalStatus(personalInfo.maritalStatus);
+      setSex(personalInfo.sex);
+      setDeleteFlag(personalInfo.deleteFlag);
+      setSysStatus(personalInfo.sysStatus);
+      setCreatedTime(personalInfo.createdTime);
 
-              setStartDate(
-                new Date(`${result.monthOfBirth}/${result.dayOfBirth}/${result.yearOfBirth}`)
-              );
-              setPassword("");
-              setRetypePassword("");
-            } else {
-              setId(0);
-            }
-          } else {
-            setId(0);
-            // setPassEnabled(false);
-            setOname("");
-            setPhone("");
-            setNationality("");
-            setResidentialStreet("");
-            setResidentialCity("");
-            setAllStates([]);
-            setResidentialState("");
-            setResidentialCountry("");
-            setMaritalStatus("");
-            setSex("");
-            setDeleteFlag("");
-            setSysStatus("");
-            setCreatedTime("");
-            setStartDate(new Date());
-            setPassword("");
-            setRetypePassword("");
-          }
-        })
-        .catch((error) => {
-          setId(0);
-          console.log(error);
-        });
+      setStartDate(
+        new Date(
+          `${personalInfo.monthOfBirth}/${personalInfo.dayOfBirth}/${personalInfo.yearOfBirth}`
+        )
+      );
+      // setPassword("");
+      // setRetypePassword("");
+    } else {
+      console.log("confirm");
+      setId(0);
+      setOname("");
+      setEmail("");
+      setPhone("");
+      setNationality("");
+      setResidentialStreet("");
+      setResidentialCity("");
+      setAllStates([]);
+      setResidentialState("");
+      setResidentialCountry("");
+      setMaritalStatus("");
+      setSex("");
+      setDeleteFlag("");
+      setSysStatus("");
+      setCreatedTime("");
+      setStartDate(new Date());
+      // setPassword("");
+      // setRetypePassword("");
     }
   };
+
+  useEffect(() => {
+    getAllFields();
+  }, []);
+
+  // const getPersonalInformation = (e) => {
+  //   setEmail(e.target.value);
+  //   const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
+  //   const emailpersonal = e.target.value;
+  //   if (emailpersonal.length === 0 || !emailpersonal.match(letters)) {
+  //     // Email Invalid
+  //   } else {
+  //     const raw = JSON.stringify({
+  //       username: emailpersonal,
+  //     });
+  //     const requestOptions = {
+  //       method: "POST",
+  //       headers: myHeaders,
+  //       body: raw,
+  //       redirect: "follow",
+  //     };
+  //     fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/getByEmail`, requestOptions)
+  //       .then(async (res) => {
+  //         const aToken = res.headers.get("token-1");
+  //         localStorage.setItem("rexxdex", aToken);
+  //         const result = await res.text();
+  //         if (result === null || result === undefined || result === "") {
+  //           return {};
+  //         }
+  //         return JSON.parse(result);
+  //       })
+  //       .then((result) => {
+  //         console.log(result);
+  //         if (Object.keys(result).length !== 0) {
+  //           if (result.id !== 0) {
+  //             console.log(result.id);
+  //             // setPassEnabled(true);
+  //             setOname(result.oname);
+  //             setId(result.id);
+  //             setPhone(result.pno);
+  //             setNationality(result.nationality);
+  //             setResidentialStreet(result.residentialStreet);
+  //             setResidentialCity(result.residentialCity);
+  //             const filteredItems = AlCountry.filter(
+  //               (item) => item.name === result.residentialCountry
+  //             );
+  //             setAllStates(filteredItems[0].states);
+  //             setResidentialState(result.residentialState);
+  //             setResidentialCountry(result.residentialCountry);
+  //             setMaritalStatus(result.maritalStatus);
+  //             setSex(result.sex);
+  //             setDeleteFlag(result.deleteFlag);
+  //             setSysStatus(result.sysStatus);
+  //             setCreatedTime(result.createdTime);
+
+  //             setStartDate(
+  //               new Date(`${result.monthOfBirth}/${result.dayOfBirth}/${result.yearOfBirth}`)
+  //             );
+  //             setPassword("");
+  //             setRetypePassword("");
+  //           } else {
+  //             setId(0);
+  //           }
+  //         } else {
+  //           setId(0);
+  //           // setPassEnabled(false);
+  //           setOname("");
+  //           setPhone("");
+  //           setNationality("");
+  //           setResidentialStreet("");
+  //           setResidentialCity("");
+  //           setAllStates([]);
+  //           setResidentialState("");
+  //           setResidentialCountry("");
+  //           setMaritalStatus("");
+  //           setSex("");
+  //           setDeleteFlag("");
+  //           setSysStatus("");
+  //           setCreatedTime("");
+  //           setStartDate(new Date());
+  //           setPassword("");
+  //           setRetypePassword("");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         setId(0);
+  //         console.log(error);
+  //       });
+  //   }
+  // };
 
   const handleOnChangeNationality = (e) => {
     setNationality(e.target.value);
@@ -293,130 +352,130 @@ function InviteUser() {
     }
   };
 
-  const handleOnPasswordKeys = (value) => {
-    const passwordValidate = new RegExp("^(?=.*[a-z!@#$%^&*.,])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
-    if (!value.match(passwordValidate)) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("password").innerHTML =
-        "Password - Password must be at least 8 characters, must include a capital letter, small letter, a number and any of these symbol (!@#$%^&*.,)<br>";
-      setCheckedPass(false);
-    }
-    if (value.match(passwordValidate)) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("password").innerHTML = "";
-      setCheckedPass(true);
-    }
-    if (retypePasswordx.length !== 0) {
-      if (retypePasswordx !== value) {
-        setCheckedPass(false);
-        // eslint-disable-next-line no-unused-expressions
-        document.getElementById("password").innerHTML = "Passwords don't match<br>";
-      } else {
-        setCheckedPass(true);
-        // eslint-disable-next-line no-unused-expressions
-        document.getElementById("password").innerHTML = "";
-      }
-    }
-    if (value.length === 0) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("password").innerHTML = "Password is required<br>";
-    }
-  };
+  // const handleOnPasswordKeys = (value) => {
+  //   const passwordValidate = new RegExp("^(?=.*[a-z!@#$%^&*.,])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+  //   if (!value.match(passwordValidate)) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("password").innerHTML =
+  //       "Password - Password must be at least 8 characters, must include a capital letter, small letter, a number and any of these symbol (!@#$%^&*.,)<br>";
+  //     setCheckedPass(false);
+  //   }
+  //   if (value.match(passwordValidate)) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("password").innerHTML = "";
+  //     setCheckedPass(true);
+  //   }
+  //   if (retypePasswordx.length !== 0) {
+  //     if (retypePasswordx !== value) {
+  //       setCheckedPass(false);
+  //       // eslint-disable-next-line no-unused-expressions
+  //       document.getElementById("password").innerHTML = "Passwords don't match<br>";
+  //     } else {
+  //       setCheckedPass(true);
+  //       // eslint-disable-next-line no-unused-expressions
+  //       document.getElementById("password").innerHTML = "";
+  //     }
+  //   }
+  //   if (value.length === 0) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("password").innerHTML = "Password is required<br>";
+  //   }
+  // };
 
-  const handleOnRTPasswordKeys = (value) => {
-    if (value === passwordx) {
-      setCheckedPass(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("rtPassword").innerHTML = "";
-    } else {
-      setCheckedPass(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("rtPassword").innerHTML = "Passwords don't match<br>";
-    }
-  };
+  // const handleOnRTPasswordKeys = (value) => {
+  //   if (value === passwordx) {
+  //     setCheckedPass(true);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("rtPassword").innerHTML = "";
+  //   } else {
+  //     setCheckedPass(false);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("rtPassword").innerHTML = "Passwords don't match<br>";
+  //   }
+  // };
 
   // Checking if the person is in the organisation via email.
   // If he/she is, will just pick the data and add them to the organisation
 
-  const checkPersonal = () => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const emailpersonal = urlParams.get("email");
-    const rolex = urlParams.get("role");
-    const orgIDD = urlParams.get("orgID");
-    if (emailpersonal.length !== 0) {
-      const rawp = JSON.stringify({
-        username: emailpersonal,
-      });
-      const requestOptionsp = {
-        method: "POST",
-        headers: myHeaders,
-        body: rawp,
-        redirect: "follow",
-      };
-      console.log(emailpersonal.length);
-      fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/getByEmail`, requestOptionsp)
-        .then(async (res) => {
-          const aToken = res.headers.get("token-1");
-          localStorage.setItem("rexxdex", aToken);
-          const result = await res.text();
-          if (result === null || result === undefined || result === "") {
-            return {};
-          }
-          return JSON.parse(result);
-        })
-        .then((result) => {
-          console.log(result);
-          if (Object.keys(result).length !== 0) {
-            MySwal.fire({
-              title: "Do you wish to join this Organisation?",
-              text: "You won't be able to revert this!",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#f96d02",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Yes, Join!",
-            }).then((resulty) => {
-              if (resulty.isConfirmed) {
-                const raw = JSON.stringify({
-                  orgID: orgIDD,
-                  personalID: result.id,
-                  email: emailpersonal,
-                  roleID: rolex,
-                });
-                const requestOptions = {
-                  method: "POST",
-                  headers: myHeaders,
-                  body: raw,
-                  redirect: "follow",
-                };
+  // const checkPersonal = () => {
+  //   const queryString = window.location.search;
+  //   const urlParams = new URLSearchParams(queryString);
+  //   const emailpersonal = urlParams.get("email");
+  //   const rolex = urlParams.get("role");
+  //   const orgIDD = urlParams.get("orgID");
+  //   if (emailpersonal.length !== 0) {
+  //     const rawp = JSON.stringify({
+  //       username: emailpersonal,
+  //     });
+  //     const requestOptionsp = {
+  //       method: "POST",
+  //       headers: myHeaders,
+  //       body: rawp,
+  //       redirect: "follow",
+  //     };
+  //     console.log(emailpersonal.length);
+  //     fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/getByEmail`, requestOptionsp)
+  //       .then(async (res) => {
+  //         const aToken = res.headers.get("token-1");
+  //         localStorage.setItem("rexxdex", aToken);
+  //         const result = await res.text();
+  //         if (result === null || result === undefined || result === "") {
+  //           return {};
+  //         }
+  //         return JSON.parse(result);
+  //       })
+  //       .then((result) => {
+  //         console.log(result);
+  //         if (Object.keys(result).length !== 0) {
+  //           MySwal.fire({
+  //             title: "Do you wish to join this Organisation?",
+  //             text: "You won't be able to revert this!",
+  //             icon: "warning",
+  //             showCancelButton: true,
+  //             confirmButtonColor: "#f96d02",
+  //             cancelButtonColor: "#d33",
+  //             confirmButtonText: "Yes, Join!",
+  //           }).then((resulty) => {
+  //             if (resulty.isConfirmed) {
+  //               const raw = JSON.stringify({
+  //                 orgID: orgIDD,
+  //                 personalID: result.id,
+  //                 email: emailpersonal,
+  //                 roleID: rolex,
+  //               });
+  //               const requestOptions = {
+  //                 method: "POST",
+  //                 headers: myHeaders,
+  //                 body: raw,
+  //                 redirect: "follow",
+  //               };
 
-                fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/add`, requestOptions)
-                  .then((res) => res.json())
-                  .then((resultx) => {
-                    console.log(resultx);
-                    MySwal.fire({
-                      title: resultx.status,
-                      type: "success",
-                      text: resultx.message,
-                    }).then(() => {
-                      navigate("/authentication/sign-in", { replace: true });
-                    });
-                  });
-              }
-            });
-          } else {
-            // Do nothing
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
+  //               fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/add`, requestOptions)
+  //                 .then((res) => res.json())
+  //                 .then((resultx) => {
+  //                   console.log(resultx);
+  //                   MySwal.fire({
+  //                     title: resultx.status,
+  //                     type: "success",
+  //                     text: resultx.message,
+  //                   }).then(() => {
+  //                     navigate("/authentication/sign-in", { replace: true });
+  //                   });
+  //                 });
+  //             }
+  //           });
+  //         } else {
+  //           // Do nothing
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
 
   useEffect(() => {
-    checkPersonal();
+    // checkPersonal();
     /* if (idx === 0) {
       setPassEnabled(true);
     } */
@@ -437,7 +496,7 @@ function InviteUser() {
       setFname(fnameu);
       setLname(lnameu);
       setOemail(emailu);
-      setOrgID(orgIDu);
+      // setOrgID(orgIDu);
       // setRoleID(roleIDu);
 
       handleOnFirstKeys(fnameu);
@@ -448,178 +507,418 @@ function InviteUser() {
     };
   }, []);
 
+  // const handleClick = (e) => {
+  //   setOpened(true);
+  //   // const user = JSON.parse(localStorage.getItem("user"));
+  //   let dayx = "";
+  //   let monthx = "";
+  //   let yearx = "";
+  //   if (startDate != null) {
+  //     dayx = startDate.getDate();
+  //     monthx = startDate.getMonth() + 1;
+  //     yearx = startDate.getFullYear();
+  //   }
+  //   e.preventDefault();
+  //   const araw = JSON.stringify({
+  //     fname: fnamex,
+  //     lname: lnamex,
+  //     oname: onamex,
+  //     email: emailx,
+  //     pno: phonex,
+  //     nationality: nationalityx,
+  //     residentialStreet: residentialStreetx,
+  //     residentialCity: residentialCityx,
+  //     residentialState: residentialStatex,
+  //     residentialCountry: residentialCountryx,
+  //     dayOfBirth: dayx,
+  //     monthOfBirth: monthx,
+  //     yearOfBirth: yearx,
+  //     maritalStatus: maritalStatusx,
+  //     sex: sexx,
+  //   });
+  //   console.log(araw);
+  //   const uraw = JSON.stringify({
+  //     id: idx,
+  //     fname: fnamex,
+  //     lname: lnamex,
+  //     oname: onamex,
+  //     email: emailx,
+  //     pno: phonex,
+  //     nationality: nationalityx,
+  //     residentialStreet: residentialStreetx,
+  //     residentialCity: residentialCityx,
+  //     residentialState: residentialStatex,
+  //     residentialCountry: residentialCountryx,
+  //     dayOfBirth: dayx,
+  //     monthOfBirth: monthx,
+  //     yearOfBirth: yearx,
+  //     maritalStatus: maritalStatusx,
+  //     sex: sexx,
+  //     deleteFlag: deleteFlagx,
+  //     sysStatus: sysStatusx,
+  //     createdTime: createdTimex,
+  //   });
+
+  //   let raw = araw;
+
+  //   localStorage.setItem("email1", emailx);
+
+  //   let endpoint = "add";
+  //   if (idx !== 0) {
+  //     endpoint = "update";
+  //     raw = uraw;
+  //   }
+  //   if (endpoint === "update") {
+  //     setPassword("");
+  //   }
+  //   const endpointPC = "add";
+
+  //   let endpointL = "add";
+  //   if (endpoint === "update") {
+  //     endpointL = `updateOrganization/${emailx}/${orgIDx}`;
+  //   }
+  //   let methodLUO = "POST";
+  //   if (endpointL !== "add") {
+  //     methodLUO = "GET";
+  //   }
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: raw,
+  //     redirect: "follow",
+  //   };
+  //   console.log(endpoint);
+  //   fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/${endpoint}`, requestOptions)
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       localStorage.setItem("personalInfo", JSON.stringify(result.data));
+  //       const queryString = window.location.search;
+  //       const urlParams = new URLSearchParams(queryString);
+  //       const orgIDs = urlParams.get("orgID");
+  //       const roleIDs = urlParams.get("role");
+  //       const raw1 = JSON.stringify({
+  //         orgID: orgIDs,
+  //         personalID: result.data.id,
+  //         email: emaily,
+  //         roleID: roleIDs,
+  //       });
+  //       const requestOptions1 = {
+  //         method: "POST",
+  //         headers: myHeaders,
+  //         body: raw1,
+  //         redirect: "follow",
+  //       };
+  //       console.log(result);
+  //       if (result.status === "SUCCESS") {
+  //         console.log("lorem");
+  //         fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/${endpointPC}`, requestOptions1)
+  //           .then((res) => res.json())
+  //           .then((resultx) => {
+  //             console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
+  //             localStorage.setItem("company", JSON.stringify(resultx.data));
+  //             // const queryString = window.location.search;
+  //             // const urlParams = new URLSearchParams(queryString);
+
+  //             const orgIDu = urlParams.get("orgID");
+  //             const raw2 = JSON.stringify({
+  //               orgID: orgIDu,
+  //               empID: result.data.id,
+  //               username: emailx,
+  //               password: passwordx,
+  //             });
+
+  //             let requestOptions2 = {
+  //               method: methodLUO,
+  //               headers: myHeaders,
+  //               body: raw2,
+  //               redirect: "follow",
+  //             };
+  //             if (methodLUO === "GET") {
+  //               requestOptions2 = {
+  //                 method: methodLUO,
+  //                 headers: myHeaders,
+  //               };
+  //               console.log("GET");
+  //             }
+  //             console.log(resultx);
+  //             if (resultx.status === "SUCCESS") {
+  //               console.log("ipsum");
+  //               fetch(`${process.env.REACT_APP_ZAVE_URL}/login/${endpointL}`, requestOptions2)
+  //                 .then((res) => res.json())
+  //                 .then((resultLog) => {
+  //                   console.log(
+  //                     `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
+  //                   );
+  //                   setOpened(false);
+  //                   MySwal.fire({
+  //                     title: resultx.status,
+  //                     type: "success",
+  //                     text: resultx.message,
+  //                   }).then(() => {
+  //                     navigate("/authentication/sign-in", { replace: true });
+  //                   });
+  //                 });
+  //             }
+  //           });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       setOpened(false);
+  //       MySwal.fire({
+  //         title: error.status,
+  //         type: "error",
+  //         text: error.message,
+  //       });
+  //     });
+  // };
+
   const handleClick = (e) => {
     setOpened(true);
-    // const user = JSON.parse(localStorage.getItem("user"));
-    let dayx = "";
-    let monthx = "";
-    let yearx = "";
-    if (startDate != null) {
-      dayx = startDate.getDate();
-      monthx = startDate.getMonth() + 1;
-      yearx = startDate.getFullYear();
-    }
-    e.preventDefault();
-    const araw = JSON.stringify({
-      fname: fnamex,
-      lname: lnamex,
-      oname: onamex,
-      email: emailx,
-      pno: phonex,
-      nationality: nationalityx,
-      residentialStreet: residentialStreetx,
-      residentialCity: residentialCityx,
-      residentialState: residentialStatex,
-      residentialCountry: residentialCountryx,
-      dayOfBirth: dayx,
-      monthOfBirth: monthx,
-      yearOfBirth: yearx,
-      maritalStatus: maritalStatusx,
-      sex: sexx,
-    });
-    console.log(araw);
-    const uraw = JSON.stringify({
-      id: idx,
-      fname: fnamex,
-      lname: lnamex,
-      oname: onamex,
-      email: emailx,
-      pno: phonex,
-      nationality: nationalityx,
-      residentialStreet: residentialStreetx,
-      residentialCity: residentialCityx,
-      residentialState: residentialStatex,
-      residentialCountry: residentialCountryx,
-      dayOfBirth: dayx,
-      monthOfBirth: monthx,
-      yearOfBirth: yearx,
-      maritalStatus: maritalStatusx,
-      sex: sexx,
-      deleteFlag: deleteFlagx,
-      sysStatus: sysStatusx,
-      createdTime: createdTimex,
-    });
+    const personalInfo = JSON.parse(localStorage.getItem("personalInfo"));
+    console.log(personalInfo);
 
-    let raw = araw;
-
-    localStorage.setItem("email1", emailx);
-
-    let endpoint = "add";
-    if (idx !== 0) {
-      endpoint = "update";
-      raw = uraw;
-    }
-    if (endpoint === "update") {
-      setPassword("");
-    }
-    const endpointPC = "add";
-
-    let endpointL = "add";
-    if (endpoint === "update") {
-      endpointL = `updateOrganization/${emailx}/${orgIDx}`;
-    }
-    let methodLUO = "POST";
-    if (endpointL !== "add") {
-      methodLUO = "GET";
-    }
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow",
-    };
-    console.log(endpoint);
-    fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/${endpoint}`, requestOptions)
-      .then((res) => res.json())
-      .then((result) => {
-        localStorage.setItem("personalInfo", JSON.stringify(result.data));
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const orgIDs = urlParams.get("orgID");
-        const roleIDs = urlParams.get("role");
-        const raw1 = JSON.stringify({
-          orgID: orgIDs,
-          personalID: result.data.id,
-          email: emaily,
-          roleID: roleIDs,
-        });
-        const requestOptions1 = {
-          method: "POST",
-          headers: myHeaders,
-          body: raw1,
-          redirect: "follow",
-        };
-        console.log(result);
-        if (result.status === "SUCCESS") {
-          console.log("lorem");
-          fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/${endpointPC}`, requestOptions1)
-            .then((res) => res.json())
-            .then((resultx) => {
-              console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
-              localStorage.setItem("company", JSON.stringify(resultx.data));
-              // const queryString = window.location.search;
-              // const urlParams = new URLSearchParams(queryString);
-
-              const orgIDu = urlParams.get("orgID");
-              const raw2 = JSON.stringify({
-                orgID: orgIDu,
-                empID: result.data.id,
-                username: emailx,
-                password: passwordx,
-              });
-
-              let requestOptions2 = {
-                method: methodLUO,
-                headers: myHeaders,
-                body: raw2,
-                redirect: "follow",
-              };
-              if (methodLUO === "GET") {
-                requestOptions2 = {
-                  method: methodLUO,
-                  headers: myHeaders,
-                };
-                console.log("GET");
-              }
-              console.log(resultx);
-              if (resultx.status === "SUCCESS") {
-                console.log("ipsum");
-                fetch(`${process.env.REACT_APP_ZAVE_URL}/login/${endpointL}`, requestOptions2)
-                  .then((res) => res.json())
-                  .then((resultLog) => {
-                    console.log(
-                      `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
-                    );
-                    setOpened(false);
-                    MySwal.fire({
-                      title: resultx.status,
-                      type: "success",
-                      text: resultx.message,
-                    }).then(() => {
-                      navigate("/authentication/sign-in", { replace: true });
-                    });
-                  });
-              }
-            });
-        }
-      })
-      .catch((error) => {
-        setOpened(false);
-        MySwal.fire({
-          title: error.status,
-          type: "error",
-          text: error.message,
-        });
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const fName = urlParams.get("fname");
+    const lName = urlParams.get("lname");
+    const emailpersonal = urlParams.get("email");
+    const role = urlParams.get("role");
+    const orgID = urlParams.get("orgID");
+    if (Object.keys(personalInfo).length === 0) {
+      // const user = JSON.parse(localStorage.getItem("user"));
+      let dayx = "";
+      let monthx = "";
+      let yearx = "";
+      if (startDate != null) {
+        dayx = startDate.getDate();
+        monthx = startDate.getMonth() + 1;
+        yearx = startDate.getFullYear();
+      }
+      e.preventDefault();
+      const raw = JSON.stringify({
+        fname: fnamex,
+        lname: lnamex,
+        oname: onamex,
+        email: emailx,
+        pno: phonex,
+        nationality: nationalityx,
+        residentialStreet: residentialStreetx,
+        residentialCity: residentialCityx,
+        residentialState: residentialStatex,
+        residentialCountry: residentialCountryx,
+        dayOfBirth: dayx,
+        monthOfBirth: monthx,
+        yearOfBirth: yearx,
+        maritalStatus: maritalStatusx,
+        sex: sexx,
       });
+      console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/add`, requestOptions)
+        .then((res) => res.json())
+        .then((result) => {
+          localStorage.setItem("personalInfo", JSON.stringify(result.data));
+          const orgIDs = urlParams.get("orgID");
+          const roleIDs = urlParams.get("role");
+          const raw1 = JSON.stringify({
+            orgID: orgIDs,
+            personalID: result.data.id,
+            email: emaily,
+            roleID: roleIDs,
+          });
+          const requestOptions1 = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw1,
+            redirect: "follow",
+          };
+          console.log(result);
+          if (result.status === "SUCCESS") {
+            console.log("lorem");
+            fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/update`, requestOptions1)
+              .then((res) => res.json())
+              .then((resultx) => {
+                console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
+                localStorage.setItem("company", JSON.stringify(resultx.data));
+                navigate(
+                  `/authentication/ValidatePassword?fname=${fName}&lname=${lName}&email=${emailpersonal}&role=${role}&orgID=${orgID}`
+                );
+                // const queryString = window.location.search;
+                // const urlParams = new URLSearchParams(queryString);
+
+                // const orgIDu = urlParams.get("orgID");
+                // const raw2 = JSON.stringify({
+                //   orgID: orgIDu,
+                //   empID: result.data.id,
+                //   username: emailx,
+                //   password: passwordx,
+                // });
+                // const requestOptions2 = {
+                //   method: "POST",
+                //   headers: myHeaders,
+                //   body: raw2,
+                //   redirect: "follow",
+                // }
+                // console.log(resultx);
+                // if (resultx.status === "SUCCESS") {
+                //   console.log("ipsum");
+                // fetch(`${process.env.REACT_APP_ZAVE_URL}/login/add`, requestOptions2)
+                //   .then((res) => res.json())
+                //   .then((resultLog) => {
+                //     console.log(
+                //       `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
+                //     );
+                //     setOpened(false);
+                //     MySwal.fire({
+                //       title: resultx.status,
+                //       type: "success",
+                //       text: resultx.message,
+                //     }).then(() => {
+                //       navigate("/authentication/sign-in", { replace: true });
+                //     });
+                //   });
+                // }
+              });
+          }
+        })
+        .catch((error) => {
+          setOpened(false);
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
+        });
+    } else {
+      let dayx = "";
+      let monthx = "";
+      let yearx = "";
+      if (startDate != null) {
+        dayx = startDate.getDate();
+        monthx = startDate.getMonth() + 1;
+        yearx = startDate.getFullYear();
+      }
+      e.preventDefault();
+      const raw = JSON.stringify({
+        id: idx,
+        fname: fnamex,
+        lname: lnamex,
+        oname: onamex,
+        email: emailx,
+        pno: phonex,
+        nationality: nationalityx,
+        residentialStreet: residentialStreetx,
+        residentialCity: residentialCityx,
+        residentialState: residentialStatex,
+        residentialCountry: residentialCountryx,
+        dayOfBirth: dayx,
+        monthOfBirth: monthx,
+        yearOfBirth: yearx,
+        maritalStatus: maritalStatusx,
+        sex: sexx,
+        deleteFlag: deleteFlagx,
+        createdTime: createdTimex,
+        sysStatus: sysStatusx,
+      });
+      console.log(raw);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+      fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/update`, requestOptions)
+        .then((res) => res.json())
+        .then((result) => {
+          localStorage.setItem("personalInfo", JSON.stringify(result.data));
+          // const queryString = window.location.search;
+          // const urlParams = new URLSearchParams(queryString);
+          const orgIDs = urlParams.get("orgID");
+          const roleIDs = urlParams.get("role");
+          const raw1 = JSON.stringify({
+            orgID: orgIDs,
+            personalID: result.data.id,
+            email: emaily,
+            roleID: roleIDs,
+          });
+          const requestOptions1 = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw1,
+            redirect: "follow",
+          };
+          console.log(result);
+          if (result.status === "SUCCESS") {
+            console.log("lorem");
+            fetch(`${process.env.REACT_APP_ZAVE_URL}/personalcompany/update`, requestOptions1)
+              .then((res) => res.json())
+              .then((resultx) => {
+                console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
+                localStorage.setItem("company", JSON.stringify(resultx.data));
+                navigate(
+                  `/authentication/ValidatePassword?fname=${fName}&lname=${lName}&email=${emailpersonal}&role=${role}&orgID=${orgID}`
+                );
+                // const queryString = window.location.search;
+                // const urlParams = new URLSearchParams(queryString);
+
+                // const orgIDu = urlParams.get("orgID");
+                // const raw2 = JSON.stringify({
+                //   orgID: orgIDu,
+                //   empID: result.data.id,
+                //   username: emailx,
+                //   password: passwordx,
+                // });
+                // const requestOptions2 = {
+                //   method: "POST",
+                //   headers: myHeaders,
+                //   body: raw2,
+                //   redirect: "follow",
+                // };
+                // console.log(resultx);
+                // if (resultx.status === "SUCCESS") {
+                //   console.log("ipsum");
+                //   fetch(`${process.env.REACT_APP_ZAVE_URL}/login/add`, requestOptions2)
+                //     .then((res) => res.json())
+                //     .then((resultLog) => {
+                //       console.log(
+                //         `STATUS - ${resultLog.status} - - - - - - MESSAGE - ${resultLog.message}`
+                //       );
+                //       setOpened(false);
+                //       MySwal.fire({
+                //         title: resultx.status,
+                //         type: "success",
+                //         text: resultx.message,
+                //       }).then(() => {
+                //         navigate("/authentication/sign-in", { replace: true });
+                //       });
+                //     });
+                // }
+              });
+          }
+        })
+        .catch((error) => {
+          setOpened(false);
+          MySwal.fire({
+            title: error.status,
+            type: "error",
+            text: error.message,
+          });
+        });
+    }
   };
 
   const handleValidate = (e) => {
     handleOnFirstKeys(fnamex);
     handleOnLastKeys(lnamex);
     handleOnPEmailKeys(emailx);
-    handleOnPasswordKeys(passwordx);
-    handleOnRTPasswordKeys(retypePasswordx);
-    if (checkedFirst && checkedLast && checkedPemail && checkedPass === true) {
+    // handleOnPasswordKeys(passwordx);
+    // handleOnRTPasswordKeys(retypePasswordx);
+    if (checkedFirst && checkedLast && checkedPemail === true) {
       handleClick(e);
     }
   };
@@ -739,7 +1038,7 @@ function InviteUser() {
                 label="Personal Email"
                 value={emailx || ""}
                 onKeyUp={(e) => handleOnPEmailKeys(e.target.value)}
-                onChange={getPersonalInformation}
+                onChange={(e) => setEmail(e.target.value)}
                 variant="standard"
                 fullWidth
               />
@@ -990,7 +1289,7 @@ function InviteUser() {
                 </div>
               </Container>
             </MDBox>
-            <MDBox
+            {/* <MDBox
               variant="gradient"
               // bgColor="info"
               borderRadius="lg"
@@ -1069,7 +1368,7 @@ function InviteUser() {
                   </MDTypography>
                 </div>
               </Container>
-            </MDBox>
+            </MDBox> */}
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
               <MDTypography
@@ -1098,7 +1397,7 @@ function InviteUser() {
                 style={Styles.buttonSx}
                 fullWidth
               >
-                Create Account
+                Next
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">

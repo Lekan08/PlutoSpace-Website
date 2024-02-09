@@ -49,18 +49,18 @@ import "react-phone-input-2/lib/style.css";
 import Styles from "styles";
 
 function Cover() {
-  const [passwordShown, setPasswordShown] = useState(false);
+  // const [passwordShown, setPasswordShown] = useState(false);
 
   // Password toggle handler
-  const togglePassword = () => {
-    // When the handler is invoked
-    // inverse the boolean state of passwordShown
-    setPasswordShown(!passwordShown);
-  };
+  // const togglePassword = () => {
+  //   // When the handler is invoked
+  //   // inverse the boolean state of passwordShown
+  //   setPasswordShown(!passwordShown);
+  // };
   const [phonex, setPhone] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [checkedPemail, setCheckedPEmail] = useState("");
-  const [checkedPass, setCheckedPass] = useState("");
+  // const [checkedPass, setCheckedPass] = useState("");
   const [checkedFirst, setCheckedFirst] = useState("");
   const [checkedLast, setCheckedLast] = useState("");
   const navigate = useNavigate();
@@ -81,8 +81,8 @@ function Cover() {
   const [residentialCountryx, setResidentialCountry] = useState("");
   const [maritalStatusx, setMaritalStatus] = useState("");
   const [sexx, setSex] = useState("");
-  const [passwordx, setPassword] = useState("");
-  const [retypePasswordx, setRetypePassword] = useState("");
+  // const [passwordx, setPassword] = useState("");
+  // const [retypePasswordx, setRetypePassword] = useState("");
   const [allStates, setAllStates] = useState([]);
 
   const [opened, setOpened] = useState(false);
@@ -166,7 +166,55 @@ function Cover() {
     }
   };
 
+  // const getPersonalInformation = () => {
+  //   // const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
+  //   // const emailpersonal = e.target.value;
+  //   // if (emailpersonal.length === 0 || !emailpersonal.match(letters)) {
+  //   //   // Email Invalid
+  //   // } else {
+  //   const myHeaders = new Headers();
+  //   myHeaders.append("Content-Type", "application/json");
+  //   const raw = JSON.stringify({
+  //     username: emailx,
+  //   });
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: myHeaders,
+  //     body: raw,
+  //     redirect: "follow",
+  //   };
+  //   fetch(`${process.env.REACT_APP_ZAVE_URL}/login/getByEmail`, requestOptions)
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       const result = await res.text();
+  //       if (result === null || result === undefined || result === "") {
+  //         return {};
+  //       }
+  //       return JSON.parse(result);
+  //     })
+  //     .then((result) => {
+  //       console.log(result);
+  //       if (Object.keys(result).length !== 0) {
+  //         if (result.id !== 0) {
+  //           console.log(result.id);
+  //           // setShow(true);
+  //         } else {
+  //           // setShow(false);
+  //         }
+  //       } else {
+  //         // setShow(false);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  //   // }
+  // };
+
   const handleOnPEmailKeys = (value) => {
+    // getPersonalInformation();
+    localStorage.setItem("personalEmail", JSON.stringify(emailx));
     const letters = new RegExp("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+.[a-zA-Z]$");
     if (!value.match(letters)) {
       setCheckedPEmail(false);
@@ -233,47 +281,47 @@ function Cover() {
     }
   };
 
-  const handleOnPasswordKeys = (value) => {
-    const passwordValidate = new RegExp("^(?=.*[a-z!@#$%^&*.,])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
-    if (!value.match(passwordValidate)) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("password").innerHTML =
-        "Password - Password must be at least 8 characters, must include a capital letter, small letter, a number and any of these symbol (!@#$%^&*.,)<br>";
-      setCheckedPass(false);
-    }
-    if (value.match(passwordValidate)) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("password").innerHTML = "";
-      setCheckedPass(true);
-    }
-    if (retypePasswordx.length !== 0) {
-      if (retypePasswordx !== value) {
-        setCheckedPass(false);
-        // eslint-disable-next-line no-unused-expressions
-        document.getElementById("rtPassword").innerHTML = "Passwords don't match<br>";
-      } else {
-        setCheckedPass(true);
-        // eslint-disable-next-line no-unused-expressions
-        document.getElementById("rtPassword").innerHTML = "";
-      }
-    }
-    if (value.length === 0) {
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("password").innerHTML = "Password is required<br>";
-    }
-  };
+  // const handleOnPasswordKeys = (value) => {
+  //   const passwordValidate = new RegExp("^(?=.*[a-z!@#$%^&*.,])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+  //   if (!value.match(passwordValidate)) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("password").innerHTML =
+  //       "Password - Password must be at least 8 characters, must include a capital letter, small letter, a number and any of these symbol (!@#$%^&*.,)<br>";
+  //     setCheckedPass(false);
+  //   }
+  //   if (value.match(passwordValidate)) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("password").innerHTML = "";
+  //     setCheckedPass(true);
+  //   }
+  //   if (retypePasswordx.length !== 0) {
+  //     if (retypePasswordx !== value) {
+  //       setCheckedPass(false);
+  //       // eslint-disable-next-line no-unused-expressions
+  //       document.getElementById("rtPassword").innerHTML = "Passwords don't match<br>";
+  //     } else {
+  //       setCheckedPass(true);
+  //       // eslint-disable-next-line no-unused-expressions
+  //       document.getElementById("rtPassword").innerHTML = "";
+  //     }
+  //   }
+  //   if (value.length === 0) {
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("password").innerHTML = "Password is required<br>";
+  //   }
+  // };
 
-  const handleOnRTPasswordKeys = (value) => {
-    if (value === passwordx) {
-      setCheckedPass(true);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("rtPassword").innerHTML = "";
-    } else {
-      setCheckedPass(false);
-      // eslint-disable-next-line no-unused-expressions
-      document.getElementById("rtPassword").innerHTML = "Passwords don't match<br>";
-    }
-  };
+  // const handleOnRTPasswordKeys = (value) => {
+  //   if (value === passwordx) {
+  //     setCheckedPass(true);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("rtPassword").innerHTML = "";
+  //   } else {
+  //     setCheckedPass(false);
+  //     // eslint-disable-next-line no-unused-expressions
+  //     document.getElementById("rtPassword").innerHTML = "Passwords don't match<br>";
+  //   }
+  // };
 
   const handleClick = (e) => {
     setOpened(true);
@@ -312,40 +360,49 @@ function Cover() {
       body: raw,
       redirect: "follow",
     };
-    localStorage.setItem("pass1", passwordx);
+    // localStorage.setItem("pass1", passwordx);
     localStorage.setItem("email1", emaily);
 
-    if (passwordx === retypePasswordx) {
-      fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/add`, requestOptions)
-        .then((res) => res.json())
-        .then((result) => {
-          setOpened(false);
-          if (result.status === "SUCCESS" || result.status === "ACCOUNT_EXIST") {
-            MySwal.fire({
-              title: result.status,
-              type: "success",
-              text: result.message,
-            }).then(() => {
-              localStorage.setItem("user", JSON.stringify(result.data));
-              navigate("/authentication/company-Registration", { replace: true });
-            });
-          } else {
-            MySwal.fire({
-              title: result.status,
-              type: "error",
-              text: result.message,
-            });
-          }
-        })
-        .catch((error) => {
-          setOpened(false);
+    // if (passwordx === retypePasswordx) {
+    fetch(`${process.env.REACT_APP_ZAVE_URL}/personal/add`, requestOptions)
+      .then((res) => res.json())
+      .then((result) => {
+        setOpened(false);
+        if (result.status === "SUCCESS") {
           MySwal.fire({
-            title: error.status,
-            type: "error",
-            text: error.message,
+            title: result.status,
+            type: "success",
+            text: result.message,
+          }).then(() => {
+            localStorage.setItem("user", JSON.stringify(result.data));
+            navigate("/authentication/company-Registration", { replace: true });
           });
+        } else if (result.status === "ACCOUNT_EXIST") {
+          MySwal.fire({
+            title: result.status,
+            type: "success",
+            text: result.message,
+          }).then(() => {
+            // localStorage.setItem("user", JSON.stringify(result.data));
+            navigate("/sign-in", { replace: true });
+          });
+        } else {
+          MySwal.fire({
+            title: result.status,
+            type: "error",
+            text: result.message,
+          });
+        }
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
         });
-    }
+      });
+    // }
   };
 
   const handleValidate = (e) => {
@@ -356,9 +413,9 @@ function Cover() {
     handleOnOEmailKeys(emaily);
     handleOnStreetKeys(residentialStreetx);
     handleOnCityKeys(residentialCityx);
-    handleOnPasswordKeys(passwordx);
-    handleOnRTPasswordKeys(retypePasswordx);
-    if (checkedFirst && checkedLast && checkedPemail && checkedPass === true) {
+    // handleOnPasswordKeys(passwordx);
+    // handleOnRTPasswordKeys(retypePasswordx);
+    if (checkedFirst && checkedLast && checkedPemail === true) {
       handleClick(e);
     }
   };
@@ -737,7 +794,7 @@ function Cover() {
                 </div>
               </Container>
             </MDBox>
-            <MDBox
+            {/* <MDBox
               variant="gradient"
               // bgColor="info"
               style={Styles.boxSx}
@@ -814,7 +871,7 @@ function Cover() {
                   </MDTypography>
                 </div>
               </Container>
-            </MDBox>
+            </MDBox> */}
             {/* <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
               <MDTypography
@@ -844,7 +901,7 @@ function Cover() {
                 style={Styles.buttonSx}
                 fullWidth
               >
-                Create Account
+                Next
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">

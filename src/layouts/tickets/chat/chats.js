@@ -81,6 +81,7 @@ function Chat({ socket, username, room }) {
       isMounted = false;
     };
   }, []);
+  console.log("showUSSOmething");
 
   const sendMessage = async () => {
     if (currentMessage !== "") {
