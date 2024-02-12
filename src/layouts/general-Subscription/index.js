@@ -502,7 +502,7 @@ function GeneralSubscription() {
               textAlign="center"
             >
               <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-                General Subscription
+                Filter Subscription
               </MDTypography>
             </MDBox>
             <MDBox
