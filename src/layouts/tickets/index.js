@@ -820,7 +820,7 @@ function Tickets() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add Ticket
+              Raise Ticket Manually
             </MDTypography>
           </MDBox>
           <MDBox
