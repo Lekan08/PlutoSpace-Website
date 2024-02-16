@@ -86,6 +86,7 @@ function InviteUser() {
           return res.json();
         })
         .then((result) => {
+          if (result.pno === null)
           if (result.id !== null) {
             setPassEnabled(false);
             setOname(result.oname);

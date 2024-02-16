@@ -70,6 +70,7 @@ function TaxRemittance() {
   //         navigate("/authentication/forbiddenPage");
   //         window.location.reload();
   //       }
+
   //       if (isMounted) {
   //         console.log(result);
   //         setTable(result);
