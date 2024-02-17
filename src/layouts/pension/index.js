@@ -421,7 +421,8 @@ function Pension() {
                     <MDBox component="form" role="form" mx={10}>
                       <MDBox
                         variant="gradient"
-                        bgColor="info"
+                        // bgColor="info"
+                        style={{ backgroundColor: "#f96d02" }}
                         borderRadius="lg"
                         coloredShadow="info"
                         mx={0}
@@ -453,7 +454,8 @@ function Pension() {
                           <MDBox mt={4} mb={1} textAlign="center">
                             <MDButton
                               variant="gradient"
-                              color="info"
+                              // color="info"
+                              style={Styles.buttonSx}
                               width="50%"
                               onClick={handleSave}
                             >

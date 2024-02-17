@@ -20,6 +20,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
+import Styles from "styles";
 import { useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 
@@ -368,10 +369,10 @@ function SingleIndividual() {
           <Accordion.Body>
             <Paper elevation={3}>
               <br />
-              <MDBox pt={3} pb={2} px={20}>
+              <MDBox pt={4} pb={3} px={3}>
                 <MDBox
                   variant="gradient"
-                  bgColor="info"
+                  style={Styles.boxSx}
                   borderRadius="lg"
                   coloredShadow="info"
                   mx={2}
@@ -421,7 +422,7 @@ function SingleIndividual() {
                             value={namex || ""}
                             onChange={(e) => setName(e.target.value)}
                             onKeyUp={handleOnNameKeys}
-                            label="First Name"
+                            label="First Name*"
                             variant="standard"
                             fullWidth
                           />
@@ -432,7 +433,7 @@ function SingleIndividual() {
                             value={lnamex || ""}
                             onChange={(e) => setLnamex(e.target.value)}
                             onKeyUp={handleOnNameKeys}
-                            label="Last Name"
+                            label="Last Name*"
                             variant="standard"
                             fullWidth
                           />
@@ -461,7 +462,7 @@ function SingleIndividual() {
                               textAlign="center"
                               color="text"
                             >
-                              Title
+                              Title*
                             </MDTypography>
                             <Form.Select
                               value={titlex}
@@ -498,7 +499,7 @@ function SingleIndividual() {
                             type="text"
                             value={streetx || ""}
                             onChange={(e) => setStreet(e.target.value)}
-                            label="Street"
+                            label="Street*"
                             variant="standard"
                             fullWidth
                           />
@@ -521,7 +522,7 @@ function SingleIndividual() {
                         <div className="row">
                           <div className="col-sm-6">
                             <MDTypography variant="button" fontWeight="regular" color="text" mt={2}>
-                              Country
+                              Country*
                             </MDTypography>
                             <MDBox textAlign="right">
                               <Form.Select
@@ -585,7 +586,7 @@ function SingleIndividual() {
 
                         <div className="col-sm-6">
                           <MDTypography variant="button" fontWeight="regular" color="text">
-                            Phone Number
+                            Phone Number*
                           </MDTypography>
                           <PhoneInput
                             value={pnox}
@@ -600,7 +601,7 @@ function SingleIndividual() {
                       <br />
                       <MDBox textAlign="center">
                         <MDTypography variant="h4" fontWeight="medium" fontSize="55%">
-                          Date Of Birth
+                          Date Of Birth*
                         </MDTypography>
                         <DatePicker
                           date={startDate}
@@ -759,7 +760,7 @@ function SingleIndividual() {
                               textAlign="center"
                               color="text"
                             >
-                              Client Level
+                              Client Level*
                             </MDTypography>
                             <Form.Select
                               value={clientLevel}
@@ -811,7 +812,7 @@ function SingleIndividual() {
                     </Container>
                     <Container>
                       <div className="row">
-                        <MDBox mt={4}>
+                        <div className="col-sm-6">
                           <MDBox textAlign="center">
                             <MDTypography
                               variant="button"
@@ -835,28 +836,41 @@ function SingleIndividual() {
                               ))}
                             </Form.Select>
                           </MDBox>
-                        </MDBox>
-                      </div>
-                    </Container>
-                    <br />
-                    <Container>
-                      <div className="row">
-                        <MDTypography
-                          variant="button"
-                          fontWeight="regular"
-                          fontSize="80%"
-                          textAlign="center"
-                          color="text"
-                        >
-                          Corporate Name
-                        </MDTypography>
-                        <Select options={options} onChange={handleChanges} styles={customStyles} />
-                        <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
+                        </div>
+                        <div className="col-sm-6">
+                          <MDTypography
+                            variant="button"
+                            fontWeight="regular"
+                            fontSize="80%"
+                            textAlign="center"
+                            color="text"
+                          >
+                            Corporate Name
+                          </MDTypography>
+                          <Container>
+                            <div className="row">
+                              <Select
+                                options={options}
+                                onChange={handleChanges}
+                                styles={customStyles}
+                              />
+                              <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
+                            </div>
+                          </Container>
+                          <MDTypography variant="h4" fontWeight="light" fontSize="55%">
+                            (Optional)
+                          </MDTypography>
+                        </div>
                       </div>
                     </Container>
                   </MDBox>
                   <MDBox mt={4} mb={1} textAlign="center">
-                    <MDButton variant="gradient" onClick={handleClick} color="info" width="50%">
+                    <MDButton
+                      variant="gradient"
+                      onClick={handleClick}
+                      style={Styles.boxSx}
+                      width="50%"
+                    >
                       Save
                     </MDButton>
                   </MDBox>

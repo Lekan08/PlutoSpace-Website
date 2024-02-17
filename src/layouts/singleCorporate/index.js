@@ -361,7 +361,13 @@ function SingleCorporate() {
       MySwal.fire({
         title: "Empty_TextField",
         type: "error",
-        text: "Please choose a street",
+        text: "Please fill in your street",
+      });
+    } else if (clientLevel === "") {
+      MySwal.fire({
+        title: "Empty_TextField",
+        type: "error",
+        text: "Please select a client level",
       });
     } else {
       handleClick(e);
@@ -503,10 +509,9 @@ function SingleCorporate() {
           <Accordion.Body>
             <Paper elevation={3}>
               <br />
-              <MDBox pt={4} pb={3} px={30}>
+              <MDBox pt={4} pb={3} px={3}>
                 <MDBox
                   variant="gradient"
-                  // bgColor="info"
                   borderRadius="lg"
                   coloredShadow="info"
                   mx={2}

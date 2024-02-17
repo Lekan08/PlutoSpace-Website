@@ -21,7 +21,7 @@ import PhoneInput from "react-phone-input-2";
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 import AllCountriesAndStates from "countries-states-master/countries";
-
+import Styles from "styles";
 // import SingleCorporateTable from "./data";
 // ZINOLEESKY
 
@@ -320,28 +320,28 @@ function UpdateSingleCorporate() {
         if (isMounted) {
           // eslint-disable-next-line eqeqeq
           if (result.length != 0) {
-            setIdx(result[0].id);
-            setName(result[0].name);
-            setStreet(result[0].street);
-            setCity(result[0].city);
-            const filteredItems = AlCountry.filter((item) => item.name === result[0].country);
+            setIdx(result[0]?.id);
+            setName(result[0]?.name);
+            setStreet(result[0]?.street);
+            setCity(result[0]?.city);
+            const filteredItems = AlCountry.filter((item) => item.name === result[0]?.country);
             setAllStates(filteredItems[0].states);
-            setResidentialState(result[0].state);
-            setResidentialCountry(result[0].country);
-            setEmail(result[0].email);
-            setPno(result[0].pno);
-            setYearOfEstablishment(result[0].yearOfEstablishment);
-            setTwitter(result[0].twitter);
-            setFacebook(result[0].facebook);
-            setInstagram(result[0].instagram);
-            setLinkedIn(result[0].linkedIn);
-            setPortfolio(result[0].portfolio);
-            setWebsite(result[0].website);
-            setIndustry(result[0].industry);
-            setDutyRelieverx(result[0].accountOwnerID);
-            setCreatedx(result[0].createdDate);
-            setDeletex(result[0].deleteFlag);
-            setClientLevel(result[0].clientLevel.id);
+            setResidentialState(result[0]?.state);
+            setResidentialCountry(result[0]?.country);
+            setEmail(result[0]?.email);
+            setPno(result[0]?.pno);
+            setYearOfEstablishment(result[0]?.yearOfEstablishment);
+            setTwitter(result[0]?.twitter);
+            setFacebook(result[0]?.facebook);
+            setInstagram(result[0]?.instagram);
+            setLinkedIn(result[0]?.linkedIn);
+            setPortfolio(result[0]?.portfolio);
+            setWebsite(result[0]?.website);
+            setIndustry(result[0]?.industry);
+            setDutyRelieverx(result[0]?.accountOwnerID);
+            setCreatedx(result[0]?.createdDate);
+            setDeletex(result[0]?.deleteFlag);
+            setClientLevel(result[0]?.clientLevel?.id);
           } else {
             setIdx(null);
           }
@@ -425,10 +425,10 @@ function UpdateSingleCorporate() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -833,7 +833,12 @@ function UpdateSingleCorporate() {
               </Container>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" onClick={handleCheckYear} color="info" width="50%">
+              <MDButton
+                variant="gradient"
+                onClick={handleCheckYear}
+                style={Styles.boxSx}
+                width="50%"
+              >
                 Save
               </MDButton>
             </MDBox>

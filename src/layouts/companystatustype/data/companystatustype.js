@@ -100,7 +100,7 @@ export default function data() {
     }
 
     MySwal.fire({
-      title: "Update Employee Type",
+      title: "Update Employee Types",
       html: `<table><tr><td>
       <label for="name">Name</label></td>
       <td><input type="text" id="name" value="${namex}" class="swal2-input" placeholder="Name"></td></tr><br>

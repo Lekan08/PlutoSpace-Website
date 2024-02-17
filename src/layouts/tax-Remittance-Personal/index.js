@@ -14,6 +14,7 @@ import Swal from "sweetalert2";
 import Footer from "examples/Footer";
 import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
+import Styles from "styles";
 import PHeaders from "postHeader";
 // import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
@@ -69,6 +70,7 @@ function TaxRemittance() {
   //         navigate("/authentication/forbiddenPage");
   //         window.location.reload();
   //       }
+
   //       if (isMounted) {
   //         console.log(result);
   //         setTable(result);
@@ -310,7 +312,13 @@ function TaxRemittance() {
           canSearch
         />
         <MDBox mt={4} mb={1} style={{ textAlign: "center" }}>
-          <MDButton variant="gradient" onClick={exportPDF} color="info" width="50%" align="center">
+          <MDButton
+            variant="gradient"
+            onClick={exportPDF}
+            style={Styles.buttonSx}
+            width="50%"
+            align="center"
+          >
             Export PDF
           </MDButton>
         </MDBox>

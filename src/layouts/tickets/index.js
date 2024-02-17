@@ -128,6 +128,7 @@ function Tickets() {
   const [ulastChatTimex, setULastChatTime] = useState("");
   const [ureopenedx, setUReopened] = useState(true);
   const [uresolvedx, setUResolved] = useState(true);
+  const [startTime, setStartTimex] = useState("");
 
   const [showUpdate, setShowUpdate] = useState(false);
   const [uopened, setUOpened] = useState(false);
@@ -178,6 +179,7 @@ function Tickets() {
     } else {
       nEndTime = endTimee;
     }
+    setStartTimex(nStartTime);
     const raw = JSON.stringify({
       orgID: orgIDs,
       startTime: nStartTime,
@@ -783,7 +785,9 @@ function Tickets() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item onClick={() => navigate("/Tickets/Chats")}>View</Dropdown.Item>
+              <Dropdown.Item onClick={() => navigate(`/Tickets/Chats/?startTime=${startTime}`)}>
+                View
+              </Dropdown.Item>
               <Dropdown.Item onClick={() => handleShow(items, value)}>Update</Dropdown.Item>
               <Dropdown.Item onClick={() => handleResolveTicket(value)}>Resolve</Dropdown.Item>
               <Dropdown.Item onClick={() => handleCloseTicket(value)}>
@@ -802,7 +806,7 @@ function Tickets() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={5}>
           <MDBox
             variant="gradient"
             //   bgColor="info"
@@ -816,7 +820,7 @@ function Tickets() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Add Ticket
+              Raise Ticket Manually
             </MDTypography>
           </MDBox>
           <MDBox

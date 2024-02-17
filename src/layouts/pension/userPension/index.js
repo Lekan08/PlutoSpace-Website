@@ -98,7 +98,7 @@ function UserPension() {
       setOpened(true);
       const raw = JSON.stringify({
         orgID: orgIDs,
-        empID: Number(urlParams.get("id")),
+        empID: urlParams.get("id"),
         providerID: changes,
       });
       // console.log(enabled);
@@ -150,7 +150,7 @@ function UserPension() {
       const raw = JSON.stringify({
         id: updates.id,
         orgID: orgIDs,
-        empID: Number(urlParams.get("id")),
+        empID: urlParams.get("id"),
         providerID: changes,
         deleteFlag: updates.deleteFlag,
         createdTime: updates.createdTime,

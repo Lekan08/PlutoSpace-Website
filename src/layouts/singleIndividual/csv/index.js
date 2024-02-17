@@ -19,7 +19,9 @@ import withReactContent from "sweetalert2-react-content";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import Styles from "styles";
 import example from "./example.jpg";
+import example1 from "./example1.jpg";
 import "../Force.css";
 
 function Csv() {
@@ -342,10 +344,10 @@ function Csv() {
                       >
                         Corporate Name
                       </MDTypography>
-
+                      <br />
                       <Select options={options} onChange={handleChanges} styles={customStyles} />
 
-                      <i style={{ fontSize: "11px", color: "gray" }}>optional</i>
+                      <i style={{ fontSize: "9px", color: "gray" }}>optional</i>
                     </Container>
                     <br />
                   </div>
@@ -368,7 +370,8 @@ function Csv() {
                     in new tab to zoom in for a clearer view)
                   </MDTypography>
                 </MDBox>
-                <img className="img" src={example} alt="example" />
+                <img className="img" src={example} alt="example" height={100} width={200} />
+                <img className="img" src={example1} alt="example" height={100} width={200} />
                 <br />
                 <MDBox textAlign="center" p={5}>
                   <MDTypography
@@ -387,7 +390,7 @@ function Csv() {
                     />
                   </MDTypography>
                 </MDBox>
-                <Button onClick={handleUpload} variant="success">
+                <Button onClick={handleUpload} style={Styles.boxSx} variant="success">
                   Upload
                 </Button>
               </MDBox>

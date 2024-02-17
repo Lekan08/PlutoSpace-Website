@@ -54,9 +54,11 @@ function GrouPs() {
     if (enabled) {
       e.preventDefault();
       const data11 = JSON.parse(localStorage.getItem("user1"));
+      console.log(data11);
+      const orgid = data11.orgID;
 
       const raw = JSON.stringify({
-        orgID: data11.orgID,
+        orgID: orgid,
         name: namex,
         descrip: descripx,
       });
@@ -84,6 +86,50 @@ function GrouPs() {
           if (result.message === "Unauthorized Access") {
             navigate("/authentication/forbiddenPage");
             window.location.reload();
+          }
+          console.log(result);
+          if (result.status === "SUCCESS") {
+            const ID = result.data.id;
+            console.log(ID);
+            const raw2 = JSON.stringify({
+              orgID: orgid,
+              groupID: ID,
+              empID: data11.personalID,
+            });
+            console.log(raw2);
+            const requestOptions2 = {
+              method: "POST",
+              headers: myHeaders,
+              body: raw2,
+              redirect: "follow",
+            };
+
+            // const headers = miHeaders;
+            fetch(`${process.env.REACT_APP_SHASHA_URL}/groups/addMember`, requestOptions2)
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                return res.json();
+              })
+              .then((resultx) => {
+                // setOpened(false);
+                if (resultx.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (resultx.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+                // window.location.reload();
+              })
+              .catch((error) => {
+                console.log(error);
+              });
           }
           MySwal.fire({
             title: result.status,

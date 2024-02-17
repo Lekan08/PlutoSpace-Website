@@ -17,6 +17,7 @@ import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
+import Styles from "styles";
 import ReportProductionTable from "layouts/products/reportProduction/data";
 
 function ReportProduction() {
@@ -354,10 +355,10 @@ function ReportProduction() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -375,9 +376,9 @@ function ReportProduction() {
             sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
             borderRadius="lg"
             coloredShadow="success"
-            mx={3}
-            mt={1}
-            p={1}
+            mx={2}
+            mt={-3}
+            p={2}
             mb={1}
             textAlign="center"
           >
@@ -485,7 +486,7 @@ function ReportProduction() {
               <MDButton
                 variant="gradient"
                 onClick={handleClick}
-                color="info"
+                style={Styles.boxSx}
                 width="50%"
                 align="left"
               >
@@ -525,7 +526,7 @@ function ReportProduction() {
             <MDButton
               variant="gradient"
               onClick={exportPDF}
-              color="info"
+              style={Styles.boxSx}
               width="50%"
               align="center"
             >

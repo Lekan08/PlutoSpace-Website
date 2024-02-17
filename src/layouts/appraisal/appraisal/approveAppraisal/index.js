@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import React, { useState, useEffect } from "react";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
@@ -150,6 +151,7 @@ function ApproveApp() {
         }
         if (isMounted) {
           setAppraisalJournies(result);
+          console.log({ appraisalJourniesResult: result });
         }
       });
     return () => {
@@ -314,15 +316,15 @@ function ApproveApp() {
                   window.location.reload();
                 }
                 if (isMounted) {
-                  //   console.log(resultq);
-                  const fdy = { id: eachQuestions.length, question: resultq[0].question.question };
+                  console.log(resultq);
+                  const fdy = { id: new Date().getTime(), question: resultq[0].question.question };
                   eachQuestions.push(fdy);
 
                   setAQuestions((itemm) => [...itemm, fdy]);
                 }
               });
           });
-          setAQuestions(eachQuestions);
+          // setAQuestions(eachQuestions);
         } else {
           setOpened(false);
           MySwal.fire({
@@ -434,6 +436,13 @@ function ApproveApp() {
       });
   };
 
+  const changeTimestamp = (timestamp) => {
+    const date = new Date(timestamp);
+    return `${
+      date.getMonth() + 1
+    }/${date.getDate()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -496,7 +505,7 @@ function ApproveApp() {
                         maxHeight: 150,
                         height: 70,
                         borderRadius: 5,
-                        border: "2px solid #318CE7",
+                        border: "2px solid #f96d02",
                       }}
                     >
                       <div
@@ -627,9 +636,10 @@ function ApproveApp() {
 
                       <MDBox
                         variant="gradient"
-                        bgColor={bool2 ? "#f96d02" : "secondary"}
+                        bgColor={bool2 ? "" : "secondary"}
+                        style={bool2 && Styles.boxSx}
                         borderRadius="lg"
-                        coloredShadow="secondary"
+                        coloredShadow="white"
                         mx={2}
                         mt={-3}
                         p={1}
@@ -645,6 +655,16 @@ function ApproveApp() {
                           mt={1}
                         >
                           {api.empName}
+                        </MDTypography>
+                        <MDTypography
+                          variant="h6"
+                          fontWeight="medium"
+                          color="white"
+                          fontSize="65%"
+                          textAlign="center"
+                          mt={1}
+                        >
+                          {changeTimestamp(api.createdTime)}
                         </MDTypography>
                       </MDBox>
                     </Grid>
@@ -709,11 +729,16 @@ function ApproveApp() {
                 aria-label="Default select example"
               >
                 <option value="">--Select Employee--</option>
-                {user.map((api) => (
-                  <option key={api.personal.id} value={api.personal.id}>
-                    {api.personal.fname} {api.personal.lname}
-                  </option>
-                ))}
+                {user.map((api) => {
+                  if (appraisal?.appraiseeID === api.personal.id) {
+                    return;
+                  }
+                  return (
+                    <option key={api.personal.id} value={api.personal.id}>
+                      {api.personal.fname} {api.personal.lname}
+                    </option>
+                  );
+                })}
               </Form.Select>
               <br />
             </MDBox>
@@ -726,7 +751,7 @@ function ApproveApp() {
                   style={Styles.buttonSx}
                   width="50%"
                 >
-                  Approve
+                  Foward
                 </MDButton>
               </MDBox>
             </div>

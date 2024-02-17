@@ -18,6 +18,7 @@ import PHeaders from "postHeader";
 // import PHeaders from "postHeader";
 import { useNavigate } from "react-router-dom";
 import DataTable from "examples/Tables/DataTable";
+import Styles from "styles";
 
 function TaxRemittanceOrg() {
   // eslint-disable-next-line prefer-const
@@ -306,7 +307,14 @@ function TaxRemittanceOrg() {
           canSearch
         />
         <MDBox mt={4} mb={1} style={{ textAlign: "center" }}>
-          <MDButton variant="gradient" onClick={exportPDF} color="info" width="50%" align="center">
+          <MDButton
+            variant="gradient"
+            coloredShadow="success"
+            onClick={exportPDF}
+            style={Styles.buttonSx}
+            width="50%"
+            align="center"
+          >
             Export PDF
           </MDButton>
         </MDBox>

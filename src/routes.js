@@ -317,6 +317,9 @@ import OffboardingChecklist from "./layouts/offboardingCompany/offboardingCheckl
 import GeneralLedger from "layouts/general-ledger";
 import PostTransactions from "./layouts/general-ledger/postTransactions/index";
 import AccountingCSV from "layouts/general-ledger/csv";
+import SignUpPassword from "layouts/authentication/completeSignUp";
+import ValidateEmail from "layouts/inviteUser/validateEmail";
+import ValidatePassword from "layouts/inviteUser/validatePassword";
 
 const routes = [
   {
@@ -426,10 +429,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Video Chat",
-    key: "videoChat",
-    icon: <Icon fontSize="small">video_call</Icon>,
-    route: "/video-chat",
+    name: "Call",
+    key: "Call",
+    icon: <Icon fontSize="small">phone</Icon>,
+    route: "/meetings",
     component: <VideoChat />,
   },
   {
@@ -747,13 +750,13 @@ const routes = [
   {
     type: "divider",
     name: "",
-    key: "divd1Bills",
+    key: "divd1Expenses",
     route: "",
   },
   {
     type: "title",
-    title: "Bills",
-    key: "titd2Bills",
+    title: "Expenses",
+    key: "titd2Expenses",
     route: "",
   },
   {
@@ -800,6 +803,41 @@ const routes = [
     icon: <Icon fontSize="small">today</Icon>,
     route: "/my-Bills/bill-Progress",
     component: <BillJourney />,
+  },
+  //   {
+  //   type: "divider",
+  //   name: "",
+  //   key: "divd1Subscription",
+  //   route: "",
+  // },
+  // {
+  //   type: "title",
+  //   title: "Subscription",
+  //   key: "titd2BillSubscription",
+  //   route: "",
+  // },
+  {
+    type: "collapse",
+    name: "Subscription",
+    key: "subscription",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/subscription",
+    component: <MySubscription />,
+  },
+  {
+    type: "collapse",
+    name: "Filter Subscription",
+    key: "generalSubscription",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/general-Subscription",
+    component: <GeneralSubscription />,
+  },
+  {
+    name: "Update Subscription",
+    key: "updateMySubscription",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/subscription/update-Subscription",
+    component: <UpdateMySubscription />,
   },
   {
     type: "divider",
@@ -985,7 +1023,7 @@ const routes = [
   },
   {
     type: "title",
-    title: "Demand And Supply",
+    title: "INVENTORY",
     key: "titd202",
     route: "",
   },
@@ -1216,7 +1254,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Due Insurance",
+    name: "Insurance contributions",
     key: "dueInsurance",
     icon: <Icon fontSize="small">access_time</Icon>,
     route: "/due-insurance-contributions",
@@ -1605,7 +1643,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Pension Settings",
+    name: "Pension Provider",
     key: "pension",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/Pension",
@@ -1662,17 +1700,25 @@ const routes = [
   },
   {
     type: "title",
-    title: "Project",
+    title: "Project Management",
     key: "titd1",
     route: "",
   },
   {
     type: "collapse",
-    name: "Project",
+    name: "Project Board",
     key: "project",
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/project",
     component: <Project />,
+  },
+  {
+    type: "collapse",
+    name: " Workflow",
+    key: "workflow",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/workflow",
+    component: <Workflow />,
   },
   {
     name: "Update Project",
@@ -1687,6 +1733,28 @@ const routes = [
     icon: <Icon fontSize="small">meeting_room</Icon>,
     route: "/project/view-Project",
     component: <ProjectView />,
+  },
+  {
+    type: "collapse",
+    name: "Stage",
+    key: "Stage",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/stage",
+    component: <Stage />,
+  },
+  {
+    name: "Add Stage",
+    key: " addStage",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/workFlow/add-Stage",
+    component: <AddStage />,
+  },
+  {
+    name: "Stage Condition",
+    key: "stage Conditions",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/stage/Stage-Condition",
+    component: <StageCondition />,
   },
   {
     name: "Subtask ",
@@ -1728,14 +1796,6 @@ const routes = [
     title: "Recruitment",
     key: "titd304",
     route: "",
-  },
-  {
-    type: "collapse",
-    name: "Pipeline",
-    key: "pipeline",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/pipeline",
-    component: <Pipeline />,
   },
   {
     name: "Update User System Role",
@@ -2134,41 +2194,6 @@ const routes = [
   {
     type: "divider",
     name: "",
-    key: "divd1Subscription",
-    route: "",
-  },
-  {
-    type: "title",
-    title: "Subscription",
-    key: "titd2BillSubscription",
-    route: "",
-  },
-  {
-    type: "collapse",
-    name: "Subscription",
-    key: "subscription",
-    icon: <Icon fontSize="small">today</Icon>,
-    route: "/subscription",
-    component: <MySubscription />,
-  },
-  {
-    type: "collapse",
-    name: "General Subscription",
-    key: "generalSubscription",
-    icon: <Icon fontSize="small">today</Icon>,
-    route: "/general-Subscription",
-    component: <GeneralSubscription />,
-  },
-  {
-    name: "Update Subscription",
-    key: "updateMySubscription",
-    icon: <Icon fontSize="small">today</Icon>,
-    route: "/subscription/update-Subscription",
-    component: <UpdateMySubscription />,
-  },
-  {
-    type: "divider",
-    name: "",
     key: "divd557",
     route: "",
   },
@@ -2188,7 +2213,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Personal",
+    name: "My Personal Tax",
     key: "taxRemittancePersonal",
     icon: <Icon fontSize="small">hail</Icon>,
     route: "/tax-Remittance-Personal",
@@ -2196,7 +2221,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "organisation",
+    name: "Company Tax History",
     key: "taxRemittanceOrganisation",
     icon: <Icon fontSize="small">corporate_fare</Icon>,
     route: "/tax-Remittance-Organisation",
@@ -2225,14 +2250,14 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tickets",
+    name: "Raise Ticket Manually",
     key: "Tickets",
     icon: <Icon fontSize="small">confirmation_number</Icon>,
     route: "/Tickets",
     component: <Tickets />,
   },
   {
-    name: "Tickets",
+    name: "Raise Ticket Manually",
     key: "Tickets",
     icon: <Icon fontSize="small">confirmation_number</Icon>,
     route: "/Tickets/Chats",
@@ -2274,35 +2299,14 @@ const routes = [
     route: "/Calendar-Accessors",
     component: <Accessor />,
   },
+
   {
     type: "collapse",
-    name: "Stage",
-    key: "Stage",
+    name: "Pipeline",
+    key: "pipeline",
     icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/stage",
-    component: <Stage />,
-  },
-  {
-    name: "Add Stage",
-    key: " addStage",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/workFlow/add-Stage",
-    component: <AddStage />,
-  },
-  {
-    name: "Stage Condition",
-    key: "stage Conditions",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/stage/Stage-Condition",
-    component: <StageCondition />,
-  },
-  {
-    type: "collapse",
-    name: "General Workflow",
-    key: "workflow",
-    icon: <Icon fontSize="small">meeting_room</Icon>,
-    route: "/workflow",
-    component: <Workflow />,
+    route: "/pipeline",
+    component: <Pipeline />,
   },
   {
     type: "collapse",
@@ -2349,6 +2353,13 @@ const routes = [
     component: <CreateBranch />,
   },
   {
+    name: "Complete Sign-Up",
+    key: "completeSignUp",
+    icon: <Icon fontSize="small">meeting_room</Icon>,
+    route: "/Complete-Sign-up",
+    component: <SignUpPassword />,
+  },
+  {
     type: "collapse",
     name: "Departments",
     key: "departments",
@@ -2366,7 +2377,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Employee Types",
+    name: "Employee Type",
     key: "Employee Status",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/Employee-Type",
@@ -2397,10 +2408,10 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "System Roles",
-    key: "systemRoles",
+    name: "Roles and Permissions",
+    key: "Roles and Permissions",
     icon: <Icon fontSize="small">assignment</Icon>,
-    route: "/system-Roles",
+    route: "/Roles&Permissions",
     component: <SysRoles />,
   },
   {
@@ -2524,6 +2535,20 @@ const routes = [
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/authentication/inviteUser",
     component: <InviteUser />,
+  },
+  {
+    name: "Email",
+    key: "validateEmail",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/validateEmail",
+    component: <ValidateEmail />,
+  },
+  {
+    name: "Password",
+    key: "validatePassword",
+    icon: <Icon fontSize="small">assignment</Icon>,
+    route: "/authentication/ValidatePassword",
+    component: <ValidatePassword />,
   },
   {
     name: "Time Off Requests Journey",
