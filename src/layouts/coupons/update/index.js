@@ -227,7 +227,7 @@ function UpdateCoupons() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={2}>
           <MDBox
             variant="gradient"
             // bgColor="info"
