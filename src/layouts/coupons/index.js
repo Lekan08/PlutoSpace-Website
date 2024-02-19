@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import MDTypography from "components/MDTypography";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
 
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -227,25 +228,22 @@ function Coupons() {
               </Container>
             </MDBox>
             <MDBox mb={2}>
-              <div className="row">
-                <div className="col-sm-6">
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <TextField
-                        id="filled-number"
-                        value={frequencyx}
-                        // onKeyUp={handleOnFrequencyKeys}
-                        label="Frequency"
-                        placeholder="Frequency "
-                        size="small"
-                        type="number"
-                        onChange={(e) => handleOnFrequencyKeys(e.target.value)}
-                        required
-                      />
-                    </FormControl>
-                  </Box>
-                </div>
-                <div className="col-sm-6">
+              <Grid container justifyContent="center" spacing={2}>
+                <Grid item xs={5}>
+                  <TextField
+                    style={{ width: "100%" }}
+                    id="filled-number"
+                    value={frequencyx}
+                    // onKeyUp={handleOnFrequencyKeys}
+                    label="Frequency"
+                    placeholder="Frequency "
+                    size="small"
+                    type="number"
+                    onChange={(e) => handleOnFrequencyKeys(e.target.value)}
+                    required
+                  />
+                </Grid>
+                <Grid item xs={5}>
                   <MDBox>
                     <Form.Select
                       value={typex}
@@ -257,12 +255,9 @@ function Coupons() {
                       <option value="2">Frequency</option>
                     </Form.Select>
                   </MDBox>
-                </div>
-              </div>
-            </MDBox>
-            <MDBox>
-              <div className="row">
-                <div className="col-sm-6">
+                </Grid>
+
+                <Grid item xs={5}>
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
                       <TextField
@@ -277,9 +272,9 @@ function Coupons() {
                         required
                       />
                     </FormControl>
-                  </Box>
-                </div>
-                <div className="col-sm-6">
+                  </Box>{" "}
+                </Grid>
+                <Grid item xs={5}>
                   <Box sx={{ minWidth: 120 }}>
                     <FormControl fullWidth>
                       <TextField
@@ -295,38 +290,8 @@ function Coupons() {
                       />
                     </FormControl>
                   </Box>
-                </div>
-              </div>
-            </MDBox>
-            <MDBox>
-              <div className="row">
-                {/* <div className="col-sm-5">
-                  <div align="center">
-                    <MDTypography
-                      variant="button"
-                      fontWeight="regular"
-                      fontSize="80%"
-                      align="center"
-                      color="text"
-                      mt={2}
-                    >
-                      Expire Time
-                    </MDTypography>
-                    <DatePicker
-                      placeholderText="MM/DD/YY hh:mm"
-                      style={{ marginRight: "10px" }}
-                      selected={expireTimex.time}
-                      peekNextMonth
-                      showMonthDropdown
-                      showYearDropdown
-                      showTimeSelect
-                      dateFormat="MM/dd/yyyy h:mm aa"
-                      dropdownMode="select"
-                      onChange={(time) => setExpireTime({ ...expireTimex, time })}
-                    />
-                  </div>
-                </div> */}
-                <div className="col-sm-5">
+                </Grid>
+                <Grid item xs={5}>
                   <MDBox mt={2}>
                     <MDTypography
                       variant="button"
@@ -349,24 +314,12 @@ function Coupons() {
                       onChange={(start) => setExpireTime(start)}
                     />
                   </MDBox>
-                </div>
-                {/* <div className="col-sm-2">
-                  <MDBox>
-                    <Form.Select
-                      value={createdx}
-                      aria-label="Default select example"
-                      onChange={(e) => setCreated(e.target.value)}
-                    >
-                      <option>Created By</option>
-                      {createdByx.map((apis) => (
-                        <option key={apis.id} value={apis.id}>
-                          {apis.personal.fname}
-                        </option>
-                      ))}
-                    </Form.Select>
-                  </MDBox>
-                </div> */}
-              </div>
+                </Grid>
+
+                <Grid item xs={5}>
+                  <></>
+                </Grid>
+              </Grid>
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton
