@@ -726,7 +726,7 @@ function TicketClientSettings() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Ticket Settings Client
+              Client Ticket Settings
             </MDTypography>
           </MDBox>
           <MDBox
@@ -879,7 +879,7 @@ function TicketClientSettings() {
                   textAlign="center"
                   mt={1}
                 >
-                  Update Ticket Settings Client
+                  Update Client Ticket Settings
                 </MDTypography>
               </MDBox>
               <MDBox

@@ -1398,14 +1398,14 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Treasury Type",
+    name: "Treasury and Deus",
     key: "treasuryType",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury-Type",
     component: <TreasuryType />,
   },
   {
-    name: "Update Treasury Type",
+    name: "Update Treasury and Dues",
     key: "updatetreasuryType",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury-Type/update",
@@ -1420,7 +1420,7 @@ const routes = [
     component: <Treasury />,
   },
   {
-    name: "Update Treasury ",
+    name: "Update Treasury  ",
     key: "updateTreasury",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury/update",
@@ -2273,7 +2273,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Settings Client",
+    name: " Client Ticket Settings ",
     key: "ticketClientSettings",
     icon: <Icon fontSize="small">manage_accounts</Icon>,
     route: "/Ticket-Settings-Client",

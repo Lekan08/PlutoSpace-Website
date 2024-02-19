@@ -189,7 +189,7 @@ function Coupons() {
     <DashboardLayout>
       <DashboardNavbar />
       <Card>
-        <MDBox pt={4} pb={3} px={30}>
+        <MDBox pt={4} pb={3} px={5}>
           <MDBox
             variant="gradient"
             // bgColor="info"
@@ -337,6 +337,7 @@ function Coupons() {
                     >
                       Expire Time
                     </MDTypography>
+                    {"\t"}
                     <DatePicker
                       placeholderText="Expire Time"
                       style={{ marginRight: "10px" }}

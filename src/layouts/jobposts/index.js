@@ -846,7 +846,7 @@ function JobPost() {
               sx={{ px: 4, mt: 2, maxHeight: "50vh", overflowY: "auto" }}
             >
               <MDBox textAlign="center">
-                <Container>
+                {/* <Container>
                   <Row>
                     <Col>
                       <MDInput
@@ -874,10 +874,8 @@ function JobPost() {
                       </MDBox>
                     </Col>
                   </Row>
-                </Container>
-              </MDBox>
-              <hr />
-              <MDBox>
+                </Container> */}
+
                 <MDTypography
                   variant="p"
                   textAlign="center"
