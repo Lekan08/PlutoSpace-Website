@@ -418,7 +418,8 @@ function IconView({ items, groups, level }) {
                   docType === "image/jpg" ||
                   docType === "image/jpeg" ||
                   docType === "image/gif" ||
-                  docType === "text/plain"
+                  docType === "text/plain" ||
+                  docType === "video/webm"
                 ) {
                   setImageUrl(`${docUrl}`);
                   setViewDoc(true);

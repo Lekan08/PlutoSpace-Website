@@ -1606,103 +1606,103 @@ function Reports() {
     };
   };
 
-  const handleCall = (e) => {
-    setOpen(false);
-    setOpened(true);
-    e.preventDefault();
-    const headers = miHeaders;
-    const data11 = JSON.parse(localStorage.getItem("user1"));
-    const orgIDs = data11.orgID;
-    const startTime = new Date(startTimex).getTime();
-    const endTime = new Date(endTimex).getTime();
-    // const data11 = JSON.parse(localStorage.getItem("user1"));
+  // const handleCall = (e) => {
+  //   setOpen(false);
+  //   setOpened(true);
+  //   e.preventDefault();
+  //   const headers = miHeaders;
+  //   const data11 = JSON.parse(localStorage.getItem("user1"));
+  //   const orgIDs = data11.orgID;
+  //   const startTime = new Date(startTimex).getTime();
+  //   const endTime = new Date(endTimex).getTime();
+  //   // const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    // const orgIDs = data11.orgID;
-    fetch(
-      `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsBetween/${orgIDs}?startTime=${startTime}&endTime=${endTime}`,
-      {
-        headers,
-      }
-    )
-      .then(async (res) => {
-        const aToken = res.headers.get("token-1");
-        localStorage.setItem("rexxdex", aToken);
-        return res.json();
-      })
-      .then((result) => {
-        setOpened(false);
-        if (result.message === "Expired Access") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Token Does Not Exist") {
-          navigate("/authentication/sign-in");
-          window.location.reload();
-        }
-        if (result.message === "Unauthorized Access") {
-          navigate("/authentication/forbiddenPage");
-          window.location.reload();
-        }
-        // setItems(result);
-        console.log({ accountingGetBetweenResult: result });
-        if (result.length === 0) {
-          setOpened(false);
-          MySwal.fire({
-            title: "NO_REPORTS",
-            type: "error",
-            text: "There are no reports between the date you selected",
-          }).then(() => {
-            setOpen(true);
-          });
-          return;
-        }
-        // const allMAP = result;
-        if (result !== "") {
-          const incomeFIltered = result.filter((os) => os.category === "INCOME");
-          const itemIncome = incomeFIltered.map((each) => ({
-            name: each.category,
-            amount: each.totalAmount,
-          }));
-          const expensesFIltered = result.filter((os) => os.category === "EXPENSES");
-          const expensesIncome = expensesFIltered.map((each) => ({
-            name: each.category,
-            amount: each.totalAmount,
-          }));
-          const zoom111 = expensesFIltered.map((item) => item.totalAmount);
-          // eslint-disable-next-line no-eval
-          console.log(eval(zoom111.join("+")));
-          // eslint-disable-next-line no-eval
-          const ExpensesTotal = eval(zoom111.join("+"));
-          console.log({ ExpensesTotal });
-          const zoom112 = incomeFIltered.map((item) => item.totalAmount);
-          // eslint-disable-next-line no-eval
-          const IncomeTotal = eval(zoom112.join("+"));
+  //   // const orgIDs = data11.orgID;
+  //   fetch(
+  //     `${process.env.REACT_APP_LOUGA_URL}/accounting/runAccountsBetween/${orgIDs}?startTime=${startTime}&endTime=${endTime}`,
+  //     {
+  //       headers,
+  //     }
+  //   )
+  //     .then(async (res) => {
+  //       const aToken = res.headers.get("token-1");
+  //       localStorage.setItem("rexxdex", aToken);
+  //       return res.json();
+  //     })
+  //     .then((result) => {
+  //       setOpened(false);
+  //       if (result.message === "Expired Access") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Token Does Not Exist") {
+  //         navigate("/authentication/sign-in");
+  //         window.location.reload();
+  //       }
+  //       if (result.message === "Unauthorized Access") {
+  //         navigate("/authentication/forbiddenPage");
+  //         window.location.reload();
+  //       }
+  //       // setItems(result);
+  //       console.log({ accountingGetBetweenResult: result });
+  //       if (result.length === 0) {
+  //         setOpened(false);
+  //         MySwal.fire({
+  //           title: "NO_REPORTS",
+  //           type: "error",
+  //           text: "There are no reports between the date you selected",
+  //         }).then(() => {
+  //           setOpen(true);
+  //         });
+  //         return;
+  //       }
+  //       // const allMAP = result;
+  //       if (result !== "") {
+  //         const incomeFIltered = result.filter((os) => os.category === "INCOME");
+  //         const itemIncome = incomeFIltered.map((each) => ({
+  //           name: each.category,
+  //           amount: each.totalAmount,
+  //         }));
+  //         const expensesFIltered = result.filter((os) => os.category === "EXPENSES");
+  //         const expensesIncome = expensesFIltered.map((each) => ({
+  //           name: each.category,
+  //           amount: each.totalAmount,
+  //         }));
+  //         const zoom111 = expensesFIltered.map((item) => item.totalAmount);
+  //         // eslint-disable-next-line no-eval
+  //         console.log(eval(zoom111.join("+")));
+  //         // eslint-disable-next-line no-eval
+  //         const ExpensesTotal = eval(zoom111.join("+"));
+  //         console.log({ ExpensesTotal });
+  //         const zoom112 = incomeFIltered.map((item) => item.totalAmount);
+  //         // eslint-disable-next-line no-eval
+  //         const IncomeTotal = eval(zoom112.join("+"));
 
-          // const calculation = expensesIncome.amount;
-          console.log({ IncomeTotal });
-          console.log({ itemIncome });
-          console.log({ expensesIncome });
-          // console.log(calculation);
-          // eslint-disable-next-line no-eval
-          // const ExpensesTotal = eval(calculation.join("+"));
-          // const calculation2 = itemIncome.amount;
-          // console.log(calculation2);
-          // eslint-disable-next-line no-eval
-          // const IncomeTotal = eval(calculation2.join("+"));
-          const zoom = result.map((item) => item.totalAmount);
-          console.log({ zoom });
-          // eslint-disable-next-line no-eval
-          console.log(eval(zoom.join("+")));
-          // eslint-disable-next-line no-eval
-          const viewTotal = eval(zoom.join("+"));
-          console.log({ viewTotal });
-          // eslint-disable-next-line no-eval
-          const diffInMillis = eval(startTime - endTime);
-          const numberOfDays = diffInMillis < 60 * 60 * 1000;
-          console.log({ numberOfDays });
-        }
-      });
-  };
+  //         // const calculation = expensesIncome.amount;
+  //         console.log({ IncomeTotal });
+  //         console.log({ itemIncome });
+  //         console.log({ expensesIncome });
+  //         // console.log(calculation);
+  //         // eslint-disable-next-line no-eval
+  //         // const ExpensesTotal = eval(calculation.join("+"));
+  //         // const calculation2 = itemIncome.amount;
+  //         // console.log(calculation2);
+  //         // eslint-disable-next-line no-eval
+  //         // const IncomeTotal = eval(calculation2.join("+"));
+  //         const zoom = result.map((item) => item.totalAmount);
+  //         console.log({ zoom });
+  //         // eslint-disable-next-line no-eval
+  //         console.log(eval(zoom.join("+")));
+  //         // eslint-disable-next-line no-eval
+  //         const viewTotal = eval(zoom.join("+"));
+  //         console.log({ viewTotal });
+  //         // eslint-disable-next-line no-eval
+  //         const diffInMillis = eval(startTime - endTime);
+  //         const numberOfDays = diffInMillis < 60 * 60 * 1000;
+  //         console.log({ numberOfDays });
+  //       }
+  //     });
+  // };
 
   const handleFinancial = (e) => {
     // Zino part Do not associate ur self by touching anything.
@@ -2484,7 +2484,7 @@ function Reports() {
                   }}
                 />
                 <MDBox pt={1} pb={1} px={2}>
-                  <MDButton onClick={handleCall}>click ma</MDButton>
+                  {/* <MDButton onClick={handleCall}>click ma</MDButton> */}
                   <MDBox
                     variant="gradient"
                     // bgColor="info"
@@ -2581,7 +2581,16 @@ function Reports() {
       </div>
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
-        <CircularProgress color="info" />
+        <CircularProgress color="info" />{" "}
+        <MDBox
+          mt={2}
+          mb={2}
+          sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        >
+          <MDTypography variant="gradient" fontSize="100%" color="white">
+            This may take a while...
+          </MDTypography>
+        </MDBox>
       </Backdrop>
     </DashboardLayout>
   );

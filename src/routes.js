@@ -826,7 +826,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "General Subscription",
+    name: "Filter Subscription",
     key: "generalSubscription",
     icon: <Icon fontSize="small">today</Icon>,
     route: "/general-Subscription",
@@ -1023,7 +1023,7 @@ const routes = [
   },
   {
     type: "title",
-    title: "Demand And Supply",
+    title: "INVENTORY",
     key: "titd202",
     route: "",
   },
@@ -1254,7 +1254,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Due Insurance",
+    name: "Insurance contributions",
     key: "dueInsurance",
     icon: <Icon fontSize="small">access_time</Icon>,
     route: "/due-insurance-contributions",
@@ -1398,14 +1398,14 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Treasury Type",
+    name: "Treasury and Deus",
     key: "treasuryType",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury-Type",
     component: <TreasuryType />,
   },
   {
-    name: "Update Treasury Type",
+    name: "Update Treasury and Dues",
     key: "updatetreasuryType",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury-Type/update",
@@ -1420,7 +1420,7 @@ const routes = [
     component: <Treasury />,
   },
   {
-    name: "Update Treasury ",
+    name: "Update Treasury  ",
     key: "updateTreasury",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury/update",
@@ -1643,7 +1643,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Pension Settings",
+    name: "Pension Provider",
     key: "pension",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/Pension",
@@ -2213,7 +2213,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Personal",
+    name: "My Personal Tax",
     key: "taxRemittancePersonal",
     icon: <Icon fontSize="small">hail</Icon>,
     route: "/tax-Remittance-Personal",
@@ -2221,7 +2221,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "organisation",
+    name: "Company Tax History",
     key: "taxRemittanceOrganisation",
     icon: <Icon fontSize="small">corporate_fare</Icon>,
     route: "/tax-Remittance-Organisation",
@@ -2250,14 +2250,14 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tickets",
+    name: "Raise Ticket Manually",
     key: "Tickets",
     icon: <Icon fontSize="small">confirmation_number</Icon>,
     route: "/Tickets",
     component: <Tickets />,
   },
   {
-    name: "Tickets",
+    name: "Raise Ticket Manually",
     key: "Tickets",
     icon: <Icon fontSize="small">confirmation_number</Icon>,
     route: "/Tickets/Chats",
@@ -2273,7 +2273,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Settings Client",
+    name: " Client Ticket Settings ",
     key: "ticketClientSettings",
     icon: <Icon fontSize="small">manage_accounts</Icon>,
     route: "/Ticket-Settings-Client",

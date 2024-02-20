@@ -45,6 +45,7 @@ function OtherInflow() {
 
   const [checkedAmount, setCheckedAmount] = useState("");
   const [checkedTaxAmount, setCheckedTaxAmount] = useState("");
+  const [checkedPaticular, setCheckedPaticular] = useState("");
 
   const TotalAmountx = parseInt(taxAmountx, 10) + parseInt(amountx, 10);
 
@@ -77,6 +78,7 @@ function OtherInflow() {
         console.log(result);
         if (result?.value) {
           setTaxAmount(result.value);
+          setCheckedTaxAmount(true);
         }
       });
   };
@@ -149,6 +151,17 @@ function OtherInflow() {
       // eslint-disable-next-line no-unused-expressions
       document.getElementById("taxamount").innerHTML = "Tax Amount is required<br>";
     }
+  };
+
+  const handleOnParticularKeys = (value) => {
+    if (value.length === 0) {
+      setCheckedPaticular(false);
+      // eslint-disable-next-line no-unused-expressions
+      document.getElementById("portfolio").innerHTML = "Particular is required<br>";
+    } else {
+      setCheckedPaticular(true);
+    }
+    // setEnabled(checkedPortfolio === true);
   };
 
   const handleClick = (e) => {
@@ -263,7 +276,7 @@ function OtherInflow() {
   };
 
   const handleValidate = (e) => {
-    if (checkedAmount && checkedTaxAmount === true) {
+    if (checkedAmount === true && checkedTaxAmount === true && checkedPaticular === true) {
       handleClick(e);
     }
   };
@@ -433,7 +446,7 @@ function OtherInflow() {
                       <Form.Control
                         as="textarea"
                         value={particularz || ""}
-                        // onKeyUp={handleOnPortfolioKeys}
+                        onKeyUp={(e) => handleOnParticularKeys(e.target.value)}
                         onChange={(e) => setParticular(e.target.value)}
                         rows={2}
                       />
