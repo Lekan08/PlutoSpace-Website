@@ -12,6 +12,7 @@ import DataTable from "examples/Tables/DataTable";
 import { useNavigate } from "react-router-dom";
 import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
+import Styles from "styles";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import MDButton from "components/MDButton";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -109,7 +110,8 @@ export default function ViewUserPension() {
       <br />
       <MDBox
         variant="gradient"
-        bgColor="info"
+        // bgColor="info"
+        style={{ backgroundColor: "#f96d02" }}
         borderRadius="lg"
         coloredShadow="info"
         mx={14}
@@ -174,7 +176,12 @@ export default function ViewUserPension() {
           </div>
           <MDBox textAlign="center" mx={3}>
             <MDBox textAlign="center" p={3}>
-              <MDButton color="success" variant="gradient" onClick={handleGets} size="large">
+              <MDButton
+                style={Styles.buttonSx}
+                variant="gradient"
+                onClick={handleGets}
+                size="large"
+              >
                 Generate History
               </MDButton>
             </MDBox>
