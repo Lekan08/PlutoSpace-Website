@@ -5,6 +5,8 @@ import MDTypography from "components/MDTypography";
 import Card from "@mui/material/Card";
 import { Container, Form } from "react-bootstrap";
 import MDButton from "components/MDButton";
+// import PHeaders from "postHeader";
+import Styles from "styles";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -177,9 +179,9 @@ function AddPension() {
           const raw2 = JSON.stringify({
             orgID: orgIDs,
             name: `${fname}_${lname}_PENSION_${result.data.id}`,
-            empID: Number(empIDX),
+            empID: empIDX,
             setupType: 2,
-            amount: Number(amountx.amount),
+            amount: amountx.amount,
             currency: currencyx,
             type: typex,
             frequency: 1,
@@ -247,7 +249,8 @@ function AddPension() {
             <MDBox pt={4} pb={3} px={3} mx={20}>
               <MDBox
                 variant="gradient"
-                bgColor="info"
+                // bgColor="info"
+                style={{ backgroundColor: "#f96d02" }}
                 borderRadius="lg"
                 coloredShadow="info"
                 mx={2}
@@ -340,7 +343,7 @@ function AddPension() {
               <br />
             </MDBox>
             <MDBox mt={4} mb={1} textAlign="center">
-              <MDButton variant="gradient" color="info" width="50%" onClick={handleAdd}>
+              <MDButton variant="gradient" style={Styles.buttonSx} width="50%" onClick={handleAdd}>
                 Add
               </MDButton>
             </MDBox>

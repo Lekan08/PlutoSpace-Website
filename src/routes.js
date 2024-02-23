@@ -768,27 +768,11 @@ const routes = [
     component: <MyBills />,
   },
   {
-    type: "collapse",
-    name: "Bills Attention",
-    key: "billsAttention",
-    icon: <Icon fontSize="small">today</Icon>,
-    route: "/Bills-Attention",
-    component: <GeneralBills />,
-  },
-  {
     name: "View Attached Doc",
     key: "viewAttachedDoc",
     icon: <Icon fontSize="small">today</Icon>,
     route: "/general-Bill/view_download_Doc",
     component: <ViewDownloadDoc />,
-  },
-  {
-    type: "collapse",
-    name: "Voucher Attention",
-    key: "voucherAttention",
-    icon: <Icon fontSize="small">today</Icon>,
-    route: "/Voucher-Attention",
-    component: <Voucher />,
   },
   {
     name: "Update Bills",
@@ -847,7 +831,7 @@ const routes = [
   },
   {
     type: "title",
-    title: "Business Travel",
+    title: "Business Trip",
     key: "titbt2",
     route: "",
   },
@@ -861,7 +845,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Business Travel",
+    name: "Business Trip",
     key: "businesstravel",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-travel",
@@ -869,7 +853,7 @@ const routes = [
   },
   {
     // type: "collapse",
-    name: "Update Business Travel",
+    name: "Update Business Trip",
     key: "businesstravelupdate",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-travel/update",
@@ -885,7 +869,7 @@ const routes = [
   },
   {
     // type: "collapse",
-    name: "View Business Travel",
+    name: "View Business Trip",
     key: "businesstravelview",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-travel/view",
@@ -1398,14 +1382,14 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Treasury Type",
+    name: "Treasury and Deus",
     key: "treasuryType",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury-Type",
     component: <TreasuryType />,
   },
   {
-    name: "Update Treasury Type",
+    name: "Update Treasury and Dues",
     key: "updatetreasuryType",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury-Type/update",
@@ -1420,7 +1404,7 @@ const routes = [
     component: <Treasury />,
   },
   {
-    name: "Update Treasury ",
+    name: "Update Treasury  ",
     key: "updateTreasury",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury/update",
@@ -2194,6 +2178,34 @@ const routes = [
   {
     type: "divider",
     name: "",
+    key: "divd511517",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Worklist",
+    key: "tit43999",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Voucher Attention",
+    key: "voucherAttention",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/Voucher-Attention",
+    component: <Voucher />,
+  },
+  {
+    type: "collapse",
+    name: "Bills Attention",
+    key: "billsAttention",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/Bills-Attention",
+    component: <GeneralBills />,
+  },
+  {
+    type: "divider",
+    name: "",
     key: "divd557",
     route: "",
   },
@@ -2273,7 +2285,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Ticket Settings Client",
+    name: " Client Ticket Settings ",
     key: "ticketClientSettings",
     icon: <Icon fontSize="small">manage_accounts</Icon>,
     route: "/Ticket-Settings-Client",
