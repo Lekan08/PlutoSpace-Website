@@ -8,6 +8,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import PieChart from "examples/Charts/PieChart";
+import Styles from "styles";
 // import CardActions from "@mui/material/CardActions";
 // import CardContent from "@mui/material/CardContent";
 // import Button from "@mui/material/Button";
@@ -239,7 +240,13 @@ export default function AnnouncementDashboard() {
       <MDBox mb={1}>
         <div align="center">
           <MDBox mt={2} mb={2}>
-            <MDButton variant="gradient" onClick={handlePrint} color="info" width="50%">
+            <MDButton
+              variant="gradient"
+              onClick={handlePrint}
+              // color="info"
+              style={Styles.boxSx}
+              width="50%"
+            >
               Print Page
             </MDButton>
           </MDBox>

@@ -24,13 +24,13 @@ export default function OtherInflowntable() {
   const MySwal = withReactContent(Swal);
 
   useEffect(() => {
-    const data11 = JSON.parse(localStorage.getItem("user1"));
+    // const data11 = JSON.parse(localStorage.getItem("user1"));
 
-    const orgIDs = data11.orgID;
-    const idx = data11.personalID;
+    // const orgIDs = data11.orgID;
+    // const idx = data11.personalID;
     const headers = miHeaders;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/otherInflow/getForEmp/${orgIDs}/${idx}`, { headers })
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/otherInflow/gets`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
