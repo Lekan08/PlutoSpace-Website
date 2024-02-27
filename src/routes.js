@@ -768,27 +768,11 @@ const routes = [
     component: <MyBills />,
   },
   {
-    type: "collapse",
-    name: "Bills Attention",
-    key: "billsAttention",
-    icon: <Icon fontSize="small">today</Icon>,
-    route: "/Bills-Attention",
-    component: <GeneralBills />,
-  },
-  {
     name: "View Attached Doc",
     key: "viewAttachedDoc",
     icon: <Icon fontSize="small">today</Icon>,
     route: "/general-Bill/view_download_Doc",
     component: <ViewDownloadDoc />,
-  },
-  {
-    type: "collapse",
-    name: "Voucher Attention",
-    key: "voucherAttention",
-    icon: <Icon fontSize="small">today</Icon>,
-    route: "/Voucher-Attention",
-    component: <Voucher />,
   },
   {
     name: "Update Bills",
@@ -847,7 +831,7 @@ const routes = [
   },
   {
     type: "title",
-    title: "Business Travel",
+    title: "Business Trip",
     key: "titbt2",
     route: "",
   },
@@ -861,7 +845,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Business Travel",
+    name: "Business Trip",
     key: "businesstravel",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-travel",
@@ -869,7 +853,7 @@ const routes = [
   },
   {
     // type: "collapse",
-    name: "Update Business Travel",
+    name: "Update Business Trip",
     key: "businesstravelupdate",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-travel/update",
@@ -885,7 +869,7 @@ const routes = [
   },
   {
     // type: "collapse",
-    name: "View Business Travel",
+    name: "View Business Trip",
     key: "businesstravelview",
     icon: <Icon fontSize="small">assignment</Icon>,
     route: "/business-travel/view",
@@ -2191,6 +2175,34 @@ const routes = [
   //   route: "/loyalty",
   //   component: <Loyalty />,
   // },
+  {
+    type: "divider",
+    name: "",
+    key: "divd511517",
+    route: "",
+  },
+  {
+    type: "title",
+    title: "Worklist",
+    key: "tit43999",
+    route: "",
+  },
+  {
+    type: "collapse",
+    name: "Voucher Attention",
+    key: "voucherAttention",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/Voucher-Attention",
+    component: <Voucher />,
+  },
+  {
+    type: "collapse",
+    name: "Bills Attention",
+    key: "billsAttention",
+    icon: <Icon fontSize="small">today</Icon>,
+    route: "/Bills-Attention",
+    component: <GeneralBills />,
+  },
   {
     type: "divider",
     name: "",

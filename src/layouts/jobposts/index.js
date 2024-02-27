@@ -422,6 +422,7 @@ function JobPost() {
         if (result.message === "Unauthorized Access") {
           navigate("/authentication/forbiddenPage");
         }
+        console.log(raw);
         console.log(result);
         setItems(result);
         setOpened(false);
