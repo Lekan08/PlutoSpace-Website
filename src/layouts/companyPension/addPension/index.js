@@ -128,6 +128,8 @@ function AddPension() {
       return true;
     }
   };
+  console.log(amountx);
+  console.log("amountx");
   const handleAdd = (e) => {
     handleTypex();
     handleAmount();
@@ -146,7 +148,7 @@ function AddPension() {
         orgID: orgIDs,
         integration: integrationx,
         amount: amountx.calculated,
-        createdBy: Number(ownerx),
+        createdBy: ownerx,
       });
       console.log(raw);
       const requestOptions = {
@@ -237,7 +239,7 @@ function AddPension() {
 
   const calculate = (e) => {
     if (typex === "PERCENTAGE")
-      setAmount({ calculated: Number(e.target.value / 100) * salary, amount: e.target.value });
+      setAmount({ calculated: (e.target.value / 100) * salary, amount: e.target.value });
     else setAmount({ calculated: e.target.value, amount: e.target.value });
   };
   return (
