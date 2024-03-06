@@ -36,6 +36,10 @@ function Birthdays() {
     const data11 = JSON.parse(localStorage.getItem("user1"));
 
     const orgIDs = data11.orgID;
+    console.log(orgIDs);
+    console.log(dayx);
+    console.log(monthx);
+    console.log("orgIDs");
     const headers = miHeaders;
 
     fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getBirthdaysToday/${orgIDs}/${dayx}/${monthx}`, {
