@@ -193,7 +193,7 @@ function UpdateTreasuryType() {
             style={Styles.boxSx}
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Update Treasury Type
+              Update Treasury Dues
             </MDTypography>
           </MDBox>{" "}
           <MDBox

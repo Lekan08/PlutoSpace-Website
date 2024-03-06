@@ -25,6 +25,7 @@ import MDButton from "components/MDButton";
 // import Backdrop from "@mui/material/Backdrop";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useReactToPrint } from "react-to-print";
+import Styles from "styles";
 import PDF from "./pdf";
 
 export default function AnnouncementDashboard() {
@@ -239,7 +240,14 @@ export default function AnnouncementDashboard() {
       <MDBox mb={1}>
         <div align="center">
           <MDBox mt={2} mb={2}>
-            <MDButton variant="gradient" onClick={handlePrint} color="info" width="50%">
+            <MDButton
+              variant="gradient"
+              color="white"
+              coloredShadow="info"
+              onClick={handlePrint}
+              style={Styles.buttonSx}
+              width="50%"
+            >
               Print Page
             </MDButton>
           </MDBox>
