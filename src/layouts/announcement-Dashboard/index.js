@@ -26,7 +26,6 @@ import MDButton from "components/MDButton";
 // import Backdrop from "@mui/material/Backdrop";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { useReactToPrint } from "react-to-print";
-import Styles from "styles";
 import PDF from "./pdf";
 
 export default function AnnouncementDashboard() {
