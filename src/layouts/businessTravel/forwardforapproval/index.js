@@ -15,6 +15,7 @@ import PHeaders from "postHeader";
 import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
 // import ForwardTimeOffRequests from "layouts/timeoffRequests/forwardTimeOffRequests/table/forwardadd";
+import Styles from "styles";
 
 function ForwardApproval() {
   const [purposex, setPurpose] = useState("");
@@ -272,7 +273,7 @@ function ForwardApproval() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={0}

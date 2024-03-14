@@ -211,6 +211,8 @@ function CompanyReg() {
               } else {
                 console.log(`STATUS - ${resultx.status} - - - - - - MESSAGE - ${resultx.message}`);
                 localStorage.setItem("company", JSON.stringify(resultx.data));
+                localStorage.setItem("newResult", JSON.stringify(result));
+                navigate(`/Complete-Sign-up?OrgID=${result.data.id}`, { replace: true });
                 // const raw2 = JSON.stringify({
                 //   orgID: result.data.id,
                 //   empID: user.id,
@@ -262,9 +264,13 @@ function CompanyReg() {
                 //   });
               }
             })
-            .then(() => {
-              localStorage.setItem("newResult", JSON.stringify(result));
-              navigate(`/Complete-Sign-up?OrgID=${result.data.id}`, { replace: true });
+            .catch((error) => {
+              setOpened(false);
+              MySwal.fire({
+                title: error.status,
+                type: "error",
+                text: error.message,
+              });
             });
         } else {
           setOpened(false);

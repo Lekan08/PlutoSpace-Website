@@ -1382,7 +1382,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Treasury and Deus",
+    name: "Treasury and Dues",
     key: "treasuryType",
     icon: <Icon fontSize="small">volunteer_activism</Icon>,
     route: "/treasury-Type",

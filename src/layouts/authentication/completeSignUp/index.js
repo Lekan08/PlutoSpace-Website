@@ -274,6 +274,14 @@ function SignUpPassword() {
                 });
               });
           });
+      })
+      .catch((error) => {
+        setOpened(false);
+        MySwal.fire({
+          title: error.status,
+          type: "error",
+          text: error.message,
+        });
       });
   };
 

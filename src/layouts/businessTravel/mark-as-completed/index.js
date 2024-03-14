@@ -17,6 +17,7 @@ import Footer from "examples/Footer";
 import withReactContent from "sweetalert2-react-content";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Styles from "styles";
 
 function MarkAsCompleted() {
   const MySwal = withReactContent(Swal);
@@ -146,7 +147,7 @@ function MarkAsCompleted() {
         <MDBox pt={4} pb={3} px={30}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={Styles.boxSx}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}

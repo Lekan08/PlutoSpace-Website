@@ -242,9 +242,11 @@ export default function AnnouncementDashboard() {
           <MDBox mt={2} mb={2}>
             <MDButton
               variant="gradient"
+              color="white"
+              coloredShadow="info"
               onClick={handlePrint}
-              // color="info"
-              style={Styles.boxSx}
+              //
+              style={Styles.buttonSx}
               width="50%"
             >
               Print Page
