@@ -52,6 +52,7 @@ function Accessor() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
+        console.log("AllUser", result);
         if (isMounted) {
           const user = result.map((r) => ({
             grantedFor: r.personal.id,
