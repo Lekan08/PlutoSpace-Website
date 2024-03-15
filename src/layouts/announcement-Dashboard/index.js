@@ -9,24 +9,11 @@ import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import PieChart from "examples/Charts/PieChart";
 import Styles from "styles";
-// import CardActions from "@mui/material/CardActions";
-// import CardContent from "@mui/material/CardContent";
-// import Button from "@mui/material/Button";
-// import Typography from "@mui/material/Typography";
-// import GHeaders from "getHeader";
 import { useNavigate } from "react-router-dom";
-// import Swal from "sweetalert2";
-// import withReactContent from "sweetalert2-react-content";
-// import PHeaders from "postHeader";
 import Footer from "examples/Footer";
-// import MixedChart from "examples/Charts/MixedChart";
-// import { ThemeProvider, createTheme } from "@mui/material/styles";
 import GHeaders from "getHeader";
 import MDButton from "components/MDButton";
-// import Backdrop from "@mui/material/Backdrop";
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { useReactToPrint } from "react-to-print";
-import Styles from "styles";
 import PDF from "./pdf";
 
 export default function AnnouncementDashboard() {
@@ -246,7 +233,6 @@ export default function AnnouncementDashboard() {
               color="white"
               coloredShadow="info"
               onClick={handlePrint}
-              //
               style={Styles.buttonSx}
               width="50%"
             >
