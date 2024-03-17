@@ -343,7 +343,7 @@ export default function BusinessTravelDashboard() {
                 {graphx.length > 0 && (
                   <MixedChart
                     inkBarStyle={{ backgroundColor: "blue" }}
-                    title="Business Travel Chart"
+                    title="Business Trip Chart"
                     description="Total Actual Amount And Total Expected Amount Insights"
                     chart={{
                       labels: [

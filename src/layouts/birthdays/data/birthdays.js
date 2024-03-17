@@ -34,17 +34,19 @@ function Birthdays() {
   const handleClick = (e) => {
     e.preventDefault();
     const data11 = JSON.parse(localStorage.getItem("user1"));
-
     const orgIDs = data11.orgID;
     const headers = miHeaders;
-
     fetch(`${process.env.REACT_APP_ZAVE_URL}/user/getBirthdaysToday/${orgIDs}/${dayx}/${monthx}`, {
       headers,
     })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);
-        return res.json();
+        const result = await res.text();
+        if (result === null || result === undefined || result === "") {
+          return {};
+        }
+        return JSON.parse(result);
       })
       .then((result) => {
         if (result.message === "Expired Access") {
@@ -62,11 +64,10 @@ function Birthdays() {
         if (result.length === 0) {
           document.getElementById("number").innerHTML = "No Birthdays for this Day<br>";
         } else {
+          setItems([result[0].personal]);
           document.getElementById("number").innerHTML = "";
         }
         console.log(result);
-        console.log("result");
-        setItems(result);
       })
       .catch((error) => {
         MySwal.fire({
@@ -78,11 +79,11 @@ function Birthdays() {
   };
 
   const bcolumns = [
-    { Header: "ID", accessor: "personal.id", align: "left" },
-    { Header: "Name", accessor: "personal.fname", align: "left" },
-    { Header: "Phone Number", accessor: "personal.pno", align: "left" },
-    { Header: "Country", accessor: "personal.residentialCountry", align: "left" },
-    { Header: "Marital status", accessor: "personal.maritalStatus", align: "left" },
+    // { Header: "ID", accessor: "id", align: "left" },
+    { Header: "Name", accessor: "fname", align: "left" },
+    { Header: "Phone Number", accessor: "pno", align: "left" },
+    { Header: "Country", accessor: "residentialCountry", align: "left" },
+    { Header: "Marital status", accessor: "maritalStatus", align: "left" },
     //   {
     //     Header: "actions",
     //     accessor: "id",

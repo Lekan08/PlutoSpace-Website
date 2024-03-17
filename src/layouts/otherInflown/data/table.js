@@ -31,7 +31,7 @@ export default function OtherInflowntable() {
     const idx = data11.personalID;
     const headers = miHeaders;
     let isMounted = true;
-    fetch(`${process.env.REACT_APP_LOUGA_URL}/otherInflow/getForEmp/${orgIDs}/${idx}`, { headers })
+    fetch(`${process.env.REACT_APP_LOUGA_URL}/otherInflow/getsForEmp/${orgIDs}/${idx}`, { headers })
       .then(async (res) => {
         const aToken = res.headers.get("token-1");
         localStorage.setItem("rexxdex", aToken);

@@ -7,6 +7,7 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Icon from "@mui/material/Icon";
 import GHeaders from "getHeader";
+import Styles from "styles";
 import { Dropdown } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Backdrop from "@mui/material/Backdrop";
@@ -148,7 +149,8 @@ function CreditFacility() {
       <MDBox pt={3}>
         <MDBox
           variant="gradient"
-          bgColor="info"
+          // bgColor="info"
+          style={Styles.boxSx}
           borderRadius="lg"
           coloredShadow="info"
           mx={2}

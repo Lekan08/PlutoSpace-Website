@@ -90,55 +90,57 @@ function InviteUser() {
   const getAllFields = () => {
     const personalInfo = JSON.parse(localStorage.getItem("personalInfo"));
     console.log(personalInfo);
-    if (Object.keys(personalInfo).length !== 0) {
-      console.log("test44");
-      console.log(personalInfo);
-      setOname(personalInfo.oname);
-      setEmail(personalInfo.email);
-      setId(personalInfo.id);
-      setPhone(personalInfo.pno);
-      setNationality(personalInfo.nationality);
-      setResidentialStreet(personalInfo.residentialStreet);
-      setResidentialCity(personalInfo.residentialCity);
-      const filteredItems = AlCountry.filter(
-        (item) => item.name === personalInfo.residentialCountry
-      );
-      setAllStates(filteredItems[0].states);
-      setResidentialState(personalInfo.residentialState);
-      setResidentialCountry(personalInfo.residentialCountry);
-      setMaritalStatus(personalInfo.maritalStatus);
-      setSex(personalInfo.sex);
-      setDeleteFlag(personalInfo.deleteFlag);
-      setSysStatus(personalInfo.sysStatus);
-      setCreatedTime(personalInfo.createdTime);
+    if (personalInfo !== null) {
+      if (Object.keys(personalInfo).length !== 0) {
+        console.log("test44");
+        console.log(personalInfo);
+        setOname(personalInfo.oname);
+        setEmail(personalInfo.email);
+        setId(personalInfo.id);
+        setPhone(personalInfo.pno);
+        setNationality(personalInfo.nationality);
+        setResidentialStreet(personalInfo.residentialStreet);
+        setResidentialCity(personalInfo.residentialCity);
+        const filteredItems = AlCountry.filter(
+          (item) => item.name === personalInfo.residentialCountry
+        );
+        setAllStates(filteredItems[0].states);
+        setResidentialState(personalInfo.residentialState);
+        setResidentialCountry(personalInfo.residentialCountry);
+        setMaritalStatus(personalInfo.maritalStatus);
+        setSex(personalInfo.sex);
+        setDeleteFlag(personalInfo.deleteFlag);
+        setSysStatus(personalInfo.sysStatus);
+        setCreatedTime(personalInfo.createdTime);
 
-      setStartDate(
-        new Date(
-          `${personalInfo.monthOfBirth}/${personalInfo.dayOfBirth}/${personalInfo.yearOfBirth}`
-        )
-      );
-      // setPassword("");
-      // setRetypePassword("");
-    } else {
-      console.log("confirm");
-      setId(0);
-      setOname("");
-      setEmail("");
-      setPhone("");
-      setNationality("");
-      setResidentialStreet("");
-      setResidentialCity("");
-      setAllStates([]);
-      setResidentialState("");
-      setResidentialCountry("");
-      setMaritalStatus("");
-      setSex("");
-      setDeleteFlag("");
-      setSysStatus("");
-      setCreatedTime("");
-      setStartDate(new Date());
-      // setPassword("");
-      // setRetypePassword("");
+        setStartDate(
+          new Date(
+            `${personalInfo.monthOfBirth}/${personalInfo.dayOfBirth}/${personalInfo.yearOfBirth}`
+          )
+        );
+        // setPassword("");
+        // setRetypePassword("");
+      } else {
+        console.log("confirm");
+        setId(0);
+        setOname("");
+        setEmail("");
+        setPhone("");
+        setNationality("");
+        setResidentialStreet("");
+        setResidentialCity("");
+        setAllStates([]);
+        setResidentialState("");
+        setResidentialCountry("");
+        setMaritalStatus("");
+        setSex("");
+        setDeleteFlag("");
+        setSysStatus("");
+        setCreatedTime("");
+        setStartDate(new Date());
+        // setPassword("");
+        // setRetypePassword("");
+      }
     }
   };
 
@@ -684,7 +686,7 @@ function InviteUser() {
     const emailpersonal = urlParams.get("email");
     const role = urlParams.get("role");
     const orgID = urlParams.get("orgID");
-    if (Object.keys(personalInfo).length === 0) {
+    if (personalInfo === null || Object.keys(personalInfo).length === 0) {
       // const user = JSON.parse(localStorage.getItem("user"));
       let dayx = "";
       let monthx = "";
