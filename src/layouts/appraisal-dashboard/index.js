@@ -106,7 +106,7 @@ export default function AppraisalDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          if (result.lenght !== 0) {
+          if (result.length !== 0) {
             const responseLabel = [];
             const numberData = [];
             const bgColorCode = [];

@@ -50,7 +50,9 @@ export default function OtherInflowntable() {
           window.location.reload();
         }
         if (isMounted) {
-          setItems(result);
+          if (result.length > 0) {
+            setItems(result);
+          }
         }
       });
     return () => {

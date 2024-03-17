@@ -109,8 +109,10 @@ function OtherInflow() {
           window.location.reload();
         }
         if (isMounted) {
-          setOIT(result);
-          getTax(orgIDs);
+          if (result.length > 0) {
+            setOIT(result);
+            getTax(orgIDs);
+          }
         }
       });
     return () => {
@@ -271,7 +273,9 @@ function OtherInflow() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        setClient(result);
+        if (result.length > 0) {
+          setClient(result);
+        }
       });
   };
 

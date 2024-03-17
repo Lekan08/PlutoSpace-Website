@@ -79,7 +79,9 @@ function OtherInflow() {
           window.location.reload();
         }
         if (isMounted) {
-          setOIT(result);
+          if (result.length > 0) {
+            setOIT(result);
+          }
         }
       });
     return () => {

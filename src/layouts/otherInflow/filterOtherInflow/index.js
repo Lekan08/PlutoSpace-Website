@@ -152,7 +152,7 @@ function FilterOtherInflow() {
           window.location.reload();
         }
         if (isMounted) {
-          if (result !== "") {
+          if (result.length > 0) {
             setGOI(result);
           }
         }

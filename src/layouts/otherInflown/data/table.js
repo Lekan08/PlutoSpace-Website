@@ -52,7 +52,9 @@ export default function OtherInflowntable() {
         }
         console.log(result);
         if (isMounted) {
-          setItems(result);
+          if (result.length > 0) {
+            setItems(result);
+          }
         }
       });
     return () => {
