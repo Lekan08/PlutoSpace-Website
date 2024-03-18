@@ -20,7 +20,11 @@ export default function AppraisalDashboard() {
   const navigate = useNavigate();
   const [graphx, setGraph] = useState([]);
   const [namex, setName] = useState("");
-  const [piex, setPie] = useState([]);
+  const [piex, setPie] = useState({
+    labels: [],
+    data: [],
+    backgroundColor: [],
+  });
   const [show, setShow] = useState(false);
   const { allGHeaders: miHeaders } = GHeaders();
   const onBeforeGetContentResolve = useRef();
@@ -64,7 +68,9 @@ export default function AppraisalDashboard() {
         }
         if (isMounted) {
           console.log(result);
-          setGraph(result);
+          if (result.length > 0) {
+            setGraph(result);
+          }
         }
       });
     return () => {
@@ -194,8 +200,10 @@ export default function AppraisalDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
-          setName(result[0].name);
+          if (result.length > 0) {
+            console.log(result);
+            setName(result[0].name);
+          }
         }
       });
     return () => {
