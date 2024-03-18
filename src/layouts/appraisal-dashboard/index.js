@@ -69,6 +69,11 @@ export default function AppraisalDashboard() {
         if (isMounted) {
           console.log(result);
           if (result.length > 0) {
+            const array1 = [];
+            // eslint-disable-next-line array-callback-return
+            result.map((each) => {
+              array1.push({ ...each, name: each.name === null ? "No Name" : each.name });
+            });
             setGraph(result);
           }
         }
@@ -125,6 +130,11 @@ export default function AppraisalDashboard() {
               numberData.push(datax.total);
               responseLabel.push(datax.name);
               bgColorCode.push(colorCodeee);
+              if (datax.name === null) {
+                responseLabel.push("No Name");
+                return;
+              }
+              responseLabel.push(datax.name);
             });
 
             const allDataa = {
@@ -132,7 +142,8 @@ export default function AppraisalDashboard() {
               data: numberData,
               backgroundColor: bgColorCode,
             };
-            console.log(result);
+            console.log({ result });
+            console.log({ allDataa });
             setPie(allDataa);
           }
         }
