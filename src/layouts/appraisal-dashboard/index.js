@@ -18,7 +18,7 @@ import Styles from "styles";
 
 export default function AppraisalDashboard() {
   const navigate = useNavigate();
-  const [graphx, setGraph] = useState([]);
+  // const [graphx, setGraph] = useState([]);
   const [chartData, setChartData] = useState({ datasets: [] });
   const [namex, setName] = useState("");
   const [piex, setPie] = useState({
@@ -102,7 +102,7 @@ export default function AppraisalDashboard() {
             };
             console.log({ dataa });
             setChartData(dataa);
-            setGraph(array1);
+            // setGraph(array1);
           }
         }
       });
@@ -274,14 +274,14 @@ export default function AppraisalDashboard() {
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} lg={12}>
               <ThemeProvider theme={darkTheme}>
-                {graphx.length > 0 && (
-                  <MixedChart
-                    inkBarStyle={{ backgroundColor: "blue" }}
-                    title="Appraisal's Chart"
-                    description="Analytics Insights"
-                    chart={chartData}
-                  />
-                )}
+                {/* {graphx.length > 0 && ( */}
+                <MixedChart
+                  inkBarStyle={{ backgroundColor: "blue" }}
+                  title="Appraisal's Chart"
+                  description="Analytics Insights"
+                  chart={chartData}
+                />
+                {/* )} */}
               </ThemeProvider>
             </Grid>
             <Grid item xs={6} md={6} lg={6}>
