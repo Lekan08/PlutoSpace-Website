@@ -142,6 +142,7 @@ export default function AppraisalDashboard() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log({ resul2: result });
           if (result.length !== 0) {
             const responseLabel = [];
             const numberData = [];
@@ -287,6 +288,19 @@ export default function AppraisalDashboard() {
                     chart={chartData}
                   />
                 )} */}
+                <PieChart
+                  icon={{ color: "info", component: "leaderboard" }}
+                  title="Pie Chart"
+                  description="Analytics Insights"
+                  chart={{
+                    labels: ["Facebook", "Direct", "Organic", "Referral"],
+                    datasets: {
+                      label: "Projects",
+                      backgroundColors: ["info", "primary", "dark", "secondary", "primary"],
+                      data: [15, 20, 12, 60],
+                    },
+                  }}
+                />
               </ThemeProvider>
             </Grid>
             <Grid item xs={6} md={6} lg={6}>
