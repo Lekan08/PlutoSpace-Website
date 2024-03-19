@@ -74,6 +74,7 @@ export default function AppraisalDashboard() {
             result.map((each) => {
               array1.push({ ...each, name: each.name === null ? "No Name" : each.name });
             });
+            console.log({ array1 });
             setGraph(array1);
           }
         }
@@ -248,23 +249,43 @@ export default function AppraisalDashboard() {
               <ThemeProvider theme={darkTheme}>
                 {graphx.length > 0 && (
                   <MixedChart
-                    icon={{ color: "info", component: "leaderboard" }}
-                    title="Mixed Chart"
+                    inkBarStyle={{ backgroundColor: "blue" }}
+                    title="Appraisal's Chart"
                     description="Analytics Insights"
                     chart={{
-                      labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                      labels: [
+                        "Jan",
+                        "Feb",
+                        "Mar",
+                        "Apr",
+                        "May",
+                        "Jun",
+                        "Jul",
+                        "Aug",
+                        "Sep",
+                        "Oct",
+                        "Nov",
+                        "Dec",
+                      ],
                       datasets: [
                         {
-                          chartType: "thin-bar",
-                          label: "Organic Search",
-                          color: "dark",
-                          data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                        },
-                        {
-                          chartType: "gradient-line",
-                          label: "Referral",
-                          color: "info",
-                          data: [30, 90, 40, 140, 290, 290, 340, 230, 400],
+                          chartType: "Bar Chart",
+                          label: "Total Appraisal Created",
+                          color: "success",
+                          data: [
+                            graphx[0].total,
+                            graphx[1].total,
+                            graphx[2].total,
+                            graphx[3].total,
+                            graphx[4].total,
+                            graphx[5].total,
+                            graphx[6].total,
+                            graphx[7].total,
+                            graphx[8].total,
+                            graphx[9].total,
+                            graphx[10].total,
+                            graphx[11].total,
+                          ],
                         },
                       ],
                     }}
