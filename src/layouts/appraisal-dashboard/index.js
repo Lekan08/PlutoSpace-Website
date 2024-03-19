@@ -67,7 +67,7 @@ export default function AppraisalDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
+          console.log({ appraisalStatForTheYear: result });
           if (result.length > 0) {
             const array1 = [];
             // eslint-disable-next-line array-callback-return
