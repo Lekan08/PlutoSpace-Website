@@ -7,7 +7,7 @@ import Card from "@mui/material/Card";
 import PieChart from "examples/Charts/PieChart";
 import { useNavigate } from "react-router-dom";
 import Footer from "examples/Footer";
-import MixedChart from "examples/Charts/MixedChart";
+// import MixedChart from "examples/Charts/MixedChart";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import GHeaders from "getHeader";
 import { useReactToPrint } from "react-to-print";
@@ -97,6 +97,7 @@ export default function AppraisalDashboard() {
               ],
             };
             console.log({ dataa });
+            console.log({ chartData });
             setChartData(dataa);
             // setGraph(array1);
           }
@@ -278,14 +279,14 @@ export default function AppraisalDashboard() {
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} lg={12}>
               <ThemeProvider theme={darkTheme}>
-                {chartData.datasets.length > 0 && (
+                {/* {chartData.datasets.length > 0 && (
                   <MixedChart
                     inkBarStyle={{ backgroundColor: "blue" }}
                     title="Appraisal's Chart"
                     description="Analytics Insights"
                     chart={chartData}
                   />
-                )}
+                )} */}
               </ThemeProvider>
             </Grid>
             <Grid item xs={6} md={6} lg={6}>
