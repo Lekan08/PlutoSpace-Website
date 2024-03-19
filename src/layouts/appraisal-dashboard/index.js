@@ -19,6 +19,7 @@ import Styles from "styles";
 export default function AppraisalDashboard() {
   const navigate = useNavigate();
   const [graphx, setGraph] = useState([]);
+  const [chartData, setChartData] = useState({ datasets: [] });
   const [namex, setName] = useState("");
   const [piex, setPie] = useState({
     labels: [],
@@ -75,6 +76,32 @@ export default function AppraisalDashboard() {
               array1.push({ ...each, name: each.name === null ? "No Name" : each.name });
             });
             console.log({ array1 });
+            const dataa = {
+              labels: [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+              ],
+              datasets: [
+                {
+                  chartType: "Bar Chart",
+                  label: "Total Appraisal Created",
+                  color: "success",
+                  data: array1.map((each) => each.total),
+                },
+              ],
+            };
+            console.log({ dataa });
+            setChartData(dataa);
             setGraph(array1);
           }
         }
@@ -252,43 +279,7 @@ export default function AppraisalDashboard() {
                     inkBarStyle={{ backgroundColor: "blue" }}
                     title="Appraisal's Chart"
                     description="Analytics Insights"
-                    chart={{
-                      labels: [
-                        "Jan",
-                        "Feb",
-                        "Mar",
-                        "Apr",
-                        "May",
-                        "Jun",
-                        "Jul",
-                        "Aug",
-                        "Sep",
-                        "Oct",
-                        "Nov",
-                        "Dec",
-                      ],
-                      datasets: [
-                        {
-                          chartType: "Bar Chart",
-                          label: "Total Appraisal Created",
-                          color: "success",
-                          data: [
-                            graphx[0].total,
-                            graphx[1].total,
-                            graphx[2].total,
-                            graphx[3].total,
-                            graphx[4].total,
-                            graphx[5].total,
-                            graphx[6].total,
-                            graphx[7].total,
-                            graphx[8].total,
-                            graphx[9].total,
-                            graphx[10].total,
-                            graphx[11].total,
-                          ],
-                        },
-                      ],
-                    }}
+                    chart={chartData}
                   />
                 )}
               </ThemeProvider>
