@@ -19,9 +19,9 @@ import Styles from "styles";
 export default function AppraisalDashboard() {
   const navigate = useNavigate();
   // const [graphx, setGraph] = useState([]);
-  const [chartData, setChartData] = useState({ datasets: [] });
+  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
   const [namex, setName] = useState("");
-  const [pieChartData, setPieChartData] = useState({ datasets: [] });
+  const [pieChartData, setPieChartData] = useState({ labels: [], datasets: [] });
   const [show, setShow] = useState(false);
   const { allGHeaders: miHeaders } = GHeaders();
   const onBeforeGetContentResolve = useRef();
@@ -278,24 +278,26 @@ export default function AppraisalDashboard() {
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} lg={12}>
               <ThemeProvider theme={darkTheme}>
-                {/* {graphx.length > 0 && ( */}
-                <MixedChart
-                  inkBarStyle={{ backgroundColor: "blue" }}
-                  title="Appraisal's Chart"
-                  description="Analytics Insights"
-                  chart={chartData}
-                />
-                {/* )} */}
+                {chartData.datasets.length > 0 && (
+                  <MixedChart
+                    inkBarStyle={{ backgroundColor: "blue" }}
+                    title="Appraisal's Chart"
+                    description="Analytics Insights"
+                    chart={chartData}
+                  />
+                )}
               </ThemeProvider>
             </Grid>
             <Grid item xs={6} md={6} lg={6}>
               <Card>
-                <PieChart
-                  title="Pie Chart"
-                  height="17.125rem"
-                  description="Analytics Insights"
-                  chart={pieChartData}
-                />
+                {pieChartData.datasets.length > 0 && (
+                  <PieChart
+                    title="Pie Chart"
+                    height="17.125rem"
+                    description="Analytics Insights"
+                    chart={pieChartData}
+                  />
+                )}
               </Card>
             </Grid>
           </Grid>
