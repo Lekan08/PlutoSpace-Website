@@ -21,11 +21,7 @@ export default function AppraisalDashboard() {
   // const [graphx, setGraph] = useState([]);
   const [chartData, setChartData] = useState({ datasets: [] });
   const [namex, setName] = useState("");
-  const [piex, setPie] = useState({
-    labels: [],
-    data: [],
-    backgroundColor: [],
-  });
+  const [pieChartData, setPieChartData] = useState({ datasets: [] });
   const [show, setShow] = useState(false);
   const { allGHeaders: miHeaders } = GHeaders();
   const onBeforeGetContentResolve = useRef();
@@ -172,7 +168,15 @@ export default function AppraisalDashboard() {
             };
             console.log({ result });
             console.log({ allDataa });
-            setPie(allDataa);
+            const piee = {
+              labels: allDataa.labels,
+              datasets: {
+                label: "Appraisal Grades",
+                backgroundColors: allDataa.backgroundColor,
+                data: allDataa.data,
+              },
+            };
+            setPieChartData(piee);
           }
         }
       });
@@ -290,14 +294,7 @@ export default function AppraisalDashboard() {
                   title="Pie Chart"
                   height="17.125rem"
                   description="Analytics Insights"
-                  chart={{
-                    labels: piex.labels,
-                    datasets: {
-                      label: "Appraisal Grades",
-                      backgroundColors: piex.backgroundColor,
-                      data: piex.data,
-                    },
-                  }}
+                  chart={pieChartData}
                 />
               </Card>
             </Grid>

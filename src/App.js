@@ -45,9 +45,6 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import TimeSheetAuto from "layouts/timesheet/timeSheetAuto";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
