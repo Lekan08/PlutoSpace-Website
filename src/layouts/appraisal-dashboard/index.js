@@ -289,14 +289,14 @@ export default function AppraisalDashboard() {
                   />
                 )} */}
                 <PieChart
-                  icon={{ color: "info", component: "leaderboard" }}
+                  icon={{ color: "primary", component: "leaderboard" }}
                   title="Pie Chart"
                   description="Analytics Insights"
                   chart={{
                     labels: ["Facebook", "Direct", "Organic", "Referral"],
                     datasets: {
                       label: "Projects",
-                      backgroundColors: ["info", "primary", "dark", "secondary", "primary"],
+                      backgroundColors: ["dark", "primary", "dark", "secondary", "primary"],
                       data: [15, 20, 12, 60],
                     },
                   }}
