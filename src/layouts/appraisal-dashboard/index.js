@@ -291,7 +291,7 @@ export default function AppraisalDashboard() {
                 )} */}
 
                 <DefaultLineChart
-                  icon={{ color: "info", component: "leaderboard" }}
+                  // icon={{ color: "info", component: "leaderboard" }}
                   title="Default Line Chart"
                   description="Product insights"
                   chart={{
