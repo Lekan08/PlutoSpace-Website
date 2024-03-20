@@ -292,30 +292,23 @@ export default function AppraisalDashboard() {
 
                 <DefaultLineChart
                   // icon={{ color: "info", component: "leaderboard" }}
-                  title="Default Line Chart"
-                  description="Product insights"
-                  chart={{
-                    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                    datasets: [
-                      {
-                        label: "Organic Search",
-                        data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-                      },
-                    ],
-                  }}
+                  inkBarStyle={{ backgroundColor: "blue" }}
+                  title="Appraisal's Chart"
+                  description="Analytics Insights"
+                  chart={chartData}
                 />
               </ThemeProvider>
             </Grid>
             <Grid item xs={6} md={6} lg={6}>
               <Card>
-                {pieChartData.datasets.length > 0 && (
-                  <PieChart
-                    title="Pie Chart"
-                    height="17.125rem"
-                    description="Analytics Insights"
-                    chart={pieChartData}
-                  />
-                )}
+                {/* {pieChartData.datasets.length > 0 && ( */}
+                <PieChart
+                  title="Pie Chart"
+                  height="17.125rem"
+                  description="Analytics Insights"
+                  chart={pieChartData}
+                />
+                {/* )} */}
               </Card>
             </Grid>
           </Grid>
