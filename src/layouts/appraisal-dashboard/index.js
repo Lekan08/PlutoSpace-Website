@@ -294,7 +294,7 @@ export default function AppraisalDashboard() {
                   // icon={{ color: "info", component: "leaderboard" }}
                   inkBarStyle={{ backgroundColor: "blue" }}
                   title="Appraisal's Chart"
-                  description="Analytics Insights"
+                  description="Analytics Insights Of Appraisals Done In this Year"
                   chart={chartData}
                 />
               </ThemeProvider>
