@@ -8,6 +8,7 @@ import PieChart from "examples/Charts/PieChart";
 import { useNavigate } from "react-router-dom";
 import Footer from "examples/Footer";
 // import MixedChart from "examples/Charts/MixedChart";
+import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import GHeaders from "getHeader";
 import { useReactToPrint } from "react-to-print";
@@ -288,17 +289,19 @@ export default function AppraisalDashboard() {
                     chart={chartData}
                   />
                 )} */}
-                <PieChart
-                  // icon={{ color: "primary", component: "leaderboard" }}
-                  title="Pie Chart"
-                  description="Analytics Insights"
+
+                <DefaultLineChart
+                  icon={{ color: "info", component: "leaderboard" }}
+                  title="Default Line Chart"
+                  description="Product insights"
                   chart={{
-                    labels: ["Facebook", "Direct", "Organic", "Referral"],
-                    datasets: {
-                      label: "Projects",
-                      backgroundColors: ["#aa5d", "#4ee", "#1ab", "#7aaa", "#7443ff"],
-                      data: [15, 20, 12, 60],
-                    },
+                    labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                    datasets: [
+                      {
+                        label: "Organic Search",
+                        data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
+                      },
+                    ],
                   }}
                 />
               </ThemeProvider>
