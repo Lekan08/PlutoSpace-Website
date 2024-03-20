@@ -20,9 +20,25 @@ import Styles from "styles";
 export default function AppraisalDashboard() {
   const navigate = useNavigate();
   // const [graphx, setGraph] = useState([]);
-  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+  const [chartData, setChartData] = useState({
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    datasets: [
+      {
+        label: "Total Appraisal Created",
+        color: "success",
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      },
+    ],
+  });
   const [namex, setName] = useState("");
-  const [pieChartData, setPieChartData] = useState({ labels: [], datasets: [] });
+  const [pieChartData, setPieChartData] = useState({
+    labels: ["No Grade"],
+    datasets: {
+      label: "Appraisal Grades",
+      backgroundColors: ["#333"],
+      data: [100],
+    },
+  });
   const [show, setShow] = useState(false);
   const { allGHeaders: miHeaders } = GHeaders();
   const onBeforeGetContentResolve = useRef();
@@ -90,7 +106,6 @@ export default function AppraisalDashboard() {
               ],
               datasets: [
                 {
-                  chartType: "Bar Chart",
                   label: "Total Appraisal Created",
                   color: "success",
                   data: array1.map((each) => each.total),
