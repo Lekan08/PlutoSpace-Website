@@ -41,10 +41,14 @@ import themeDark from "assets/theme-dark";
 // Material Dashboard 2 React contexts
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, PointElement } from "chart.js";
+
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import TimeSheetAuto from "layouts/timesheet/timeSheetAuto";
+
+ChartJS.register(ArcElement, Tooltip, Legend, PointElement);
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();

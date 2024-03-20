@@ -19,7 +19,7 @@ import { useMemo } from "react";
 import PropTypes from "prop-types";
 
 // react-chartjs-2 components
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 import { Pie } from "react-chartjs-2";
 
@@ -34,7 +34,7 @@ import MDTypography from "components/MDTypography";
 // PieChart configurations
 import configs from "examples/Charts/PieChart/configs";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+// ChartJS.register(ArcElement, Tooltip, Legend);
 
 function PieChart({ icon, title, description, height, chart }) {
   const { data, options } = configs(chart.labels || [], chart.datasets || {});

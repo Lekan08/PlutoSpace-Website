@@ -20,7 +20,7 @@ import PropTypes from "prop-types";
 
 // react-chartjs-2 components
 // import "chart.js/auto";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+// import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
 import { Line } from "react-chartjs-2";
 
@@ -41,7 +41,7 @@ import configs from "examples/Charts/MixedChart/configs";
 // Material Dashboard 2 PRO React base styles
 import colors from "assets/theme/base/colors";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+// ChartJS.register(ArcElement, Tooltip, Legend);
 
 function MixedChart({ icon, title, description, height, chart }) {
   const chartRef = useRef(null);
