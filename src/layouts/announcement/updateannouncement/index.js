@@ -242,6 +242,8 @@ function UpdateAnnouncement() {
           title: result.status,
           type: "success",
           text: result.message,
+        }).then(() => {
+          navigate("/Announcement");
         });
       })
       .catch((error) => {

@@ -297,7 +297,7 @@ function UpdateInsurance() {
           type: "success",
           text: result.message,
         }).then(() => {
-          window.location.reload();
+          navigate("/insurance/type");
         });
       })
       .catch((error) => {
@@ -312,7 +312,9 @@ function UpdateInsurance() {
   const handleValidate = (e) => {
     handleOnItemWorthKeys(itemWorthx);
     if (checkItemWorth === true) {
-      handleUpdate(e);
+      handleUpdate(e).then(() => {
+        navigate("/insurance/type");
+      });
     }
   };
 

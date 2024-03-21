@@ -717,7 +717,7 @@ function InterviewSchedule() {
         <MDBox component="form" role="form">
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={0}
