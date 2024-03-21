@@ -7,7 +7,8 @@ import Card from "@mui/material/Card";
 import PieChart from "examples/Charts/PieChart";
 import { useNavigate } from "react-router-dom";
 import Footer from "examples/Footer";
-import MixedChart from "examples/Charts/MixedChart";
+// import MixedChart from "examples/Charts/MixedChart";
+import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import GHeaders from "getHeader";
 import { useReactToPrint } from "react-to-print";
@@ -18,12 +19,25 @@ import Styles from "styles";
 
 export default function AppraisalDashboard() {
   const navigate = useNavigate();
-  const [graphx, setGraph] = useState([]);
+  // const [graphx, setGraph] = useState([]);
+  const [chartData, setChartData] = useState({
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    datasets: [
+      {
+        label: "Total Appraisal Created",
+        color: "success",
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      },
+    ],
+  });
   const [namex, setName] = useState("");
-  const [piex, setPie] = useState({
-    labels: [],
-    data: [],
-    backgroundColor: [],
+  const [pieChartData, setPieChartData] = useState({
+    labels: ["No Grade"],
+    datasets: {
+      label: "Appraisal Grades",
+      backgroundColors: ["#333"],
+      data: [100],
+    },
   });
   const [show, setShow] = useState(false);
   const { allGHeaders: miHeaders } = GHeaders();
@@ -67,9 +81,41 @@ export default function AppraisalDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
+          console.log({ appraisalStatForTheYear: result });
           if (result.length > 0) {
-            setGraph(result);
+            const array1 = [];
+            // eslint-disable-next-line array-callback-return
+            result.map((each) => {
+              array1.push({ ...each, name: each.name === null ? "No Name" : each.name });
+            });
+            console.log({ array1 });
+            const dataa = {
+              labels: [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+              ],
+              datasets: [
+                {
+                  label: "Total Appraisal Created",
+                  color: "success",
+                  data: array1.map((each) => each.total),
+                },
+              ],
+            };
+            console.log({ dataa });
+            console.log({ chartData });
+            setChartData(dataa);
+            // setGraph(array1);
           }
         }
       });
@@ -112,6 +158,7 @@ export default function AppraisalDashboard() {
           window.location.reload();
         }
         if (isMounted) {
+          console.log({ resul2: result });
           if (result.length !== 0) {
             const responseLabel = [];
             const numberData = [];
@@ -125,6 +172,11 @@ export default function AppraisalDashboard() {
               numberData.push(datax.total);
               responseLabel.push(datax.name);
               bgColorCode.push(colorCodeee);
+              if (datax.name === null) {
+                responseLabel.push("No Name");
+                return;
+              }
+              responseLabel.push(datax.name);
             });
 
             const allDataa = {
@@ -132,8 +184,17 @@ export default function AppraisalDashboard() {
               data: numberData,
               backgroundColor: bgColorCode,
             };
-            console.log(result);
-            setPie(allDataa);
+            console.log({ result });
+            console.log({ allDataa });
+            const piee = {
+              labels: allDataa.labels,
+              datasets: {
+                label: "Appraisal Grades",
+                backgroundColors: allDataa.backgroundColor,
+                data: allDataa.data,
+              },
+            };
+            setPieChartData(piee);
           }
         }
       });
@@ -235,67 +296,34 @@ export default function AppraisalDashboard() {
           <Grid container spacing={2}>
             <Grid item xs={12} md={12} lg={12}>
               <ThemeProvider theme={darkTheme}>
-                {graphx.length > 0 && (
+                {/* {chartData.datasets.length > 0 && (
                   <MixedChart
                     inkBarStyle={{ backgroundColor: "blue" }}
                     title="Appraisal's Chart"
                     description="Analytics Insights"
-                    chart={{
-                      labels: [
-                        "Jan",
-                        "Feb",
-                        "Mar",
-                        "Apr",
-                        "May",
-                        "Jun",
-                        "Jul",
-                        "Aug",
-                        "Sep",
-                        "Oct",
-                        "Nov",
-                        "Dec",
-                      ],
-                      datasets: [
-                        {
-                          chartType: "Bar Chart",
-                          label: "Total Appraisal Created",
-                          color: "success",
-                          data: [
-                            graphx[0].total,
-                            graphx[1].total,
-                            graphx[2].total,
-                            graphx[3].total,
-                            graphx[4].total,
-                            graphx[5].total,
-                            graphx[6].total,
-                            graphx[7].total,
-                            graphx[8].total,
-                            graphx[9].total,
-                            graphx[10].total,
-                            graphx[11].total,
-                          ],
-                        },
-                      ],
-                    }}
+                    chart={chartData}
                   />
-                )}
+                )} */}
+
+                <DefaultLineChart
+                  // icon={{ color: "info", component: "leaderboard" }}
+                  inkBarStyle={{ backgroundColor: "blue" }}
+                  title="Appraisal's Chart"
+                  description="Analytics Insights Of Appraisals Done In this Year"
+                  chart={chartData}
+                />
               </ThemeProvider>
             </Grid>
             <Grid item xs={6} md={6} lg={6}>
               <Card>
+                {/* {pieChartData.datasets.length > 0 && ( */}
                 <PieChart
                   title="Pie Chart"
                   height="17.125rem"
                   description="Analytics Insights"
-                  chart={{
-                    labels: piex.labels,
-                    datasets: {
-                      label: "Appraisal Grades",
-                      backgroundColors: piex.backgroundColor,
-                      data: piex.data,
-                    },
-                  }}
+                  chart={pieChartData}
                 />
+                {/* )} */}
               </Card>
             </Grid>
           </Grid>
