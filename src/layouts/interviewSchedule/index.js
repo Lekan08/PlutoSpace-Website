@@ -909,7 +909,7 @@ function InterviewSchedule() {
           <MDBox>
             <MDBox component="form" role="form">
               <MDBox variant="gradient" mx={0} mt={-3} p={2} mb={1} textAlign="center">
-                <MDTypography variant="h4" fontWeight="medium" color="info" mt={1}>
+                <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
                   Add Applicants
                 </MDTypography>
               </MDBox>
@@ -918,7 +918,7 @@ function InterviewSchedule() {
               <div className="row">
                 <div className="col-sm-6">
                   <MDBox variant="gradient" mx={0} mt={-3} p={1} mb={1} textAlign="center">
-                    <MDTypography variant="h6" fontWeight="medium" color="info" mt={1}>
+                    <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
                       Removed Applicants
                     </MDTypography>
                   </MDBox>
@@ -937,7 +937,7 @@ function InterviewSchedule() {
                 </div>
                 <div className="col-sm-6">
                   <MDBox variant="gradient" mx={0} mt={-3} p={1} mb={1} textAlign="center">
-                    <MDTypography variant="h6" fontWeight="medium" color="info" mt={1}>
+                    <MDTypography variant="h6" fontWeight="medium" color="White" mt={1}>
                       Added Applicants
                     </MDTypography>
                   </MDBox>
@@ -985,12 +985,14 @@ function InterviewSchedule() {
                     <MDButton
                       variant="gradient"
                       onClick={() => AddChipData(1)}
-                      color="info"
-                      width="50%"
+                      style={{ backgroundColor: "#f96d02" }}
+                      width="30%"
                       align="center"
                       size="small"
                     >
-                      Add
+                      <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
+                        add
+                      </MDTypography>
                     </MDButton>
                   </MDBox>
                 </div>
@@ -1010,21 +1012,29 @@ function InterviewSchedule() {
           <MDBox />
         )}
         <MDBox mt={3} mb={5} textAlign="center">
-          <MDTypography variant="h4" fontWeight="medium" color="info" mt={8} mb={3}>
+          <MDTypography
+            variant="h4"
+            fontWeight="medium"
+            style={{ backgroundColor: "#f96d02", marginTop: "20px" }}
+            mt={8}
+            mb={3}
+          >
             Generate A Video Call Link For The Interview
           </MDTypography>
           <MDInput variant="outlined" disabled style={{ width: "50%" }} value={link} />
           <br />
           <MDButton
             variant="gradient"
-            style={{ marginTop: "20px" }}
-            color="info"
+            color="white"
+            style={{ backgroundColor: "#f96d02", marginTop: "20px" }}
             onClick={() => Gen()}
-            width="50%"
+            width="30%"
             align="center"
             size="small"
           >
-            Generate
+            <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
+              Generate
+            </MDTypography>
           </MDButton>
         </MDBox>
         <Container>
@@ -1033,12 +1043,15 @@ function InterviewSchedule() {
               <MDBox mt={2} mb={2}>
                 <MDButton
                   variant="gradient"
+                  color="white"
                   onClick={handleInterviewEvent}
-                  color="info"
-                  width="50%"
+                  style={{ backgroundColor: "#f96d02" }}
+                  width="30%"
                   align="left"
                 >
-                  Add Participant
+                  <MDTypography variant="h6" fontWeight="medium" color="white" mt={1}>
+                    Add Participant
+                  </MDTypography>
                 </MDButton>
               </MDBox>
             </div>
@@ -1074,7 +1087,7 @@ function InterviewSchedule() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}

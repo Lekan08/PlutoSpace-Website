@@ -204,7 +204,7 @@ function ScheduledInterview() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox
             variant="gradient"
-            bgColor="info"
+            style={{ backgroundColor: "#f96d02" }}
             borderRadius="lg"
             coloredShadow="info"
             mx={2}
@@ -213,7 +213,12 @@ function ScheduledInterview() {
             mb={1}
             textAlign="center"
           >
-            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+            <MDTypography
+              variant="h4"
+              fontWeight="medium"
+              style={{ backgroundColor: "#f96d02" }}
+              mt={1}
+            >
               Calendar
             </MDTypography>
           </MDBox>
