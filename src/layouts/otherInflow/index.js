@@ -13,13 +13,13 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
-import DataTable from "examples/Tables/DataTable";
+// import DataTable from "examples/Tables/DataTable";
 import Backdrop from "@mui/material/Backdrop";
 import Grid from "@mui/material/Grid";
 import CircularProgress from "@mui/material/CircularProgress";
 import Footer from "examples/Footer";
 import GHeaders from "getHeader";
-import OtherInflowntable from "./data/table";
+// import OtherInflowntable from "./data/table";
 // Big Zzzz Doings
 // total is task + amountt
 
@@ -27,7 +27,7 @@ function OtherInflow() {
   const MySwal = withReactContent(Swal);
   const { allPHeaders: myHeaders } = PHeaders();
   const { allGHeaders: miHeaders } = GHeaders();
-  const { columns: pColumns, rows: pRows } = OtherInflowntable();
+  // const { columns: pColumns, rows: pRows } = OtherInflowntable();
 
   const navigate = useNavigate();
 
@@ -109,8 +109,10 @@ function OtherInflow() {
           window.location.reload();
         }
         if (isMounted) {
-          setOIT(result);
-          getTax(orgIDs);
+          if (result.length > 0) {
+            setOIT(result);
+            getTax(orgIDs);
+          }
         }
       });
     return () => {
@@ -271,7 +273,9 @@ function OtherInflow() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        setClient(result);
+        if (result.length > 0) {
+          setClient(result);
+        }
       });
   };
 
@@ -478,7 +482,7 @@ function OtherInflow() {
         </MDBox>
       </Card>
       <br />
-      <MDBox pt={3}>
+      {/* <MDBox pt={3}>
         <DataTable
           table={{ columns: pColumns, rows: pRows }}
           isSorted
@@ -487,7 +491,7 @@ function OtherInflow() {
           noEndBorder
           canSearch
         />
-      </MDBox>
+      </MDBox> */}
       <Footer />
       <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={opened}>
         <CircularProgress color="info" />

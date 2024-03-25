@@ -49,7 +49,9 @@ export default function OtherInflowtable() {
           window.location.reload();
         }
         if (isMounted) {
-          setItems(result);
+          if (result.length > 0) {
+            setItems(result);
+          }
         }
       });
     return () => {
@@ -195,7 +197,7 @@ export default function OtherInflowtable() {
     MySwal.fire({
       title: "Update Other Inflow Type",
       html: ` <table><tr><td>
-           <label for="Name">Name</label></td>
+           <label for="Name">Name *</label></td>
            <td><input type="text" id="name" value="${namex}" class="swal2-input" placeholder="Name"></td></tr><br>
            <tr><td><label for="descrip">Description</label></td>
            <td><input type="text" class="swal2-input" id="descrip" value="${descripx}" placeholder="Description"></td></tr>

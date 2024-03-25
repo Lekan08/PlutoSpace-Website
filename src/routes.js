@@ -2183,7 +2183,7 @@ const routes = [
   },
   {
     type: "title",
-    title: "Worklist",
+    title: "Expenses",
     key: "tit43999",
     route: "",
   },
@@ -2285,7 +2285,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: " Client Ticket Settings ",
+    name: " CLIENT TICKET SLA ",
     key: "ticketClientSettings",
     icon: <Icon fontSize="small">manage_accounts</Icon>,
     route: "/Ticket-Settings-Client",

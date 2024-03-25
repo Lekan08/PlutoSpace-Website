@@ -106,7 +106,9 @@ function UpdateOtherInflow() {
           window.location.reload();
         }
         if (isMounted) {
-          setOIT(result);
+          if (result.length > 0) {
+            setOIT(result);
+          }
         }
       });
     return () => {
@@ -156,7 +158,9 @@ function UpdateOtherInflow() {
           navigate("/authentication/forbiddenPage");
           window.location.reload();
         }
-        setClient(result);
+        if (result.length > 0) {
+          setClient(result);
+        }
       });
   };
 
@@ -189,19 +193,21 @@ function UpdateOtherInflow() {
           window.location.reload();
         }
         console.log(result);
-        setItems(result);
-        setAmount(result[0].amount);
-        setTaxAmount(result[0].taxAmount);
-        setOtherInflowType(result[0].otherInflowTypeID);
-        setParticular(result[0].particulars);
-        if (result[0].clientType !== 0) {
-          handleChangeClient(result[0].clientType);
+        if (result.length > 0) {
+          setItems(result);
+          setAmount(result[0].amount);
+          setTaxAmount(result[0].taxAmount);
+          setOtherInflowType(result[0].otherInflowTypeID);
+          setParticular(result[0].particulars);
+          if (result[0].clientType !== 0) {
+            handleChangeClient(result[0].clientType);
+          }
+          setClientTypex(result[0].clientType);
+          setClientIDx(result[0].clientID);
+          handleOnAmountKeys(result[0].amount);
+          handleOnTaxAmountKeys(result[0].taxAmount);
+          // handleOnClientIDKeys(result[0].clientID);
         }
-        setClientTypex(result[0].clientType);
-        setClientIDx(result[0].clientID);
-        handleOnAmountKeys(result[0].amount);
-        handleOnTaxAmountKeys(result[0].taxAmount);
-        // handleOnClientIDKeys(result[0].clientID);
       });
   };
 
