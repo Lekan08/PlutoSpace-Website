@@ -726,7 +726,7 @@ function TicketClientSettings() {
             textAlign="center"
           >
             <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-              Client Ticket Settings
+              CLIENT TICKET SLA
             </MDTypography>
           </MDBox>
           <MDBox
