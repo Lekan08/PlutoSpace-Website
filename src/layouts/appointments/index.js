@@ -31,6 +31,7 @@ import GHeaders from "getHeader";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import timezones from "layouts/appointments/timezones.json";
+import TextField from "@mui/material/TextField";
 import CalendarData from "./data";
 
 function Appointments() {
@@ -501,126 +502,161 @@ function Appointments() {
               {" "}
             </MDTypography>
           </MDBox>
-          <div align="center">
-            <MDBox mt={2} mb={2}>
-              <MDInput
-                type="text"
-                value={newEvent.title}
-                onKeyUp={handleOnTitleKeys}
-                onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-                label="Title"
-                variant="standard"
-                style={{ width: "30%" }}
-              />
-            </MDBox>
-            <div style={{ width: "700px" }}>
-              <Form.Group className="mb-1" controlId="exampleForm.ControlTextArea">
-                <Form.Label style={{ fontSize: 14 }}>Description</Form.Label>
-                <Form.Control
-                  as="textarea"
+          {/* <div align="center"> */}
+          <Container>
+            <div className="row">
+              <div className="col-sm-6">
+                <TextField
+                  id="outlined-textarea"
+                  value={newEvent.title}
+                  placeholder="Title "
+                  label="Title"
+                  onKeyUp={handleOnTitleKeys}
+                  onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+                  sx={{
+                    width: 400,
+                  }}
+                  multiline
+                  required
+                />
+              </div>
+              <div className="col-sm-6">
+                <TextField
+                  id="outlined-textarea"
+                  placeholder="Description "
+                  label="Description"
                   value={description || ""}
                   onChange={(e) => setDescription(e.target.value)}
-                  label="Description"
-                  variant="standard"
+                  sx={{
+                    width: 400,
+                  }}
+                  multiline
+                  required
                 />
-              </Form.Group>
+              </div>
             </div>
-            <br />
-            <Container>
-              <div className="row">
-                <div className="col-sm-6">
-                  <div align="center">
-                    <MDTypography
-                      variant="button"
-                      fontWeight="regular"
-                      fontSize="80%"
-                      align="left"
-                      color="text"
-                      mt={2}
-                    >
-                      Appointment Starts
-                    </MDTypography>
-                    <DatePicker
-                      placeholderText="MM/DD/YY hh:mm"
-                      style={{ marginRight: "10px" }}
-                      selected={newEvent.time}
-                      peekNextMonth
-                      showMonthDropdown
-                      showYearDropdown
-                      showTimeSelect
-                      dateFormat="MM/dd/yyyy h:mm aa"
-                      dropdownMode="select"
-                      onChange={(time) => setNewEvent({ ...newEvent, time })}
-                    />
-                  </div>
-                </div>
-                <div className="col-sm-6">
-                  <div align="center">
-                    <MDTypography
-                      variant="button"
-                      fontWeight="regular"
-                      fontSize="80%"
-                      align="left"
-                      color="text"
-                      mt={2}
-                    >
-                      Appointment Ends
-                    </MDTypography>
-                    <DatePicker
-                      placeholderText="MM/DD/YY hh:mm"
-                      style={{ marginRight: "10px" }}
-                      selected={newEvent.end}
-                      peekNextMonth
-                      dateFormat="MM/dd/yyyy h:mm aa"
-                      showMonthDropdown
-                      showYearDropdown
-                      showTimeSelect
-                      dropdownMode="select"
-                      onChange={(time) => ends(time)}
-                    />
-                  </div>
-                </div>
-              </div>
-              <br />
-
-              <div style={{ marginRight: "auto", marginLeft: "auto" }}>
-                <MDTypography
-                  variant="button"
-                  fontWeight="regular"
-                  fontSize="80%"
-                  // align="left"
-                  color="text"
-                  mt={2}
-                >
-                  Reminder
-                </MDTypography>{" "}
-                <br />
-                <DatePicker
-                  placeholderText="MM/DD/YY hh:mm"
-                  style={{ marginRight: "10px" }}
-                  selected={reminde}
-                  peekNextMonth
-                  dateFormat="MM/dd/yyyy h:mm aa"
-                  showMonthDropdown
-                  showYearDropdown
-                  showTimeSelect
-                  dropdownMode="select"
-                  onChange={(time) => reminder(time)}
-                />
-              </div>
-            </Container>
-            <div className="col-sm-6">
-              <MDBox mt={4}>
-                <MDBox textAlign="center">
+          </Container>
+          {/* <MDBox mt={2} mb={2}>
+            <MDInput
+              type="text"
+              value={newEvent.title}
+              onKeyUp={handleOnTitleKeys}
+              onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
+              label="Title"
+              variant="standard"
+              style={{ width: "30%" }}
+            />
+          </MDBox> */}
+          {/* <div style={{ width: "700px" }}>
+            <Form.Group className="mb-1" controlId="exampleForm.ControlTextArea">
+              <Form.Label style={{ fontSize: 14 }}>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                value={description || ""}
+                onChange={(e) => setDescription(e.target.value)}
+                label="Description"
+                variant="standard"
+              />
+            </Form.Group>
+          </div> */}
+          <br />
+          <Container>
+            <div className="row">
+              <div className="col-sm-4">
+                <div align="center">
                   <MDTypography
                     variant="button"
                     fontWeight="regular"
-                    fontSize="80%"
+                    // fontSize="80%"
+                    align="left"
+                    color="text"
+                    mt={2}
+                  >
+                    Appointment Starts
+                  </MDTypography>
+                  <DatePicker
+                    placeholderText="MM/DD/YY hh:mm"
+                    style={{ marginRight: "10px" }}
+                    selected={newEvent.time}
+                    peekNextMonth
+                    showMonthDropdown
+                    showYearDropdown
+                    showTimeSelect
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    dropdownMode="select"
+                    onChange={(time) => setNewEvent({ ...newEvent, time })}
+                  />
+                </div>
+              </div>
+              <div className="col-sm-4">
+                <div align="center">
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    // fontSize="80%"
+                    align="left"
+                    color="text"
+                    mt={2}
+                  >
+                    Appointment Ends
+                  </MDTypography>
+                  <DatePicker
+                    placeholderText="MM/DD/YY hh:mm"
+                    style={{ marginRight: "10px" }}
+                    selected={newEvent.end}
+                    peekNextMonth
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    showMonthDropdown
+                    showYearDropdown
+                    showTimeSelect
+                    dropdownMode="select"
+                    onChange={(time) => ends(time)}
+                  />
+                </div>
+              </div>
+              <div className="col-sm-4">
+                <div align="center">
+                  <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    // fontSize="80%"
+                    align="left"
+                    color="text"
+                    mt={2}
+                  >
+                    Reminder
+                  </MDTypography>{" "}
+                  <br />
+                  <DatePicker
+                    placeholderText="MM/DD/YY hh:mm"
+                    style={{ marginRight: "10px" }}
+                    selected={reminde}
+                    peekNextMonth
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    showMonthDropdown
+                    showYearDropdown
+                    showTimeSelect
+                    dropdownMode="select"
+                    onChange={(time) => reminder(time)}
+                  />
+                </div>
+              </div>
+            </div>
+            <br />
+          </Container>
+          <Container>
+            <div className="row">
+              <div className="col-sm-6">
+                <MDBox textAlign="center">
+                  {/* <MDTypography
+                    variant="button"
+                    fontWeight="regular"
+                    // fontSize="80%"
                     textAlign="center"
                     color="text"
                   >
                     Time Zone
-                  </MDTypography>
+                  </MDTypography> */}
                   <Form.Select
                     value={timezone}
                     onChange={(e) => {
@@ -636,95 +672,103 @@ function Appointments() {
                     ))}
                   </Form.Select>
                 </MDBox>
-              </MDBox>
+              </div>
+              <div className="col-sm-6">
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <Typography>Select Participants</Typography>
+                  </AccordionSummary>
+                  <Form>
+                    {user.map((api) => (
+                      <div key={api.personal.id} className="mb-3">
+                        <Form.Check.Input
+                          type="checkbox"
+                          // defaultChecked={checked}
+                          onClick={(e) => applicant(e, api)}
+                        />
+                        <Form.Check.Label>
+                          &nbsp;{api.personal.fname} {api.personal.lname}
+                        </Form.Check.Label>
+                      </div>
+                    ))}
+                  </Form>
+                </Accordion>
+              </div>
             </div>
-            <br />
-            <div className="col-sm-5">
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>Select Participants</Typography>
-                </AccordionSummary>
-                <Form>
-                  {user.map((api) => (
-                    <div key={api.personal.id} className="mb-3">
-                      <Form.Check.Input
-                        type="checkbox"
-                        // defaultChecked={checked}
-                        onClick={(e) => applicant(e, api)}
-                      />
-                      <Form.Check.Label>
-                        &nbsp;{api.personal.fname} {api.personal.lname}
-                      </Form.Check.Label>
-                    </div>
-                  ))}
-                </Form>
-              </Accordion>
-            </div>
-            <br />
-            <hr />
-            <MDBox mt={3} mb={3}>
-              &nbsp;
-              <MDBox component="form" role="form">
-                <MDBox variant="gradient" mx={2} mt={-3} p={2} mb={1} textAlign="center">
-                  <MDTypography variant="h5" fontWeight="medium" color="warning" mt={1}>
-                    Add Participants Not In The Organization
-                  </MDTypography>
-                </MDBox>
+          </Container>
+          <br />
+          <hr />
+          <MDBox mt={3} mb={3}>
+            &nbsp;
+            <MDBox component="form" role="form">
+              <MDBox variant="gradient" mx={2} mt={-3} p={2} mb={1} textAlign="center">
+                <MDTypography variant="h5" fontWeight="medium" color="warning" mt={1}>
+                  Add Participants Not In The Organization
+                </MDTypography>
               </MDBox>
-              <Container>
-                <div className="row">
-                  <div className="col-sm-6">
-                    <MDBox>
-                      <MDInput
-                        type="text"
-                        label="Email *"
-                        value={emailx || ""}
-                        onChange={(e) => setEmail(e.target.value)}
-                        onKeyDown={(e) => handleKeyDown(e, 1)}
-                        // onKeyUp={() => handleOnPEmailKeys()}
-                        variant="standard"
-                        style={{ width: "80%" }}
-                      />
-                      <MDButton
-                        variant="gradient"
-                        onClick={() => AddChipData(1)}
-                        color="warning"
-                        width="50%"
-                        align="center"
-                        size="small"
-                      >
-                        Add
-                      </MDButton>
-                      <br />
-                      {errorx && <i style={{ color: "red", fontSize: "12px" }}>{validate}</i>}
-                    </MDBox>
-                  </div>
-                  <div className="col-sm-6">
-                    <Paper sx={style} component="ul">
-                      {emailAccount.map((data) => (
-                        <ListItem key={data.index}>
-                          <Chip label={data.label} onDelete={handleEmailDelete(data)} />
-                        </ListItem>
-                      ))}
-                    </Paper>
-                  </div>
-                </div>
-              </Container>
             </MDBox>
-            <hr />
+            <Container>
+              <div className="row">
+                <div className="col-sm-6">
+                  <MDBox>
+                    <MDInput
+                      type="text"
+                      label="Email *"
+                      value={emailx || ""}
+                      onChange={(e) => setEmail(e.target.value)}
+                      onKeyDown={(e) => handleKeyDown(e, 1)}
+                      // onKeyUp={() => handleOnPEmailKeys()}
+                      variant="standard"
+                      style={{ width: "80%" }}
+                    />
+                    <MDButton
+                      variant="gradient"
+                      onClick={() => AddChipData(1)}
+                      color="warning"
+                      width="50%"
+                      align="center"
+                      size="small"
+                    >
+                      Add
+                    </MDButton>
+                    <br />
+                    {errorx && <i style={{ color: "red", fontSize: "12px" }}>{validate}</i>}
+                  </MDBox>
+                </div>
+                <div className="col-sm-6">
+                  <Paper sx={style} component="ul">
+                    {emailAccount.map((data) => (
+                      <ListItem key={data.index}>
+                        <Chip label={data.label} onDelete={handleEmailDelete(data)} />
+                      </ListItem>
+                    ))}
+                  </Paper>
+                </div>
+              </div>
+            </Container>
+          </MDBox>
+          <hr />
+          <Container>
             <MDBox>
-              <MDTypography variant="h5" fontWeight="medium" color="warning" mt={8} mb={3}>
+              <MDTypography
+                variant="h5"
+                fontWeight="medium"
+                color="warning"
+                mt={8}
+                mb={3}
+                textAlign="center"
+              >
                 Generate A Video Call Link For The Appointment
               </MDTypography>
-              <MDInput variant="outlined" disabled style={{ width: "90%" }} value={link} />
+              <MDInput variant="outlined" disabled style={{ width: "100%" }} value={link} />
               <br />
               <MDButton
                 variant="gradient"
-                style={{ marginTop: "20px" }}
+                style={{ marginTop: "20px", marginLeft: "42.5%" }}
                 color="warning"
                 onClick={() => Gen()}
                 width="50%"
@@ -734,19 +778,21 @@ function Appointments() {
                 Generate
               </MDButton>
             </MDBox>
-            <br />
-            <MDBox mt={2} mb={2}>
-              <MDButton
-                variant="gradient"
-                onClick={handleValidate}
-                color="warning"
-                width="50%"
-                align="left"
-              >
-                Add appointment
-              </MDButton>
-            </MDBox>
-          </div>
+          </Container>
+
+          <br />
+          <MDBox mt={2} mb={2}>
+            <MDButton
+              variant="gradient"
+              onClick={handleValidate}
+              color="warning"
+              width="50%"
+              align="left"
+            >
+              Add appointment
+            </MDButton>
+          </MDBox>
+          {/* </div> */}
         </MDBox>
       </Card>
       &nbsp;
