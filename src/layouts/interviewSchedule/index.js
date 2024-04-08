@@ -1019,7 +1019,9 @@ function InterviewSchedule() {
             mt={8}
             mb={3}
           >
-            Generate A Video Call Link For The Interview
+            <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
+              Generate A Video Call Link For The Interview
+            </MDTypography>
           </MDTypography>
           <MDInput variant="outlined" disabled style={{ width: "50%" }} value={link} />
           <br />
