@@ -189,120 +189,131 @@ function AccountReport() {
           console.log(result);
           console.log(incomeStatementPDF);
           console.log(companyDetails);
-          const raw = JSON.stringify({
-            company: {
-              id: companyDetails[0].id,
-              name: companyDetails[0].name,
-              street: companyDetails[0].street,
-              city: companyDetails[0].city,
-              state: companyDetails[0].state,
-              country: companyDetails[0].country,
-              pno: companyDetails[0].pno,
-              email: companyDetails[0].email,
-              // eslint-disable-next-line no-unneeded-ternary
-              profilePic: userProfile ? userProfile : "https://i.ibb.co/5FG72RG/defaulto.png",
-            },
-            incomeTotal: toNumber(result.incomeTotal).toLocaleString(undefined),
-            incomeTotalNumber: toNumber(result.incomeTotalNumber),
-            costOfGoodsTotal: toNumber(result.costOfGoodsTotal).toLocaleString(undefined),
-            costOfGoodsTotalNumber: toNumber(result.costOfGoodsTotalNumber),
-            operatingCostTotal: toNumber(result.operatingCostTotal).toLocaleString(undefined),
-            operatingCostTotalNumber: toNumber(result.operatingCostTotalNumber),
-            nonOperatingCostTotal: toNumber(result.nonOperatingCostTotal).toLocaleString(undefined),
-            nonOperatingCostTotalNumber: toNumber(result.costOfGoodsTotalNumber),
-            incomeItems: result.incomeItems,
-            costOfGoodsItems: result.costOfGoodsItems,
-            operatingCostItems: result.operatingCostItems,
-            nonOperatingCostItems: result.nonOperatingCostItems,
-          });
-          console.log(raw);
-          const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-          };
-          fetch(incomeStatementPDF, requestOptions)
-            .then(async (res) => {
-              const aToken = res.headers.get("token-1");
-              localStorage.setItem("rexxdex", aToken);
-              const result = await res.text();
-              if (result === null || result === undefined || result === "") {
-                return {};
-              }
-
-              return JSON.parse(result);
-            })
-            .then((result) => {
-              setOpened(false);
-              if (result.message === "Expired Access") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (result.message === "Token Does Not Exist") {
-                navigate("/authentication/sign-in");
-                window.location.reload();
-              }
-              if (result.message === "Unauthorized Access") {
-                navigate("/authentication/forbiddenPage");
-                window.location.reload();
-              }
-
-              if (isMounted) {
-                if (result.status === "SUCCESS") {
-                  fetch(
-                    `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.data.name}`,
-                    {
-                      headers,
-                    }
-                  )
-                    .then(async (res) => {
-                      const aToken = res.headers.get("token-1");
-                      localStorage.setItem("rexxdex", aToken);
-                      return res.json();
-                    })
-                    .then((resultxme2) => {
-                      if (resultxme2.message === "Expired Access") {
-                        navigate("/authentication/sign-in");
-                        window.location.reload();
-                      }
-                      if (resultxme2.message === "Token Does Not Exist") {
-                        navigate("/authentication/sign-in");
-                        window.location.reload();
-                      }
-                      if (resultxme2.message === "Unauthorized Access") {
-                        navigate("/authentication/forbiddenPage");
-                        window.location.reload();
-                      }
-
-                      // if (isMounted) {
-                      console.log(`link [${resultxme2[0]}]`);
-                      const url = resultxme2[0];
-                      if (url !== "") {
-                        const objectURL = url;
-                        console.log(objectURL);
-
-                        // (C2) TO "FORCE DOWNLOAD"
-                        const anchor = document.createElement("a");
-                        anchor.href = objectURL;
-                        anchor.download = result.data.name;
-                        anchor.click();
-
-                        // (C3) CLEAN UP
-                        window.URL.revokeObjectURL(objectURL);
-                      }
-                    })
-                    .catch((error) => {
-                      showMessage(error.status, "error", error.message);
-                    });
-                } else if (result.status === "FAILURE") {
-                  showMessage(result.status, "error", result.message);
-                }
-              }
-            })
-            .catch((error) => {
-              showMessage(error.status, "error", error.message);
+          if (!result.incomeItems) {
+            const raw = JSON.stringify({
+              company: {
+                id: companyDetails[0].id,
+                name: companyDetails[0].name,
+                street: companyDetails[0].street,
+                city: companyDetails[0].city,
+                state: companyDetails[0].state,
+                country: companyDetails[0].country,
+                pno: companyDetails[0].pno,
+                email: companyDetails[0].email,
+                // eslint-disable-next-line no-unneeded-ternary
+                profilePic: userProfile ? userProfile : "https://i.ibb.co/5FG72RG/defaulto.png",
+              },
+              incomeTotal: toNumber(result.incomeTotal).toLocaleString(undefined),
+              incomeTotalNumber: toNumber(result.incomeTotalNumber),
+              costOfGoodsTotal: toNumber(result.costOfGoodsTotal).toLocaleString(undefined),
+              costOfGoodsTotalNumber: toNumber(result.costOfGoodsTotalNumber),
+              operatingCostTotal: toNumber(result.operatingCostTotal).toLocaleString(undefined),
+              operatingCostTotalNumber: toNumber(result.operatingCostTotalNumber),
+              nonOperatingCostTotal: toNumber(result.nonOperatingCostTotal).toLocaleString(
+                undefined
+              ),
+              nonOperatingCostTotalNumber: toNumber(result.costOfGoodsTotalNumber),
+              incomeItems: result.incomeItems,
+              costOfGoodsItems: result.costOfGoodsItems,
+              operatingCostItems: result.operatingCostItems,
+              nonOperatingCostItems: result.nonOperatingCostItems,
             });
+            console.log(raw);
+            const requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: raw,
+              redirect: "follow",
+            };
+            fetch(incomeStatementPDF, requestOptions)
+              .then(async (res) => {
+                const aToken = res.headers.get("token-1");
+                localStorage.setItem("rexxdex", aToken);
+                const result = await res.text();
+                if (result === null || result === undefined || result === "") {
+                  return {};
+                }
+
+                return JSON.parse(result);
+              })
+              .then((result) => {
+                setOpened(false);
+                if (result.message === "Expired Access") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (result.message === "Token Does Not Exist") {
+                  navigate("/authentication/sign-in");
+                  window.location.reload();
+                }
+                if (result.message === "Unauthorized Access") {
+                  navigate("/authentication/forbiddenPage");
+                  window.location.reload();
+                }
+
+                if (isMounted) {
+                  if (result.status === "SUCCESS") {
+                    fetch(
+                      `${process.env.REACT_APP_EKOATLANTIC_URL}/media/getS3Urls/${result.data.name}`,
+                      {
+                        headers,
+                      }
+                    )
+                      .then(async (res) => {
+                        const aToken = res.headers.get("token-1");
+                        localStorage.setItem("rexxdex", aToken);
+                        return res.json();
+                      })
+                      .then((resultxme2) => {
+                        if (resultxme2.message === "Expired Access") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultxme2.message === "Token Does Not Exist") {
+                          navigate("/authentication/sign-in");
+                          window.location.reload();
+                        }
+                        if (resultxme2.message === "Unauthorized Access") {
+                          navigate("/authentication/forbiddenPage");
+                          window.location.reload();
+                        }
+
+                        // if (isMounted) {
+                        console.log(`link [${resultxme2[0]}]`);
+                        const url = resultxme2[0];
+                        if (url !== "") {
+                          const objectURL = url;
+                          console.log(objectURL);
+
+                          // (C2) TO "FORCE DOWNLOAD"
+                          const anchor = document.createElement("a");
+                          anchor.href = objectURL;
+                          anchor.download = result.data.name;
+                          anchor.click();
+
+                          // (C3) CLEAN UP
+                          window.URL.revokeObjectURL(objectURL);
+                        }
+                      })
+                      .catch((error) => {
+                        showMessage(error.status, "error", error.message);
+                      });
+                  } else if (result.status === "FAILURE") {
+                    showMessage(result.status, "error", result.message);
+                  }
+                }
+              })
+              .catch((error) => {
+                showMessage(error.status, "error", error.message);
+              });
+          } else {
+            setOpened(false);
+            MySwal.fire({
+              title: "Empty Reports",
+              type: Error,
+              text: "No Report To Generate",
+            });
+          }
         }
       })
       .catch((error) => {
