@@ -825,7 +825,7 @@ function ThirdParty() {
           </MDBox>
           <MDBox
             variant="gradient"
-            // bgColor="error"
+            // bgColor="error"//
             borderRadius="lg"
             coloredShadow="success"
             mx={3}

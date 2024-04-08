@@ -15,13 +15,15 @@ import { useNavigate } from "react-router-dom";
 // import withReactContent from "sweetalert2-react-content";
 import PHeaders from "postHeader";
 import Footer from "examples/Footer";
-import MixedChart from "examples/Charts/MixedChart";
+// import MixedChart from "examples/Charts/MixedChart";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import GHeaders from "getHeader";
 import { useReactToPrint } from "react-to-print";
 import MDButton from "components/MDButton";
 import MDBox from "components/MDBox";
 import PDF from "layouts/announcement-Dashboard/pdf";
+// import PieChart from "examples/Charts/PieChart";
+import DefaultLineChart from "examples/Charts/LineCharts/DefaultLineChart";
 // import Backdrop from "@mui/material/Backdrop";
 
 export default function TicketDashboard() {
@@ -36,10 +38,47 @@ export default function TicketDashboard() {
   const [show, setShow] = useState(false);
   const [isResolved, setIsResolved] = useState("");
   const [averageRating, setAverageRating] = useState("");
-  const [graphx, setGraph] = useState([]);
+  // const [graphx, setGraph] = useState([]);
   const [namex, setName] = useState("");
+  const [graphTR, setGraphTResolved] = useState([]);
+  const [graphTC, setGraphTCreated] = useState([]);
   const { allGHeaders: miHeaders } = GHeaders();
   const onBeforeGetContentResolve = useRef();
+
+  const [chartData, setChartData] = useState({
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    // datasets: [
+    //   {
+    //     label: "Total Appraisal Created",
+    //     color: "success",
+    //     data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    //   },
+    // ],
+    datasets: [
+      {
+        chartType: "Bar Chart",
+        label: "Total Ticket Created",
+        color: "success",
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      },
+      {
+        chartType: "Bar Chart",
+        label: "Ticket's Resolved",
+        color: "info",
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      },
+    ],
+  });
+  console.log(chartData);
+
+  // const [pieChartData, setPieChartData] = useState({
+  //   labels: ["No Grade"],
+  //   datasets: {
+  //     label: "Appraisal Grades",
+  //     backgroundColors: ["#333"],
+  //     data: [100],
+  //   },
+  // });
 
   const darkTheme = createTheme({
     palette: {
@@ -89,7 +128,7 @@ export default function TicketDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
+          // console.log(result);
           // setSupply(result);
           if (result.length > 0) {
             setTicketCreated(result);
@@ -143,7 +182,7 @@ export default function TicketDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
+          // console.log(result);
           // setSupply(result);
           if (result.length > 0) {
             setTicketCurrOpened(result);
@@ -199,7 +238,7 @@ export default function TicketDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
+          // console.log(result);
           // setSupply(result);
           if (result.length > 0) {
             setTicketAss(result);
@@ -246,7 +285,7 @@ export default function TicketDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
+          // console.log(result);
           setAverageRating(result);
         }
       });
@@ -298,7 +337,7 @@ export default function TicketDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
+          // console.log(result);
           // setSupply(result);
           if (result.length > 0) {
             setTicketUnAss(result);
@@ -351,7 +390,7 @@ export default function TicketDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
+          // console.log(result);
           // setSupply(result);
           if (result.length > 0) {
             setIsResolved(result);
@@ -381,7 +420,7 @@ export default function TicketDashboard() {
         return JSON.parse(result);
       })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         if (result.message === "Expired Access") {
           navigate("/authentication/sign-in");
           window.location.reload();
@@ -395,7 +434,59 @@ export default function TicketDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          setGraph(result);
+          console.log(result);
+          const allCreated = [];
+          const allResolved = [];
+          // eslint-disable-next-line array-callback-return
+          result.map((val) => {
+            const tCreated = val.totalCreated;
+            allCreated.push(tCreated);
+            const tResolved = val.totalResolved;
+            allResolved.push(tResolved);
+          });
+          console.log(allCreated);
+          console.log(allResolved);
+          setGraphTCreated(allCreated);
+          setGraphTResolved(allResolved);
+          // setGraph(result);
+          const dataa = {
+            labels: [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec",
+            ],
+            datasets: [
+              // {
+              //   label: "Total Ticket Created",
+              //   color: "success",
+              //   data: allCreated,
+              // },
+              {
+                chartType: "Bar Chart",
+                label: "Total Ticket Created",
+                color: "success",
+                data: graphTC,
+              },
+              {
+                chartType: "Bar Chart",
+                label: "Ticket's Resolved",
+                color: "info",
+                data: graphTR,
+              },
+            ],
+          };
+          console.log({ dataa });
+          console.log({ chartData });
+          setChartData(dataa);
           console.log(result);
           // eslint-disable-next-line no-restricted-syntax
           // for (const key in graph) {
@@ -403,7 +494,7 @@ export default function TicketDashboard() {
           //   TR.push(graph[key].totalResolved);
           // }
 
-          console.log(averageRating);
+          // console.log(averageRating);
         }
       });
     return () => {
@@ -469,7 +560,7 @@ export default function TicketDashboard() {
           window.location.reload();
         }
         if (isMounted) {
-          console.log(result);
+          // console.log(result);
           setName(result[0].name);
         }
       });
@@ -490,6 +581,34 @@ export default function TicketDashboard() {
           </MDBox>
         </div>
       </MDBox>
+      {/* <div ref={componentRef} style={{ width: "100%", height: window.innerHeight }}>
+        {show ? <PDF namexxx={namex} /> : ""}
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={12} lg={12}>
+              <ThemeProvider theme={darkTheme}>
+                <DefaultLineChart
+                  // icon={{ color: "info", component: "leaderboard" }}
+                  inkBarStyle={{ backgroundColor: "blue" }}
+                  title="Appraisal's Chart"
+                  description="Analytics Insights Of Appraisals Done In this Year"
+                  chart={chartData}
+                />
+              </ThemeProvider>
+            </Grid> */}
+      {/* <Grid item xs={6} md={6} lg={6}>
+              <Card>
+                <PieChart
+                  title="Pie Chart"
+                  height="17.125rem"
+                  description="Analytics Insights"
+                  chart={pieChartData}
+                />
+              </Card>
+            </Grid> */}
+      {/* </Grid>
+        </Box>
+      </div> */}
       <div ref={componentRef} style={{ width: "100%", height: window.innerHeight }}>
         {show ? <PDF namexxx={namex} /> : ""}
         &nbsp;
@@ -653,70 +772,55 @@ export default function TicketDashboard() {
               </Card>
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
-              <ThemeProvider theme={darkTheme}>
+              {/* <ThemeProvider theme={darkTheme}>
                 {graphx.length > 0 && (
                   <MixedChart
                     inkBarStyle={{ backgroundColor: "blue" }}
                     title="Ticket's Chart"
                     description="Analytics Insights"
                     chart={{
-                      labels: [
-                        "Jan",
-                        "Feb",
-                        "Mar",
-                        "Apr",
-                        "May",
-                        "Jun",
-                        "Jul",
-                        "Aug",
-                        "Sep",
-                        "Oct",
-                        "Nov",
-                        "Dec",
-                      ],
-                      datasets: [
-                        {
-                          chartType: "Bar Chart",
-                          label: "Total Ticket Created",
-                          color: "success",
-                          data: [
-                            graphx[0].totalCreated,
-                            graphx[1].totalCreated,
-                            graphx[2].totalCreated,
-                            graphx[3].totalCreated,
-                            graphx[4].totalCreated,
-                            graphx[5].totalCreated,
-                            graphx[6].totalCreated,
-                            graphx[7].totalCreated,
-                            graphx[8].totalCreated,
-                            graphx[9].totalCreated,
-                            graphx[10].totalCreated,
-                            graphx[11].totalCreated,
-                          ],
-                        },
-                        {
-                          chartType: "Bar Chart",
-                          label: "Ticket's Resolved",
-                          color: "info",
-                          data: [
-                            graphx[0].totalResolved,
-                            graphx[1].totalResolved,
-                            graphx[2].totalResolved,
-                            graphx[3].totalResolved,
-                            graphx[4].totalResolved,
-                            graphx[5].totalResolved,
-                            graphx[6].totalResolved,
-                            graphx[7].totalResolved,
-                            graphx[8].totalResolved,
-                            graphx[9].totalResolved,
-                            graphx[10].totalResolved,
-                            graphx[11].totalResolved,
-                          ],
-                        },
-                      ],
+                      data: {
+                        labels: [
+                          "Jan",
+                          "Feb",
+                          "Mar",
+                          "Apr",
+                          "May",
+                          "Jun",
+                          "Jul",
+                          "Aug",
+                          "Sep",
+                          "Oct",
+                          "Nov",
+                          "Dec",
+                        ],
+                        datasets: [
+                          {
+                            chartType: "Bar Chart",
+                            label: "Total Ticket Created",
+                            color: "success",
+                            data: graphTC,
+                          },
+                          {
+                            chartType: "Bar Chart",
+                            label: "Ticket's Resolved",
+                            color: "info",
+                            data: graphTR,
+                          },
+                        ],
+                      },
                     }}
                   />
                 )}
+              </ThemeProvider> */}
+              <ThemeProvider theme={darkTheme}>
+                <DefaultLineChart
+                  // icon={{ color: "info", component: "leaderboard" }}
+                  inkBarStyle={{ backgroundColor: "blue" }}
+                  title="Ticket's Chart"
+                  description="Analytics Insights"
+                  chart={chartData}
+                />
               </ThemeProvider>
             </Grid>
           </Grid>
