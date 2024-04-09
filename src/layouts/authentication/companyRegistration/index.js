@@ -42,6 +42,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import AllCountriesAndStates from "countries-states-master/countries";
 import Styles from "styles";
+import GHeaders from "getHeader";
 
 function CompanyReg() {
   const { countriesAndStates: AlCountry } = AllCountriesAndStates();
@@ -68,6 +69,8 @@ function CompanyReg() {
   const [checkedComCity, setCheckedComCity] = useState("");
 
   const [opened, setOpened] = useState(false);
+
+  const { allGHeaders: miHeaders } = GHeaders();
 
   const handleOnComNameKeys = (value) => {
     const letters = /^[a-zA-Z0-9 ]+$/;
@@ -176,6 +179,7 @@ function CompanyReg() {
       .then((result) => {
         console.log(result);
         if (result.status === "SUCCESS") {
+          console.log("success");
           const raw1 = JSON.stringify({
             orgID: result.data.id,
             personalID: user.id,
@@ -192,7 +196,8 @@ function CompanyReg() {
             .then((resultx) => {
               if (resultx.status !== "SUCCESS") {
                 fetch(`${process.env.REACT_APP_KUBU_URL}/company/delete/${result.data.id}`, {
-                  headers: myHeaders,
+                  method: "DELETE",
+                  headers: miHeaders,
                 })
                   .then((res) => res.json())
                   .then((delResult) => {
@@ -265,6 +270,7 @@ function CompanyReg() {
               }
             })
             .catch((error) => {
+              console.log("catchh");
               setOpened(false);
               MySwal.fire({
                 title: error.status,
@@ -273,6 +279,7 @@ function CompanyReg() {
               });
             });
         } else {
+          console.log("failled");
           setOpened(false);
           MySwal.fire({
             title: result.status,
@@ -282,6 +289,7 @@ function CompanyReg() {
         }
       })
       .catch((error) => {
+        console.log("failled4");
         setOpened(false);
         MySwal.fire({
           title: error.status,
